@@ -1,0 +1,14 @@
+.footer {
+  background-color: rgb(34, 35, 39);
+}
+
+.footer__images img {
+  width: 15%;
+}
+
+.footer__info {
+  justify-content: flex-end;
+}
+.footer__info img {
+  width: 35%;
+}

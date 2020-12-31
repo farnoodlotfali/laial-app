@@ -1,0 +1,152 @@
+.playList {
+  width: 50%;
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 9999;
+  background-color: rgb(18, 18, 18);
+  box-shadow: 5px 18px 18px 0 rgba(168, 179, 211, 0.38);
+  transition: left 500ms ease-in-out;
+  direction: ltr;
+  /* left: -100%; */
+}
+
+.bg__gray {
+  background-color: rgb(34, 35, 39);
+}
+
+.playerInfo {
+  /* justify-content: flex-end; */
+  direction: rtl;
+}
+
+.info {
+  display: grid;
+  align-self: center;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.info__title {
+  font-weight: 900;
+  font-size: 22px;
+  max-height: 47px;
+  overflow: hidden;
+}
+
+.info__person {
+  font-weight: 600;
+  font-size: 15px;
+  color: #6c7480;
+}
+
+.info__image {
+  height: 150px;
+  width: 150px;
+  border-radius: 10px;
+}
+
+.info__image img {
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.icons {
+  justify-content: flex-end;
+}
+
+.player__zone .current-time {
+  flex: 0.1;
+}
+.player__zone .player {
+  flex: 2;
+}
+.player__zone .last-time {
+  flex: 0.1;
+}
+
+.closeBtn {
+  margin-left: 94%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.closeBtn:hover {
+  color: #6c7480;
+  cursor: pointer;
+}
+
+.song {
+  direction: rtl;
+}
+
+.song__image {
+  height: 80px;
+  width: 80px;
+  border-radius: 10px;
+}
+
+.song__image img {
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.song__info {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.song__title {
+  font-weight: 900;
+  font-size: 17px;
+  max-height: 47px;
+  overflow: hidden;
+}
+
+.song__person {
+  font-weight: 600;
+  font-size: 12px;
+  color: #6c7480;
+}
+
+.song__time {
+  font-size: 13px;
+}
+
+.songs .number {
+  font-size: larger;
+  font-weight: bold;
+}
+.songs {
+  direction: rtl;
+  overflow-y: scroll;
+}
+
+@media (max-width: 768px) {
+  .playList {
+    width: 100%;
+  }
+  .playlist__musicBar {
+    font-size: 10px;
+  }
+
+  /* .last-time {
+    margin-right: -20px;
+  } */
+
+  .closeBtn {
+    margin-left: 87%;
+  }
+  .info__title {
+    font-size: 17px;
+  }
+}

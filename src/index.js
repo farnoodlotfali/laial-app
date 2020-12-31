@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Fragment } from 'react';
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode><App/></React.StrictMode>
+  <Fragment>
     <App />
-  </React.StrictMode>,
+  </Fragment>,
   document.getElementById('root')
 );
 

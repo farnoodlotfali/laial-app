@@ -1,11 +1,78 @@
-.app {
-  margin-top: 100px;
-  background-color: rgb(18, 18, 18);
-  font-family: sans-serif;
-  text-align: center;
+/* external css: flickity.css */
+
+* {
+  box-sizing: border-box;
 }
 
-/*! Flickity v2.1.2
+body {
+  font-family: sans-serif;
+}
+.rowList {
+  margin-top: 20px;
+}
+
+.rowList__title {
+  margin-bottom: 0px;
+  /* margin-right: 20px; */
+  display: flex;
+  background: rgb(18, 18, 18);
+  direction: rtl;
+}
+.rowList__title h3 {
+  padding-top: 10px;
+  padding-right: 5px;
+  padding-bottom: 10px;
+}
+.rowList .carousel {
+  outline-width: 0px;
+  height: 377px;
+  padding-bottom: 20px;
+  padding-top: 10px;
+  background-color: rgb(18, 18, 18);
+  /* background: #838383; */
+  /* margin-bottom: 400px; */
+}
+
+.rowList .flickity-viewport {
+  height: 376px;
+}
+.rowList .carousel-cell {
+  left: 0 !important;
+}
+.rowList .flickity-slider {
+  /* transform: translateX(0%) !important ; */
+  /* background-color: red; */
+}
+@media (max-width: 768px) {
+  .rowList__title {
+    padding-top: 10px;
+  }
+  .rowList__title h3 {
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    font-size: 15px;
+  }
+  .rowList .carousel {
+    height: 180px;
+  }
+
+  .rowList .flickity-viewport {
+    height: 190.8px;
+  }
+}
+
+/* cell number */
+/* .carousel-cell:before {
+  display: block;
+  text-align: center;
+  content: counter(carousel-cell);
+  line-height: 200px;
+  font-size: 80px;
+  color: white;
+} */
+
+/*! Flickity v2.2.1
 https://flickity.metafizzy.co
 ---------------------------------------------- */
 
@@ -17,11 +84,11 @@ https://flickity.metafizzy.co
   outline: none;
 }
 
-.flickity-viewport {
+/* .flickity-viewport {
   overflow: hidden;
   position: relative;
   height: 100%;
-}
+} */
 
 .flickity-slider {
   position: absolute;
@@ -33,7 +100,6 @@ https://flickity.metafizzy.co
 
 .flickity-enabled.is-draggable {
   -webkit-tap-highlight-color: transparent;
-  tap-highlight-color: transparent;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -82,7 +148,7 @@ https://flickity.metafizzy.co
 }
 
 .flickity-button-icon {
-  fill: #333;
+  fill: currentColor;
 }
 
 /* ---- previous/next buttons ---- */
@@ -151,3 +217,22 @@ https://flickity.metafizzy.co
 .flickity-page-dots .dot.is-selected {
   opacity: 1;
 }
+
+/* .rowList {
+  direction: rtl;
+}
+.rowList h3 {
+  margin-right: 50px;
+  display: flex;
+}
+
+.rowList__row {
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  padding: 20px;
+}
+
+.rowList__row::-webkit-scrollbar {
+  display: none;
+} */

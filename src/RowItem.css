@@ -1,0 +1,145 @@
+.carousel-cellRowItem {
+  width: 16.1%;
+  height: 378px;
+  margin-right: 5px;
+  border-radius: 5px;
+  margin-left: 5px;
+  min-width: 240px;
+  transition: transform 450ms;
+}
+.carousel-cellRowItem:hover {
+  cursor: pointer;
+  transform: scale(1.04);
+  opacity: 0.8;
+}
+.carousel-cellRowItem img {
+  width: 100%;
+  height: 250px;
+  border-radius: 5px;
+}
+
+.rowItem__onHover {
+  display: none;
+}
+
+.rowItem__title {
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 28px;
+  color: white;
+  margin-top: 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.rowItem__person {
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 28px;
+  color: #757575;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.rowItem:hover .rowItem__onHover {
+  display: block;
+  /* color: red; */
+  /* top: 50%; */
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 5px;
+  width: 100%;
+  height: 67%;
+  opacity: 1;
+  transition: all 0.5s;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.9));
+}
+
+.rowItem:hover .rowItem__icons {
+  display: flex;
+  /* border-top: 1px solid rgba(128, 128, 128, 0.582); */
+  float: left;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+
+  opacity: 1;
+}
+
+.rowItem:hover .rowItem__icon {
+  margin-top: 5px;
+  border-radius: 3px;
+  background-color: rgba(245, 245, 220, 0.1);
+  margin-bottom: 7px;
+  margin-left: 5px;
+  color: white;
+}
+
+.rowItem:hover .rowItem__icon:hover {
+  color: black;
+  background-color: white;
+}
+
+.rowItem:hover .MuiSvgIcon-root {
+  margin: 2px;
+}
+.rowItem__image {
+  height: 251px;
+}
+.rowItem__image .badge {
+  position: relative;
+  bottom: 36px;
+  left: 30%;
+  /* margin-left: 100px; */
+  min-width: 65px;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgb(8, 8, 8);
+  padding: 3px 2px;
+  border-radius: 20px;
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .carousel-cellRowItem {
+    height: 190px;
+    width: 31.5%;
+    min-width: 106px;
+  }
+
+  .carousel-cellRowItem img {
+    width: 100%;
+    height: 114px;
+    border-radius: 5px;
+  }
+  .rowItem__image {
+    height: 114px;
+  }
+  .rowItem:hover .rowItem__onHover {
+    /* display: none; */
+  }
+
+  .rowItem__image .badge {
+    bottom: 25px;
+    left: 25%;
+    min-width: 45px;
+    padding: 1px;
+    font-size: 12px;
+
+    /* height: 20px; */
+  }
+
+  .rowItem__info h4 {
+    font-size: 12px;
+  }
+  .rowItem__title {
+    margin: 0;
+    padding-bottom: 0;
+  }
+  .rowItem__person {
+    margin: 0;
+  }
+}
