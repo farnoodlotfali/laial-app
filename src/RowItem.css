@@ -1,4 +1,5 @@
 .carousel-cellRowItem {
+  /* position: relative; */
   width: 16.1%;
   height: 378px;
   margin-right: 5px;
@@ -22,6 +23,29 @@
   display: none;
 }
 
+.visit_text {
+  /* color: white; */
+  margin-top: 5px;
+
+  /* background-color: rgba(18, 18, 18, 0.2); */
+  /* background-image: linear-gradient(rgba(34, 35, 39, 0), rgba(34, 35, 39, 0.2)); */
+}
+.visit_text:hover {
+  background-image: linear-gradient(rgba(34, 35, 39, 0), rgba(34, 35, 39, 0.2));
+}
+.visit {
+  width: 100%;
+  font-size: 18px;
+  font-weight: normal;
+  color: white;
+  /* font-weight: 900; */
+}
+.visit:hover {
+  /* color: rgb(171, 185, 240) !important; */
+  text-decoration: none;
+  font-weight: 900;
+  color: rgb(18, 18, 18);
+}
 .rowItem__title {
   font-size: 20px;
   font-weight: 900;
@@ -44,6 +68,7 @@
 }
 
 .rowItem:hover .rowItem__onHover {
+  cursor: context-menu;
   display: block;
   /* color: red; */
   /* top: 50%; */
@@ -55,10 +80,14 @@
   height: 67%;
   opacity: 1;
   transition: all 0.5s;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.9));
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.3),
+    rgba(0, 0, 0, 0.9)
+  );
 }
 
 .rowItem:hover .rowItem__icons {
+  cursor: pointer;
   display: flex;
   /* border-top: 1px solid rgba(128, 128, 128, 0.582); */
   float: left;

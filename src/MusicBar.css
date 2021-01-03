@@ -77,7 +77,8 @@
   height: 4px;
 }
 
-.icon:hover {
+.icon:hover,
+.icon-press {
   cursor: pointer;
   color: #6c7480 !important;
 }

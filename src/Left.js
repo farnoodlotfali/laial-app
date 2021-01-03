@@ -2,6 +2,7 @@ import { IconButton, Slide, Slider, Tooltip } from '@material-ui/core';
 import {
   Close,
   Delete,
+  Pause,
   PlayArrowRounded,
   Repeat,
   Shuffle,
@@ -12,17 +13,34 @@ import React, { useContext, useState } from 'react';
 import AppContext from './contexts/appContext';
 import logo from './assets/0.jpg';
 import './Left.css';
+import playerContext from './player/playerContext';
+import SongOnLeft from './SongOnLeft';
 
 const Left = () => {
   const { showLeft, ChangeShowLeft, showCenter } = useContext(AppContext);
-  const [value, setValue] = useState(33);
-  //   const [open, setOpen] = useState(showLeft);
+  const {
+    playList,
+    progress,
+    handleChange,
+    previousMusic,
+    nextMusic,
+    playAndPauseMusic,
+    playing,
+    duration,
+    totalDuration,
+    changeShuffle,
+    shuffle,
+    changeLoop,
+    loop,
+  } = useContext(playerContext);
+
+  // console.log(totalDuration);
   const removeLeft = () => {
     ChangeShowLeft(false);
   };
-  const changeValue = (e, newValue) => {
-    setValue(newValue);
-  };
+
+  const zeroPad = (num, places) => String(num).padStart(places, '0');
+
   return (
     // <div className='left text-light'>
     <Slide direction='right' timeout={500} in={showLeft}>
@@ -39,424 +57,73 @@ const Left = () => {
             </div>
           </div>
           <div className='icons d-flex justify-content-around mt-3 mb-4'>
-            <div className='icon d-flex align-items-center'>
+            <div
+              className={`icon d-flex ${
+                shuffle ? 'icon-press' : ''
+              } align-items-center`}
+              onClick={() => changeShuffle()}
+            >
               <Shuffle style={{ fontSize: 25 }} />
             </div>
-            <div className='icon  '>
+            <div className='icon  ' onClick={() => previousMusic()}>
               <SkipPreviousRounded style={{ fontSize: 35 }} />
             </div>
-            <div className='icon  '>
-              <PlayArrowRounded style={{ fontSize: 35 }} />
+            <div className='icon  ' onClick={() => playAndPauseMusic()}>
+              {playing ? (
+                <Pause style={{ fontSize: 35 }} />
+              ) : (
+                <PlayArrowRounded style={{ fontSize: 35 }} />
+              )}
             </div>
-            <div className='icon  '>
+            <div className='icon  ' onClick={() => nextMusic()}>
               <SkipNextRounded style={{ fontSize: 35 }} />
             </div>
-            <div className='icon d-flex align-items-center'>
+            <div
+              onClick={() => changeLoop()}
+              className={`icon d-flex ${
+                loop ? 'icon-press' : ''
+              } align-items-center`}
+            >
               <Repeat style={{ fontSize: 25 }} />
             </div>
           </div>
           <div className='playlist__musicBar m d-flex mb-4 mt-2 justify-content-center'>
             <div className='player__zone d-flex  col-10 p-0'>
               <div className='current-time  d-flex align-items-center'>
-                01:32
+                {Math.floor(duration / 60) +
+                  ':' +
+                  zeroPad(Math.floor(duration % 60), 2)}
               </div>
               <div className='player d-flex align-items-center mx-2'>
                 <Slider
                   variant='determinate'
-                  value={value}
-                  onChange={changeValue}
+                  value={progress}
+                  onChange={(e, newDuration) => handleChange(newDuration)}
                 />
               </div>
-              <div className='last-time d-flex align-items-center'>07:24</div>
-            </div>
-          </div>
-        </div>
-        <div className='songs container'>
-          <div className='song d-flex my-5 ml-4 justify-content-between'>
-            <div className='song__right d-flex'>
-              <div className='number mx-4 align-self-center'>1</div>
-              <div className='song__image'>
-                <img src={logo} alt='' />
-              </div>
-              <div className='song__info mr-3 align-self-center '>
-                <div className='song__title'>دودمه شب دهم محرم الحرام</div>
-                <div className='song__person'>حاج مهدی رسولی</div>
-              </div>
-            </div>
-            <div className='song__left d-flex'>
-              <div className='song__time align-self-center text-muted'>
-                3:49
-              </div>
-              <div className='deleteSongBtn align-self-center mr-1'>
-                <Tooltip placement='right' title='Delete'>
-                  <IconButton aria-label='delete' color='inherit'>
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
-          <div className='song d-flex my-5 ml-4 justify-content-between'>
-            <div className='song__right d-flex'>
-              <div className='number mx-4 align-self-center'>1</div>
-              <div className='song__image'>
-                <img src={logo} alt='' />
-              </div>
-              <div className='song__info mr-3 align-self-center '>
-                <div className='song__title'>دودمه شب دهم محرم الحرام</div>
-                <div className='song__person'>حاج مهدی رسولی</div>
-              </div>
-            </div>
-            <div className='song__left d-flex'>
-              <div className='song__time align-self-center text-muted'>
-                3:49
-              </div>
-              <div className='deleteSongBtn align-self-center mr-1'>
-                <Tooltip placement='right' title='Delete'>
-                  <IconButton aria-label='delete' color='inherit'>
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
-          <div className='song d-flex my-5 ml-4 justify-content-between'>
-            <div className='song__right d-flex'>
-              <div className='number mx-4 align-self-center'>1</div>
-              <div className='song__image'>
-                <img src={logo} alt='' />
-              </div>
-              <div className='song__info mr-3 align-self-center '>
-                <div className='song__title'>دودمه شب دهم محرم الحرام</div>
-                <div className='song__person'>حاج مهدی رسولی</div>
-              </div>
-            </div>
-            <div className='song__left d-flex'>
-              <div className='song__time align-self-center text-muted'>
-                3:49
-              </div>
-              <div className='deleteSongBtn align-self-center mr-1'>
-                <Tooltip placement='right' title='Delete'>
-                  <IconButton aria-label='delete' color='inherit'>
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
-          <div className='song d-flex my-5 ml-4 justify-content-between'>
-            <div className='song__right d-flex'>
-              <div className='number mx-4 align-self-center'>1</div>
-              <div className='song__image'>
-                <img src={logo} alt='' />
-              </div>
-              <div className='song__info mr-3 align-self-center '>
-                <div className='song__title'>دودمه شب دهم محرم الحرام</div>
-                <div className='song__person'>حاج مهدی رسولی</div>
-              </div>
-            </div>
-            <div className='song__left d-flex'>
-              <div className='song__time align-self-center text-muted'>
-                3:49
-              </div>
-              <div className='deleteSongBtn align-self-center mr-1'>
-                <Tooltip placement='right' title='Delete'>
-                  <IconButton aria-label='delete' color='inherit'>
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
-          <div className='song d-flex my-5 ml-4 justify-content-between'>
-            <div className='song__right d-flex'>
-              <div className='number mx-4 align-self-center'>1</div>
-              <div className='song__image'>
-                <img src={logo} alt='' />
-              </div>
-              <div className='song__info mr-3 align-self-center '>
-                <div className='song__title'>دودمه شب دهم محرم الحرام</div>
-                <div className='song__person'>حاج مهدی رسولی</div>
-              </div>
-            </div>
-            <div className='song__left d-flex'>
-              <div className='song__time align-self-center text-muted'>
-                3:49
-              </div>
-              <div className='deleteSongBtn align-self-center mr-1'>
-                <Tooltip placement='right' title='Delete'>
-                  <IconButton aria-label='delete' color='inherit'>
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
-          <div className='song d-flex my-5 ml-4 justify-content-between'>
-            <div className='song__right d-flex'>
-              <div className='number mx-4 align-self-center'>1</div>
-              <div className='song__image'>
-                <img src={logo} alt='' />
-              </div>
-              <div className='song__info mr-3 align-self-center '>
-                <div className='song__title'>دودمه شب دهم محرم الحرام</div>
-                <div className='song__person'>حاج مهدی رسولی</div>
-              </div>
-            </div>
-            <div className='song__left d-flex'>
-              <div className='song__time align-self-center text-muted'>
-                3:49
-              </div>
-              <div className='deleteSongBtn align-self-center mr-1'>
-                <Tooltip placement='right' title='Delete'>
-                  <IconButton aria-label='delete' color='inherit'>
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
-          <div className='song d-flex my-5 ml-4 justify-content-between'>
-            <div className='song__right d-flex'>
-              <div className='number mx-4 align-self-center'>1</div>
-              <div className='song__image'>
-                <img src={logo} alt='' />
-              </div>
-              <div className='song__info mr-3 align-self-center '>
-                <div className='song__title'>دودمه شب دهم محرم الحرام</div>
-                <div className='song__person'>حاج مهدی رسولی</div>
-              </div>
-            </div>
-            <div className='song__left d-flex'>
-              <div className='song__time align-self-center text-muted'>
-                3:49
-              </div>
-              <div className='deleteSongBtn align-self-center mr-1'>
-                <Tooltip placement='right' title='Delete'>
-                  <IconButton aria-label='delete' color='inherit'>
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
-          <div className='song d-flex my-5 ml-4 justify-content-between'>
-            <div className='song__right d-flex'>
-              <div className='number mx-4 align-self-center'>1</div>
-              <div className='song__image'>
-                <img src={logo} alt='' />
-              </div>
-              <div className='song__info mr-3 align-self-center '>
-                <div className='song__title'>دودمه شب دهم محرم الحرام</div>
-                <div className='song__person'>حاج مهدی رسولی</div>
-              </div>
-            </div>
-            <div className='song__left d-flex'>
-              <div className='song__time align-self-center text-muted'>
-                3:49
-              </div>
-              <div className='deleteSongBtn align-self-center mr-1'>
-                <Tooltip placement='right' title='Delete'>
-                  <IconButton aria-label='delete' color='inherit'>
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
-          <div className='song d-flex my-5 ml-4 justify-content-between'>
-            <div className='song__right d-flex'>
-              <div className='number mx-4 align-self-center'>1</div>
-              <div className='song__image'>
-                <img src={logo} alt='' />
-              </div>
-              <div className='song__info mr-3 align-self-center '>
-                <div className='song__title'>دودمه شب دهم محرم الحرام</div>
-                <div className='song__person'>حاج مهدی رسولی</div>
-              </div>
-            </div>
-            <div className='song__left d-flex'>
-              <div className='song__time align-self-center text-muted'>
-                3:49
-              </div>
-              <div className='deleteSongBtn align-self-center mr-1'>
-                <Tooltip placement='right' title='Delete'>
-                  <IconButton aria-label='delete' color='inherit'>
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
-          <div className='song d-flex my-5 ml-4 justify-content-between'>
-            <div className='song__right d-flex'>
-              <div className='number mx-4 align-self-center'>1</div>
-              <div className='song__image'>
-                <img src={logo} alt='' />
-              </div>
-              <div className='song__info mr-3 align-self-center '>
-                <div className='song__title'>دودمه شب دهم محرم الحرام</div>
-                <div className='song__person'>حاج مهدی رسولی</div>
-              </div>
-            </div>
-            <div className='song__left d-flex'>
-              <div className='song__time align-self-center text-muted'>
-                3:49
-              </div>
-              <div className='deleteSongBtn align-self-center mr-1'>
-                <Tooltip placement='right' title='Delete'>
-                  <IconButton aria-label='delete' color='inherit'>
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
-          <div className='song d-flex my-5 ml-4 justify-content-between'>
-            <div className='song__right d-flex'>
-              <div className='number mx-4 align-self-center'>1</div>
-              <div className='song__image'>
-                <img src={logo} alt='' />
-              </div>
-              <div className='song__info mr-3 align-self-center '>
-                <div className='song__title'>دودمه شب دهم محرم الحرام</div>
-                <div className='song__person'>حاج مهدی رسولی</div>
-              </div>
-            </div>
-            <div className='song__left d-flex'>
-              <div className='song__time align-self-center text-muted'>
-                3:49
-              </div>
-              <div className='deleteSongBtn align-self-center mr-1'>
-                <Tooltip placement='right' title='Delete'>
-                  <IconButton aria-label='delete' color='inherit'>
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
-          <div className='song d-flex my-5 ml-4 justify-content-between'>
-            <div className='song__right d-flex'>
-              <div className='number mx-4 align-self-center'>1</div>
-              <div className='song__image'>
-                <img src={logo} alt='' />
-              </div>
-              <div className='song__info mr-3 align-self-center '>
-                <div className='song__title'>دودمه شب دهم محرم الحرام</div>
-                <div className='song__person'>حاج مهدی رسولی</div>
-              </div>
-            </div>
-            <div className='song__left d-flex'>
-              <div className='song__time align-self-center text-muted'>
-                3:49
-              </div>
-              <div className='deleteSongBtn align-self-center mr-1'>
-                <Tooltip placement='right' title='Delete'>
-                  <IconButton aria-label='delete' color='inherit'>
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
-          <div className='song d-flex my-5 ml-4 justify-content-between'>
-            <div className='song__right d-flex'>
-              <div className='number mx-4 align-self-center'>1</div>
-              <div className='song__image'>
-                <img src={logo} alt='' />
-              </div>
-              <div className='song__info mr-3 align-self-center '>
-                <div className='song__title'>دودمه شب دهم محرم الحرام</div>
-                <div className='song__person'>حاج مهدی رسولی</div>
-              </div>
-            </div>
-            <div className='song__left d-flex'>
-              <div className='song__time align-self-center text-muted'>
-                3:49
-              </div>
-              <div className='deleteSongBtn align-self-center mr-1'>
-                <Tooltip placement='right' title='Delete'>
-                  <IconButton aria-label='delete' color='inherit'>
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
-          <div className='song d-flex my-5 ml-4 justify-content-between'>
-            <div className='song__right d-flex'>
-              <div className='number mx-4 align-self-center'>1</div>
-              <div className='song__image'>
-                <img src={logo} alt='' />
-              </div>
-              <div className='song__info mr-3 align-self-center '>
-                <div className='song__title'>دودمه شب دهم محرم الحرام</div>
-                <div className='song__person'>حاج مهدی رسولی</div>
-              </div>
-            </div>
-            <div className='song__left d-flex'>
-              <div className='song__time align-self-center text-muted'>
-                3:49
-              </div>
-              <div className='deleteSongBtn align-self-center mr-1'>
-                <Tooltip placement='right' title='Delete'>
-                  <IconButton aria-label='delete' color='inherit'>
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
-          <div className='song d-flex my-5 ml-4 justify-content-between'>
-            <div className='song__right d-flex'>
-              <div className='number mx-4 align-self-center'>1</div>
-              <div className='song__image'>
-                <img src={logo} alt='' />
-              </div>
-              <div className='song__info mr-3 align-self-center '>
-                <div className='song__title'>دودمه شب دهم محرم الحرام</div>
-                <div className='song__person'>حاج مهدی رسولی</div>
-              </div>
-            </div>
-            <div className='song__left d-flex'>
-              <div className='song__time align-self-center text-muted'>
-                3:49
-              </div>
-              <div className='deleteSongBtn align-self-center mr-1'>
-                <Tooltip placement='right' title='Delete'>
-                  <IconButton aria-label='delete' color='inherit'>
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
-          <div className='song d-flex my-5 ml-4 justify-content-between'>
-            <div className='song__right d-flex'>
-              <div className='number mx-4 align-self-center'>1</div>
-              <div className='song__image'>
-                <img src={logo} alt='' />
-              </div>
-              <div className='song__info mr-3 align-self-center '>
-                <div className='song__title'>دودمه شب دهم محرم الحرام</div>
-                <div className='song__person'>حاج مهدی رسولی</div>
-              </div>
-            </div>
-            <div className='song__left d-flex'>
-              <div className='song__time align-self-center text-muted'>
-                3:49
-              </div>
-              <div className='deleteSongBtn align-self-center mr-1'>
-                <Tooltip placement='right' title='Delete'>
-                  <IconButton aria-label='delete' color='inherit'>
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
+              <div className='last-time d-flex align-items-center'>
+                {' '}
+                {Math.floor(totalDuration / 60) +
+                  ':' +
+                  zeroPad(Math.floor(totalDuration % 60), 2)}
               </div>
             </div>
           </div>
         </div>
+        {playList && (
+          <div className='songs container'>
+            {playList.map((music, i) => (
+              <SongOnLeft
+                key={i}
+                song={music}
+                playList={playList}
+                totalDuration={totalDuration}
+                zeroPad={zeroPad}
+                number={i + 1}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </Slide>
     /* </div> */

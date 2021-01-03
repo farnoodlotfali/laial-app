@@ -8,6 +8,7 @@ import {
   SET_PALYLIST,
   NEXT_MUSIC,
   PREVIOUS_MUSIC,
+  SET_CURRENT_URL,
 } from './types';
 
 export default (state, action) => {
@@ -41,7 +42,8 @@ export default (state, action) => {
       // console.log(action.payload);
       return {
         ...state,
-        percentage: action.payload,
+        duration: action.payload.currentTime,
+        totalDuration: action.payload.duration,
       };
     case SET_PALYLIST:
       return {
@@ -52,14 +54,19 @@ export default (state, action) => {
       return {
         ...state,
         currentUrl: action.payload,
-        playing: true,
       };
     case PREVIOUS_MUSIC:
       return {
         ...state,
         currentUrl: action.payload,
-        playing: true,
       };
+    case SET_CURRENT_URL:
+      // console.log(action.payload);
+      return {
+        ...state,
+        currentUrl: action.payload,
+      };
+
     default:
       return state;
   }

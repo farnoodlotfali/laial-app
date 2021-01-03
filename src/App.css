@@ -1,5 +1,5 @@
 .app {
-  margin-top: 100px;
+  /* margin-top: 100px; */
   background-color: rgb(18, 18, 18);
   font-family: sans-serif;
   text-align: center;
@@ -151,3 +151,7 @@ https://flickity.metafizzy.co
 .flickity-page-dots .dot.is-selected {
   opacity: 1;
 }
+/* .carousel img {
+  height: 400px;
+  width: 100%;
+} */

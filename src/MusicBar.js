@@ -42,7 +42,7 @@ const urls = [
   },
 ];
 
-const MusicBar = ({ playList = urls }) => {
+const MusicBar = ({ playList = urls, url, q }) => {
   const audioRef = useRef();
   const { showMusic, ChangeShowLeft } = useContext(AppContext);
   const {
@@ -59,7 +59,7 @@ const MusicBar = ({ playList = urls }) => {
     previousMusic,
     currentUrl,
   } = useContext(PlayerContext);
-  // console.log(duration);
+  // console.log(q);
 
   const showPlaylist = () => {
     ChangeShowLeft(true);
@@ -69,7 +69,7 @@ const MusicBar = ({ playList = urls }) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    setPlayList(playList);
+    // setPlayList(playList);
     //   حرکت خواهد کردprogress اگر در حال پخش بود
     if (playing) {
       //progress سرعت جلو رفتن
@@ -88,121 +88,142 @@ const MusicBar = ({ playList = urls }) => {
   }, [playing, playList]);
 
   const handleChange = (newDuration) => {
+    // تنظیم مدت زمان هنگام کلیک
     changeDuration(audioRef.current, newDuration);
     setProgress(newDuration);
   };
   const handleNext = () => {
+    //  موزیک بعدی
     nextMusic(audioRef.current);
     setProgress(0);
   };
   const handlePrevious = () => {
+    // موزیک قبلی
     previousMusic(audioRef.current);
     setProgress(0);
   };
+  useEffect(() => {
+    if (url !== null) {
+      console.log(url);
+      audioRef.current.src = url;
+      console.log(audioRef.current);
+    }
+  }, [url]);
+
   return (
     // <div className='musicBar text-light'>
-    <Slide direction='down' timeout={500} in={showMusic}>
-      <div
-        className='container musicBar text-light'
-        style={{ marginTop: showMusic ? '0px' : '-110px' }}
-      >
-        <div className='row'>
-          <div className='col-md-4'>
-            <div className='musicBar__info'>
-              <div className='musicBar__infoImage'>
-                <img src={logo} alt='logo' />
-              </div>
-              <div className='musicBar__infoDesc'>
-                <div className='infoDesc__title'>دودمه شب دهم محرم الحرام</div>
-                <div className='infoDesc__person'>حاج مهدی رسولی</div>
-              </div>
-            </div>
-          </div>
-          <div className='player col-md-6 mt-3'>
-            <audio ref={audioRef} className='player' autoPlay={playing}>
-              <source src={currentUrl} type='audio/mpeg' />
-            </audio>
-            <div className='player__actions d-flex justify-content-center '>
-              <div className='icon mr-4  align-self-center'>
-                <ShuffleRounded style={{ fontSize: 25 }} />
-              </div>
-              <div className='icon mr-4 ' onClick={handlePrevious}>
-                <SkipPreviousRounded style={{ fontSize: 35 }} />
-              </div>
-              <div
-                className='icon mr-4  '
-                onClick={() => playAndPauseMusic(audioRef.current)}
-              >
-                {playing ? (
-                  <Pause style={{ fontSize: 35 }} />
-                ) : (
-                  <PlayArrowRounded style={{ fontSize: 35 }} />
-                )}
-              </div>
-              <div className='icon mr-4  ' onClick={handleNext}>
-                <SkipNextRounded style={{ fontSize: 35 }} />
-              </div>
-              <div className='icon mr-4 align-self-center '>
-                <RepeatRounded style={{ fontSize: 25 }} />
+    currentUrl !== null ? (
+      <Slide direction='down' timeout={500} in={showMusic}>
+        <div
+          className='container musicBar text-light'
+          style={{ marginTop: showMusic ? '0px' : '-110px' }}
+        >
+          <div className='row'>
+            <div className='col-md-4'>
+              <div className='musicBar__info'>
+                <div className='musicBar__infoImage'>
+                  <img src={logo} alt='logo' />
+                </div>
+                <div className='musicBar__infoDesc'>
+                  <div className='infoDesc__title'>
+                    دودمه شب دهم محرم الحرام
+                  </div>
+                  <div className='infoDesc__person'>حاج مهدی رسولی</div>
+                </div>
               </div>
             </div>
-            <div className='player__zone d-flex mt-2'>
-              <div className='current-time align-self-center '>
-                {Math.floor(audioRef.current?.currentTime / 60) +
-                  ':' +
-                  zeroPad(Math.floor(audioRef.current?.currentTime % 60), 2)}
-              </div>
-              <div className='player mt-1 align-self-center mx-3 '>
-                <Slider
-                  variant='determinate'
-                  value={progress}
-                  onChange={(e, newDuration) => handleChange(newDuration)}
+            <div className='player col-md-6 mt-3'>
+              <audio ref={audioRef} className='player' autoPlay={playing}>
+                <source
+                  src={currentUrl == null ? url : currentUrl}
+                  type='audio/mpeg'
                 />
+              </audio>
+              <div className='player__actions d-flex justify-content-center '>
+                <div className='icon mr-4  align-self-center'>
+                  <ShuffleRounded style={{ fontSize: 25 }} />
+                </div>
+                <div className='icon mr-4 ' onClick={handlePrevious}>
+                  <SkipPreviousRounded style={{ fontSize: 35 }} />
+                </div>
+                <div
+                  className='icon mr-4  '
+                  onClick={() => playAndPauseMusic(audioRef.current)}
+                >
+                  {playing ? (
+                    <Pause style={{ fontSize: 35 }} />
+                  ) : (
+                    <PlayArrowRounded style={{ fontSize: 35 }} />
+                  )}
+                </div>
+                <div className='icon mr-4  ' onClick={handleNext}>
+                  <SkipNextRounded style={{ fontSize: 35 }} />
+                </div>
+                <div className='icon mr-4 align-self-center '>
+                  <RepeatRounded style={{ fontSize: 25 }} />
+                </div>
               </div>
-              <div className='last-time align-self-center '>
-                {
-                  // audioRef?.current?.duration
-                  Math.floor(audioRef.current?.duration / 60) +
+              <div className='player__zone d-flex mt-2'>
+                <div className='current-time align-self-center '>
+                  {Math.floor(audioRef.current?.currentTime / 60) +
                     ':' +
-                    zeroPad(Math.floor(audioRef.current?.duration % 60), 2)
-                }
-              </div>
-            </div>
-          </div>
-          <div className='playlist_sound  col-sm-3 col-md-2 mt-3'>
-            <div
-              className='icon playlist_sound_playlist d-flex justify-content-end align-self-end mb-2 '
-              onClick={showPlaylist}
-            >
-              <QueueMusic fontSize='large' />
-            </div>
-
-            <div className='sound  d-flex '>
-              <div className='progressBar p-0  w-100 mt-1 '>
-                <Slider
-                  value={volume * 100}
-                  onChange={(e, newVolume) =>
-                    changeVolume(audioRef.current, newVolume)
+                    zeroPad(Math.floor(audioRef.current?.currentTime % 60), 2)}
+                </div>
+                <div className='player mt-1 align-self-center mx-3 '>
+                  <Slider
+                    variant='determinate'
+                    value={progress}
+                    onChange={(e, newDuration) => handleChange(newDuration)}
+                  />
+                </div>
+                <div className='last-time align-self-center '>
+                  {
+                    // audioRef?.current?.duration
+                    Math.floor(audioRef.current?.duration / 60) +
+                      ':' +
+                      zeroPad(Math.floor(audioRef.current?.duration % 60), 2)
                   }
-                  aria-labelledby='continuous-slider'
-                />
-              </div>
-              <div
-                className='icon col-2 p-0 d-flex align-self-center mr-2'
-                onClick={() => muteAndUnmuteMusic(audioRef.current)}
-              >
-                {mute ? <VolumeOff /> : <VolumeUp />}
+                </div>
               </div>
             </div>
+            <div className='playlist_sound  col-sm-3 col-md-2 mt-3'>
+              <div
+                className='icon playlist_sound_playlist d-flex justify-content-end align-self-end mb-2 '
+                onClick={showPlaylist}
+              >
+                <QueueMusic fontSize='large' />
+              </div>
 
-            {/* <div className='playlist mt-3'> */}
+              <div className='sound  d-flex '>
+                <div className='progressBar p-0  w-100 mt-1 '>
+                  <Slider
+                    value={volume * 100}
+                    onChange={(e, newVolume) =>
+                      changeVolume(audioRef.current, newVolume)
+                    }
+                    aria-labelledby='continuous-slider'
+                  />
+                </div>
+                <div
+                  className='icon col-2 p-0 d-flex align-self-center mr-2'
+                  onClick={() => muteAndUnmuteMusic(audioRef.current)}
+                >
+                  {mute ? <VolumeOff /> : <VolumeUp />}
+                </div>
+              </div>
 
-            {/* </div> */}
+              {/* <div className='playlist mt-3'> */}
+
+              {/* </div> */}
+            </div>
           </div>
+          {/* <div className='col-3 bg-danger'>dsds</div> */}
         </div>
-        {/* <div className='col-3 bg-danger'>dsds</div> */}
-      </div>
-    </Slide>
+      </Slide>
+    ) : (
+      <></>
+    )
+
     // </div>
   );
 };

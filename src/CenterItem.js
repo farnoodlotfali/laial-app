@@ -9,6 +9,8 @@ const CenterItem = ({ name, id }) => {
   let inputRef = useRef();
 
   const editName = () => {
+    // console.log(inputRef.current.focus);
+    inputRef.current.focus();
     setIsEdit(!isEdit);
     localStorage.setItem(
       id,

@@ -7,3 +7,4 @@ export const CHANGE_DURATION = 'CHANGE_DURATION';
 export const SET_PALYLIST = 'SET_PALYLIST';
 export const NEXT_MUSIC = 'NEXT_MUSIC';
 export const PREVIOUS_MUSIC = 'PREVIOUS_MUSIC';
+export const SET_CURRENT_URL = 'SET_CURRENT_URL';

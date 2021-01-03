@@ -1,0 +1,34 @@
+.rowItemPage {
+  direction: rtl;
+}
+.musicInfo__right {
+  flex: 0.2;
+}
+.musicInfo__left {
+  flex: 0.7;
+}
+.musicInfo__image {
+  width: 455px;
+  height: 455px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px 5px rgba(168, 179, 211, 0.7);
+}
+.musicInfo__left hr {
+  border-top: 1px solid rgb(34, 35, 39) !important;
+}
+.actions a {
+  color: white;
+}
+
+.actions a:hover {
+  text-decoration: none;
+}
+.musicInfo__left .MuiIconButton-root {
+  color: inherit;
+  /* border: 1px solid rgba(168, 179, 211, 0.486); */
+  /* padding: 10px; */
+}
+
+.musicInfo__left .Favorite:hover {
+  color: rgb(165, 49, 49);
+}

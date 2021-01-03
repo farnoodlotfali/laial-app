@@ -92,6 +92,7 @@
 }
 
 .song__image img {
+  cursor: pointer;
   height: 100%;
   width: 100%;
   border-radius: 10px;
@@ -104,7 +105,12 @@
   text-align: right;
   margin-right: 10px;
 }
-
+.deleteSongBtn .Favorite:hover {
+  color: rgb(165, 49, 49);
+}
+.deleteSongBtn .MuiIconButton-root {
+  color: inherit;
+}
 .song__title {
   font-weight: 900;
   font-size: 17px;
