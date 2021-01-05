@@ -1,6 +1,10 @@
 .notFound {
   width: 100%;
-  height: 78.086vh;
+  height: 75vh;
+  display: block;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
 }
 .notFound__content {
   display: grid;
@@ -14,7 +18,6 @@
 .notfound__desc {
   font-size: 30px;
   font-weight: bold;
-  /* margin-top: -40px;  */
   color: #8a8f99;
 }
 .notFound__content a {
@@ -24,4 +27,10 @@
   color: #346cab;
   font-weight: 500;
   text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .notFound {
+    height: 65vh;
+  }
 }

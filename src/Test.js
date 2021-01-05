@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Howl } from 'howler';
+import React, { useState } from 'react';
 import { useRef } from 'react';
 
 // https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3

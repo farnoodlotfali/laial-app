@@ -10,7 +10,9 @@ body {
 body::-webkit-scrollbar {
   display: none;
 }
-
+/* * {
+  background-color: rgb(18, 18, 18);
+} */
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

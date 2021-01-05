@@ -6,7 +6,7 @@ import logo1 from './assets/0.jpg';
 import './RowItem.css';
 import { Link, Route } from 'react-router-dom';
 import playerContext from './player/playerContext';
-import slug from './slug';
+import slug from './Slug';
 const urls = [
   {
     url:
@@ -64,19 +64,21 @@ const RowItem = ({
   return (
     <div className='carousel-cellRowItem rowItem '>
       <div className='rowItem__image'>
-        <img src={logo1} alt='logo' />
-        <Badge className='badge bg-light'>
-          شور
-          {/* {modes} */}
-        </Badge>
+        <Link to={`/rowitempage/${'ali'}`} className='visit '>
+          <img src={logo1} alt='logo' />
+          <Badge className='badge bg-light'>
+            شور
+            {/* {modes} */}
+          </Badge>
+        </Link>
       </div>
       <div className='rowItem__onHover'>
         {' '}
-        <Link to={`/rowitempage/${'ali'}`} className='visit '>
+        {/* <Link to={`/rowitempage/${'ali'}`} className='visit '>
           <div className='visit_text p-2 '>
             توضیحات بیشتر <Info />
           </div>
-        </Link>
+        </Link> */}
         <div className='rowItem__icons'>
           <div className='rowItem__icon' onClick={playMusicAndShowMusicBar}>
             <PlayCircleFilled fontSize='large' />

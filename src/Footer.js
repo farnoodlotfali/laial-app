@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './assets/and.jpg';
 import logo1 from './assets/bazar.jpg';
 import './Footer.css';
+import PhoneMenu from './PhoneMenu';
 
 const Footer = () => {
   return (

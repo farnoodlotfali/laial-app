@@ -1,5 +1,10 @@
 import { Divider, IconButton, Tooltip } from '@material-ui/core';
-import { Favorite, GetAppRounded, PlayArrow } from '@material-ui/icons';
+import {
+  Favorite,
+  GetAppRounded,
+  PlayArrow,
+  PlaylistAdd,
+} from '@material-ui/icons';
 import React, { useContext, useEffect, useState } from 'react';
 import AppContext from './contexts/appContext';
 import playerContext from './player/playerContext';
@@ -58,7 +63,7 @@ const RowItemPage = ({
     }, 1000);
   };
   return (
-    <div className='rowItemPage my-4  '>
+    <div className='rowItemPage py-4  '>
       <div className='musicInfo d-flex justify-content-around'>
         <div className='musicInfo__right '>
           <img
@@ -101,6 +106,14 @@ const RowItemPage = ({
                   </IconButton>
                 </Tooltip>
               </a>
+            </div>
+
+            <div>
+              <Tooltip placement='left' title='Add'>
+                <IconButton aria-label='Add'>
+                  <PlaylistAdd className='Add' fontSize='large' />
+                </IconButton>
+              </Tooltip>
             </div>
           </div>
         </div>

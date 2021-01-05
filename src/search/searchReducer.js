@@ -1,4 +1,5 @@
 import {
+  // eslint-disable-next-line
   SEARCH_VALUE_CHANGE,
   PERSONS_VALUE_CHANGE,
   CATEGORIES_VALUE_CHANGE,

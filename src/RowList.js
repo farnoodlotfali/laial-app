@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import RowItem from './RowItem';
 import Flickity from 'react-flickity-component';
 import './RowList.css';
@@ -13,8 +13,10 @@ import logo1 from './assets/0.jpg';
 // import logo8 from './assets/11.jpg';
 import logo9 from './assets/a.jpg';
 import logo10 from './assets/b.jpg';
+import { Link } from 'react-router-dom';
+import appContext from './contexts/appContext';
 
-const RowList = ({ title }) => {
+const RowList = ({ title, slug = '1' }) => {
   const flickityOptions = {
     // initialIndex: 2,
     contain: true,
@@ -22,10 +24,22 @@ const RowList = ({ title }) => {
     pageDots: false,
     rightToLeft: true,
   };
+  const { ChangeListName } = useContext(appContext);
   return (
     <div className='rowList mb-3 mt-5'>
-      <div className='rowList__title d-flex'>
-        <h3 className=' text-light  mr-3'>{title}</h3>
+      <div className='rowList__title d-flex '>
+        <div className=' text-light title mr-3'>{title}</div>
+        <div
+          className='d-flex  align-items-center '
+          onClick={() => ChangeListName(title)}
+        >
+          <Link
+            to={`/list/${title}`}
+            className=' text-light moreSong mr-5   ml-3'
+          >
+            نمایش بیشتر
+          </Link>
+        </div>
       </div>
 
       <Flickity className='carousel col px-2 py-0' options={flickityOptions}>

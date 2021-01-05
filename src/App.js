@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -6,23 +6,19 @@ import Header from './Header';
 import AppState from './contexts/AppState';
 // eslint-disable-next-line
 import Test from './Test';
-import MusicBar from './MusicBar';
 import Left from './Left';
 import Center from './Center';
 import Footer from './Footer';
 import Home from './Home';
 import Search from './search/Search';
 import AboutUs from './AboutUs';
-import Navigation from './Navigation';
 import SearchState from './search/SearchState';
 import Playerstate from './player/PlayerState';
-import ReactDOM from 'react-dom';
-import Flickity from 'react-flickity-component';
 import axios from './axios/axios';
 import RowItemPage from './RowItemPage';
-import appContext from './contexts/appContext';
-import slug from './slug';
-import y from './y';
+import Slug from './Slug';
+import PhoneMenu from './PhoneMenu';
+import MoreSong from './MoreSong';
 
 // function Carousel() {
 //   return (
@@ -42,27 +38,29 @@ import y from './y';
 
 const App = () => {
   // console.log(slug);
-  const doa = async () => {
-    try {
-      const res = await axios.get('page/home');
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const doa = async () => {
+  //   try {
+  //     const res = await axios.get('page/home');
+  //     console.log(res);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   // doa();
   return (
-    <div className='app ' style={{ marginBottom: '1000px' }}>
+    <div
+      className='app '
+
+      // style={{ marginBottom: '1000px' }}
+    >
       <AppState>
         <Playerstate>
           <SearchState>
             <Router>
-              {/* <MusicBar /> */}
               <Center />
               <Left />
               <Header />
-              {/* <RowItemPage /> */}
               <Switch>
                 <Route exact path='/' component={Home} />
                 <Route
@@ -71,8 +69,10 @@ const App = () => {
                   component={RowItemPage}
                 />
                 <Route exact path='/search' component={Search} />
+                <Route exact path='/list/:slug' component={MoreSong} />
                 <Route exact path='/aboutus' component={AboutUs} />
               </Switch>
+              <PhoneMenu />
               <Footer />
             </Router>
           </SearchState>

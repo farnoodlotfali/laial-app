@@ -4,7 +4,10 @@ import React, {
   useEffect,
   useRef,
   useState,
+  Fragment,
 } from 'react';
+
+import '../MusicBar.css';
 import MusicBar from '../MusicBar';
 import PlayerContext from './playerContext';
 import playerReducer from './playerReducer';
@@ -13,6 +16,8 @@ import { Slide, Slider } from '@material-ui/core';
 import AppContext from '../contexts/appContext';
 import logo from '../assets/0.jpg';
 import {
+  ExpandLess,
+  ExpandMore,
   Pause,
   PlayArrowRounded,
   QueueMusic,
@@ -63,7 +68,7 @@ const urls = [
 ];
 const Playerstate = (props) => {
   const audioRef = useRef();
-  const { showMusic, ChangeShowLeft } = useContext(AppContext);
+  const { showMusic, ChangeShowLeft, ChangeShowMusic } = useContext(AppContext);
   const initialState = {
     playList: [],
     playing: false,
@@ -77,9 +82,6 @@ const Playerstate = (props) => {
   };
   const [state, dispatch] = useReducer(playerReducer, initialState);
 
-  const showPlaylist = () => {
-    ChangeShowLeft(true);
-  };
   const zeroPad = (num, places) => String(num).padStart(places, '0');
   const [Time, setTime] = useState('0:00');
   const [shuffle, setShuffle] = useState(false);
@@ -87,7 +89,6 @@ const Playerstate = (props) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // setPlayList(playList);
     //   حرکت خواهد کردprogress اگر در حال پخش بود
     if (state.playing) {
       //progress سرعت جلو رفتن
@@ -113,7 +114,12 @@ const Playerstate = (props) => {
         clearInterval(timer);
       };
     }
+    // eslint-disable-next-line
   }, [state.playing]);
+
+  const showPlaylist = () => {
+    ChangeShowLeft(true);
+  };
 
   const handleChange = (newDuration) => {
     // تنظیم مدت زمان هنگام کلیک
@@ -126,25 +132,21 @@ const Playerstate = (props) => {
     setProgress(0);
   };
   const handlePrevious = () => {
-    // console.log(1);
     // موزیک قبلی
     previousMusic(audioRef.current);
     setProgress(0);
   };
 
   const setPlayList = (playlist) => {
-    // console.log(playList);
-
     dispatch({
       type: SET_PALYLIST,
       payload: playlist,
     });
-    // console.log(playList);
   };
+
   const setUrl = (url, playlist) => {
     setPlayList(playlist);
 
-    // console.log(state.pervUrl);
     dispatch({
       type: SET_CURRENT_URL,
       payload: url,
@@ -153,7 +155,6 @@ const Playerstate = (props) => {
   };
 
   const playAndPauseMusic = async (audioElement = audioRef.current) => {
-    // console.log(audioRef.current.duration);
     // پلی و استپ کردن آهنگ
     if (audioElement !== undefined) {
       if (await state.playing) {
@@ -166,12 +167,7 @@ const Playerstate = (props) => {
           type: PLAY_MUSIC,
         });
 
-        // audioElement.pause();
-        // audioElement.load();
         audioElement.play();
-        // setTimeout(() => {
-        //   setTime(null);
-        // }, 100);
       }
     }
   };
@@ -229,15 +225,13 @@ const Playerstate = (props) => {
     if (state.playList != undefined) {
       for (let i = 0; i < state.playList.length; i++) {
         if (oldSrc == state.playList[i].url) {
-          // console.log(i == state.playList.length - 1 && !loop);
           if (i == state.playList.length - 1) {
             last = true;
           }
           // if (shuffle) {
           let random =
             Math.floor(Math.random() * (state.playList.length - 1)) + 0;
-          // }
-          // console.log(random);
+
           if (state.playList[shuffle ? random : i + 1] !== undefined) {
             // console.log(state.playList[shuffle ? random : i + 1].url);
             dispatch({
@@ -271,18 +265,20 @@ const Playerstate = (props) => {
   const previousMusic = (audioElement = audioRef.current) => {
     setTime('0:00');
     let oldSrc = audioElement.childNodes[0].attributes.src.value;
-    for (let i = 0; i < state.playList.length; i++) {
-      if (oldSrc == state.playList[i].url) {
-        if (state.playList[i - 1] !== undefined) {
-          dispatch({
-            type: PREVIOUS_MUSIC,
-            payload: state.playList[i - 1].url,
-          });
-        } else {
-          dispatch({
-            type: PREVIOUS_MUSIC,
-            payload: state.playList[state.playList.length - 1].url,
-          });
+    if (state.playList != undefined) {
+      for (let i = 0; i < state.playList.length; i++) {
+        if (oldSrc == state.playList[i].url) {
+          if (state.playList[i - 1] !== undefined) {
+            dispatch({
+              type: PREVIOUS_MUSIC,
+              payload: state.playList[i - 1].url,
+            });
+          } else {
+            dispatch({
+              type: PREVIOUS_MUSIC,
+              payload: state.playList[state.playList.length - 1].url,
+            });
+          }
         }
       }
     }
@@ -315,7 +311,12 @@ const Playerstate = (props) => {
   const changeLoop = () => {
     setLopp(!loop);
   };
-
+  const [show, setshow] = useState(null);
+  if (showMusic) {
+    setTimeout(() => {
+      setshow(true);
+    }, 1200);
+  }
   return (
     <PlayerContext.Provider
       value={{
@@ -345,121 +346,138 @@ const Playerstate = (props) => {
     >
       {/* <MusicBar url={state.currentUrl} /> */}
       {state.currentUrl !== null ? (
-        <Slide direction='down' timeout={500} in={showMusic}>
-          <div
-            className='container musicBar text-light'
-            style={{ marginTop: showMusic ? '0px' : '-110px' }}
-          >
-            <div className='row'>
-              <div className='col-md-4'>
-                <div className='musicBar__info'>
-                  <div className='musicBar__infoImage'>
-                    <img src={logo} alt='logo' />
-                  </div>
-                  <div className='musicBar__infoDesc'>
-                    <div className='infoDesc__title'>
-                      دودمه شب دهم محرم الحرام
+        <Fragment>
+          <Slide direction='down' timeout={500} in={showMusic}>
+            <div
+              className='container musicBar text-light'
+              style={{ marginTop: showMusic ? '0px' : '-110px' }}
+            >
+              <div className='row'>
+                <div className='col-md-4'>
+                  <div className='musicBar__info'>
+                    <div className='musicBar__infoImage'>
+                      <img src={logo} alt='logo' />
                     </div>
-                    <div className='infoDesc__person'>حاج مهدی رسولی</div>
+                    <div className='musicBar__infoDesc'>
+                      <div className='infoDesc__title'>
+                        دودمه شب دهم محرم الحرام
+                      </div>
+                      <div className='infoDesc__person'>حاج مهدی رسولی</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className='player col-md-6 mt-3'>
-                <audio
-                  ref={audioRef}
-                  className='player'
-                  autoPlay={state.playing}
-                >
-                  <source src={state.currentUrl} type='audio/mpeg' />
-                </audio>
-                <div className='player__actions d-flex justify-content-center '>
-                  <div
-                    onClick={() => changeShuffle(!shuffle)}
-                    className={`icon mr-4 ${
-                      shuffle ? 'icon-press' : ''
-                    } align-self-center`}
+                <div className='player col-md-6 mt-3'>
+                  <audio
+                    ref={audioRef}
+                    className='player'
+                    autoPlay={state.playing}
                   >
-                    <ShuffleRounded style={{ fontSize: 25 }} />
-                  </div>
-                  <div className='icon mr-4 ' onClick={handlePrevious}>
-                    <SkipPreviousRounded style={{ fontSize: 35 }} />
-                  </div>
-                  <div
-                    className='icon mr-4  '
-                    onClick={() => playAndPauseMusic(audioRef.current)}
-                  >
-                    {state.playing ? (
-                      <Pause style={{ fontSize: 35 }} />
-                    ) : (
-                      <PlayArrowRounded style={{ fontSize: 35 }} />
-                    )}
-                  </div>
-                  <div className='icon mr-4  ' onClick={handleNext}>
-                    <SkipNextRounded style={{ fontSize: 35 }} />
-                  </div>
-                  <div
-                    onClick={changeLoop}
-                    className={`icon mr-4  ${
-                      loop ? 'icon-press' : ''
-                    } align-self-center `}
-                  >
-                    <RepeatRounded style={{ fontSize: 25 }} />
-                  </div>
-                </div>
-                <div className='player__zone d-flex mt-2'>
-                  <div className='current-time align-self-center '>
-                    {Math.floor(audioRef.current?.currentTime / 60) +
-                      ':' +
-                      zeroPad(
-                        Math.floor(audioRef.current?.currentTime % 60),
-                        2
+                    <source src={state.currentUrl} type='audio/mpeg' />
+                  </audio>
+                  <div className='player__actions d-flex justify-content-center '>
+                    <div
+                      onClick={() => changeShuffle(!shuffle)}
+                      className={`icon mr-4 ${
+                        shuffle ? 'icon-press' : ''
+                      } align-self-center`}
+                    >
+                      <ShuffleRounded style={{ fontSize: 25 }} />
+                    </div>
+                    <div className='icon mr-4 ' onClick={handlePrevious}>
+                      <SkipPreviousRounded style={{ fontSize: 35 }} />
+                    </div>
+                    <div
+                      className='icon mr-4  '
+                      onClick={() => playAndPauseMusic(audioRef.current)}
+                    >
+                      {state.playing ? (
+                        <Pause style={{ fontSize: 35 }} />
+                      ) : (
+                        <PlayArrowRounded style={{ fontSize: 35 }} />
                       )}
+                    </div>
+                    <div className='icon mr-4  ' onClick={handleNext}>
+                      <SkipNextRounded style={{ fontSize: 35 }} />
+                    </div>
+                    <div
+                      onClick={changeLoop}
+                      className={`icon mr-4  ${
+                        loop ? 'icon-press' : ''
+                      } align-self-center `}
+                    >
+                      <RepeatRounded style={{ fontSize: 25 }} />
+                    </div>
                   </div>
-                  <div className='player mt-1 align-self-center mx-3 '>
-                    <Slider
-                      variant='determinate'
-                      value={progress}
-                      onChange={(e, newDuration) => handleChange(newDuration)}
-                    />
-                  </div>
-                  <div className='last-time align-self-center '>
-                    {Time == null
-                      ? Math.floor(audioRef.current?.duration / 60) +
+                  <div className='player__zone d-flex mt-2'>
+                    <div className='current-time align-self-center '>
+                      {Math.floor(audioRef.current?.currentTime / 60) +
                         ':' +
-                        zeroPad(Math.floor(audioRef.current?.duration % 60), 2)
-                      : Time}
+                        zeroPad(
+                          Math.floor(audioRef.current?.currentTime % 60),
+                          2
+                        )}
+                    </div>
+                    <div className='player mt-1 align-self-center mx-3 '>
+                      <Slider
+                        variant='determinate'
+                        value={progress}
+                        onChange={(e, newDuration) => handleChange(newDuration)}
+                      />
+                    </div>
+                    <div className='last-time align-self-center '>
+                      {Time == null
+                        ? Math.floor(audioRef.current?.duration / 60) +
+                          ':' +
+                          zeroPad(
+                            Math.floor(audioRef.current?.duration % 60),
+                            2
+                          )
+                        : Time}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className='playlist_sound  col-sm-3 col-md-2 mt-3'>
-                <div
-                  className='icon playlist_sound_playlist d-flex justify-content-end align-self-end mb-2 '
-                  onClick={showPlaylist}
-                >
-                  <QueueMusic fontSize='large' />
-                </div>
-
-                <div className='sound  d-flex '>
-                  <div className='progressBar p-0  w-100 mt-1 '>
-                    <Slider
-                      value={state.volume * 100}
-                      onChange={(e, newVolume) =>
-                        changeVolume(audioRef.current, newVolume)
-                      }
-                      aria-labelledby='continuous-slider'
-                    />
-                  </div>
+                <div className='playlist_sound  col-sm-3 col-md-2 mt-3 mb-2'>
                   <div
-                    className='icon col-2 p-0 d-flex align-self-center mr-2'
-                    onClick={() => muteAndUnmuteMusic(audioRef.current)}
+                    className='icon playlist_sound_playlist d-flex justify-content-end align-self-end mb-2 '
+                    onClick={showPlaylist}
                   >
-                    {state.mute ? <VolumeOff /> : <VolumeUp />}
+                    <QueueMusic fontSize='large' />
                   </div>
+
+                  <div className='sound  d-flex '>
+                    <div className='progressBar p-0  w-100 mt-1 '>
+                      <Slider
+                        value={state.volume * 100}
+                        onChange={(e, newVolume) =>
+                          changeVolume(audioRef.current, newVolume)
+                        }
+                        aria-labelledby='continuous-slider'
+                      />
+                    </div>
+                    <div
+                      className='icon col-2 p-0 d-flex align-self-center mr-2'
+                      onClick={() => muteAndUnmuteMusic(audioRef.current)}
+                    >
+                      {state.mute ? <VolumeOff /> : <VolumeUp />}
+                    </div>
+                  </div>
+                </div>
+                <div className='  hidePlayer' onClick={ChangeShowMusic}>
+                  {showMusic ? (
+                    <ExpandLess fontSize='large' />
+                  ) : (
+                    <ExpandMore fontSize='large' />
+                  )}
                 </div>
               </div>
             </div>
-          </div>
-        </Slide>
+          </Slide>
+          {show && (
+            <div className='  hidePlayer' onClick={ChangeShowMusic}>
+              <ExpandMore fontSize='large' />
+            </div>
+          )}
+        </Fragment>
       ) : (
         <></>
       )}

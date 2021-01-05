@@ -9,6 +9,7 @@ body {
 }
 .rowList {
   margin-top: 20px;
+  background-color: rgb(18, 18, 18);
 }
 
 .rowList__title {
@@ -18,10 +19,19 @@ body {
   background: rgb(18, 18, 18);
   direction: rtl;
 }
-.rowList__title h3 {
+.rowList__title .title {
   padding-top: 10px;
   padding-right: 5px;
+  font-size: 30px;
+  font-weight: 700;
   padding-bottom: 10px;
+}
+
+.rowList__title .moreSong {
+  font-size: 18px;
+  text-decoration: none;
+  cursor: pointer;
+  color: rgb(103, 94, 165) !important;
 }
 .rowList .carousel {
   outline-width: 0px;
@@ -42,24 +52,6 @@ body {
 .rowList .flickity-slider {
   /* transform: translateX(0%) !important ; */
   /* background-color: red; */
-}
-@media (max-width: 768px) {
-  .rowList__title {
-    padding-top: 10px;
-  }
-  .rowList__title h3 {
-    padding-top: 5px;
-    padding-right: 5px;
-    padding-bottom: 5px;
-    font-size: 15px;
-  }
-  .rowList .carousel {
-    height: 180px;
-  }
-
-  .rowList .flickity-viewport {
-    height: 190.8px;
-  }
 }
 
 /* cell number */
@@ -236,3 +228,37 @@ https://flickity.metafizzy.co
 .rowList__row::-webkit-scrollbar {
   display: none;
 } */
+@media (max-width: 768px) {
+  .rowList {
+    border-top-left-radius: 40px !important;
+    border-top-right-radius: 40px !important;
+    margin-top: 0 !important  ;
+    margin-bottom: 10 !important  ;
+  }
+  .rowList__title {
+    justify-content: space-between;
+    border-top-left-radius: 25px !important;
+    border-top-right-radius: 25px !important;
+  }
+  .rowList__title .title {
+    font-size: 19px;
+    /* padding-top: 10px; */
+  }
+  .rowList__title h3 {
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    font-size: 15px;
+  }
+  .rowList .carousel {
+    height: 180px;
+  }
+
+  .rowList .flickity-viewport {
+    height: 190.8px;
+  }
+
+  .rowList__title .moreSong {
+    font-size: 13px;
+  }
+}

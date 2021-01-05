@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AppContext from './contexts/appContext';
 import logo from './assets/0.jpg';
-import './MusicBar.css';
+// import './MusicBar.css';
 import {
   Pause,
   PlayArrowRounded,
@@ -217,7 +217,6 @@ const MusicBar = ({ playList = urls, url, q }) => {
               {/* </div> */}
             </div>
           </div>
-          {/* <div className='col-3 bg-danger'>dsds</div> */}
         </div>
       </Slide>
     ) : (

@@ -45,9 +45,10 @@
   color: rgb(233, 47, 47);
 } */
 @media (max-width: 776px) {
-  /* .header {
-    margin-top: 280px;
-  } */
+  .header {
+    display: none !important;
+    /* margin-top: 280px; */
+  }
   .navbar-expand-sm .navbar-nav {
     flex-direction: column;
     float: right;

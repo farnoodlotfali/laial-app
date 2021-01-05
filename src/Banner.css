@@ -31,6 +31,25 @@
   justify-content: center;
 }
 
+/* .banner .flickity-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 5px #19f;
+} */
+.banner .flickity-prev-next-button {
+  display: flex !important;
+  justify-content: space-between !important;
+}
+.banner .flickity-prev-next-button.next {
+  margin-top: 10%;
+  right: 10px;
+  margin-right: 87%;
+}
+
+.banner .flickity-prev-next-button.previous {
+  margin-top: 10%;
+  left: 10px;
+  margin-left: 5%;
+}
 .banner .carousel-cell-image {
   height: 399px;
   width: 99%;
@@ -38,10 +57,19 @@
   max-height: 100%;
 }
 @media (max-width: 768px) {
+  .banner .flickity-prev-next-button {
+    display: none !important  ;
+  }
+  .banner {
+    margin-top: 0;
+  }
   .banner .carousel-cell {
     height: 300px;
   }
   .banner .carousel-cell-image {
     height: 299px;
+  }
+  .banner .carousel {
+    padding-top: 0 !important;
   }
 }

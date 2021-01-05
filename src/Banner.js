@@ -8,17 +8,18 @@ import './Banner.css';
 
 import 'flickity-fade';
 // autoPlay={false}
-const Banner = () => {
+const Banner = ({ img, id, src, url, text }) => {
   const flickityOptions = {
     contain: true,
-    prevNextButtons: false,
+    prevNextButtons: true,
     pageDots: false,
     // rightToLeft: true,
-    autoPlay: true,
+    autoPlay: 3000,
     pauseAutoPlayOnHover: false,
     fade: true,
     wrapAround: true,
   };
+  // console.log(img);
   return (
     <div className='banner'>
       <Flickity className='carousel ' options={flickityOptions}>

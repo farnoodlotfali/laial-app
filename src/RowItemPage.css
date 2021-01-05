@@ -32,3 +32,14 @@
 .musicInfo__left .Favorite:hover {
   color: rgb(165, 49, 49);
 }
+
+@media (max-width: 768px) {
+  .musicInfo {
+    display: grid !important;
+  }
+
+  .musicInfo__image {
+    width: 286px;
+    height: 286px;
+  }
+}

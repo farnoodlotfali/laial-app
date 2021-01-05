@@ -1,0 +1,39 @@
+.phoneMenu {
+  direction: rtl;
+  position: fixed;
+  background-color: rgb(34, 35, 39) !important;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+  z-index: 1000;
+  display: none !important  ;
+}
+
+.phoneMenu .active a {
+  color: rgb(80, 89, 139);
+}
+
+.phoneMenu__item a {
+  color: white;
+  text-decoration: none !important;
+  display: grid;
+}
+
+.phoneMenu__item {
+  display: grid;
+}
+/* .phoneMenu .phoneMenu__items {
+  background-color: rgb(34, 35, 39) !important;
+} */
+/* .phoneMenu__items .MuiSvgIcon-root,
+.phoneMenu__items span,
+.phoneMenu__items .phoneMenu__item {
+  background-color: rgb(34, 35, 39) !important;
+} */
+@media (max-width: 768px) {
+  .phoneMenu {
+    display: block !important;
+  }
+}

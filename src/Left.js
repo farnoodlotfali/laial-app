@@ -1,7 +1,6 @@
-import { IconButton, Slide, Slider, Tooltip } from '@material-ui/core';
+import { Slide, Slider } from '@material-ui/core';
 import {
   Close,
-  Delete,
   Pause,
   PlayArrowRounded,
   Repeat,
@@ -9,7 +8,7 @@ import {
   SkipNextRounded,
   SkipPreviousRounded,
 } from '@material-ui/icons';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import AppContext from './contexts/appContext';
 import logo from './assets/0.jpg';
 import './Left.css';

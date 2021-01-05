@@ -99,6 +99,32 @@
   flex: 0.1;
 }
 
+.musicBar .hidePlayer {
+  width: 48px;
+  height: 44px;
+  color: rgb(34, 35, 39);
+  background-color: rgb(151, 151, 151);
+  position: absolute;
+  bottom: -8%;
+  z-index: 1005;
+  border-radius: 10px;
+  left: 5%;
+  display: none;
+}
+.hidePlayer {
+  border-radius: 10px;
+  width: 48px;
+  height: 44px;
+  color: rgb(34, 35, 39);
+  z-index: 100;
+
+  position: fixed;
+  background-color: rgb(138, 138, 138);
+  left: 5%;
+
+  display: none;
+}
+
 @media (max-width: 768px) {
   .musicBar {
     position: sticky;
@@ -110,7 +136,7 @@
     z-index: 999;
     box-shadow: 5px 18px 18px 0 rgba(168, 179, 211, 0.38);
     background-color: rgb(18, 18, 18);
-    margin-top: -284px !important;
+    margin-top: -305px !important;
   }
   .player__zone {
     font-size: 10px;
@@ -124,5 +150,9 @@
   }
   .playlist_sound .sound {
     flex: 0.4;
+  }
+  .musicBar .hidePlayer,
+  .hidePlayer {
+    display: block;
   }
 }

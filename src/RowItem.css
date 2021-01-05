@@ -133,8 +133,11 @@
 }
 
 @media (max-width: 768px) {
+  .rowItem__onHover {
+    display: none !important;
+  }
   .carousel-cellRowItem {
-    height: 190px;
+    height: 180px;
     width: 31.5%;
     min-width: 106px;
   }
@@ -170,5 +173,10 @@
   }
   .rowItem__person {
     margin: 0;
+  }
+
+  .visit_text,
+  .visit_text .MuiSvgIcon-root {
+    font-size: 13px;
   }
 }

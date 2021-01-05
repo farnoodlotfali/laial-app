@@ -155,4 +155,11 @@
   .info__title {
     font-size: 17px;
   }
+  .song__title {
+    font-size: 13px;
+  }
+  .song__image img {
+    height: 70px;
+    width: 70px;
+  }
 }
