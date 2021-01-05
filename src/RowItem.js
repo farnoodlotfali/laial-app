@@ -74,11 +74,11 @@ const RowItem = ({
       </div>
       <div className='rowItem__onHover'>
         {' '}
-        {/* <Link to={`/rowitempage/${'ali'}`} className='visit '>
+        <Link to={`/rowitempage/${'ali'}`} className='visit '>
           <div className='visit_text p-2 '>
             توضیحات بیشتر <Info />
           </div>
-        </Link> */}
+        </Link>
         <div className='rowItem__icons'>
           <div className='rowItem__icon' onClick={playMusicAndShowMusicBar}>
             <PlayCircleFilled fontSize='large' />
