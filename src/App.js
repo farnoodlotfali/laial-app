@@ -14,27 +14,12 @@ import Search from './search/Search';
 import AboutUs from './AboutUs';
 import SearchState from './search/SearchState';
 import Playerstate from './player/PlayerState';
+// eslint-disable-next-line
 import axios from './axios/axios';
 import RowItemPage from './RowItemPage';
-import Slug from './Slug';
 import PhoneMenu from './PhoneMenu';
 import MoreSong from './MoreSong';
-
-// function Carousel() {
-//   return (
-//     <div className='app'>
-//       <Flickity>
-//         <img src='https://placeimg.com/640/480/animals' />
-//         <img src='https://placeimg.com/640/480/nature' />
-//         <img src='https://placeimg.com/640/480/architecture' />
-//         <img src='https://placeimg.com/640/480/architecture' />
-//         <img src='https://placeimg.com/640/480/architecture' />
-//         <img src='https://placeimg.com/640/480/architecture' />
-//         <img src='https://placeimg.com/640/480/architecture' />
-//       </Flickity>
-//     </div>
-//   );
-// }
+import RowItemPageState from './rowItemPageState/RowItemPageState';
 
 const App = () => {
   // console.log(slug);
@@ -57,24 +42,27 @@ const App = () => {
       <AppState>
         <Playerstate>
           <SearchState>
-            <Router>
-              <Center />
-              <Left />
-              <Header />
-              <Switch>
-                <Route exact path='/' component={Home} />
-                <Route
-                  exact
-                  path={`/rowitempage/:slug`}
-                  component={RowItemPage}
-                />
-                <Route exact path='/search' component={Search} />
-                <Route exact path='/list/:slug' component={MoreSong} />
-                <Route exact path='/aboutus' component={AboutUs} />
-              </Switch>
-              <PhoneMenu />
-              <Footer />
-            </Router>
+            <RowItemPageState>
+              <Router>
+                <Center />
+                <Left />
+                <Header />
+                <Switch>
+                  <Route exact path='/' component={Home} />
+                  <Route
+                    exact
+                    path={`/rowitempage/:slug`}
+                    component={RowItemPage}
+                  />
+                  <Route exact path='/search' component={Search} />
+                  <Route exact path='/list/:slug' component={MoreSong} />
+                  <Route exact path='/aboutus' component={AboutUs} />
+                </Switch>
+
+                <Footer />
+                <PhoneMenu />
+              </Router>
+            </RowItemPageState>
           </SearchState>
         </Playerstate>
       </AppState>

@@ -1,15 +1,14 @@
-import { Divider, IconButton, Tooltip } from '@material-ui/core';
+import { IconButton, Tooltip } from '@material-ui/core';
 import {
   Favorite,
   GetAppRounded,
   PlayArrow,
   PlaylistAdd,
 } from '@material-ui/icons';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import AppContext from './contexts/appContext';
 import playerContext from './player/playerContext';
 import './RowItemPage.css';
-import y from './y';
 const urls = [
   {
     url:
@@ -46,9 +45,7 @@ const RowItemPage = ({
   playlist = urls,
 }) => {
   const { ChangeShowMusic, showMusic } = useContext(AppContext);
-  const { playAndPauseMusic, playing, setUrl, playMusic } = useContext(
-    playerContext
-  );
+  const { setUrl, playMusic } = useContext(playerContext);
   useEffect(() => {}, []);
   // نشان دادن موزیک و پخش موزیک
   const playMusicAndShowMusicBar = () => {
@@ -100,7 +97,7 @@ const RowItemPage = ({
 
             <div>
               <a href='https://dl.ganja2music.com/Ganja2Music/128/Archive/B/Behnam%20Bani/Single/Behnam%20Bani%20-%20Khoshhalam%20(128).mp3'>
-                <Tooltip placement='left' title='Download'>
+                <Tooltip placement='right' title='Download'>
                   <IconButton aria-label='download'>
                     <GetAppRounded fontSize='large' />
                   </IconButton>
@@ -109,7 +106,7 @@ const RowItemPage = ({
             </div>
 
             <div>
-              <Tooltip placement='left' title='Add'>
+              <Tooltip placement='right' title='Add'>
                 <IconButton aria-label='Add'>
                   <PlaylistAdd className='Add' fontSize='large' />
                 </IconButton>

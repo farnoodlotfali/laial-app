@@ -1,12 +1,12 @@
 import { Info, PlayCircleFilled, PlaylistAdd } from '@material-ui/icons';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Badge } from 'react-bootstrap';
 import AppContext from './contexts/appContext';
 import logo1 from './assets/0.jpg';
 import './RowItem.css';
-import { Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import playerContext from './player/playerContext';
-import slug from './Slug';
+import axios from 'axios';
 const urls = [
   {
     url:
@@ -32,24 +32,40 @@ const urls = [
     id: 901,
   },
 ];
+
 const RowItem = ({
-  // logo  ,
-  categories = 'شب سوم محرم',
-  languages = 'فارسی',
-  persons = 'محمد',
-  modes = 'دودمه',
-  years = '2001',
+  logo,
+  media,
+  person,
+  slug,
   url = 'http://dl.musicdam.net/Downloads/mp3/Hayedeh%20-%20Bordi%20Az%20Yadam%20128.mp3',
   playlist = urls,
 }) => {
   const { ChangeShowMusic, ChangeshowCenter, showMusic } = useContext(
     AppContext
   );
-  const [state, setstate] = useState(false);
+  // console.log(media.duration);
+  useEffect(() => {
+    let isMounted = true;
+    const getUrl = async () => {
+      try {
+        const res = await axios.get`http://downloader.7negare.ir/download/${media?.telegram_id}`;
+        const view = await axios.get(
+          `http://laial.7negare.ir/api/post/${slug}/?state=views`
+        );
+        console.log(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  const { playAndPauseMusic, playing, setUrl, playMusic } = useContext(
-    playerContext
-  );
+    // getUrl();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const { setUrl, playMusic } = useContext(playerContext);
   const playMusicAndShowMusicBar = () => {
     // نشان دادن موزیک و پخش موزیک
     setUrl(url);
@@ -61,20 +77,22 @@ const RowItem = ({
       playMusic();
     }, 1000);
   };
+
   return (
     <div className='carousel-cellRowItem rowItem '>
       <div className='rowItem__image'>
-        <Link to={`/rowitempage/${'ali'}`} className='visit '>
+        <Link to={`/rowitempage/${slug}`} className='visit '>
           <img src={logo1} alt='logo' />
           <Badge className='badge bg-light'>
-            شور
-            {/* {modes} */}
+            {/* شور */}
+            {/* {media?.name?.includes('|')
+              ? media?.name?.split('|')[0]
+              : media?.name?.split('-')[0]} */}
           </Badge>
         </Link>
       </div>
       <div className='rowItem__onHover'>
-        {' '}
-        <Link to={`/rowitempage/${'ali'}`} className='visit '>
+        <Link to={`/rowitempage/${slug}`} className='visit '>
           <div className='visit_text p-2 '>
             توضیحات بیشتر <Info />
           </div>
@@ -89,10 +107,15 @@ const RowItem = ({
         </div>
       </div>{' '}
       <div className='rowItem__info'>
-        <h4 className='rowItem__title text-center'>اهل کاشان هستم</h4>
+        <h4 className='rowItem__title text-center'>
+          {/* {media?.name?.includes('|')
+            ? media?.name?.split('|')[1]
+            : media?.name?.split('-')[1]} */}
+          {media?.name}
+        </h4>
         <h4 className='rowItem__person text-center'>
           {/* حاج محمد شریفی */}
-          {persons}
+          {person?.[0]?.name}
         </h4>
       </div>
     </div>

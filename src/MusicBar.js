@@ -14,7 +14,7 @@ import {
   VolumeOff,
   VolumeUp,
 } from '@material-ui/icons';
-import { LinearProgress, Slide, Slider } from '@material-ui/core';
+import { Slide, Slider } from '@material-ui/core';
 import PlayerContext from './player/playerContext';
 const urls = [
   {
@@ -46,14 +46,13 @@ const MusicBar = ({ playList = urls, url, q }) => {
   const audioRef = useRef();
   const { showMusic, ChangeShowLeft } = useContext(AppContext);
   const {
-    setPlayList,
     playAndPauseMusic,
     playing,
     mute,
     muteAndUnmuteMusic,
     changeVolume,
     volume,
-    duration,
+
     changeDuration,
     nextMusic,
     previousMusic,

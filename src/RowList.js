@@ -16,7 +16,7 @@ import logo10 from './assets/b.jpg';
 import { Link } from 'react-router-dom';
 import appContext from './contexts/appContext';
 
-const RowList = ({ title, slug = '1' }) => {
+const RowList = ({ id, title, slug = '1', data }) => {
   const flickityOptions = {
     // initialIndex: 2,
     contain: true,
@@ -24,38 +24,40 @@ const RowList = ({ title, slug = '1' }) => {
     pageDots: false,
     rightToLeft: true,
   };
-  const { ChangeListName } = useContext(appContext);
+  const { ChangeListNameAndPlayListOnMoreSong } = useContext(appContext);
+  const { context, count, pageinate } = data;
+  // console.log(context);
   return (
-    <div className='rowList mb-3 mt-5'>
-      <div className='rowList__title d-flex '>
+    <div className={`rowList mb-3 mt-5 `}>
+      <div className={`rowList__title d-flex ${id === 1 ? 'top__radius' : ''}`}>
         <div className=' text-light title mr-3'>{title}</div>
         <div
           className='d-flex  align-items-center '
-          onClick={() => ChangeListName(title)}
+          onClick={() => ChangeListNameAndPlayListOnMoreSong(title, context)}
         >
-          <Link
-            to={`/list/${title}`}
-            className=' text-light moreSong mr-5   ml-3'
-          >
-            نمایش بیشتر
-          </Link>
+          {pageinate === true ? (
+            <Link
+              to={`/list/${slug}`}
+              className=' text-light moreSong mr-5   ml-3'
+            >
+              نمایش بیشتر
+            </Link>
+          ) : (
+            ''
+          )}
         </div>
       </div>
 
       <Flickity className='carousel col px-2 py-0' options={flickityOptions}>
-        <RowItem logo={logo9} />
-        <RowItem logo={logo10} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
+        {context.map((item) => (
+          <RowItem
+            key={item.id}
+            logo={item.image}
+            media={item.media[0]}
+            person={item.person}
+            slug={item.slug}
+          />
+        ))}
       </Flickity>
     </div>
   );

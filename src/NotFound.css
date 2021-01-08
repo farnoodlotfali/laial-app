@@ -1,6 +1,7 @@
 .notFound {
+  position: relative;
   width: 100%;
-  height: 75vh;
+  height: 546px;
   display: block;
   justify-content: center;
   align-items: center;
@@ -31,6 +32,6 @@
 
 @media (max-width: 768px) {
   .notFound {
-    height: 65vh;
+    height: 460px;
   }
 }

@@ -6,7 +6,7 @@ import appContext from './contexts/appContext';
 import { useContext } from 'react';
 
 const MoreSong = () => {
-  const { listName } = useContext(appContext);
+  const { listName, playlistOnMoreSong } = useContext(appContext);
 
   return (
     <div className='moreSong pb-3 pt-5'>
@@ -14,21 +14,16 @@ const MoreSong = () => {
         <h3> {listName}</h3>
       </div>
       <div className='moreSong__items mt-5'>
-        {' '}
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-        <RowItem logo={logo1} />
-      </div>{' '}
+        {playlistOnMoreSong.map((item) => (
+          <RowItem
+            key={item.id}
+            logo={item.image}
+            media={item.media}
+            person={item.person}
+            slug={item.slug}
+          />
+        ))}
+      </div>
     </div>
   );
 };

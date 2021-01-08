@@ -261,4 +261,15 @@ https://flickity.metafizzy.co
   .rowList__title .moreSong {
     font-size: 13px;
   }
+
+  .top__radius {
+    position: absolute;
+    justify-content: space-between;
+    border-top-left-radius: 25px !important;
+    border-top-right-radius: 25px !important;
+    z-index: 1000;
+    left: 0;
+    right: 0;
+    top: 40%;
+  }
 }

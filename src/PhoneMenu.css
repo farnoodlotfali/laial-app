@@ -1,6 +1,6 @@
 .phoneMenu {
   direction: rtl;
-  position: fixed;
+  position: sticky;
   background-color: rgb(34, 35, 39) !important;
   left: 0;
   bottom: 0;

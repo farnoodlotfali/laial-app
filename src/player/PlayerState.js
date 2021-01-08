@@ -8,10 +8,8 @@ import React, {
 } from 'react';
 
 import '../MusicBar.css';
-import MusicBar from '../MusicBar';
 import PlayerContext from './playerContext';
 import playerReducer from './playerReducer';
-import Parser from 'html-react-parser';
 import { Slide, Slider } from '@material-ui/core';
 import AppContext from '../contexts/appContext';
 import logo from '../assets/0.jpg';
@@ -40,7 +38,7 @@ import {
   PREVIOUS_MUSIC,
   SET_CURRENT_URL,
 } from './types';
-import NotFound from '../NotFound';
+// eslint-disable-next-line
 const urls = [
   {
     url:
@@ -94,7 +92,7 @@ const Playerstate = (props) => {
       //progress سرعت جلو رفتن
 
       const timer = setInterval(() => {
-        if (audioRef.current.currentTime == audioRef.current.duration) {
+        if (audioRef.current.currentTime === audioRef.current.duration) {
           nextMusic();
         }
         setProgress((prevProgress) =>
@@ -222,10 +220,11 @@ const Playerstate = (props) => {
     setTime('0:00');
     let last = null;
     let oldSrc = audioElement.childNodes[0].attributes.src.value;
-    if (state.playList != undefined) {
+    if (state.playList !== undefined) {
       for (let i = 0; i < state.playList.length; i++) {
-        if (oldSrc == state.playList[i].url) {
-          if (i == state.playList.length - 1) {
+        if (oldSrc === state.playList[i].url) {
+          if (i === state.playList.length - 1) {
+            // eslint-disable-next-line
             last = true;
           }
           // if (shuffle) {
@@ -265,9 +264,9 @@ const Playerstate = (props) => {
   const previousMusic = (audioElement = audioRef.current) => {
     setTime('0:00');
     let oldSrc = audioElement.childNodes[0].attributes.src.value;
-    if (state.playList != undefined) {
+    if (state.playList !== undefined) {
       for (let i = 0; i < state.playList.length; i++) {
-        if (oldSrc == state.playList[i].url) {
+        if (oldSrc === state.playList[i].url) {
           if (state.playList[i - 1] !== undefined) {
             dispatch({
               type: PREVIOUS_MUSIC,

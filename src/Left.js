@@ -16,7 +16,7 @@ import playerContext from './player/playerContext';
 import SongOnLeft from './SongOnLeft';
 
 const Left = () => {
-  const { showLeft, ChangeShowLeft, showCenter } = useContext(AppContext);
+  const { showLeft, ChangeShowLeft } = useContext(AppContext);
   const {
     playList,
     progress,
