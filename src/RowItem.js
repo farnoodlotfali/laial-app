@@ -1,5 +1,5 @@
 import { Info, PlayCircleFilled, PlaylistAdd } from '@material-ui/icons';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Badge } from 'react-bootstrap';
 import AppContext from './contexts/appContext';
 import logo1 from './assets/0.jpg';
@@ -44,15 +44,23 @@ const RowItem = ({
   const { ChangeShowMusic, ChangeshowCenter, showMusic } = useContext(
     AppContext
   );
+  const { setUrl, playMusic } = useContext(playerContext);
+
+  const [didMount, setDidMount] = useState(false);
+
   // console.log(media.duration);
   useEffect(() => {
-    let isMounted = true;
+    setDidMount(true);
+    const view = async () => {
+      const view = await axios.get(
+        `http://laial.7negare.ir/api/post/${slug}/?state=views`
+      );
+    };
+
     const getUrl = async () => {
       try {
         const res = await axios.get`http://downloader.7negare.ir/download/${media?.telegram_id}`;
-        const view = await axios.get(
-          `http://laial.7negare.ir/api/post/${slug}/?state=views`
-        );
+
         console.log(res.data);
       } catch (error) {
         console.log(error);
@@ -60,12 +68,12 @@ const RowItem = ({
     };
 
     // getUrl();
-    return () => {
-      isMounted = false;
-    };
+    // view();
+    return () => setDidMount(false);
   }, []);
-
-  const { setUrl, playMusic } = useContext(playerContext);
+  if (!didMount) {
+    return null;
+  }
   const playMusicAndShowMusicBar = () => {
     // نشان دادن موزیک و پخش موزیک
     setUrl(url);
@@ -81,7 +89,7 @@ const RowItem = ({
   return (
     <div className='carousel-cellRowItem rowItem '>
       <div className='rowItem__image'>
-        <Link to={`/rowitempage/${slug}`} className='visit '>
+        <Link to={`/song/${slug}`} className='visit '>
           <img src={logo1} alt='logo' />
           <Badge className='badge bg-light'>
             {/* شور */}
@@ -92,7 +100,7 @@ const RowItem = ({
         </Link>
       </div>
       <div className='rowItem__onHover'>
-        <Link to={`/rowitempage/${slug}`} className='visit '>
+        <Link to={`/song/${slug}`} className='visit '>
           <div className='visit_text p-2 '>
             توضیحات بیشتر <Info />
           </div>

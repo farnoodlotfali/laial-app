@@ -3,12 +3,14 @@ import React, { useEffect, useState } from 'react';
 import Banner from './Banner';
 import RowList from './RowList';
 import './Home.css';
+import TileBanner from './TileBanner';
 
 const Home = () => {
   // eslint-disable-next-line
   const [state, setstate] = useState(null);
+  const [didMount, setDidMount] = useState(false);
   useEffect(() => {
-    let isMounted = true;
+    setDidMount(true);
     const getHome = async () => {
       try {
         const res = await axios.get('page/home');
@@ -21,21 +23,21 @@ const Home = () => {
     };
 
     getHome();
-    return () => {
-      isMounted = false;
-    };
+    return () => setDidMount(false);
   }, [state]);
-
+  if (!didMount) {
+    return null;
+  }
   return (
     <div className='home'>
-      {state &&
+      {state !== null &&
         state.map((data, i) =>
           data.banner !== null ? (
-            <Banner
-              key={i}
-              imgs={data.banner.images}
-              type={data.banner.banner_type}
-            />
+            data.banner.banner_type === 'big' ? (
+              <Banner key={i} imgs={data.banner.images} />
+            ) : (
+              <TileBanner key={i} imgs={data.banner.images} />
+            )
           ) : (
             <RowList
               key={i}

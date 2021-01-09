@@ -1,5 +1,6 @@
 .footer {
   background-color: rgb(34, 35, 39);
+  bottom: 0 !important;
 }
 
 .footer__images img {
@@ -11,4 +12,15 @@
 }
 .footer__info img {
   width: 35%;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    margin-bottom: 16%;
+  }
+}
+@media (max-width: 465px) {
+  .footer {
+    margin-bottom: 25%;
+  }
 }

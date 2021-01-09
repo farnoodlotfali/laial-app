@@ -7,7 +7,7 @@ import Flickity from 'react-flickity-component';
 import './Banner.css';
 
 import 'flickity-fade';
-const Banner = ({ imgs, type }) => {
+const Banner = ({ imgs }) => {
   const flickityOptions = {
     contain: true,
     prevNextButtons: true,

@@ -1,10 +1,10 @@
-import { Headset, Home, Search } from '@material-ui/icons';
+import { Headset, Home, MusicNote, Search } from '@material-ui/icons';
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import appContext from './contexts/appContext';
 import './PhoneMenu.css';
 const PhoneMenu = () => {
-  const { ChangeshowCenter } = useContext(appContext);
+  const { ChangeshowCenter, ChangeShowMusic } = useContext(appContext);
   const [state, setstate] = useState(1);
 
   return (
@@ -31,6 +31,10 @@ const PhoneMenu = () => {
         <div className='phoneMenu__item' onClick={ChangeshowCenter}>
           <Headset fontSize='large' />
           <span>لیست من</span>
+        </div>{' '}
+        <div className='phoneMenu__item' onClick={ChangeShowMusic}>
+          <MusicNote fontSize='large' />
+          <span>آهنگ</span>
         </div>
       </div>
     </div>

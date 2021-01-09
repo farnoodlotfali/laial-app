@@ -20,6 +20,8 @@ import RowItemPage from './RowItemPage';
 import PhoneMenu from './PhoneMenu';
 import MoreSong from './MoreSong';
 import RowItemPageState from './rowItemPageState/RowItemPageState';
+import MusicBar from './MusicBar';
+import Person from './Person';
 
 const App = () => {
   // console.log(slug);
@@ -49,14 +51,11 @@ const App = () => {
                 <Header />
                 <Switch>
                   <Route exact path='/' component={Home} />
-                  <Route
-                    exact
-                    path={`/rowitempage/:slug`}
-                    component={RowItemPage}
-                  />
+                  <Route exact path={`/song/:slug`} component={RowItemPage} />
                   <Route exact path='/search' component={Search} />
                   <Route exact path='/list/:slug' component={MoreSong} />
                   <Route exact path='/aboutus' component={AboutUs} />
+                  <Route exact path='/person/:slug' component={Person} />
                 </Switch>
 
                 <Footer />

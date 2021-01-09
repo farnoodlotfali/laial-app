@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import logo from './assets/and.jpg';
 import logo1 from './assets/bazar.jpg';
+import appContext from './contexts/appContext';
 import './Footer.css';
 // eslint-disable-next-line
-import PhoneMenu from './PhoneMenu';
+import playerContext from './player/playerContext';
 
 const Footer = () => {
+  const { currentUrl } = useContext(playerContext);
+
   return (
-    <div className='footer py-3 px-3 d-flex text-light '>
+    <div
+      className='footer py-3 px-3 d-flex text-light '
+      style={{ marginBottom: currentUrl !== null ? '25%' : '0%' }}
+    >
       <div className='footer__images'>
         <img className='ml-2' src={logo1} alt='' />
         <img className='ml-2' src={logo} alt='' />

@@ -1,40 +1,22 @@
-/* .item img {
-  width: 1229px;
-  height: 300px;
-} */
-
 .banner {
   margin-top: 56px;
 }
-/* .flickity-slider {
-  overflow: hidden;
-  position: relative !important;
-} */
+
 .banner .carousel {
   background-color: rgb(18, 18, 18);
   padding-bottom: 10px;
   padding-top: 10px;
 }
-/* .banner .carousel-cell {
-  left: 0 !important;
-}
-.banner .flickity-slider {  
-  transform: translateX(0%) !important ;
-} */
+
 .banner .carousel-cell {
   width: 100%;
   height: 400px;
   margin-right: 10px;
-  /* center images in cells with flexbox */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* .banner .flickity-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 5px #19f;
-} */
 .banner .flickity-prev-next-button {
   display: flex !important;
   justify-content: space-between !important;

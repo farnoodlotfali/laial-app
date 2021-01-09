@@ -49,15 +49,19 @@ const RowList = ({ id, title, slug = '1', data }) => {
       </div>
 
       <Flickity className='carousel col px-2 py-0' options={flickityOptions}>
-        {context.map((item) => (
-          <RowItem
-            key={item.id}
-            logo={item.image}
-            media={item.media[0]}
-            person={item.person}
-            slug={item.slug}
-          />
-        ))}
+        {context.map((item, i) => {
+          if (i <= 12) {
+            return (
+              <RowItem
+                key={item.id}
+                logo={item.image}
+                media={item.media[0]}
+                person={item.person}
+                slug={item.slug}
+              />
+            );
+          }
+        })}
       </Flickity>
     </div>
   );

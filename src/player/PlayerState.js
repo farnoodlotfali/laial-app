@@ -38,6 +38,7 @@ import {
   PREVIOUS_MUSIC,
   SET_CURRENT_URL,
 } from './types';
+import PhoneMusicBar from '../PhoneMusicBar';
 // eslint-disable-next-line
 const urls = [
   {
@@ -343,16 +344,19 @@ const Playerstate = (props) => {
         changeLoop,
       }}
     >
+      {props.children}
+
       {/* <MusicBar url={state.currentUrl} /> */}
       {state.currentUrl !== null ? (
         <Fragment>
+          {/* <PhoneMusicBar /> */}
           <Slide direction='down' timeout={500} in={showMusic}>
             <div
-              className='container musicBar text-light'
-              style={{ marginTop: showMusic ? '0px' : '-110px' }}
+              className=' musicBar text-light'
+              // style={{ display: showMusic ? 'block' : 'none' }}
             >
-              <div className='row'>
-                <div className='col-md-4'>
+              <div className='position d-flex justify-content-around'>
+                <div className='musicBar__right'>
                   <div className='musicBar__info'>
                     <div className='musicBar__infoImage'>
                       <img src={logo} alt='logo' />
@@ -365,7 +369,7 @@ const Playerstate = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className='player col-md-6 mt-3'>
+                <div className='player musicBar__center mt-3'>
                   <audio
                     ref={audioRef}
                     className='player'
@@ -435,7 +439,7 @@ const Playerstate = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className='playlist_sound  col-sm-3 col-md-2 mt-3 mb-2'>
+                <div className='playlist_sound  musicBar__left mt-3 mb-2'>
                   <div
                     className='icon playlist_sound_playlist d-flex justify-content-end align-self-end mb-2 '
                     onClick={showPlaylist}
@@ -461,26 +465,13 @@ const Playerstate = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className='  hidePlayer' onClick={ChangeShowMusic}>
-                  {showMusic ? (
-                    <ExpandLess fontSize='large' />
-                  ) : (
-                    <ExpandMore fontSize='large' />
-                  )}
-                </div>
               </div>
             </div>
           </Slide>
-          {show && (
-            <div className='  hidePlayer' onClick={ChangeShowMusic}>
-              <ExpandMore fontSize='large' />
-            </div>
-          )}
         </Fragment>
       ) : (
         <></>
       )}
-      {props.children}
     </PlayerContext.Provider>
   );
 };
