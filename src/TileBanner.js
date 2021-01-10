@@ -1,6 +1,7 @@
 import React from 'react';
 import Flickity from 'react-flickity-component';
 import './TileBanner.css';
+import logo from './assets/0.jpg';
 const TileBanner = ({ imgs }) => {
   const flickityOptions = {
     // initialIndex: 2,
@@ -16,11 +17,7 @@ const TileBanner = ({ imgs }) => {
         {imgs.map((img, i) => (
           // console.log(img.src),
           <div key={i} className='carousel-cell'>
-            <img
-              className='carousel-cell-image'
-              src={img.full_image_url}
-              alt='image'
-            />
+            <img className='carousel-cell-image' src={logo} alt='image' />
           </div>
         ))}
       </Flickity>

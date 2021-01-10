@@ -230,9 +230,13 @@ https://flickity.metafizzy.co
 } */
 @media (max-width: 768px) {
   .rowList {
+    position: sticky;
     border-top-left-radius: 40px !important;
     border-top-right-radius: 40px !important;
-    margin-top: 0 !important  ;
+    z-index: 10;
+    right: 0;
+    left: 0;
+    margin-top: -30px !important;
     margin-bottom: 10 !important  ;
   }
   .rowList__title {
@@ -251,7 +255,7 @@ https://flickity.metafizzy.co
     font-size: 15px;
   }
   .rowList .carousel {
-    height: 180px;
+    height: 200px;
   }
 
   .rowList .flickity-viewport {
@@ -262,7 +266,7 @@ https://flickity.metafizzy.co
     font-size: 13px;
   }
 
-  .top__radius {
+  /* .top__radius {
     position: absolute;
     justify-content: space-between;
     border-top-left-radius: 25px !important;
@@ -271,5 +275,5 @@ https://flickity.metafizzy.co
     left: 0;
     right: 0;
     top: 40%;
-  }
+  } */
 }

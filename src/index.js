@@ -4,11 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Fragment } from 'react';
-
+import { BrowserRouter as Router } from 'react-router-dom';
 ReactDOM.render(
   // <React.StrictMode><App/></React.StrictMode>
   <Fragment>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </Fragment>,
   document.getElementById('root')
 );

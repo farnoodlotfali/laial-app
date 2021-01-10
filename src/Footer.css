@@ -1,6 +1,8 @@
 .footer {
   background-color: rgb(34, 35, 39);
   bottom: 0 !important;
+  position: relative;
+  /* top: 82px; */
 }
 
 .footer__images img {

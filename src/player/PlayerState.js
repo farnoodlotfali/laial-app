@@ -12,6 +12,7 @@ import PlayerContext from './playerContext';
 import playerReducer from './playerReducer';
 import { Slide, Slider } from '@material-ui/core';
 import AppContext from '../contexts/appContext';
+import { detect } from 'detect-browser';
 import logo from '../assets/0.jpg';
 import {
   ExpandLess,
@@ -39,6 +40,7 @@ import {
   SET_CURRENT_URL,
 } from './types';
 import PhoneMusicBar from '../PhoneMusicBar';
+import { useLocation } from 'react-router';
 // eslint-disable-next-line
 const urls = [
   {
@@ -65,11 +67,58 @@ const urls = [
     id: 901,
   },
 ];
+
+const detectMob = () => {
+  const toMatch = [
+    /Android/i,
+    /webOS/i,
+    /iPhone/i,
+    /iPad/i,
+    /iPod/i,
+    /BlackBerry/i,
+    /Windows Phone/i,
+  ];
+  return toMatch.some((toMatchItem) => {
+    return navigator.userAgent.match(toMatchItem);
+  });
+};
+
+const getTimeToday = () => {
+  var today = new Date();
+  let date =
+    today.getFullYear() +
+    '-' +
+    (today.getMonth() + 1) +
+    '-' +
+    today.getDate() +
+    '/' +
+    today.getHours() +
+    '-' +
+    today.getMinutes() +
+    '-' +
+    today.getSeconds();
+  return date;
+};
+const browser = () => {
+  const browser = detect();
+  // if (browser) {
+  //   console.log(browser.name);
+  //   console.log(browser.version);
+  //   console.log(browser.os);
+  // }
+
+  return browser.name;
+};
+
 const Playerstate = (props) => {
+  const location = useLocation();
+  // console.log(location.pathname);
+
   const audioRef = useRef();
   const { showMusic, ChangeShowLeft, ChangeShowMusic } = useContext(AppContext);
   const initialState = {
     playList: [],
+    musicChangeList: [],
     playing: false,
     load: false,
     mute: false,
@@ -85,6 +134,7 @@ const Playerstate = (props) => {
   const [Time, setTime] = useState('0:00');
   const [shuffle, setShuffle] = useState(false);
   const [loop, setLopp] = useState(false);
+  const [musicChangeList, setMusicChangeList] = useState([]);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -172,10 +222,6 @@ const Playerstate = (props) => {
   };
 
   const playMusic = (audioElement = audioRef.current) => {
-    // console.log(audioRef.current.duration);
-
-    // console.log(state.totalDuration);
-
     dispatch({
       type: PLAY_MUSIC,
     });
@@ -218,6 +264,7 @@ const Playerstate = (props) => {
   };
 
   const nextMusic = (audioElement = audioRef.current) => {
+    console.log(audioElement.currentTime);
     setTime('0:00');
     let last = null;
     let oldSrc = audioElement.childNodes[0].attributes.src.value;
@@ -297,12 +344,28 @@ const Playerstate = (props) => {
   };
 
   const changeDuration = (audioElement, newDuration) => {
-    // console.log(audioElement.duration);
-
     if (audioElement !== undefined) {
       audioElement.currentTime =
         (audioRef.current.duration * newDuration) / 100;
     }
+  };
+
+  const putToMusicChangeList = (Songtime, action) => {
+    const schema = {
+      listen_duration: Songtime,
+      isMobile: detectMob(),
+      browserName: browser(),
+      userId: null,
+      action: action,
+      date: getTimeToday(),
+      like: false,
+      download: false,
+      song: null,
+      destination_url: null,
+    };
+
+    musicChangeList.push(schema);
+    setMusicChangeList(musicChangeList);
   };
 
   const changeShuffle = () => {

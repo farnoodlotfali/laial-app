@@ -1,6 +1,12 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useLocation,
+  Prompt,
+} from 'react-router-dom';
 
 import Header from './Header';
 import AppState from './contexts/AppState';
@@ -22,19 +28,37 @@ import MoreSong from './MoreSong';
 import RowItemPageState from './rowItemPageState/RowItemPageState';
 import MusicBar from './MusicBar';
 import Person from './Person';
-
+import { useEffect } from 'react';
+import { detect } from 'detect-browser';
 const App = () => {
-  // console.log(slug);
-  // const doa = async () => {
-  //   try {
-  //     const res = await axios.get('page/home');
-  //     console.log(res);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  // console.log(window.screen.width);
+  const browser = detect();
+  const location = useLocation();
+  if (browser) {
+    console.log(browser.name);
+    console.log(browser.version);
+    console.log(browser.os);
+  }
 
-  // doa();
+  function detectMob() {
+    const toMatch = [
+      /Android/i,
+      /webOS/i,
+      /iPhone/i,
+      /iPad/i,
+      /iPod/i,
+      /BlackBerry/i,
+      /Windows Phone/i,
+    ];
+
+    return toMatch.some((toMatchItem) => {
+      return navigator.userAgent.match(toMatchItem);
+    });
+  }
+  useEffect(() => {
+    console.log(location.pathname);
+  }, [location.pathname]);
+  console.log(detectMob());
   return (
     <div
       className='app '
@@ -45,22 +69,20 @@ const App = () => {
         <Playerstate>
           <SearchState>
             <RowItemPageState>
-              <Router>
-                <Center />
-                <Left />
-                <Header />
-                <Switch>
-                  <Route exact path='/' component={Home} />
-                  <Route exact path={`/song/:slug`} component={RowItemPage} />
-                  <Route exact path='/search' component={Search} />
-                  <Route exact path='/list/:slug' component={MoreSong} />
-                  <Route exact path='/aboutus' component={AboutUs} />
-                  <Route exact path='/person/:slug' component={Person} />
-                </Switch>
+              <Center />
+              <Left />
+              <Header />
+              <Switch>
+                <Route exact path='/' component={Home} />
+                <Route exact path={`/song/:slug`} component={RowItemPage} />
+                <Route exact path='/search' component={Search} />
+                <Route exact path='/list/:slug' component={MoreSong} />
+                <Route exact path='/aboutus' component={AboutUs} />
+                <Route exact path='/person/:slug' component={Person} />
+              </Switch>
 
-                <Footer />
-                <PhoneMenu />
-              </Router>
+              <Footer />
+              <PhoneMenu />
             </RowItemPageState>
           </SearchState>
         </Playerstate>

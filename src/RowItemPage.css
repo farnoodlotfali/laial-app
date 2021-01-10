@@ -1,5 +1,6 @@
 .rowItemPage {
   direction: rtl;
+  height: 600px;
 }
 .musicInfo__right {
   flex: 0.2;
@@ -34,6 +35,9 @@
 }
 
 @media (max-width: 768px) {
+  .rowItemPage {
+    height: 90vh;
+  }
   .musicInfo {
     display: grid !important;
   }

@@ -4,6 +4,7 @@ import Banner from './Banner';
 import RowList from './RowList';
 import './Home.css';
 import TileBanner from './TileBanner';
+import Footer from './Footer';
 
 const Home = () => {
   // eslint-disable-next-line
@@ -16,7 +17,7 @@ const Home = () => {
         const res = await axios.get('page/home');
         setstate(res.data.data[0].block);
 
-        console.log(res.data.data[0].block);
+        // console.log(res.data.data[0].block);
       } catch (error) {
         console.log(error);
       }
@@ -28,6 +29,10 @@ const Home = () => {
   if (!didMount) {
     return null;
   }
+  window.addEventListener('hashchange', function (e) {
+    console.log('hashchange1', window.location.hash);
+  });
+
   return (
     <div className='home'>
       {state !== null &&
@@ -55,8 +60,6 @@ const Home = () => {
         <RowList title={'محمد حسین شریفی'} />
         <RowList title={'استقلال قهرمان'} />
       </div> */}
-
-      {/* <Footer /> */}
     </div>
   );
 };
