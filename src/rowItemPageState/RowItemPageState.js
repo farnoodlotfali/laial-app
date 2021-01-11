@@ -3,13 +3,11 @@ import RowItemPageContext from './rowItemPageContext';
 
 const RowItemPageState = (props) => {
   const [item, setItem] = useState(null);
-  const changeItem = () => {
+  const changeItem = (url, media, person) => {
     setItem({
-      url: 'idjisjdis',
-      singer: 'ali',
-      mode: 'shor',
-      songName: 'mola',
-      img: 'aaa',
+      url: url,
+      media: media,
+      person: person,
     });
   };
   return (

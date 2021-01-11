@@ -1,14 +1,16 @@
-import { IconButton, Tooltip } from '@material-ui/core';
+import { IconButton, Slide, Tooltip } from '@material-ui/core';
 import {
   Favorite,
   GetAppRounded,
   PlayArrow,
   PlaylistAdd,
+  Visibility,
 } from '@material-ui/icons';
 import React, { useContext, useEffect } from 'react';
 import AppContext from './contexts/appContext';
 import playerContext from './player/playerContext';
 import './RowItemPage.css';
+import rowItemPageContext from './rowItemPageState/rowItemPageContext';
 const urls = [
   {
     url:
@@ -46,6 +48,8 @@ const RowItemPage = ({
 }) => {
   const { ChangeShowMusic, showMusic } = useContext(AppContext);
   const { setUrl, playMusic } = useContext(playerContext);
+  const { item } = useContext(rowItemPageContext);
+  // console.log(item);
   useEffect(() => {}, []);
   // نشان دادن موزیک و پخش موزیک
   const playMusicAndShowMusicBar = () => {
@@ -71,10 +75,10 @@ const RowItemPage = ({
         </div>
         <div className='musicInfo__left text-light   justify-content-start align-items-center'>
           <div className='musicInfo__name mt-5 mb-3 d-flex'>
-            نام آهنگ : علی علی مولا
+            نام آهنگ : {item.media.name}
           </div>{' '}
           <div className='musicInfo__singer mb-3 d-flex'>
-            خواننده : بهنام بانی
+            خواننده : {item.person[0].name}
           </div>
           <div className='musicInfo__mode mb-3 d-flex'>سبک : شور</div>
           <hr />
@@ -87,17 +91,18 @@ const RowItemPage = ({
               </Tooltip>
             </div>
 
-            <div>
-              <Tooltip placement='left' title='Favorite'>
-                <IconButton aria-label='Favorite'>
-                  <Favorite className='Favorite' fontSize='large' />
-                </IconButton>
-              </Tooltip>
+            <div className='favorite'>
+              {/* <Tooltip placement='left' title='Favorite'> */}
+              <IconButton aria-label='Favorite'>
+                <Favorite className='Favorite' fontSize='large' />
+              </IconButton>
+              {/* </Tooltip> */}
+              48
             </div>
 
             <div>
               <a href='https://dl.ganja2music.com/Ganja2Music/128/Archive/B/Behnam%20Bani/Single/Behnam%20Bani%20-%20Khoshhalam%20(128).mp3'>
-                <Tooltip placement='right' title='Download'>
+                <Tooltip placement='bottom' title='Download'>
                   <IconButton aria-label='download'>
                     <GetAppRounded fontSize='large' />
                   </IconButton>
@@ -111,6 +116,14 @@ const RowItemPage = ({
                   <PlaylistAdd className='Add' fontSize='large' />
                 </IconButton>
               </Tooltip>
+            </div>
+            <div className='view'>
+              {/* <Tooltip placement='right' title='View'> */}
+              <IconButton aria-label='View'>
+                <Visibility className='View' fontSize='large' />
+              </IconButton>
+              {/* </Tooltip> */}
+              32
             </div>
           </div>
         </div>

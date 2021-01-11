@@ -6,9 +6,10 @@ const AppState = (props) => {
   const [showLeft, setShowLeft] = useState(false);
   const [showCenter, setShowCenter] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [slug, setSlug] = useState('home');
   const [lists, setLists] = useState([]);
-  const [playlistOnMoreSong, setPlaylistOnMoreSong] = useState([]);
-  const [listName, setListName] = useState('');
+  // const [playlistOnMoreSong, setPlaylistOnMoreSong] = useState([]);
+  const [listName, setListName] = useState(null);
 
   const ChangeShowMusic = () => {
     setShowMusic(!showMusic);
@@ -26,9 +27,9 @@ const AppState = (props) => {
   const ChangeLists = (newLists) => {
     setLists(newLists);
   };
-  const ChangeListNameAndPlayListOnMoreSong = (name, playlist) => {
-    setListName(name);
-    setPlaylistOnMoreSong(playlist);
+  const ChangeListNameAndPlayListOnMoreSong = (name, slug) => {
+    setListName({ name: name, slug: slug });
+    // setPlaylistOnMoreSong(playlist);
   };
   const removeLoading = () => {
     setLoading(!loading);
@@ -49,7 +50,8 @@ const AppState = (props) => {
         loading,
         ChangeListNameAndPlayListOnMoreSong,
         listName,
-        playlistOnMoreSong,
+        // playlistOnMoreSong,
+        slug,
       }}
     >
       {props.children}

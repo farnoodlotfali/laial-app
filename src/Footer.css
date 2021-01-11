@@ -16,7 +16,7 @@
   width: 35%;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .footer {
     margin-bottom: 16%;
   }
@@ -25,4 +25,4 @@
   .footer {
     margin-bottom: 25%;
   }
-}
+} */

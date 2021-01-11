@@ -21,6 +21,11 @@
   color: white;
 }
 
+.view,
+.favorite {
+  display: grid;
+}
+
 .actions a:hover {
   text-decoration: none;
 }
@@ -43,7 +48,7 @@
   }
 
   .musicInfo__image {
-    width: 286px;
-    height: 286px;
+    width: 200px;
+    height: 200px;
   }
 }

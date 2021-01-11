@@ -7,6 +7,7 @@ import './RowItem.css';
 import { Link } from 'react-router-dom';
 import playerContext from './player/playerContext';
 import axios from 'axios';
+import rowItemPageContext from './rowItemPageState/rowItemPageContext';
 const urls = [
   {
     url:
@@ -45,10 +46,10 @@ const RowItem = ({
     AppContext
   );
   const { setUrl, playMusic } = useContext(playerContext);
+  const { changeItem } = useContext(rowItemPageContext);
 
   const [didMount, setDidMount] = useState(false);
 
-  // console.log(media.duration);
   useEffect(() => {
     setDidMount(true);
     const view = async () => {
@@ -58,12 +59,14 @@ const RowItem = ({
     };
 
     const getUrl = async () => {
-      try {
-        const res = await axios.get`http://downloader.7negare.ir/download/${media?.telegram_id}`;
+      if (media.path === null) {
+        try {
+          const res = await axios.get`http://downloader.7negare.ir/download/${media?.telegram_id}`;
 
-        console.log(res.data);
-      } catch (error) {
-        console.log(error);
+          console.log(res.data);
+        } catch (error) {
+          console.log(error);
+        }
       }
     };
 
@@ -89,7 +92,11 @@ const RowItem = ({
   return (
     <div className='carousel-cellRowItem rowItem '>
       <div className='rowItem__image'>
-        <Link to={`/song/${slug}`} className='visit '>
+        <Link
+          to={`/song/${slug}`}
+          onClick={() => changeItem(url, media, person)}
+          className='visit '
+        >
           <img src={logo1} alt='logo' />
           <Badge className='badge bg-light'>
             {/* شور */}
@@ -100,7 +107,11 @@ const RowItem = ({
         </Link>
       </div>
       <div className='rowItem__onHover'>
-        <Link to={`/song/${slug}`} className='visit '>
+        <Link
+          to={`/song/${slug}`}
+          onClick={() => changeItem(url, media, person)}
+          className='visit '
+        >
           <div className='visit_text p-2 '>
             توضیحات بیشتر <Info />
           </div>

@@ -33,7 +33,7 @@ const RowList = ({ id, title, slug = '1', data }) => {
         <div className=' text-light title mr-3'>{title}</div>
         <div
           className='d-flex  align-items-center '
-          onClick={() => ChangeListNameAndPlayListOnMoreSong(title, context)}
+          onClick={() => ChangeListNameAndPlayListOnMoreSong(title, slug)}
         >
           {pageinate === true ? (
             <Link
@@ -50,17 +50,17 @@ const RowList = ({ id, title, slug = '1', data }) => {
 
       <Flickity className='carousel col px-2 py-0' options={flickityOptions}>
         {context.map((item, i) => {
-          if (i <= 12) {
-            return (
-              <RowItem
-                key={item.id}
-                logo={item.image}
-                media={item.media[0]}
-                person={item.person}
-                slug={item.slug}
-              />
-            );
-          }
+          // if (i <= 12) {
+          return (
+            <RowItem
+              key={item.id}
+              logo={item.image}
+              media={item.media[0]}
+              person={item.person}
+              slug={item.slug}
+            />
+          );
+          // }
         })}
       </Flickity>
     </div>

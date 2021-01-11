@@ -416,7 +416,7 @@ const Playerstate = (props) => {
           <Slide direction='down' timeout={500} in={showMusic}>
             <div
               className=' musicBar text-light'
-              // style={{ display: showMusic ? 'block' : 'none' }}
+              style={{ display: showMusic ? 'block' : 'none' }}
             >
               <div className='position d-flex justify-content-around'>
                 <div className='musicBar__right'>

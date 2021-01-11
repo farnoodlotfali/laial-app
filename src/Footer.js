@@ -12,7 +12,7 @@ const Footer = () => {
   return (
     <div
       className='footer py-3 px-3 d-flex text-light '
-      style={{ marginBottom: currentUrl !== null ? '25%' : '0%' }}
+      // style={{ marginBottom: currentUrl !== null ? '25%' : '0%' }}
     >
       <div className='footer__images'>
         <img className='ml-2' src={logo1} alt='' />

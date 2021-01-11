@@ -34,11 +34,11 @@ const App = () => {
   // console.log(window.screen.width);
   const browser = detect();
   const location = useLocation();
-  if (browser) {
-    console.log(browser.name);
-    console.log(browser.version);
-    console.log(browser.os);
-  }
+  // if (browser) {
+  //   console.log(browser.name);
+  //   console.log(browser.version);
+  //   console.log(browser.os);
+  // }
 
   function detectMob() {
     const toMatch = [
@@ -56,9 +56,9 @@ const App = () => {
     });
   }
   useEffect(() => {
-    console.log(location.pathname);
+    // console.log(location.pathname);
   }, [location.pathname]);
-  console.log(detectMob());
+  // console.log(detectMob());
   return (
     <div
       className='app '
@@ -73,6 +73,11 @@ const App = () => {
               <Left />
               <Header />
               <Switch>
+                {/* <Route
+                  exact
+                  path='/'
+                  component={() => <Home slug={'home'} />}
+                /> */}
                 <Route exact path='/' component={Home} />
                 <Route exact path={`/song/:slug`} component={RowItemPage} />
                 <Route exact path='/search' component={Search} />

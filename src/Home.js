@@ -1,23 +1,27 @@
 import axios from './axios/axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Banner from './Banner';
 import RowList from './RowList';
 import './Home.css';
 import TileBanner from './TileBanner';
 import Footer from './Footer';
+import appContext from './contexts/appContext';
 
-const Home = () => {
+const Home = (x = 'home') => {
+  const slug = useContext(appContext);
+  // console.log(x);
   // eslint-disable-next-line
   const [state, setstate] = useState(null);
+  // console.log(slug);
   const [didMount, setDidMount] = useState(false);
   useEffect(() => {
     setDidMount(true);
     const getHome = async () => {
       try {
-        const res = await axios.get('page/home');
+        const res = await axios.get(`page/${slug.slug}`);
         setstate(res.data.data[0].block);
 
-        // console.log(res.data.data[0].block);
+        console.log(res.data.data[0].block);
       } catch (error) {
         console.log(error);
       }
@@ -25,13 +29,10 @@ const Home = () => {
 
     getHome();
     return () => setDidMount(false);
-  }, [state]);
+  }, [state, slug.slug]);
   if (!didMount) {
     return null;
   }
-  window.addEventListener('hashchange', function (e) {
-    console.log('hashchange1', window.location.hash);
-  });
 
   return (
     <div className='home'>
