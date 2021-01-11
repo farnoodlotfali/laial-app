@@ -6,7 +6,7 @@ import logo1 from './assets/0.jpg';
 import './RowItem.css';
 import { Link } from 'react-router-dom';
 import playerContext from './player/playerContext';
-import axios from 'axios';
+import axios from './axios/axios';
 import rowItemPageContext from './rowItemPageState/rowItemPageContext';
 const urls = [
   {
@@ -53,15 +53,13 @@ const RowItem = ({
   useEffect(() => {
     setDidMount(true);
     const view = async () => {
-      const view = await axios.get(
-        `http://laial.7negare.ir/api/post/${slug}/?state=views`
-      );
+      const view = await axios.instance.get(`/post/${slug}/?state=views`);
     };
 
     const getUrl = async () => {
       if (media.path === null) {
         try {
-          const res = await axios.get`http://downloader.7negare.ir/download/${media?.telegram_id}`;
+          const res = await axios.downloader.get`/${media?.telegram_id}`;
 
           console.log(res.data);
         } catch (error) {

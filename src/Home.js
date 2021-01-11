@@ -18,7 +18,7 @@ const Home = (x = 'home') => {
     setDidMount(true);
     const getHome = async () => {
       try {
-        const res = await axios.get(`page/${slug.slug}`);
+        const res = await axios.instance.get(`page/${slug.slug}`);
         setstate(res.data.data[0].block);
 
         console.log(res.data.data[0].block);
