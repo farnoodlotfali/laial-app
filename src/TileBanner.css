@@ -21,3 +21,14 @@
   display: block;
   max-height: 100%;
 }
+
+@media (max-width: 768px) {
+  .tileBanner .carousel-cell {
+    height: 150px;
+    width: 25%;
+  }
+  .tileBanner .carousel-cell-image {
+    height: 149px;
+    width: 100%;
+  }
+}

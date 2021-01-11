@@ -1,11 +1,10 @@
 import React from 'react';
 import './App.css';
 import {
-  BrowserRouter as Router,
+  // BrowserRouter as Router,
   Route,
   Switch,
   useLocation,
-  Prompt,
 } from 'react-router-dom';
 
 import Header from './Header';
@@ -26,7 +25,6 @@ import RowItemPage from './RowItemPage';
 import PhoneMenu from './PhoneMenu';
 import MoreSong from './MoreSong';
 import RowItemPageState from './rowItemPageState/RowItemPageState';
-import MusicBar from './MusicBar';
 import Person from './Person';
 import { useEffect } from 'react';
 import { detect } from 'detect-browser';

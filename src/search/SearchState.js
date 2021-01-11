@@ -2,13 +2,13 @@ import React, { useReducer, useState } from 'react';
 import SearchContext from './searchContext';
 import searchReducer from './searchReducer';
 import {
-  SEARCH_VALUE_CHANGE,
+  // SEARCH_VALUE_CHANGE,
   PERSONS_VALUE_CHANGE,
   CATEGORIES_VALUE_CHANGE,
-  MODES_VALUE_CHANGE,
-  YEARS_VALUE_CHANGE,
-  LANGUAGES_VALUE_CHANGE,
-  ORDER_VALUE_CHANGE,
+  // MODES_VALUE_CHANGE,
+  // YEARS_VALUE_CHANGE,
+  // LANGUAGES_VALUE_CHANGE,
+  // ORDER_VALUE_CHANGE,
 } from './types';
 const options = [
   {

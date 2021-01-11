@@ -3,7 +3,7 @@ import {
   BottomNavigationAction,
   TextField,
 } from '@material-ui/core';
-import React, { useState, useReducer, Fragment, useContext } from 'react';
+import React, { useState, useReducer, useContext } from 'react';
 import Navigation from '../Navigation';
 import './Search.css';
 import Autocomplete from '@material-ui/lab/Autocomplete';

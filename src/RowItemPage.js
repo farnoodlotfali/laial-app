@@ -1,4 +1,4 @@
-import { IconButton, Slide, Tooltip } from '@material-ui/core';
+import { IconButton, Tooltip } from '@material-ui/core';
 import {
   Favorite,
   GetAppRounded,
@@ -75,10 +75,10 @@ const RowItemPage = ({
         </div>
         <div className='musicInfo__left text-light   justify-content-start align-items-center'>
           <div className='musicInfo__name mt-5 mb-3 d-flex'>
-            نام آهنگ : {item.media.name}
+            نام آهنگ : {item?.media?.name}
           </div>{' '}
           <div className='musicInfo__singer mb-3 d-flex'>
-            خواننده : {item.person[0].name}
+            خواننده : {item?.person[0]?.name}
           </div>
           <div className='musicInfo__mode mb-3 d-flex'>سبک : شور</div>
           <hr />

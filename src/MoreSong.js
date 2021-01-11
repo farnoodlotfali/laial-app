@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './MoreSong.css';
-import logo1 from './assets/0.jpg';
 import RowItem from './RowItem';
 import appContext from './contexts/appContext';
 import { useContext } from 'react';
@@ -28,7 +27,7 @@ const MoreSong = () => {
 
     getBlock();
     return () => setDidMount(false);
-  }, [state]);
+  }, [state, listName.slug]);
   if (!didMount) {
     return null;
   }

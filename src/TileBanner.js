@@ -17,7 +17,7 @@ const TileBanner = ({ imgs }) => {
         {imgs.map((img, i) => (
           // console.log(img.src),
           <div key={i} className='carousel-cell'>
-            <img className='carousel-cell-image' src={logo} alt='image' />
+            <img className='carousel-cell-image' src={logo} alt='logo' />
           </div>
         ))}
       </Flickity>

@@ -73,7 +73,7 @@ const RowItem = ({
     // getUrl();
     // view();
     return () => setDidMount(false);
-  }, []);
+  }, [media?.telegram_id]);
   if (!didMount) {
     return null;
   }

@@ -15,8 +15,6 @@ import AppContext from '../contexts/appContext';
 import { detect } from 'detect-browser';
 import logo from '../assets/0.jpg';
 import {
-  ExpandLess,
-  ExpandMore,
   Pause,
   PlayArrowRounded,
   QueueMusic,
@@ -39,7 +37,6 @@ import {
   PREVIOUS_MUSIC,
   SET_CURRENT_URL,
 } from './types';
-import PhoneMusicBar from '../PhoneMusicBar';
 import { useLocation } from 'react-router';
 // eslint-disable-next-line
 const urls = [
@@ -374,12 +371,7 @@ const Playerstate = (props) => {
   const changeLoop = () => {
     setLopp(!loop);
   };
-  const [show, setshow] = useState(null);
-  if (showMusic) {
-    setTimeout(() => {
-      setshow(true);
-    }, 1200);
-  }
+
   return (
     <PlayerContext.Provider
       value={{
