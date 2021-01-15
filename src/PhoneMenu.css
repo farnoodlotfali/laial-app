@@ -1,6 +1,6 @@
 .phoneMenu {
   direction: rtl;
-  position: sticky;
+  position: fixed;
   background-color: rgb(34, 35, 39) !important;
   left: 0;
   bottom: 0;
@@ -10,6 +10,14 @@
   z-index: 1000;
   display: none !important  ;
 }
+
+/* position: fixed; */
+/* z-index: 20000; */
+/* padding-bottom: 8px; */
+/* background: black; */
+/* bottom: 0%; */
+/* left: 0; */
+/* right: 0;*/
 
 .phoneMenu .active a {
   color: rgb(80, 89, 139);

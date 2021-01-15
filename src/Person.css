@@ -3,3 +3,10 @@
   width: 30%;
   height: 30%;
 }
+
+.person__items {
+  padding: 0 10px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

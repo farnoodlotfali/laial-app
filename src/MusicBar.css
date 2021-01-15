@@ -8,6 +8,7 @@
   flex-direction: column;
   align-items: stretch; */
   /* margin-top: -110px; */
+  display: block;
 }
 
 .musicBar__info {
@@ -111,6 +112,7 @@
     justify-content: center;
   }
   .musicBar {
+    display: none !important;
     height: 300px !important;
     /* display: none !important; */
     position: fixed;

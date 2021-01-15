@@ -3,13 +3,13 @@ import './Header.css';
 import MenuIcon from '@material-ui/icons/Menu';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import appContext from './contexts/appContext';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 // for fix to top use fixed-top in  className='fixed-top'
 const Header = () => {
   const { ChangeshowCenter, ChangeShowLeft } = useContext(appContext);
   return (
     <nav className='header navbar navbar-expand-sm  py-4 '>
-      <button
+      {/* <button
         className='navbar-toggler text-white'
         type='button'
         data-toggle='collapse'
@@ -21,34 +21,38 @@ const Header = () => {
         <span className='navbar-toggler-icon'>
           <MenuIcon />
         </span>
-      </button>
+      </button> */}
 
       <div className='collapse navbar-collapse  ' id='header__nav'>
         <ul className='navbar-nav   mt-2 mt-lg-0'>
-          <Link
+          <NavLink
+            activeClassName='selected'
+            exact
             to='/'
-            className='nav-item   mx-3'
+            className='   mx-3'
             onClick={() => ChangeShowLeft(false)}
           >
             خانه
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
+            activeClassName='selected'
             to='/search'
-            className='nav-item mx-3'
+            className=' mx-3'
             onClick={() => ChangeShowLeft(false)}
           >
             جستجو
-          </Link>
-          <Link to='#' className='nav-item mx-3 ' onClick={ChangeshowCenter}>
+          </NavLink>
+          <NavLink to='#' className=' mx-3 ' onClick={ChangeshowCenter}>
             لیست من
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
+            activeClassName='selected'
             to='/aboutus'
-            className='nav-item  mx-3'
+            className='  mx-3'
             onClick={() => ChangeShowLeft(false)}
           >
             درباره ی ما
-          </Link>
+          </NavLink>
         </ul>
       </div>
       {/* </div> */}

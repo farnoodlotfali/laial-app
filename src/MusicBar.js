@@ -112,7 +112,7 @@ const MusicBar = ({ playList = urls, url, q }) => {
   return (
     // <div className='musicBar text-light'>
     // currentUrl !== null ? (
-    <Slide direction='down' timeout={500} in={showMusic}>
+    <Slide direction='left' timeout={500} in={showMusic}>
       <div
         className=' musicBar text-light'
         // style={{ marginTop: showMusic ? '0px' : '-110px' }}

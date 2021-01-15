@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import appContext from './contexts/appContext';
 import './Person.css';
+import Flickity from 'react-flickity-component';
+import Spinner from './spinner/Spinner';
+import RowItem from './RowItem';
+import { useParams } from 'react-router';
 const Person = () => {
-  return (
+  const { personList, getPerson, loading } = useContext(appContext);
+
+  let params = useParams();
+
+  useEffect(() => {
+    getPerson(params.slug);
+    // eslint-disable-next-line
+  }, []);
+  // console.log(personList);
+  return loading ? (
+    <Spinner />
+  ) : (
     <div className='person'>
       <div className='person__img my-4'>
         <img
@@ -20,6 +36,20 @@ const Person = () => {
           officiis similique sapiente nesciunt non sint corrupti aliquid, error
           explicabo. Est, id magnam?
         </div>
+      </div>
+      <div className='person__items'>
+        {personList &&
+          personList?.map((item, i) => {
+            return (
+              <RowItem
+                key={item.id}
+                logo={item.image}
+                media={item.media[0]}
+                person={item.person}
+                slug={item.slug}
+              />
+            );
+          })}
       </div>
     </div>
   );

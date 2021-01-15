@@ -1,67 +1,54 @@
 import axios from './axios/axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import Banner from './Banner';
 import RowList from './RowList';
 import './Home.css';
 import TileBanner from './TileBanner';
 import Footer from './Footer';
 import appContext from './contexts/appContext';
+import Spinner from './spinner/Spinner';
+import { useHistory, useParams } from 'react-router';
 
-const Home = (x = 'home') => {
-  const slug = useContext(appContext);
-  // console.log(x);
-  // eslint-disable-next-line
-  const [state, setstate] = useState(null);
-  // console.log(slug);
-  const [didMount, setDidMount] = useState(false);
+const Home = () => {
+  const { slug, removeAndSetLoading, loading, getHome, home } = useContext(
+    appContext
+  );
+  let params = useParams();
+  // let his = useHistory();
+  // console.log(params.slug);
   useEffect(() => {
-    setDidMount(true);
-    const getHome = async () => {
-      try {
-        const res = await axios.instance.get(`page/${slug.slug}`);
-        setstate(res.data.data[0].block);
-
-        console.log(res.data.data[0].block);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     getHome();
-    return () => setDidMount(false);
-  }, [state, slug.slug]);
-  if (!didMount) {
-    return null;
-  }
+    // eslint-disable-next-line
+  }, []);
 
   return (
-    <div className='home'>
-      {state !== null &&
-        state.map((data, i) =>
-          data.banner !== null ? (
-            data.banner.banner_type === 'big' ? (
-              <Banner key={i} imgs={data.banner.images} />
-            ) : (
-              <TileBanner key={i} imgs={data.banner.images} />
-            )
-          ) : (
-            <RowList
-              key={i}
-              slug={data.slug}
-              id={data.id}
-              title={data.name}
-              data={data.data}
-            />
-          )
-        )}
-
-      {/* <Banner />
-     
-        <RowList title={'عمو پورنگ '} />
-        <RowList title={'محمد حسین شریفی'} />
-        <RowList title={'استقلال قهرمان'} />
-      </div> */}
-    </div>
+    <Fragment>
+      {loading ? (
+        <Spinner />
+      ) : (
+        home !== null && (
+          <div className='home'>
+            {home.map((data, i) =>
+              data.banner !== null ? (
+                data.banner.banner_type === 'big' ? (
+                  <Banner key={i} imgs={data.banner.images} />
+                ) : (
+                  <TileBanner key={i} imgs={data.banner.images} />
+                )
+              ) : (
+                <RowList
+                  key={i}
+                  slug={data.slug}
+                  id={data.id}
+                  title={data.name}
+                  data={data.data}
+                />
+              )
+            )}
+          </div>
+        )
+      )}
+    </Fragment>
   );
 };
 

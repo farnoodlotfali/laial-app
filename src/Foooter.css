@@ -1,0 +1,31 @@
+.foooter {
+  background-color: rgb(34, 35, 39);
+  /* padding-bottom: 10px; */
+  position: sticky;
+  height: 100px;
+}
+
+.foooter__left {
+  /* width: 200px; */
+  overflow: hidden;
+  margin-right: 5px;
+  flex: 0.5;
+}
+.foooter__right {
+  overflow: hidden;
+  /* width: 200px; */
+  flex: 0.5;
+}
+
+.foooter__right__img,
+.foooter__left__img {
+  width: 100px;
+  height: 100px;
+}
+
+@media (max-width: 768px) {
+  .foooter {
+    /* padding-bottom: 110px; */
+    margin-bottom: 51px;
+  }
+}

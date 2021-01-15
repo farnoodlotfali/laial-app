@@ -4,45 +4,34 @@ import RowItem from './RowItem';
 import appContext from './contexts/appContext';
 import { useContext } from 'react';
 import axios from './axios/axios';
+import Spinner from './spinner/Spinner';
+import { useParams } from 'react-router';
 
 const MoreSong = () => {
-  const { listName } = useContext(appContext);
-  // console.log(listName.slug);
-
-  const [didMount, setDidMount] = useState(false);
-  const [state, setstate] = useState(null);
+  const { BlockListName, loading, getBlock, block } = useContext(appContext);
+  // console.log(props.location.pathname);
+  let params = useParams();
+  // console.log(params);
 
   useEffect(() => {
-    setDidMount(true);
-    const getBlock = async () => {
-      try {
-        const res = await axios.get(`block/${listName.slug}`);
-        setstate(res.data.results);
+    getBlock(params.slug);
+    // eslint-disable-next-line
+  }, []);
 
-        // console.log(res.data.results);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    getBlock();
-    return () => setDidMount(false);
-  }, [state, listName.slug]);
-  if (!didMount) {
-    return null;
-  }
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <div className='moreSong pb-3 pt-5'>
       <div className='moreSong__title text-light'>
-        <h3> {listName.name}</h3>
+        <h3> {BlockListName}</h3>
       </div>
       <div className='moreSong__items mt-5'>
-        {state &&
-          state.map((item) => (
+        {block !== null &&
+          block.map((item) => (
             <RowItem
               key={item.id}
               logo={item.image}
-              media={item.media}
+              media={item.media[0]}
               person={item.person}
               slug={item.slug}
             />

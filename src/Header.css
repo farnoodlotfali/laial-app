@@ -12,7 +12,9 @@
   padding: 0px;
   margin: 0px;
 }
-
+.selected {
+  color: rgb(103, 94, 165) !important;
+}
 .navbar li {
   /* margin: 10px;
   padding: 10px; */

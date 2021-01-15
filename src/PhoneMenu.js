@@ -1,6 +1,12 @@
-import { Headset, Home, MusicNote, Search } from '@material-ui/icons';
+import {
+  Headset,
+  Home,
+  MenuRounded,
+  MusicNote,
+  Search,
+} from '@material-ui/icons';
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import appContext from './contexts/appContext';
 import './PhoneMenu.css';
 const PhoneMenu = () => {
@@ -10,31 +16,29 @@ const PhoneMenu = () => {
   return (
     <div className='phoneMenu'>
       <div className='phoneMenu__items d-flex justify-content-around py-2 '>
-        <div
-          className={`phoneMenu__item ${state === 1 ? 'active' : ''}`}
-          onClick={() => setstate(1)}
-        >
-          <Link to='/'>
-            <Home fontSize='large' />
-            <span> خانه </span>
-          </Link>
+        <div className={`phoneMenu__item`}>
+          <MenuRounded fontSize='large' />
+          {/* <span> منو </span> */}
         </div>
-        <div
-          className={`phoneMenu__item ${state === 0 ? 'active' : ''}`}
-          onClick={() => setstate(0)}
-        >
-          <Link to='/search'>
+        <div className={`phoneMenu__item`}>
+          <NavLink activeClassName='selected' exact to='/'>
+            <Home fontSize='large' />
+            {/* <span> خانه </span> */}
+          </NavLink>
+        </div>
+        <div className={`phoneMenu__item }`}>
+          <NavLink activeClassName='selected' exact to='/search'>
             <Search fontSize='large' />
-            <span>جستجو</span>
-          </Link>
+            {/* <span>جستجو</span> */}
+          </NavLink>
         </div>
         <div className='phoneMenu__item' onClick={ChangeshowCenter}>
           <Headset fontSize='large' />
-          <span>لیست من</span>
+          {/* <span>لیست من</span> */}
         </div>{' '}
         <div className='phoneMenu__item' onClick={ChangeShowMusic}>
           <MusicNote fontSize='large' />
-          <span>آهنگ</span>
+          {/* <span>آهنگ</span> */}
         </div>
       </div>
     </div>

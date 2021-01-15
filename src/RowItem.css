@@ -9,7 +9,7 @@
   transition: transform 450ms;
 }
 .carousel-cellRowItem:hover {
-  cursor: pointer;
+  cursor: context-menu;
   transform: scale(1.04);
   opacity: 0.8;
 }
@@ -23,14 +23,7 @@
   display: none;
 }
 
-.visit_text {
-  /* color: white; */
-  margin-top: 5px;
-
-  /* background-color: rgba(18, 18, 18, 0.2); */
-  /* background-image: linear-gradient(rgba(34, 35, 39, 0), rgba(34, 35, 39, 0.2)); */
-}
-.visit_text:hover {
+/* .visit_text:hover {
   background-image: linear-gradient(rgba(34, 35, 39, 0), rgba(34, 35, 39, 0.2));
 }
 .visit {
@@ -38,15 +31,14 @@
   font-size: 18px;
   font-weight: normal;
   color: white;
-  /* font-weight: 900; */
 }
 .visit:hover {
-  /* color: rgb(171, 185, 240) !important; */
   text-decoration: none;
   font-weight: 900;
   color: rgb(18, 18, 18);
-}
+} */
 .rowItem__title {
+  cursor: pointer;
   font-size: 20px;
   font-weight: 900;
   line-height: 28px;
@@ -54,17 +46,30 @@
   margin-top: 10px;
   padding: 10px;
   display: flex;
+  transition: transform 450ms ease-out;
   justify-content: center;
+}
+.rowItem__title:hover {
+  transform: rotate(-15deg) scale(1.03);
+}
+
+.rowItem__info a:hover {
+  text-decoration: none !important;
 }
 
 .rowItem__person {
+  cursor: pointer;
   font-size: 13px;
   font-weight: 900;
   line-height: 28px;
   color: #757575;
   margin-top: 10px;
   display: flex;
+  transition: transform 450ms ease-out;
   justify-content: center;
+}
+.rowItem__person:hover {
+  transform: rotate(-15deg) scale(1.05);
 }
 
 .rowItem:hover .rowItem__onHover {
@@ -82,7 +87,7 @@
   transition: all 0.5s;
   background-image: linear-gradient(
     rgba(255, 255, 255, 0.3),
-    rgba(0, 0, 0, 0.9)
+    rgba(0, 0, 0, 0.5)
   );
 }
 
@@ -132,6 +137,19 @@
   opacity: 0.8;
 }
 
+.moblie_play {
+  display: none;
+  position: absolute;
+  top: 6%;
+  font-size: 34px;
+  left: 10%;
+  color: white;
+  opacity: 0.8;
+}
+.rowItem__playing {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .rowItem__onHover {
     display: none !important;
@@ -149,9 +167,6 @@
   }
   .rowItem__image {
     height: 114px;
-  }
-  .rowItem:hover .rowItem__onHover {
-    /* display: none; */
   }
 
   .rowItem__image .badge {
@@ -178,5 +193,13 @@
   .visit_text,
   .visit_text .MuiSvgIcon-root {
     font-size: 13px;
+  }
+
+  .moblie_play {
+    display: block;
+  }
+
+  .rowItem__playing {
+    display: block;
   }
 }

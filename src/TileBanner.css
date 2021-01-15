@@ -2,11 +2,14 @@
   background-color: rgb(18, 18, 18);
   padding-bottom: 10px;
   padding-top: 10px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  margin-right: 10px;
 }
 
 .tileBanner .carousel-cell {
-  width: 25%;
-  height: 400px;
+  width: 22.22%;
+  height: 350px;
   margin-right: 10px;
   display: flex;
   align-items: center;
@@ -16,8 +19,8 @@
 
 .tileBanner .carousel-cell-image {
   border-radius: 10px;
-  height: 399px;
-  width: 99%;
+  height: 349px;
+  width: 100%;
   display: block;
   max-height: 100%;
 }
@@ -25,7 +28,7 @@
 @media (max-width: 768px) {
   .tileBanner .carousel-cell {
     height: 150px;
-    width: 25%;
+    width: 66.66%;
   }
   .tileBanner .carousel-cell-image {
     height: 149px;

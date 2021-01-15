@@ -5,7 +5,7 @@ import './RowList.css';
 import { Link } from 'react-router-dom';
 import appContext from './contexts/appContext';
 
-const RowList = ({ id, title, slug = '1', data }) => {
+const RowList = ({ id, title, slug = '', data }) => {
   const flickityOptions = {
     // initialIndex: 2,
     contain: true,
@@ -13,17 +13,13 @@ const RowList = ({ id, title, slug = '1', data }) => {
     pageDots: false,
     rightToLeft: true,
   };
-  const { ChangeListNameAndPlayListOnMoreSong } = useContext(appContext);
   const { context, count, pageinate } = data;
   // console.log(context);
   return (
     <div className={`rowList mb-3 mt-5 `}>
       <div className={`rowList__title d-flex ${id === 1 ? 'top__radius' : ''}`}>
         <div className=' text-light title mr-3'>{title}</div>
-        <div
-          className='d-flex  align-items-center '
-          onClick={() => ChangeListNameAndPlayListOnMoreSong(title, slug)}
-        >
+        <div className='d-flex  align-items-center '>
           {pageinate === true ? (
             <Link
               to={`/list/${slug}`}
@@ -39,7 +35,6 @@ const RowList = ({ id, title, slug = '1', data }) => {
 
       <Flickity className='carousel col px-2 py-0' options={flickityOptions}>
         {context.map((item, i) => {
-          // if (i <= 12) {
           return (
             <RowItem
               key={item.id}
@@ -49,7 +44,6 @@ const RowList = ({ id, title, slug = '1', data }) => {
               slug={item.slug}
             />
           );
-          // }
         })}
       </Flickity>
     </div>

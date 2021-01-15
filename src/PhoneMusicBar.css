@@ -1,0 +1,66 @@
+.phoneMusicBar {
+  direction: rtl;
+  position: fixed;
+  display: flex;
+  /* bottom: 7%; */
+  z-index: 12200;
+  height: 61px;
+  bottom: 49px;
+  right: 0;
+  left: 0;
+  display: none !important;
+}
+.phoneMusicBar__slide {
+  z-index: 12200;
+  display: none !important;
+}
+.phoneMusicBar__left {
+  flex: 0.6;
+}
+.phoneMusicBar__right {
+  flex: 0.4;
+}
+.phoneMusicBar__img {
+  width: 40px;
+  height: 40px;
+}
+.phoneMusicBar__title {
+  font-size: 15px;
+  font-weight: 700;
+}
+.phoneMusicBar__singer {
+  font-size: 12px;
+  font-weight: 500;
+}
+.phoneMusicBar__slide .MuiDrawer-paperAnchorBottom,
+.phoneMusicBar__slide .MuiPaper-root {
+  background-color: rgb(78, 83, 88) !important;
+  bottom: 109px;
+  /* max-width: 360px; */
+  overflow: hidden;
+  /* top: 10%; */
+  /* position: relative; */
+  z-index: 999;
+}
+
+.mobileSound {
+  width: 125px;
+}
+
+.mobileSound .MuiSlider-root {
+  padding: 0 !important;
+  color: white;
+  display: flex;
+  align-self: center;
+}
+.mobileSound .MuiSlider-track {
+  height: 4px;
+}
+@media (max-width: 768px) {
+  .phoneMusicBar {
+    display: flex !important;
+  }
+  .phoneMusicBar__slide {
+    display: block !important;
+  }
+}

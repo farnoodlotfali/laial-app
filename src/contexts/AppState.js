@@ -1,16 +1,40 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
+import axios from '../axios/axios';
 import AppContext from './appContext';
-
+import appReducer from './appReducer';
+import {
+  GET_HOME,
+  ERROR,
+  SET_LOADING,
+  GET_BLOCK,
+  GET_BLOCK_LIST_PROPERTIES,
+  GET_PERSON,
+  GET_SONG_PAGE,
+} from './types';
 const AppState = (props) => {
+  const initialState = {
+    home: null,
+    loading: false,
+    block: null,
+    BlockListName: '',
+    slug: null,
+    error: null,
+    personList: null,
+    dataSongPage: null,
+    // x: false,
+  };
+  const [state, dispatch] = useReducer(appReducer, initialState);
   const [showMusic, setShowMusic] = useState(false);
   const [showLeft, setShowLeft] = useState(false);
   const [showCenter, setShowCenter] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [x, setx] = useState(false);
+  // const [loading, setLoading] = useState(true);
   const [slug, setSlug] = useState('home');
   const [lists, setLists] = useState([]);
-  // const [playlistOnMoreSong, setPlaylistOnMoreSong] = useState([]);
-  const [listName, setListName] = useState(null);
-
+  const showx = () => {
+    // setx(!x);
+    setx(!x);
+  };
   const ChangeShowMusic = () => {
     setShowMusic(!showMusic);
   };
@@ -27,12 +51,100 @@ const AppState = (props) => {
   const ChangeLists = (newLists) => {
     setLists(newLists);
   };
-  const ChangeListNameAndPlayListOnMoreSong = (name, slug) => {
-    setListName({ name: name, slug: slug });
-    // setPlaylistOnMoreSong(playlist);
+
+  const viewPage = async (slug) => {
+    try {
+      const view = await axios.instance.get(`/post/${slug}/?state=views`);
+    } catch (error) {
+      // console.log(error);
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
   };
-  const removeLoading = () => {
-    setLoading(!loading);
+  const getSongUrl = async () => {};
+
+  const getHome = async () => {
+    dispatch({
+      type: SET_LOADING,
+    });
+    try {
+      const res = await axios.instance.get(`page/home`);
+      dispatch({
+        type: GET_HOME,
+        payload: res.data.data[0].block,
+      });
+    } catch (error) {
+      // console.log(error);
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+
+  const getBlock = async (newSlug) => {
+    dispatch({
+      type: SET_LOADING,
+    });
+    try {
+      const res = await axios.instance.get(`block/${newSlug}`);
+      dispatch({
+        type: GET_BLOCK,
+        payload: {
+          block: res.data.results,
+          BlockListName: res.data?.block[0]?.name,
+        },
+      });
+      // console.log(res);
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+
+  const getPerson = async (newSlug) => {
+    dispatch({
+      type: SET_LOADING,
+    });
+    try {
+      const res = await axios.instance.get(`persons/${newSlug}`);
+      // console.log(res.data);
+      dispatch({
+        type: GET_PERSON,
+        payload: res.data.results,
+      });
+      // console.log(res.data.results);
+    } catch (error) {
+      // console.log(error);
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+  const getSongPage = async (newSlug) => {
+    dispatch({
+      type: SET_LOADING,
+    });
+    try {
+      const res = await axios.instance.get(`post/${newSlug}`);
+      // console.log(res.data.data);
+      dispatch({
+        type: GET_SONG_PAGE,
+        payload: res.data.data,
+      });
+    } catch (error) {
+      // console.log(error);
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
   };
 
   return (
@@ -46,12 +158,21 @@ const AppState = (props) => {
         showCenter,
         ChangeLists,
         lists,
-        removeLoading,
-        loading,
-        ChangeListNameAndPlayListOnMoreSong,
-        listName,
-        // playlistOnMoreSong,
         slug,
+        getHome,
+        getPerson,
+        getBlock,
+        getSongPage,
+        viewPage,
+        getSongUrl,
+        showx,
+        x,
+        home: state.home,
+        block: state.block,
+        dataSongPage: state.dataSongPage,
+        BlockListName: state.BlockListName,
+        personList: state.personList,
+        loading: state.loading,
       }}
     >
       {props.children}

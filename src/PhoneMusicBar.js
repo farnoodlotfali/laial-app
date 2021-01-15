@@ -5,7 +5,7 @@ import playerContext from './player/playerContext';
 const PhoneMusicBar = () => {
   const progress = useContext(playerContext);
   return (
-    <div className='phoneMusicBar'>
+    <div className='phoneMusicBar bg-dark'>
       <div className='phoneMusicBar__top'>
         <div className='player__zone d-flex mt-2'>
           <div className='current-time align-self-center '>3:44</div>dadsdda

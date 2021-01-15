@@ -10,7 +10,7 @@ import 'flickity-fade';
 const Banner = ({ imgs }) => {
   const flickityOptions = {
     contain: true,
-    prevNextButtons: true,
+    prevNextButtons: false,
     pageDots: false,
     // rightToLeft: true,
     autoPlay: 3000,
