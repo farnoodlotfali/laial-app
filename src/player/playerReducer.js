@@ -82,6 +82,7 @@ export default (state, action) => {
       return {
         playing: false,
         loading: true,
+        volume: 1,
         totalDuration: action.payload.totalDuration,
         telegramId: action.payload.telegramId,
         songId: action.payload.songId,

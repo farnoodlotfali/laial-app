@@ -125,7 +125,9 @@ const Playerstate = (props) => {
   const location = useLocation();
   // console.log(location.pathname === location.pathname);
   const audioRef = useRef();
-  const { showMusic, ChangeShowLeft, ChangeShowMusic } = useContext(AppContext);
+  const { showMusic, ChangeShowLeft, ChangeShowMusi, showLeft } = useContext(
+    AppContext
+  );
   const initialState = {
     playList: [],
     playing: false,
@@ -135,7 +137,7 @@ const Playerstate = (props) => {
     totalDuration: 0,
     currentUrl: null,
     audioElement: null,
-    volume: 1,
+    volume: 0,
     telegramId: null,
     songId: null,
   };
@@ -189,7 +191,8 @@ const Playerstate = (props) => {
   };
 
   const showPlaylist = () => {
-    ChangeShowLeft(true);
+    ChangeShowLeft(!showLeft);
+    console.log(showLeft);
   };
 
   const handleChange = (newDuration) => {
@@ -217,6 +220,7 @@ const Playerstate = (props) => {
 
   const setUrl = (url, playlist) => {
     setPlayList(playlist);
+
     dispatch({
       type: SET_CURRENT_URL,
       payload: url,
@@ -244,14 +248,14 @@ const Playerstate = (props) => {
   };
 
   const playMusic = (audioElement = audioRef.current) => {
-    dispatch({
-      type: PLAY_MUSIC,
-    });
     if (audioElement) {
       audioElement.pause();
       audioElement.load();
       audioElement.play();
     }
+    dispatch({
+      type: PLAY_MUSIC,
+    });
   };
 
   const muteAndUnmuteMusic = (audioElement) => {
@@ -388,7 +392,6 @@ const Playerstate = (props) => {
     setLopp(!loop);
   };
   const [showMusiBar, setShowMusicBar] = useState(false);
-
   return (
     <PlayerContext.Provider
       value={{
@@ -424,8 +427,14 @@ const Playerstate = (props) => {
       {/* <MusicBar url={state.currentUrl} /> */}
       {state.currentUrl !== null ? (
         <Fragment>
-          <audio ref={audioRef} className='player' autoPlay={state.playing}>
-            <source src={state.currentUrl} type='audio/mpeg' />
+          <audio
+            ref={audioRef}
+            className='player'
+            autoPlay={state.playing}
+            src={state.currentUrl}
+            type='audio/mpeg'
+          >
+            {/* <source src={state.currentUrl} type='audio/mpeg' /> */}
           </audio>
           {/* for mobile ratio */}
           <Fragment
@@ -656,7 +665,7 @@ const Playerstate = (props) => {
                     <div className='sound  d-flex '>
                       <div className='progressBar p-0  w-100 mt-1 '>
                         <Slider
-                          value={state.volume * 100}
+                          value={1 * 100}
                           onChange={(e, newVolume) =>
                             changeVolume(audioRef.current, newVolume)
                           }
