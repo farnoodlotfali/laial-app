@@ -47,6 +47,8 @@ import {
   NEXT_MUSIC,
   PREVIOUS_MUSIC,
   SET_CURRENT_URL,
+  SET_IDS,
+  SET_LOADING,
 } from './types';
 import { useLocation } from 'react-router';
 import PhoneMusicBar from '../PhoneMusicBar';
@@ -127,6 +129,7 @@ const Playerstate = (props) => {
   const initialState = {
     playList: [],
     playing: false,
+    loading: false,
     mute: false,
     duration: 0,
     totalDuration: 0,
@@ -139,18 +142,12 @@ const Playerstate = (props) => {
   const [state, dispatch] = useReducer(playerReducer, initialState);
 
   const zeroPad = (num, places) => String(num).padStart(places, '0');
-  const [Time, setTime] = useState('0:00');
   const [shuffle, setShuffle] = useState(false);
   const [loop, setLopp] = useState(false);
   const [musicChangeList, setMusicChangeList] = useState([]);
   const [progress, setProgress] = useState(0);
   // const [ids, setIds] = useState(null);
 
-  const getIds = (tId, id) => {
-    state.songId = id;
-    state.telegramId = tId;
-    // setIds({ telegramId: tId, songId: id });
-  };
   useEffect(() => {
     //   حرکت خواهد کردprogress اگر در حال پخش بود
     if (state.playing) {
@@ -169,7 +166,6 @@ const Playerstate = (props) => {
           type: CHANGE_DURATION,
           payload: {
             currentTime: audioRef.current.currentTime,
-            duration: audioRef.current.duration,
           },
         });
       }, 1000);
@@ -178,6 +174,19 @@ const Playerstate = (props) => {
       };
     }
   }, [state.playing]);
+
+  const setIds = (tId, id, duration) => {
+    dispatch({
+      type: SET_IDS,
+      payload: {
+        telegramId: tId,
+        songId: id,
+        totalDuration: duration,
+      },
+    });
+
+    // setIds({ telegramId: tId, songId: id });
+  };
 
   const showPlaylist = () => {
     ChangeShowLeft(true);
@@ -208,12 +217,12 @@ const Playerstate = (props) => {
 
   const setUrl = (url, playlist) => {
     setPlayList(playlist);
-
     dispatch({
       type: SET_CURRENT_URL,
       payload: url,
     });
     setProgress(0);
+    // playMusic();
   };
 
   const playAndPauseMusic = async (audioElement = audioRef.current) => {
@@ -243,9 +252,6 @@ const Playerstate = (props) => {
       audioElement.load();
       audioElement.play();
     }
-    setTimeout(() => {
-      setTime(null);
-    }, 100);
   };
 
   const muteAndUnmuteMusic = (audioElement) => {
@@ -278,7 +284,6 @@ const Playerstate = (props) => {
 
   const nextMusic = (audioElement = audioRef.current) => {
     putToMusicChangeList(audioElement.currentTime, 'next');
-    setTime('0:00');
     let last = null;
     let oldSrc = audioElement.childNodes[0].attributes.src.value;
     if (state.playList !== undefined) {
@@ -316,15 +321,9 @@ const Playerstate = (props) => {
         type: PLAY_MUSIC,
       });
     }
-
-    setProgress(0);
-    setTimeout(() => {
-      setTime(null);
-    }, 100);
   };
   const previousMusic = (audioElement = audioRef.current) => {
     putToMusicChangeList(audioElement.currentTime, 'previous');
-    setTime('0:00');
     let oldSrc = audioElement.childNodes[0].attributes.src.value;
     if (state.playList !== undefined) {
       for (let i = 0; i < state.playList.length; i++) {
@@ -352,9 +351,6 @@ const Playerstate = (props) => {
         type: PLAY_MUSIC,
       });
     }
-    setTimeout(() => {
-      setTime(null);
-    }, 100);
   };
 
   const changeDuration = (audioElement, newDuration) => {
@@ -410,6 +406,7 @@ const Playerstate = (props) => {
         loop: loop,
         totalDuration: state.totalDuration,
         songId: state.songId,
+        loading: state.loading,
         changeVolume,
         changeDuration,
         nextMusic,
@@ -419,7 +416,7 @@ const Playerstate = (props) => {
         handleChange,
         changeShuffle,
         changeLoop,
-        getIds,
+        setIds,
       }}
     >
       {props.children}
@@ -444,7 +441,14 @@ const Playerstate = (props) => {
                 onOpen={() => setShowMusicBar(true)}
               >
                 <div className='player__zone d-flex '>
-                  <div className='current-time align-self-center '>0:00</div>
+                  <div className='current-time align-self-center '>
+                    {Math.floor(audioRef.current?.currentTime / 60) +
+                      ':' +
+                      zeroPad(
+                        Math.floor(audioRef.current?.currentTime % 60),
+                        2
+                      )}
+                  </div>
 
                   <div className='player'>
                     <Slider
@@ -454,7 +458,12 @@ const Playerstate = (props) => {
                     />
                   </div>
 
-                  <div className='last-time align-self-center '>3:48</div>
+                  <div className='last-time align-self-center '>
+                    {' '}
+                    {Math.floor(state.totalDuration / 60) +
+                      ':' +
+                      zeroPad(Math.floor(state.totalDuration % 60), 2)}
+                  </div>
                 </div>
 
                 <div className='d-flex text-light pb-2 px-2 justify-content-between'>
@@ -630,14 +639,9 @@ const Playerstate = (props) => {
                         />
                       </div>
                       <div className='last-time align-self-center '>
-                        {Time == null
-                          ? Math.floor(audioRef.current?.duration / 60) +
-                            ':' +
-                            zeroPad(
-                              Math.floor(audioRef.current?.duration % 60),
-                              2
-                            )
-                          : Time}
+                        {Math.floor(state.totalDuration / 60) +
+                          ':' +
+                          zeroPad(Math.floor(state.totalDuration % 60), 2)}
                       </div>
                     </div>
                   </div>

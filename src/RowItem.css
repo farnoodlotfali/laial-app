@@ -139,10 +139,10 @@
 
 .moblie_play {
   display: none;
-  position: absolute;
-  top: 6%;
+  position: relative;
+  bottom: 90%;
   font-size: 34px;
-  left: 10%;
+  /* left: 10%; */
   color: white;
   opacity: 0.8;
 }

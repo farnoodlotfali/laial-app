@@ -9,6 +9,8 @@ import {
   NEXT_MUSIC,
   PREVIOUS_MUSIC,
   SET_CURRENT_URL,
+  SET_LOADING,
+  SET_IDS,
 } from './types';
 // eslint-disable-next-line
 export default (state, action) => {
@@ -39,11 +41,9 @@ export default (state, action) => {
         volume: action.payload,
       };
     case CHANGE_DURATION:
-      // console.log(action.payload);
       return {
         ...state,
         duration: action.payload.currentTime,
-        totalDuration: action.payload.duration,
       };
     case SET_PALYLIST:
       return {
@@ -60,11 +60,31 @@ export default (state, action) => {
         ...state,
         currentUrl: action.payload,
       };
-    case SET_CURRENT_URL:
-      // console.log(action.payload);
+    case SET_LOADING:
       return {
         ...state,
+        loading: true,
+        playing: false,
+      };
+    case SET_CURRENT_URL:
+      return {
+        ...state,
+        // songId: action.payload.songId,
+
+        // telegramId: action.payload.telegramId,
+        // totalDuration: action.payload.totalDuration,
+        // currentUrl: action.payload.currentUrl,
         currentUrl: action.payload,
+
+        loading: false,
+      };
+    case SET_IDS:
+      return {
+        playing: false,
+        loading: true,
+        totalDuration: action.payload.totalDuration,
+        telegramId: action.payload.telegramId,
+        songId: action.payload.songId,
       };
 
     default:

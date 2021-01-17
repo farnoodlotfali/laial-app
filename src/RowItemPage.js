@@ -8,12 +8,12 @@ import {
 } from '@material-ui/icons';
 import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router';
+import axios from './axios/axios';
 import AppContext from './contexts/appContext';
 import playerContext from './player/playerContext';
 import './RowItemPage.css';
 import rowItemPageContext from './rowItemPageState/rowItemPageContext';
 import Spinner from './spinner/Spinner';
-import logo from './assets/p.svg';
 const urls = [
   {
     url:
@@ -56,28 +56,43 @@ const RowItemPage = ({
     dataSongPage,
     loading,
   } = useContext(AppContext);
-  const { setUrl, playMusic, getIds } = useContext(playerContext);
-  const { item } = useContext(rowItemPageContext);
+  const { setUrl, playMusic, setIds } = useContext(playerContext);
+  // const { item } = useContext(rowItemPageContext);
   // console.log(item);
 
   let params = useParams();
   // console.log(params);
   useEffect(() => {
     getSongPage(params.slug);
+
+    // eslint-disable-next-line
   }, []);
   // console.log(dataSongPage);
   // نشان دادن موزیک و پخش موزیک
-  const playMusicAndShowMusicBar = () => {
-    getIds(item?.media?.telegram_id, item?.media?.id);
-    setUrl(url, playlist);
+  const playMusicAndShowMusicBar = async () => {
+    // console.log(
+    //   dataSongPage?.media?.[0]?.telegram_id,
+    //   dataSongPage?.media?.[0]?.id,
+    //   dataSongPage?.media?.[0]?.duration
+    // );
+    setIds(
+      dataSongPage?.media?.[0]?.telegram_id,
+      dataSongPage?.media?.[0]?.id,
+      dataSongPage?.media?.[0]?.duration
+    );
+    try {
+      const res = await axios.downloader.get(
+        `/${dataSongPage?.media?.[0]?.telegram_id}`
+      );
+      setUrl(res.data.download_link);
 
-    setTimeout(() => {
       if (!showMusic) {
         ChangeShowMusic();
       }
-
       playMusic();
-    }, 1000);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return loading ? (
     <Spinner />

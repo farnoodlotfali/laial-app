@@ -5,13 +5,12 @@ import {
   MusicNote,
   Search,
 } from '@material-ui/icons';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import appContext from './contexts/appContext';
 import './PhoneMenu.css';
 const PhoneMenu = () => {
   const { ChangeshowCenter, ChangeShowMusic } = useContext(appContext);
-  const [state, setstate] = useState(1);
 
   return (
     <div className='phoneMenu'>

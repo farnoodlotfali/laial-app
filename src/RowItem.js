@@ -1,12 +1,9 @@
 import {
-  Info,
-  PlayArrow,
   PlayArrowRounded,
   PlayCircleFilled,
-  PlayCircleOutlineOutlined,
   PlaylistAdd,
 } from '@material-ui/icons';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { Badge } from 'react-bootstrap';
 import AppContext from './contexts/appContext';
 import logo1 from './assets/0.jpg';
@@ -14,9 +11,9 @@ import './RowItem.css';
 import { Link } from 'react-router-dom';
 import playerContext from './player/playerContext';
 import axios from './axios/axios';
+
+import SpinnerLoading from './spinner/SpinnerLoading';
 import rowItemPageContext from './rowItemPageState/rowItemPageContext';
-import logo from './assets/p.svg';
-import SpinnerMusic from './spinner/SpinnerMusic';
 const urls = [
   {
     url:
@@ -43,66 +40,40 @@ const urls = [
   },
 ];
 
-const RowItem = ({
-  media,
-  person,
-  slug,
-  url = 'http://dl.musicdam.net/Downloads/mp3/Hayedeh%20-%20Bordi%20Az%20Yadam%20128.mp3',
-  playlist = urls,
-}) => {
-  const { ChangeShowMusic, ChangeshowCenter, showMusic, viewPage } = useContext(
+const RowItem = ({ media, person, slug, playlist = urls }) => {
+  // eslint-disable-next-line
+  const { ChangeShowMusic, ChangeshowCenter, showMusic } = useContext(
     AppContext
-  );
-  const { setUrl, playMusic, getIds, playing, songId } = useContext(
+  ); // eslint-disable-next-line
+  const { playMusic, playing, songId, loading, setUrl, setIds } = useContext(
     playerContext
   );
   const { changeItem } = useContext(rowItemPageContext);
+  // console.log(media.duration);
 
-  const [didMount, setDidMount] = useState(false);
-  // console.log(person);
-  useEffect(() => {
-    setDidMount(true);
-
-    viewPage(slug);
-    // const view = async () => {
-    //   const view = await axios.instance.get(`/post/${slug}/?state=views`);
-    // };
-
-    const getUrl = async () => {
-      if (media.path === null) {
-        try {
-          const res = await axios.downloader.get`/${media?.telegram_id}`;
-
-          // console.log(res.data);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    };
-
-    // getUrl();
-    // view();
-    return () => setDidMount(false);
-  }, [media?.telegram_id]);
-  if (!didMount) {
-    return null;
-  }
-  const playMusicAndShowMusicBar = () => {
+  const playMusicAndShowMusicBar = async () => {
     // نشان دادن موزیک و پخش موزیک
-    getIds(media?.telegram_id, media?.id);
+    setIds(media?.telegram_id, media?.id, media?.duration);
+    try {
+      const res = await axios.downloader.get(`/${media?.telegram_id}`);
+      setUrl(res.data.download_link);
 
-    setUrl(url);
-    // console.log(media?.telegram_id, media?.id);
-    setTimeout(() => {
+      // if (!loading) {
+      //   setTimeout(() => {
+
+      //   }, 1200);
+      // }
       if (!showMusic) {
         ChangeShowMusic();
       }
       playMusic();
-    }, 1000);
+    } catch (error) {
+      console.log(error);
+    }
   };
-  const c = () => {
-    playMusicAndShowMusicBar();
-    // console.log(media?.id);
+
+  const setItem = () => {
+    changeItem(media, person);
   };
 
   const truncate = (str, no_words) => {
@@ -113,35 +84,21 @@ const RowItem = ({
     <div className='carousel-cellRowItem rowItem '>
       <div className='rowItem__image'>
         <img src={logo1} alt='logo' />
-        {playing && media?.id === songId ? (
+        {loading && media?.id === songId ? (
           <div className='rowItem__playing'>
-            <SpinnerMusic />
+            <SpinnerLoading />
           </div>
         ) : (
-          <div className=' moblie_play' onClick={() => c()}>
+          <div className=' moblie_play' onClick={playMusicAndShowMusicBar}>
             <PlayArrowRounded style={{ fontSize: '100px' }} />
             {/* <img src={logo} alt='' /> */}
           </div>
         )}
 
-        <Badge className='badge bg-light'>
-          {/* شور */}
-          {/* {media?.name?.includes('|')
-              ? media?.name?.split('|')[0]
-              : media?.name?.split('-')[0]} */}
-        </Badge>
+        <Badge className='badge bg-light'>{/* شور */}</Badge>
         {/* </Link> */}
       </div>
       <div className='rowItem__onHover'>
-        {/* <Link
-          to={`/song/${slug}`}
-          onClick={() => changeItem(url, media, person)}
-          className='visit '
-        >
-          <div className='visit_text p-2 '>
-            توضیحات بیشتر <Info />
-          </div>
-        </Link> */}
         <div className='rowItem__icons'>
           <div className='rowItem__icon' onClick={playMusicAndShowMusicBar}>
             <PlayCircleFilled fontSize='large' />
@@ -151,12 +108,9 @@ const RowItem = ({
           </div>
         </div>
       </div>{' '}
-      <div className='rowItem__info'>
+      <div className='rowItem__info ' onClick={() => setItem()}>
         <Link to={`/song/${slug}`} className='visit '>
           <h4 className='rowItem__title text-center'>
-            {/* {media?.name?.includes('|')
-            ? media?.name?.split('|')[1]
-            : media?.name?.split('-')[1]} */}
             {truncate(media?.name, 4)}
           </h4>
         </Link>

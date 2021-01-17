@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import appContext from './contexts/appContext';
 import './Person.css';
-import Flickity from 'react-flickity-component';
 import Spinner from './spinner/Spinner';
 import RowItem from './RowItem';
 import { useParams } from 'react-router';
@@ -19,7 +18,7 @@ const Person = () => {
     <Spinner />
   ) : (
     <div className='person'>
-      <div className='person__img my-4'>
+      <div className='person__img mp-4'>
         <img
           src='https://www.ganja2music.com/Image/Post/10.2020/Behnam%20Bani%20-%20Khoshhalam.jpg'
           alt=''

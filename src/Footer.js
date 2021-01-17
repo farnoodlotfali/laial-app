@@ -1,14 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import logo from './assets/and.jpg';
 import logo1 from './assets/bazar.jpg';
-import appContext from './contexts/appContext';
 import './Footer.css';
 // eslint-disable-next-line
-import playerContext from './player/playerContext';
 
 const Footer = () => {
-  const { currentUrl } = useContext(playerContext);
-
   return (
     <div
       className='footer py-3 px-3 d-flex text-light '

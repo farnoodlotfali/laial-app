@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 import './Header.css';
-import MenuIcon from '@material-ui/icons/Menu';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import appContext from './contexts/appContext';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 // for fix to top use fixed-top in  className='fixed-top'
 const Header = () => {
   const { ChangeshowCenter, ChangeShowLeft } = useContext(appContext);

@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import RowItem from './RowItem';
 import Flickity from 'react-flickity-component';
 import './RowList.css';
 import { Link } from 'react-router-dom';
-import appContext from './contexts/appContext';
 
 const RowList = ({ id, title, slug = '', data }) => {
   const flickityOptions = {
@@ -13,7 +12,7 @@ const RowList = ({ id, title, slug = '', data }) => {
     pageDots: false,
     rightToLeft: true,
   };
-  const { context, count, pageinate } = data;
+  const { context, pageinate } = data;
   // console.log(context);
   return (
     <div className={`rowList mb-3 mt-5 `}>

@@ -8,3 +8,5 @@ export const SET_PALYLIST = 'SET_PALYLIST';
 export const NEXT_MUSIC = 'NEXT_MUSIC';
 export const PREVIOUS_MUSIC = 'PREVIOUS_MUSIC';
 export const SET_CURRENT_URL = 'SET_CURRENT_URL';
+export const SET_LOADING = 'SET_LOADING';
+export const SET_IDS = 'SET_IDS';

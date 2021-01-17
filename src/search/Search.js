@@ -3,13 +3,14 @@ import {
   BottomNavigationAction,
   TextField,
 } from '@material-ui/core';
-import React, { useState, useReducer, useContext } from 'react';
+import React, { useState, useContext, useReducer } from 'react';
 import Navigation from '../Navigation';
 import './Search.css';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import SearchView from './SearchView';
 import searchContext from './searchContext';
+import searchReducer from './searchReducer';
 
 const options = [
   {
@@ -124,13 +125,14 @@ const Search = () => {
     languages: [],
     order: [],
   };
-
-  // const [state, dispatch] = useReducer(SearchReducer, initialState);
+  // eslint-disable-next-line
+  const [state, dispatch] = useReducer(searchReducer, initialState);
   const [value, setValue] = useState(0);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const findSame = (title) => {
     const newArray = [];
+    // eslint-disable-next-line
     options.map((option) => {
       if (!newArray.includes(option[title])) {
         newArray.push(option[title]);

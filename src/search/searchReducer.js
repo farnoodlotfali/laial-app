@@ -17,6 +17,7 @@ import {
 // languages: [],
 // order: [],
 
+// eslint-disable-next-line
 export default (state, action) => {
   switch (action.type) {
     case CATEGORIES_VALUE_CHANGE:

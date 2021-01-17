@@ -1,19 +1,14 @@
-import axios from './axios/axios';
-import React, { Fragment, useContext, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 import Banner from './Banner';
 import RowList from './RowList';
 import './Home.css';
 import TileBanner from './TileBanner';
-import Footer from './Footer';
 import appContext from './contexts/appContext';
 import Spinner from './spinner/Spinner';
-import { useHistory, useParams } from 'react-router';
 
 const Home = () => {
-  const { slug, removeAndSetLoading, loading, getHome, home } = useContext(
-    appContext
-  );
-  let params = useParams();
+  const { loading, getHome, home } = useContext(appContext);
+  // let params = useParams();
   // let his = useHistory();
   // console.log(params.slug);
   useEffect(() => {

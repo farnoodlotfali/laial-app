@@ -7,7 +7,6 @@ import {
   ERROR,
   SET_LOADING,
   GET_BLOCK,
-  GET_BLOCK_LIST_PROPERTIES,
   GET_PERSON,
   GET_SONG_PAGE,
 } from './types';
@@ -29,7 +28,7 @@ const AppState = (props) => {
   const [showCenter, setShowCenter] = useState(false);
   const [x, setx] = useState(false);
   // const [loading, setLoading] = useState(true);
-  const [slug, setSlug] = useState('home');
+  // const [slug, setSlug] = useState('home');
   const [lists, setLists] = useState([]);
   const showx = () => {
     // setx(!x);
@@ -54,6 +53,7 @@ const AppState = (props) => {
 
   const viewPage = async (slug) => {
     try {
+      // eslint-disable-next-line
       const view = await axios.instance.get(`/post/${slug}/?state=views`);
     } catch (error) {
       // console.log(error);
@@ -158,7 +158,6 @@ const AppState = (props) => {
         showCenter,
         ChangeLists,
         lists,
-        slug,
         getHome,
         getPerson,
         getBlock,

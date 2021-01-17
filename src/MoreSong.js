@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './MoreSong.css';
 import RowItem from './RowItem';
 import appContext from './contexts/appContext';
 import { useContext } from 'react';
-import axios from './axios/axios';
 import Spinner from './spinner/Spinner';
 import { useParams } from 'react-router';
 

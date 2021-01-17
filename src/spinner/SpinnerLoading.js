@@ -1,7 +1,7 @@
 import React from 'react';
-import spinner from './SpinnerMusic.gif';
+import SpinnerLoad from './SpinnerLoad.gif';
 
-const SpinnerMusic = () => {
+const SpinnerLoading = () => {
   return (
     <div
       className='spinner'
@@ -14,7 +14,7 @@ const SpinnerMusic = () => {
       }}
     >
       <img
-        src={spinner}
+        src={SpinnerLoad}
         alt='..loading'
         style={{ widows: '200px', display: 'block' }}
       />
@@ -22,4 +22,4 @@ const SpinnerMusic = () => {
   );
 };
 
-export default SpinnerMusic;
+export default SpinnerLoading;
