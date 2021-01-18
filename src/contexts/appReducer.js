@@ -5,6 +5,9 @@ import {
   GET_BLOCK,
   GET_PERSON,
   GET_SONG_PAGE,
+  GET_SONG_PAGE_URL,
+  VIEWS_PAGE,
+  GET_RECOMMENDER,
 } from './types';
 // eslint-disable-next-line
 export default (state, action) => {
@@ -39,7 +42,23 @@ export default (state, action) => {
       return {
         ...state,
         dataSongPage: action.payload,
+        // loading: false,
+      };
+    case GET_SONG_PAGE_URL:
+      return {
+        ...state,
+        downloadUrl: action.payload,
         loading: false,
+      };
+    case VIEWS_PAGE:
+      return {
+        ...state,
+        viewsPage: action.payload,
+      };
+    case GET_RECOMMENDER:
+      return {
+        ...state,
+        recommender: action.payload,
       };
     case ERROR:
       return {

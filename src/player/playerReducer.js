@@ -86,6 +86,8 @@ export default (state, action) => {
         totalDuration: action.payload.totalDuration,
         telegramId: action.payload.telegramId,
         songId: action.payload.songId,
+        songSinger: action.payload.songSinger,
+        songName: action.payload.songName,
       };
 
     default:

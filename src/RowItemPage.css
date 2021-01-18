@@ -1,6 +1,6 @@
 .rowItemPage {
   direction: rtl;
-  height: 600px;
+  height: 100%;
 }
 .musicInfo__right {
   flex: 0.2;

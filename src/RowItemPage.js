@@ -12,8 +12,9 @@ import axios from './axios/axios';
 import AppContext from './contexts/appContext';
 import playerContext from './player/playerContext';
 import './RowItemPage.css';
-import rowItemPageContext from './rowItemPageState/rowItemPageContext';
+import Flickity from 'react-flickity-component';
 import Spinner from './spinner/Spinner';
+import RowItem from './RowItem';
 const urls = [
   {
     url:
@@ -45,36 +46,40 @@ const urls = [
     id: 901,
   },
 ];
-const RowItemPage = ({
-  url = 'https://dl.ganja2music.com/Ganja2Music/128/Archive/B/Behnam%20Bani/Single/Behnam%20Bani%20-%20Khoshhalam%20(128).mp3',
-  playlist = urls,
-}) => {
+const RowItemPage = () => {
+  const flickityOptions = {
+    // initialIndex: 2,
+    contain: true,
+    prevNextButtons: false,
+    pageDots: false,
+    rightToLeft: true,
+  };
   const {
     ChangeShowMusic,
     showMusic,
     getSongPage,
     dataSongPage,
+    viewPage,
     loading,
+    downloadUrl,
+    viewsPage,
+    getRecommender,
+    recommender,
   } = useContext(AppContext);
   const { setUrl, playMusic, setIds } = useContext(playerContext);
-  // const { item } = useContext(rowItemPageContext);
   // console.log(item);
 
   let params = useParams();
-  // console.log(params);
   useEffect(() => {
     getSongPage(params.slug);
+    viewPage(params.slug);
+    getRecommender();
 
     // eslint-disable-next-line
   }, []);
-  // console.log(dataSongPage);
+
   // نشان دادن موزیک و پخش موزیک
   const playMusicAndShowMusicBar = async () => {
-    // console.log(
-    //   dataSongPage?.media?.[0]?.telegram_id,
-    //   dataSongPage?.media?.[0]?.id,
-    //   dataSongPage?.media?.[0]?.duration
-    // );
     setIds(
       dataSongPage?.media?.[0]?.telegram_id,
       dataSongPage?.media?.[0]?.id,
@@ -105,7 +110,6 @@ const RowItemPage = ({
             src='https://www.ganja2music.com/Image/Post/10.2020/Behnam%20Bani%20-%20Khoshhalam.jpg'
             alt=''
           />
-          {/* <img className='musicInfo__image' src={logo} alt='' /> */}
         </div>
         <div className='musicInfo__left text-light   justify-content-start align-items-center'>
           <div className='musicInfo__name mt-5 mb-3 d-flex'>
@@ -126,16 +130,14 @@ const RowItemPage = ({
             </div>
 
             <div className='favorite'>
-              {/* <Tooltip placement='left' title='Favorite'> */}
               <IconButton aria-label='Favorite'>
                 <Favorite className='Favorite' fontSize='large' />
               </IconButton>
-              {/* </Tooltip> */}
               48
             </div>
 
             <div>
-              <a href='https://dl.ganja2music.com/Ganja2Music/128/Archive/B/Behnam%20Bani/Single/Behnam%20Bani%20-%20Khoshhalam%20(128).mp3'>
+              <a href={downloadUrl} className='download'>
                 <Tooltip placement='bottom' title='Download'>
                   <IconButton aria-label='download'>
                     <GetAppRounded fontSize='large' />
@@ -152,17 +154,34 @@ const RowItemPage = ({
               </Tooltip>
             </div>
             <div className='view'>
-              {/* <Tooltip placement='right' title='View'> */}
               <IconButton aria-label='View'>
                 <Visibility className='View' fontSize='large' />
               </IconButton>
-              {/* </Tooltip> */}
-              32
+              {viewsPage}
             </div>
           </div>
         </div>
       </div>
-      <div className='musicPlayer'></div>
+
+      <div className='rowList mb-3 mt-5  pt-5 '>
+        <h3 className='text-light pb-3'>
+          <span>پیشنهاداتی برای شما</span>
+        </h3>
+        <Flickity className='carousel  px-2 py-0' options={flickityOptions}>
+          {recommender &&
+            recommender.map((item, i) => {
+              return (
+                <RowItem
+                  key={item.id}
+                  logo={item.image}
+                  media={item.media[0]}
+                  person={item.person}
+                  slug={item.slug}
+                />
+              );
+            })}
+        </Flickity>
+      </div>
     </div>
   );
 };

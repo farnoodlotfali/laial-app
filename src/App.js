@@ -76,6 +76,7 @@ const App = () => {
 
               {/* <Footer /> */}
               <Foooter />
+
               <PhoneMenu />
             </RowItemPageState>
           </SearchState>

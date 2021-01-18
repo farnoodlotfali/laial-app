@@ -48,21 +48,22 @@ const RowItem = ({ media, person, slug, playlist = urls }) => {
   const { playMusic, playing, songId, loading, setUrl, setIds } = useContext(
     playerContext
   );
-  const { changeItem } = useContext(rowItemPageContext);
-  // console.log(media.duration);
+  // console.log(person);
 
   const playMusicAndShowMusicBar = async () => {
     // نشان دادن موزیک و پخش موزیک
-    setIds(media?.telegram_id, media?.id, media?.duration);
+    setIds(
+      media?.telegram_id,
+      media?.id,
+      media?.duration,
+      media?.name,
+      person?.[0]?.name
+    );
+    // console.log(media?.name, person?.[0]?.name);
     try {
       const res = await axios.downloader.get(`/${media?.telegram_id}`);
       setUrl(res.data.download_link);
 
-      // if (!loading) {
-      //   setTimeout(() => {
-
-      //   }, 1200);
-      // }
       if (!showMusic) {
         ChangeShowMusic();
       }
@@ -70,10 +71,6 @@ const RowItem = ({ media, person, slug, playlist = urls }) => {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const setItem = () => {
-    changeItem(media, person);
   };
 
   const truncate = (str, no_words) => {
@@ -108,7 +105,7 @@ const RowItem = ({ media, person, slug, playlist = urls }) => {
           </div>
         </div>
       </div>{' '}
-      <div className='rowItem__info ' onClick={() => setItem()}>
+      <div className='rowItem__info '>
         <Link to={`/song/${slug}`} className='visit '>
           <h4 className='rowItem__title text-center'>
             {truncate(media?.name, 4)}

@@ -140,6 +140,8 @@ const Playerstate = (props) => {
     volume: 0,
     telegramId: null,
     songId: null,
+    songName: '',
+    songSinger: '',
   };
   const [state, dispatch] = useReducer(playerReducer, initialState);
 
@@ -177,13 +179,15 @@ const Playerstate = (props) => {
     }
   }, [state.playing]);
 
-  const setIds = (tId, id, duration) => {
+  const setIds = (tId, id, duration, name, singer) => {
     dispatch({
       type: SET_IDS,
       payload: {
         telegramId: tId,
         songId: id,
         totalDuration: duration,
+        songName: name,
+        songSinger: singer,
       },
     });
 
@@ -192,7 +196,6 @@ const Playerstate = (props) => {
 
   const showPlaylist = () => {
     ChangeShowLeft(!showLeft);
-    console.log(showLeft);
   };
 
   const handleChange = (newDuration) => {
@@ -289,7 +292,9 @@ const Playerstate = (props) => {
   const nextMusic = (audioElement = audioRef.current) => {
     putToMusicChangeList(audioElement.currentTime, 'next');
     let last = null;
-    let oldSrc = audioElement.childNodes[0].attributes.src.value;
+    // console.log(audioElement.src);
+    // let oldSrc = audioElement.childNodes[0].attributes.src.value;
+    let oldSrc = audioElement.src;
     if (state.playList !== undefined) {
       for (let i = 0; i < state.playList.length; i++) {
         if (oldSrc === state.playList[i].url) {
@@ -328,7 +333,8 @@ const Playerstate = (props) => {
   };
   const previousMusic = (audioElement = audioRef.current) => {
     putToMusicChangeList(audioElement.currentTime, 'previous');
-    let oldSrc = audioElement.childNodes[0].attributes.src.value;
+    let oldSrc = audioElement.src;
+    // let oldSrc = audioElement.childNodes[0].attributes.src.value;
     if (state.playList !== undefined) {
       for (let i = 0; i < state.playList.length; i++) {
         if (oldSrc === state.playList[i].url) {
@@ -531,10 +537,10 @@ const Playerstate = (props) => {
                 <img className='phoneMusicBar__img m-2' src={logo} alt='' />
                 <div className='phoneMusicBar__info align-self-center mr-2'>
                   <div className='phoneMusicBar__title'>
-                    <span>جانی و جانان</span>
+                    <span>{state.songName}</span>
                   </div>
                   <div className='phoneMusicBar__singer'>
-                    <span>مهدی رعنایی</span>
+                    <span>{state.songSinger}</span>
                   </div>
                 </div>
               </div>
@@ -587,10 +593,10 @@ const Playerstate = (props) => {
                         <img src={logo} alt='logo' />
                       </div>
                       <div className='musicBar__infoDesc'>
-                        <div className='infoDesc__title'>
-                          دودمه شب دهم محرم الحرام
+                        <div className='infoDesc__title'>{state.songName}</div>
+                        <div className='infoDesc__person'>
+                          {state.songSinger}
                         </div>
-                        <div className='infoDesc__person'>حاج مهدی رسولی</div>
                       </div>
                     </div>
                   </div>

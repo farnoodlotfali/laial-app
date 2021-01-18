@@ -9,6 +9,9 @@ import {
   GET_BLOCK,
   GET_PERSON,
   GET_SONG_PAGE,
+  GET_SONG_PAGE_URL,
+  VIEWS_PAGE,
+  GET_RECOMMENDER,
 } from './types';
 const AppState = (props) => {
   const initialState = {
@@ -20,6 +23,9 @@ const AppState = (props) => {
     error: null,
     personList: null,
     dataSongPage: null,
+    downloadUrl: null,
+    viewsPage: 0,
+    recommender: null,
     // x: false,
   };
   const [state, dispatch] = useReducer(appReducer, initialState);
@@ -55,6 +61,11 @@ const AppState = (props) => {
     try {
       // eslint-disable-next-line
       const view = await axios.instance.get(`/post/${slug}/?state=views`);
+      // console.log(view.data.data);
+      dispatch({
+        type: VIEWS_PAGE,
+        payload: view.data.data.views,
+      });
     } catch (error) {
       // console.log(error);
       dispatch({
@@ -63,7 +74,6 @@ const AppState = (props) => {
       });
     }
   };
-  const getSongUrl = async () => {};
 
   const getHome = async () => {
     dispatch({
@@ -133,7 +143,9 @@ const AppState = (props) => {
     });
     try {
       const res = await axios.instance.get(`post/${newSlug}`);
-      // console.log(res.data.data);
+      // console.log(res.data.data.media[0].telegram_id);
+      getSongPageUrl(res.data.data.media[0].telegram_id);
+
       dispatch({
         type: GET_SONG_PAGE,
         payload: res.data.data,
@@ -146,7 +158,38 @@ const AppState = (props) => {
       });
     }
   };
-
+  const getSongPageUrl = async (telegramId) => {
+    try {
+      const res = await axios.downloader.get(`/${telegramId}`);
+      // console.log(res.data.download_link);
+      dispatch({
+        type: GET_SONG_PAGE_URL,
+        payload: res.data.download_link,
+      });
+    } catch (error) {
+      // console.log(error);
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+  const getRecommender = async () => {
+    try {
+      const res = await axios.instance.get(`/recommender`);
+      // console.log(res.data.data);
+      dispatch({
+        type: GET_RECOMMENDER,
+        payload: res.data.data,
+      });
+    } catch (error) {
+      // console.log(error);
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
   return (
     <AppContext.Provider
       value={{
@@ -163,7 +206,7 @@ const AppState = (props) => {
         getBlock,
         getSongPage,
         viewPage,
-        getSongUrl,
+        getRecommender,
         showx,
         x,
         home: state.home,
@@ -172,6 +215,9 @@ const AppState = (props) => {
         BlockListName: state.BlockListName,
         personList: state.personList,
         loading: state.loading,
+        downloadUrl: state.downloadUrl,
+        viewsPage: state.viewsPage,
+        recommender: state.recommender,
       }}
     >
       {props.children}
