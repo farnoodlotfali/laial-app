@@ -8,6 +8,7 @@ import {
   GET_SONG_PAGE_URL,
   VIEWS_PAGE,
   GET_RECOMMENDER,
+  LIKE_SONG,
 } from './types';
 // eslint-disable-next-line
 export default (state, action) => {
@@ -42,6 +43,7 @@ export default (state, action) => {
       return {
         ...state,
         dataSongPage: action.payload,
+        like: action.payload.likes,
         // loading: false,
       };
     case GET_SONG_PAGE_URL:
@@ -54,6 +56,11 @@ export default (state, action) => {
       return {
         ...state,
         viewsPage: action.payload,
+      };
+    case LIKE_SONG:
+      return {
+        ...state,
+        like: action.payload,
       };
     case GET_RECOMMENDER:
       return {

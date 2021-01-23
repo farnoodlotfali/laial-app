@@ -3,6 +3,7 @@ import RowItem from './RowItem';
 import Flickity from 'react-flickity-component';
 import './RowList.css';
 import { Link } from 'react-router-dom';
+import { ChevronLeftRounded } from '@material-ui/icons';
 
 const RowList = ({ id, title, slug = '', data }) => {
   const flickityOptions = {
@@ -17,14 +18,19 @@ const RowList = ({ id, title, slug = '', data }) => {
   return (
     <div className={`rowList mb-3 mt-5 `}>
       <div className={`rowList__title d-flex ${id === 1 ? 'top__radius' : ''}`}>
-        <div className=' text-light title mr-3'>{title}</div>
+        <Link
+          to={`/list/${slug}`}
+          className=' text-light moreSong  d-flex   ml-3'
+        >
+          <div className=' text-light title mr-3'>{title}</div>
+        </Link>
         <div className='d-flex  align-items-center '>
           {pageinate === true ? (
             <Link
               to={`/list/${slug}`}
-              className=' text-light moreSong mr-5   ml-3'
+              className=' text-light moreSong mr-5 d-flex   ml-3'
             >
-              نمایش بیشتر
+              نمایش همه <ChevronLeftRounded className='align-self-center' />
             </Link>
           ) : (
             ''
@@ -41,6 +47,7 @@ const RowList = ({ id, title, slug = '', data }) => {
               media={item.media[0]}
               person={item.person}
               slug={item.slug}
+              context={context}
             />
           );
         })}

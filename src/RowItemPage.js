@@ -63,8 +63,10 @@ const RowItemPage = () => {
     loading,
     downloadUrl,
     viewsPage,
+    like,
     getRecommender,
     recommender,
+    likeSong,
   } = useContext(AppContext);
   const { setUrl, playMusic, setIds } = useContext(playerContext);
   // console.log(item);
@@ -77,13 +79,15 @@ const RowItemPage = () => {
 
     // eslint-disable-next-line
   }, []);
-
+  // console.log(dataSongPage);
   // نشان دادن موزیک و پخش موزیک
   const playMusicAndShowMusicBar = async () => {
     setIds(
       dataSongPage?.media?.[0]?.telegram_id,
       dataSongPage?.media?.[0]?.id,
-      dataSongPage?.media?.[0]?.duration
+      dataSongPage?.media?.[0]?.duration,
+      dataSongPage?.media?.[0]?.name,
+      dataSongPage?.person?.[0]?.name
     );
     try {
       const res = await axios.downloader.get(
@@ -130,10 +134,13 @@ const RowItemPage = () => {
             </div>
 
             <div className='favorite'>
-              <IconButton aria-label='Favorite'>
+              <IconButton
+                aria-label='Favorite'
+                onClick={() => likeSong(params.slug)}
+              >
                 <Favorite className='Favorite' fontSize='large' />
               </IconButton>
-              48
+              {like}
             </div>
 
             <div>

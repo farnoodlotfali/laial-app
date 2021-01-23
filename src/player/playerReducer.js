@@ -11,6 +11,8 @@ import {
   SET_CURRENT_URL,
   SET_LOADING,
   SET_IDS,
+  SET_PROGRESS,
+  SEEKING,
 } from './types';
 // eslint-disable-next-line
 export default (state, action) => {
@@ -44,6 +46,7 @@ export default (state, action) => {
       return {
         ...state,
         duration: action.payload.currentTime,
+        // currentProgress: action.payload.currentProgress,
       };
     case SET_PALYLIST:
       return {
@@ -67,22 +70,28 @@ export default (state, action) => {
         playing: false,
       };
     case SET_CURRENT_URL:
+      // console.log(action.payload);
       return {
         ...state,
-        // songId: action.payload.songId,
-
-        // telegramId: action.payload.telegramId,
-        // totalDuration: action.payload.totalDuration,
-        // currentUrl: action.payload.currentUrl,
         currentUrl: action.payload,
-
         loading: false,
+      };
+    case SET_PROGRESS:
+      return {
+        ...state,
+        currentProgress: action.payload,
+        // seek: false,
+      };
+    case SEEKING:
+      return {
+        ...state,
+        seeking: action.payload,
       };
     case SET_IDS:
       return {
+        ...state,
         playing: false,
         loading: true,
-        volume: 1,
         totalDuration: action.payload.totalDuration,
         telegramId: action.payload.telegramId,
         songId: action.payload.songId,

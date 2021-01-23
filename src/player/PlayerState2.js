@@ -52,7 +52,6 @@ import {
   SET_PROGRESS,
 } from './types';
 import { useLocation } from 'react-router';
-import PhoneMusicBar from '../PhoneMusicBar';
 import axios from '../axios/axios';
 // eslint-disable-next-line
 
@@ -89,16 +88,10 @@ const getTimeToday = () => {
 };
 const browser = () => {
   const browser = detect();
-  // if (browser) {
-  //   console.log(browser.name);
-  //   console.log(browser.version);
-  //   console.log(browser.os);
-  // }
-
   return browser.name;
 };
 
-const Playerstate = (props) => {
+const Playerstate2 = (props) => {
   const location = useLocation();
   const audioRef = useRef();
   const { showMusic, ChangeShowLeft, ChangeShowMusi, showLeft } = useContext(
@@ -133,25 +126,22 @@ const Playerstate = (props) => {
 
     if (state.playing && !state.loading) {
       //progress سرعت جلو رفتن
-      const timer = setInterval(() => {
-        if (audioRef?.current && audioRef?.current?.ended && !state.seek) {
-          nextMusic();
-        } else if (
-          audioRef?.current?.paused &&
-          state.currentUrl !== null &&
-          !state.loading
-        ) {
-          audioRef?.current?.play();
-        }
 
+      const timer = setInterval(() => {
+        if (state.audioElement !== null) {
+          console.log(state.audioElement.currentTime);
+        }
+        // if (audioRef?.current && audioRef?.current?.ended && !state.seek) {
+        //   nextMusic();
+        // }
         let progress = parseFloat(
-          (audioRef?.current?.currentTime * 100) / audioRef?.current?.duration
+          (state.audioElement?.currentTime * 100) / state.audioElement?.duration
         ).toFixed(2);
         setNewProgress(progress);
         dispatch({
           type: CHANGE_DURATION,
           payload: {
-            currentTime: audioRef.current.currentTime,
+            currentTime: state.audioElement?.currentTime,
           },
         });
       }, 1000);
@@ -169,7 +159,22 @@ const Playerstate = (props) => {
     });
   };
   const setIds = (tId, id, duration, name, singer) => {
-    if (audioRef.current.played) {
+    let x = document.getElementById('audio');
+    while (x.lastElementChild) {
+      x.removeChild(x.lastElementChild);
+    }
+    let audio = document.createElement('audio');
+    audio.setAttribute('className', 'playerAudio');
+    audio.setAttribute('type', 'audio/mpeg');
+    // audio.setAttribute('preload', 'metadata');
+    audio.setAttribute('autoPlay', 'false');
+    audio.preload = 'metadata';
+    audio.setAttribute('src', 'http://dl.rovzenews.ir/telegram/763/763.mp3');
+    document.getElementById('audio').appendChild(audio);
+    state.audioElement = audio;
+    // console.log(document.getElementById('audio'));
+    // console.log(audio.currentTime);
+    if (audioRef.current) {
       audioRef.current.pause();
     }
     dispatch({
@@ -182,8 +187,6 @@ const Playerstate = (props) => {
         songSinger: singer,
       },
     });
-
-    // setIds({ telegramId: tId, songId: id });
   };
 
   const showPlaylist = () => {
@@ -194,7 +197,7 @@ const Playerstate = (props) => {
     // تنظیم مدت زمان هنگام کلیک
     // state.seek = true;
     state.seek = true;
-    changeDuration(audioRef.current, newDuration);
+    changeDuration(newDuration);
     setNewProgress(newDuration);
   };
   const handleNext = () => {
@@ -210,22 +213,13 @@ const Playerstate = (props) => {
     setNewProgress(0);
   };
 
-  // const setPlayList = (playlist) => {
-  //   if (playlist !== state.playList) {
-  //     dispatch({
-  //       type: SET_PALYLIST,
-  //       payload: playlist,
-  //     });
-  //   }
-  // };
-
   const zeroPad = (num, places) => String(num).padStart(places, '0');
 
-  const playAndPauseMusic = (audioElement = audioRef.current) => {
+  const playAndPauseMusic = () => {
     // پلی و استپ کردن آهنگ
-    if (audioElement !== undefined) {
+    if (state.audioElement !== undefined) {
       if (state.playing) {
-        audioElement.pause();
+        state.audioElement.pause();
         dispatch({
           type: PAUSE_MUSIC,
         });
@@ -234,7 +228,7 @@ const Playerstate = (props) => {
           type: PLAY_MUSIC,
         });
 
-        audioElement.play();
+        state.audioElement.play();
       }
     }
   };
@@ -250,16 +244,16 @@ const Playerstate = (props) => {
     });
   };
 
-  const muteAndUnmuteMusic = (audioElement) => {
+  const muteAndUnmuteMusic = () => {
     // میوت و آن-میوت کردن آهنگ
-    if (audioElement !== undefined) {
+    if (state.audioElement !== undefined) {
       if (state.mute) {
-        audioElement.muted = false;
+        state.audioElement.muted = false;
         dispatch({
           type: UNMUTE_MUSIC,
         });
       } else {
-        audioElement.muted = true;
+        state.audioElement.muted = true;
         dispatch({
           type: MUTE_MUSIC,
         });
@@ -267,10 +261,12 @@ const Playerstate = (props) => {
     }
   };
 
-  const changeVolume = (audioElement = audioRef.current, newVolume) => {
+  const changeVolume = (e, newVolume) => {
     // تغییر صدای آهنگ
-    if (audioElement !== undefined) {
-      audioElement.volume = newVolume / 100;
+
+    // console.log(newVolume);
+    if (state.audioElement !== undefined) {
+      state.audioElement.volume = newVolume / 100;
       dispatch({
         type: CHANGE_VOLUME,
         payload: newVolume / 100,
@@ -282,12 +278,10 @@ const Playerstate = (props) => {
     if (playlist !== state.playList) {
       setPlayList(playlist);
     }
-    // console.log(url);
     dispatch({
       type: SET_CURRENT_URL,
       payload: url,
     });
-    // setProgress(0);
     setNewProgress(0);
   };
 
@@ -296,10 +290,8 @@ const Playerstate = (props) => {
 
     putToMusicChangeList(audioElement.currentTime, 'next');
     let last = null;
-    // console.log(playList);
     if (playList !== undefined) {
       for (let i = 0; i < playList.length; i++) {
-        // console.log(555);
         if (state.songId === playList[i].media[0].id) {
           let chosen =
             playList[i + 1] !== undefined ? playList[i + 1] : playList[0];
@@ -331,7 +323,6 @@ const Playerstate = (props) => {
 
     putToMusicChangeList(audioElement.currentTime, 'previous');
     let last = null;
-    // console.log(playList);
     if (playList !== undefined) {
       for (let i = 0; i < playList.length; i++) {
         if (state.songId === playList[i].media[0].id) {
@@ -361,43 +352,12 @@ const Playerstate = (props) => {
       }
     }
     setNewProgress(0);
-
-    // putToMusicChangeList(audioElement.currentTime, 'previous');
-    // let oldSrc = audioElement.src;
-    // // let oldSrc = audioElement.childNodes[0].attributes.src.value;
-    // if (state.playList !== undefined) {
-    //   for (let i = 0; i < state.playList.length; i++) {
-    //     if (oldSrc === state.playList[i].url) {
-    //       if (state.playList[i - 1] !== undefined) {
-    //         dispatch({
-    //           type: PREVIOUS_MUSIC,
-    //           payload: state.playList[i - 1].url,
-    //         });
-    //       } else {
-    //         dispatch({
-    //           type: PREVIOUS_MUSIC,
-    //           payload: state.playList[state.playList.length - 1].url,
-    //         });
-    //       }
-    //     }
-    //   }
-    // }
-    // // setProgress(0);
-    // setNewProgress(0);
-    // if (audioElement) {
-    //   audioElement.pause();
-    //   audioElement.load();
-    //   audioElement.play();
-    //   dispatch({
-    //     type: PLAY_MUSIC,
-    //   });
-    // }
   };
 
-  const changeDuration = (audioElement, newDuration) => {
-    if (audioElement !== undefined) {
-      audioElement.currentTime =
-        (audioRef.current.duration * newDuration) / 100;
+  const changeDuration = (newDuration) => {
+    if (state.audioElement !== undefined) {
+      state.audioElement.currentTime =
+        (state.audioElement?.duration * newDuration) / 100;
     }
   };
 
@@ -465,23 +425,9 @@ const Playerstate = (props) => {
     >
       {props.children}
 
-      {/* <MusicBar url={state.currentUrl} /> */}
       {/* {state.currentUrl !== null ? ( */}
       <Fragment>
-        <div id='audio'>
-          <audio
-            ref={audioRef}
-            className='player'
-            autoPlay={state.playing}
-            // src={state.currentUrl}
-            // src={'http://dl.rovzenews.ir/telegram/763/763.mp3'}
-            src={
-              'https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3'
-            }
-            type='audio/mpeg'
-            preload='metadata'
-          ></audio>
-        </div>
+        <div id='audio'></div>
 
         {/* for mobile ratio */}
         <Fragment
@@ -549,7 +495,7 @@ const Playerstate = (props) => {
                 <div className='d-flex mobileSound mr-2'>
                   <div
                     className='icon col-2 p-0 d-flex align-self-center mr-2'
-                    onClick={() => muteAndUnmuteMusic(audioRef.current)}
+                    onClick={() => muteAndUnmuteMusic()}
                   >
                     {state.mute ? <VolumeOff /> : <VolumeUp />}
                   </div>
@@ -570,7 +516,7 @@ const Playerstate = (props) => {
           <div className='phoneMusicBar bg-dark d-flex text-light'>
             <div
               className='phoneMusicBar__left d-flex align-self-center 
-             justify-content-start'
+               justify-content-start'
             >
               <img className='phoneMusicBar__img m-2' src={logo} alt='' />
               <div className='phoneMusicBar__info align-self-center mr-2'>
@@ -584,7 +530,7 @@ const Playerstate = (props) => {
             </div>
             <div
               className='phoneMusicBar__right d-flex align-self-center 
-             justify-content-around'
+               justify-content-around'
             >
               <div className='icon ' onClick={handleNext}>
                 <SkipNextRounded style={{ fontSize: '25px' }} />
@@ -651,7 +597,7 @@ const Playerstate = (props) => {
                     </div>
                     <div
                       className='icon mr-4  '
-                      onClick={() => playAndPauseMusic(audioRef.current)}
+                      onClick={() => playAndPauseMusic()}
                     >
                       {state.playing ? (
                         <Pause style={{ fontSize: 35 }} />
@@ -681,8 +627,8 @@ const Playerstate = (props) => {
                         )}
                     </div>
                     {/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
+                          ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
                     <ClickAwayListener onClickAway={() => (state.seek = false)}>
                       <div
                         className='player mt-1 align-self-center mx-3 '
@@ -737,10 +683,10 @@ const Playerstate = (props) => {
         </Fragment>
       </Fragment>
       {/* ) : (
-        <></>
-      )} */}
+          <></>
+        )} */}
     </PlayerContext.Provider>
   );
 };
 
-export default Playerstate;
+export default Playerstate2;

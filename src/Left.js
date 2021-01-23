@@ -20,6 +20,7 @@ const Left = () => {
   const {
     playList,
     progress,
+    currentProgress,
     handleChange,
     previousMusic,
     nextMusic,
@@ -31,6 +32,8 @@ const Left = () => {
     shuffle,
     changeLoop,
     loop,
+    songSinger,
+    songName,
   } = useContext(playerContext);
 
   // console.log(totalDuration);
@@ -39,7 +42,6 @@ const Left = () => {
   };
 
   const zeroPad = (num, places) => String(num).padStart(places, '0');
-
   return (
     // <div className='left text-light'>
     <Slide direction='right' timeout={500} in={showLeft}>
@@ -51,8 +53,8 @@ const Left = () => {
               <img src={logo} alt='' />
             </div>
             <div className='info mr-3'>
-              <div className='info__title mb-2'> دودمه شب دهم محرم الحرام</div>
-              <div className='info__person mb-4'> حاج مهدی رسولی</div>
+              <div className='info__title mb-2'>{songName}</div>
+              <div className='info__person mb-4'> {songSinger}</div>
             </div>
           </div>
           <div className='icons d-flex justify-content-around mt-3 mb-4'>
@@ -96,7 +98,7 @@ const Left = () => {
               <div className='player d-flex align-items-center mx-2'>
                 <Slider
                   variant='determinate'
-                  value={progress}
+                  value={currentProgress}
                   onChange={(e, newDuration) => handleChange(newDuration)}
                 />
               </div>
@@ -110,13 +112,12 @@ const Left = () => {
           </div>
         </div>
         {playList && (
-          <div className='songs container'>
-            {playList.map((music, i) => (
+          <div className='songs '>
+            {playList.map((item, i) => (
               <SongOnLeft
                 key={i}
-                song={music}
-                playList={playList}
-                totalDuration={totalDuration}
+                item={item}
+                playlist={playList}
                 zeroPad={zeroPad}
                 number={i + 1}
               />

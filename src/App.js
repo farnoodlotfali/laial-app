@@ -21,7 +21,7 @@ import PhoneMenu from './PhoneMenu';
 import MoreSong from './MoreSong';
 import RowItemPageState from './rowItemPageState/RowItemPageState';
 import Person from './Person';
-
+import axios from 'axios';
 import Foooter from './Foooter';
 const App = () => {
   // const browser = detect();
@@ -34,12 +34,11 @@ const App = () => {
 
   return (
     <div className='app '>
+      {/* <Test/> */}
       <AppState>
         <Playerstate>
           <SearchState>
             <RowItemPageState>
-              {/* <PhoneList />
-              <Y /> */}
               <Center />
               <Left />
               <Header />
@@ -74,7 +73,6 @@ const App = () => {
                 <Route exact path='/**' component={AboutUs} />
               </Switch>
 
-              {/* <Footer /> */}
               <Foooter />
 
               <PhoneMenu />

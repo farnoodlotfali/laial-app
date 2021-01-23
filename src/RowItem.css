@@ -46,11 +46,13 @@
   margin-top: 10px;
   padding: 10px;
   display: flex;
-  transition: transform 450ms ease-out;
+  transition: transform 450ms ease-in-out;
   justify-content: center;
 }
 .rowItem__title:hover {
-  transform: rotate(-15deg) scale(1.03);
+  /* color: rgb(161, 161, 161); */
+  /* transform: rotate(-15deg) scale(1.03); */
+  transform: scale(1.1);
 }
 
 .rowItem__info a:hover {
@@ -65,11 +67,13 @@
   color: #757575;
   margin-top: 10px;
   display: flex;
-  transition: transform 450ms ease-out;
+  transition: transform 450ms ease-in-out;
   justify-content: center;
 }
 .rowItem__person:hover {
-  transform: rotate(-15deg) scale(1.05);
+  transform: scale(1.1);
+  /* color: rgba(243, 243, 243, 0.726); */
+  /* font-size: 20px; */
 }
 
 .rowItem:hover .rowItem__onHover {
@@ -149,7 +153,18 @@
 .rowItem__playing {
   display: none;
 }
+.play__music {
+  position: relative;
+  bottom: 85%;
+  /* left: 12%; */
+}
 
+.play__music .MuiSvgIcon-root {
+  color: white;
+  font-size: 165px;
+  opacity: 0.7;
+  cursor: pointer;
+}
 @media (max-width: 768px) {
   .rowItem__onHover {
     display: none !important;
@@ -159,7 +174,9 @@
     width: 31.5%;
     min-width: 106px;
   }
-
+  .play__music {
+    display: none !important;
+  }
   .carousel-cellRowItem img {
     width: 100%;
     height: 114px;

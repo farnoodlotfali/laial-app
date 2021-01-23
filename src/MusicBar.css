@@ -85,10 +85,10 @@
   height: 4px;
 }
 .player__zone .current-time {
-  flex: 0.1;
+  flex: 0.12;
 }
 .player__zone .player {
-  flex: 1;
+  flex: 0.9;
 }
 .player__zone .last-time {
   flex: 0.1;

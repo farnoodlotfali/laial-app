@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRef } from 'react';
-
+import ReactPlayer from 'react-player';
 // https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3
 const urls = [
   {
@@ -31,83 +31,36 @@ const urls = [
 const Test = () => {
   const audioRef = useRef();
 
-  const state = {
-    id: 0,
-    playing: false,
-    loaded: false,
-    loop: false,
-    isChangeTime: false,
-    mute: false,
-    volume: 1.0,
-    seek: 0.0,
-    isSeeking: false,
+  const q = () => {
+    let audio = document.createElement('audio');
+    audio.setAttribute('ref', 'audioRef');
+    audio.setAttribute('className', 'player');
+    audio.setAttribute('type', 'audio/mpeg');
+    audio.setAttribute('preload', 'metadata');
+    audio.setAttribute('autoPlay', '{state.playing}');
+    audio.setAttribute('src', '{state.currentUrl}');
+    document.getElementById('audio').appendChild(audio);
   };
-  const [source, setSource] = useState(urls[state.id]);
-
-  const handlePlay = () => {
-    // console.log(document.getElementById('player').volume);
-    document.getElementById('player').play();
-  };
-  const handlePause = () => {
-    document.getElementById('player').pause();
-  };
-  const handleVolumeUp = () => {
-    let volume = document.getElementById('player');
-    if (volume.volume !== 1) {
-      volume.volume = 0.9;
-    }
-  };
-  const handleVolumeDown = () => {
-    let volume = document.getElementById('player');
-    if (volume.volume - 0.1 > 0) {
-      volume.volume = 0.5;
-    }
-  };
-  const handleMute = () => {
-    let volume = document.getElementById('player');
-    volume.muted ? (volume.muted = false) : (volume.muted = true);
-  };
-  const handleNext = () => {
-    // console.log(source);
-    for (let i = 0; i < urls.length; i++) {
-      if (source.name === urls[i].name) {
-        console.log(i);
-
-        setSource(urls[i + 1]);
-        if (urls[i + 1] === undefined) {
-          setSource(urls[0]);
-        }
-        console.log(source);
-      }
-    }
-
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.load();
-      audioRef.current.play();
-    }
-  };
-  // console.log(audioRef.current.childNodes[1].attributes.id.value);
   return (
     <div className=''>
-      <audio
-        ref={audioRef}
-        id='player'
-        onCanPlayThrough={() => console.log(900)}
-        // onTimeUpdate={() => console.log(200)}
-      >
-        {' '}
-        <source src={source.url} type='audio/mpeg' id={source.id} />
-      </audio>
-      <div>
-        <button onClick={handlePlay}>Play</button>
-        <button onClick={handlePause}>Pause</button>
-        <button onClick={handleVolumeUp}>Vol +</button>
-        <button onClick={handleVolumeDown}>Vol -</button>
-        <button onClick={handleNext}>next</button>
-        <button onClick={handleMute}>mute</button>
+      <div id='audio'>
+        <button onClick={q}>create</button>
       </div>
     </div>
+    // <div className=''>
+    //   <ReactPlayer
+    //     ref={audioRef}
+    //     playing={true}
+    //     controls={true}
+    //     autoPlay={true}
+    //     // url='https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3'
+    //     url='http://dl.rovzenews.ir/telegram/760/760.mp3'
+
+    //     // src='https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3'
+    //     // onPlay={(e) => console.log(audioRef.current.duration)}
+    //     // other props here
+    //   />
+    // </div>
   );
 };
 

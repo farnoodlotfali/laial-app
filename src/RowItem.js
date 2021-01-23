@@ -1,4 +1,5 @@
 import {
+  Pause,
   PlayArrowRounded,
   PlayCircleFilled,
   PlaylistAdd,
@@ -40,15 +41,21 @@ const urls = [
   },
 ];
 
-const RowItem = ({ media, person, slug, playlist = urls }) => {
+const RowItem = ({ media, person, slug, context }) => {
   // eslint-disable-next-line
   const { ChangeShowMusic, ChangeshowCenter, showMusic } = useContext(
     AppContext
   ); // eslint-disable-next-line
-  const { playMusic, playing, songId, loading, setUrl, setIds } = useContext(
-    playerContext
-  );
-  // console.log(person);
+  const {
+    playMusic,
+    playing,
+    songId,
+    loading,
+    setUrl,
+    setIds,
+    playAndPauseMusic,
+  } = useContext(playerContext);
+  // console.log(context);
 
   const playMusicAndShowMusicBar = async () => {
     // نشان دادن موزیک و پخش موزیک
@@ -62,8 +69,7 @@ const RowItem = ({ media, person, slug, playlist = urls }) => {
     // console.log(media?.name, person?.[0]?.name);
     try {
       const res = await axios.downloader.get(`/${media?.telegram_id}`);
-      setUrl(res.data.download_link);
-
+      setUrl(res.data.download_link, context);
       if (!showMusic) {
         ChangeShowMusic();
       }
@@ -74,16 +80,23 @@ const RowItem = ({ media, person, slug, playlist = urls }) => {
   };
 
   const truncate = (str, no_words) => {
-    return str.split(' ').splice(0, no_words).join(' ');
+    return str?.split(' ').splice(0, no_words).join(' ');
   };
 
   return (
     <div className='carousel-cellRowItem rowItem '>
       <div className='rowItem__image'>
         <img src={logo1} alt='logo' />
+
+        {/* mobile ratio  */}
         {loading && media?.id === songId ? (
           <div className='rowItem__playing'>
             <SpinnerLoading />
+          </div>
+        ) : playing && media?.id === songId ? (
+          <div className=' moblie_play' onClick={playMusicAndShowMusicBar}>
+            <Pause style={{ fontSize: '100px' }} />
+            {/* <img src={logo} alt='' /> */}
           </div>
         ) : (
           <div className=' moblie_play' onClick={playMusicAndShowMusicBar}>
@@ -92,10 +105,24 @@ const RowItem = ({ media, person, slug, playlist = urls }) => {
           </div>
         )}
 
+        {/* web ratio  */}
+        {loading && media?.id === songId ? (
+          <div className=''>
+            <SpinnerLoading />
+          </div>
+        ) : playing && media?.id === songId ? (
+          <div className=' play__music'>
+            <Pause />
+          </div>
+        ) : (
+          <div className=' play__music' onClick={playMusicAndShowMusicBar}>
+            <PlayArrowRounded />
+          </div>
+        )}
         <Badge className='badge bg-light'>{/* شور */}</Badge>
         {/* </Link> */}
       </div>
-      <div className='rowItem__onHover'>
+      {/* <div className='rowItem__onHover'>
         <div className='rowItem__icons'>
           <div className='rowItem__icon' onClick={playMusicAndShowMusicBar}>
             <PlayCircleFilled fontSize='large' />
@@ -104,7 +131,7 @@ const RowItem = ({ media, person, slug, playlist = urls }) => {
             <PlaylistAdd fontSize='large' />
           </div>
         </div>
-      </div>{' '}
+      </div>{' '} */}
       <div className='rowItem__info '>
         <Link to={`/song/${slug}`} className='visit '>
           <h4 className='rowItem__title text-center'>

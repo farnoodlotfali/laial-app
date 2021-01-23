@@ -1,15 +1,15 @@
 .tileBanner .carousel {
   background-color: rgb(18, 18, 18);
   padding-bottom: 10px;
-  padding-top: 10px;
-  margin-top: 40px;
+  /* padding-top: 10px; */
+  /* margin-top: 40px; */
   margin-bottom: 40px;
   margin-right: 10px;
 }
 
 .tileBanner .carousel-cell {
-  width: 22.22%;
-  height: 350px;
+  width: 33%;
+  height: 300px;
   margin-right: 10px;
   display: flex;
   align-items: center;

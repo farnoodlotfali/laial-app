@@ -10,3 +10,5 @@ export const PREVIOUS_MUSIC = 'PREVIOUS_MUSIC';
 export const SET_CURRENT_URL = 'SET_CURRENT_URL';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_IDS = 'SET_IDS';
+export const SET_PROGRESS = 'SET_PROGRESS';
+export const SEEKING = 'SEEKING';

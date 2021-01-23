@@ -12,6 +12,7 @@ import {
   GET_SONG_PAGE_URL,
   VIEWS_PAGE,
   GET_RECOMMENDER,
+  LIKE_SONG,
 } from './types';
 const AppState = (props) => {
   const initialState = {
@@ -25,6 +26,7 @@ const AppState = (props) => {
     dataSongPage: null,
     downloadUrl: null,
     viewsPage: 0,
+    like: 0,
     recommender: null,
     // x: false,
   };
@@ -65,6 +67,24 @@ const AppState = (props) => {
       dispatch({
         type: VIEWS_PAGE,
         payload: view.data.data.views,
+      });
+    } catch (error) {
+      // console.log(error);
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+
+  const likeSong = async (slug) => {
+    try {
+      // eslint-disable-next-line
+      const like = await axios.instance.get(`/post/${slug}/?state=likes`);
+      // console.log(like.data.data);
+      dispatch({
+        type: LIKE_SONG,
+        payload: like.data.data.likes,
       });
     } catch (error) {
       // console.log(error);
@@ -143,7 +163,7 @@ const AppState = (props) => {
     });
     try {
       const res = await axios.instance.get(`post/${newSlug}`);
-      // console.log(res.data.data.media[0].telegram_id);
+      // console.log(res.data.data.likes);
       getSongPageUrl(res.data.data.media[0].telegram_id);
 
       dispatch({
@@ -206,6 +226,7 @@ const AppState = (props) => {
         getBlock,
         getSongPage,
         viewPage,
+        likeSong,
         getRecommender,
         showx,
         x,
@@ -217,6 +238,7 @@ const AppState = (props) => {
         loading: state.loading,
         downloadUrl: state.downloadUrl,
         viewsPage: state.viewsPage,
+        like: state.like,
         recommender: state.recommender,
       }}
     >
