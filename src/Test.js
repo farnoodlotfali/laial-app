@@ -31,37 +31,37 @@ const urls = [
 const Test = () => {
   const audioRef = useRef();
 
-  const q = () => {
-    let audio = document.createElement('audio');
-    audio.setAttribute('ref', 'audioRef');
-    audio.setAttribute('className', 'player');
-    audio.setAttribute('type', 'audio/mpeg');
-    audio.setAttribute('preload', 'metadata');
-    audio.setAttribute('autoPlay', '{state.playing}');
-    audio.setAttribute('src', '{state.currentUrl}');
-    document.getElementById('audio').appendChild(audio);
-  };
-  return (
-    <div className=''>
-      <div id='audio'>
-        <button onClick={q}>create</button>
-      </div>
-    </div>
-    // <div className=''>
-    //   <ReactPlayer
-    //     ref={audioRef}
-    //     playing={true}
-    //     controls={true}
-    //     autoPlay={true}
-    //     // url='https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3'
-    //     url='http://dl.rovzenews.ir/telegram/760/760.mp3'
+  // const q = () => {
+  //   let audio = document.createElement('audio');
+  //   audio.setAttribute('ref', 'audioRef');
+  //   audio.setAttribute('className', 'player');
+  //   audio.setAttribute('type', 'audio/mpeg');
+  //   audio.setAttribute('preload', 'metadata');
+  //   audio.setAttribute('autoPlay', '{state.playing}');
+  //   audio.setAttribute('src', '{state.currentUrl}');
+  //   document.getElementById('audio').appendChild(audio);
+  // };
+  // return (
+  //   <div className=''>
+  //     <div id='audio'>
+  //       <button onClick={q}>create</button>
+  //     </div>
+  //   </div>
+  // <div className=''>
+  //   <ReactPlayer
+  //     ref={audioRef}
+  //     playing={true}
+  //     controls={true}
+  //     autoPlay={true}
+  //     // url='https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3'
+  //     url='http://dl.rovzenews.ir/telegram/760/760.mp3'
 
-    //     // src='https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3'
-    //     // onPlay={(e) => console.log(audioRef.current.duration)}
-    //     // other props here
-    //   />
-    // </div>
-  );
+  //     // src='https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3'
+  //     // onPlay={(e) => console.log(audioRef.current.duration)}
+  //     // other props here
+  //   />
+  // </div>
+  // );
 };
 
 export default Test;

@@ -5,6 +5,17 @@
 .musicInfo__right {
   flex: 0.2;
 }
+.musicInfo__right:hover {
+  background: linear-gradient(
+    135deg,
+    #000000 0%,
+    #000000 25%,
+    #1e539e 50%,
+    #ff3083 75%,
+    #7800a8 100%
+  );
+  position: absolute;
+}
 .musicInfo__left {
   flex: 0.7;
 }

@@ -4,7 +4,7 @@ import spinner2 from './Spinner2.gif';
 
 const Spinner = () => {
   return (
-    <div className='spinner' style={{ display: 'flex', height: '85vh' }}>
+    <div className='spinner' style={{ display: 'flex', height: '100vh' }}>
       <img
         src={spinner2}
         alt='..loading'

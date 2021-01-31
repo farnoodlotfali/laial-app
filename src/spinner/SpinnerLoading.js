@@ -7,7 +7,7 @@ const SpinnerLoading = () => {
       className='spinner'
       style={{
         display: 'flex',
-        height: '114px',
+        height: '100%',
         opacity: 0.5,
         position: 'absolute',
         top: '1%',

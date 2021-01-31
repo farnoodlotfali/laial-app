@@ -23,6 +23,7 @@ import RowItemPageState from './rowItemPageState/RowItemPageState';
 import Person from './Person';
 import axios from 'axios';
 import Foooter from './Foooter';
+import Test from './Test';
 const App = () => {
   // const browser = detect();
   // const location = useLocation();
@@ -34,7 +35,7 @@ const App = () => {
 
   return (
     <div className='app '>
-      {/* <Test/> */}
+      {/* <Test /> */}
       <AppState>
         <Playerstate>
           <SearchState>
@@ -57,11 +58,7 @@ const App = () => {
                   path='/list/:slug'
                   component={MoreSong}
                 />
-                {/* <Route
-                  exact
-                  path='/list/:slug'
-                  component={() => <MoreSong slug={} />}
-                /> */}
+
                 <Route exact path='/aboutus' component={AboutUs} />
                 <Route
                   sensitive

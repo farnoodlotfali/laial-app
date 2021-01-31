@@ -566,54 +566,59 @@ const Playerstate = (props) => {
               </div>
             </SwipeableDrawer>
           </div>
-
-          <div className='phoneMusicBar bg-dark d-flex text-light'>
-            <div
-              className='phoneMusicBar__left d-flex align-self-center 
-             justify-content-start'
-            >
-              <img className='phoneMusicBar__img m-2' src={logo} alt='' />
-              <div className='phoneMusicBar__info align-self-center mr-2'>
-                <div className='phoneMusicBar__title'>
-                  <span>{state.songName}</span>
+          {state.currentUrl && (
+            <Slide direction='up' timeout={500} in={showMusic}>
+              <div className='phoneMusicBar bg-dark d-flex text-light'>
+                <div
+                  className='phoneMusicBar__left d-flex align-self-center 
+          justify-content-start'
+                >
+                  <img className='phoneMusicBar__img m-2' src={logo} alt='' />
+                  <div className='phoneMusicBar__info align-self-center mr-2'>
+                    <div className='phoneMusicBar__title'>
+                      <div className='scroll'>
+                        <span>{state.songName}</span>
+                      </div>
+                    </div>
+                    <div className='phoneMusicBar__singer'>
+                      <span>{state.songSinger}</span>
+                    </div>
+                  </div>
                 </div>
-                <div className='phoneMusicBar__singer'>
-                  <span>{state.songSinger}</span>
+                <div
+                  className='phoneMusicBar__right d-flex align-self-center 
+          justify-content-around'
+                >
+                  <div className='icon ' onClick={handleNext}>
+                    <SkipNextRounded style={{ fontSize: '25px' }} />
+                  </div>
+                  <div
+                    className='icon '
+                    onClick={() => playAndPauseMusic(audioRef.current)}
+                  >
+                    {state.playing ? (
+                      <Pause style={{ fontSize: '25px' }} />
+                    ) : (
+                      <PlayCircleFilledRounded style={{ fontSize: '25px' }} />
+                    )}
+                  </div>
+                  <div className='icon' onClick={handlePrevious}>
+                    <SkipPreviousRounded style={{ fontSize: '25px' }} />
+                  </div>
+                  <div
+                    className='icon'
+                    onClick={() => setShowMusicBar(!showMusiBar)}
+                  >
+                    {showMusiBar ? (
+                      <ExpandMoreRounded style={{ fontSize: '25px' }} />
+                    ) : (
+                      <ExpandLessRounded style={{ fontSize: '25px' }} />
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div
-              className='phoneMusicBar__right d-flex align-self-center 
-             justify-content-around'
-            >
-              <div className='icon ' onClick={handleNext}>
-                <SkipNextRounded style={{ fontSize: '25px' }} />
-              </div>
-              <div
-                className='icon '
-                onClick={() => playAndPauseMusic(audioRef.current)}
-              >
-                {state.playing ? (
-                  <Pause style={{ fontSize: '25px' }} />
-                ) : (
-                  <PlayCircleFilledRounded style={{ fontSize: '25px' }} />
-                )}
-              </div>
-              <div className='icon' onClick={handlePrevious}>
-                <SkipPreviousRounded style={{ fontSize: '25px' }} />
-              </div>
-              <div
-                className='icon'
-                onClick={() => setShowMusicBar(!showMusiBar)}
-              >
-                {showMusiBar ? (
-                  <ExpandMoreRounded style={{ fontSize: '25px' }} />
-                ) : (
-                  <ExpandLessRounded style={{ fontSize: '25px' }} />
-                )}
-              </div>
-            </div>
-          </div>
+            </Slide>
+          )}
         </Fragment>
         {/* for web ratio */}
         <Fragment
@@ -631,7 +636,11 @@ const Playerstate = (props) => {
                       <img src={logo} alt='logo' />
                     </div>
                     <div className='musicBar__infoDesc'>
-                      <div className='infoDesc__title'>{state.songName}</div>
+                      <div className='infoDesc__title'>
+                        <div className='scroll'>
+                          <span>{state.songName}</span>
+                        </div>
+                      </div>
                       <div className='infoDesc__person'>{state.songSinger}</div>
                     </div>
                   </div>

@@ -41,6 +41,7 @@
 }
 
 .infoDesc__title {
+  white-space: nowrap;
   font-weight: 900;
   font-size: 20px;
   max-height: 47px;

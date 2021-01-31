@@ -136,6 +136,7 @@ const RowItem = ({ media, person, slug, context }) => {
         <Link to={`/song/${slug}`} className='visit '>
           <h4 className='rowItem__title text-center'>
             {truncate(media?.name, 4)}
+            {/* {media?.name} */}
           </h4>
         </Link>
         <Link to={`/person/${person?.[0]?.slug}`} className='visit '>

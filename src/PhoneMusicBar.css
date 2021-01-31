@@ -9,6 +9,7 @@
   right: 0;
   left: 0;
   display: none !important;
+  transition: top 0.3s;
 }
 .phoneMusicBar__slide {
   z-index: 12200;
@@ -25,8 +26,26 @@
   height: 40px;
 }
 .phoneMusicBar__title {
+  overflow: hidden;
+  width: 140px;
+  height: 100%;
   font-size: 15px;
   font-weight: 700;
+}
+
+.scroll {
+  animation: animate 4s linear infinite;
+}
+@keyframes animate {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.phoneMusicBar__title div {
+  white-space: nowrap;
 }
 .phoneMusicBar__singer {
   font-size: 12px;
