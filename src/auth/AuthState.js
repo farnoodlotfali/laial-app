@@ -12,8 +12,8 @@ import {
 } from './types';
 const AuthState = (props) => {
   const initialState = {
-    tokenAccess: localStorage.getItem('tokenAccess'),
-    tokenRefresh: localStorage.getItem('tokenRefresh'),
+    // tokenAccess: localStorage.getItem('tokenAccess'),
+    // tokenRefresh: localStorage.getItem('tokenRefresh'),
     isAuth: false,
     loading: true,
     error: null,
@@ -104,12 +104,12 @@ const AuthState = (props) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + state.tokenAccess,
+        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
       },
     };
     try {
       const res = await axios.instance.get('/test-auth/', config);
-      console.log(res.data);
+      // console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -125,8 +125,8 @@ const AuthState = (props) => {
         testAuth,
         isAuth: state.isAuth,
         user: state.user,
-        tokenAccess: state.tokenAccess,
-        tokenRefresh: state.tokenRefresh,
+        // tokenAccess: state.tokenAccess,
+        // tokenRefresh: state.tokenRefresh,
       }}
     >
       {props.children}
