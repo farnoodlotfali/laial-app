@@ -5,14 +5,19 @@ import './Home.css';
 import TileBanner from './TileBanner';
 import appContext from './contexts/appContext';
 import Spinner from './spinner/Spinner';
+import authContext from './auth/authContext';
 
 const Home = () => {
   const { loading, getHome, home } = useContext(appContext);
+  const { loadUser, tokenAccess } = useContext(authContext);
+
   // let params = useParams();
   // let his = useHistory();
   // console.log(params.slug);
   useEffect(() => {
     getHome();
+    loadUser();
+
     // eslint-disable-next-line
   }, []);
 

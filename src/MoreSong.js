@@ -15,7 +15,7 @@ const MoreSong = () => {
   useEffect(() => {
     getBlock(params.slug);
     // eslint-disable-next-line
-  }, []);
+  }, [params.slug]);
 
   return loading ? (
     <Spinner />

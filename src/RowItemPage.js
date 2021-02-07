@@ -2,7 +2,7 @@ import { IconButton, Tooltip } from '@material-ui/core';
 import {
   Favorite,
   GetAppRounded,
-  PlayArrow,
+  PlayArrowRounded,
   PlaylistAdd,
   Visibility,
 } from '@material-ui/icons';
@@ -70,7 +70,6 @@ const RowItemPage = () => {
   } = useContext(AppContext);
   const { setUrl, playMusic, setIds } = useContext(playerContext);
   // console.log(item);
-
   let params = useParams();
   useEffect(() => {
     getSongPage(params.slug);
@@ -78,7 +77,7 @@ const RowItemPage = () => {
     getRecommender();
 
     // eslint-disable-next-line
-  }, []);
+  }, [params.slug]);
   // console.log(dataSongPage);
   // نشان دادن موزیک و پخش موزیک
   const playMusicAndShowMusicBar = async () => {
@@ -126,9 +125,12 @@ const RowItemPage = () => {
           <hr />
           <div className='actions d-flex justify-content-around'>
             <div onClick={playMusicAndShowMusicBar}>
-              <Tooltip placement='left' title='Play'>
+              <Tooltip placement='bottom' title='پخش آهنگ'>
                 <IconButton aria-label='play'>
-                  <PlayArrow style={{ fontSize: '40px' }} className='icon' />
+                  <PlayArrowRounded
+                    style={{ fontSize: '40px' }}
+                    className='icon'
+                  />
                 </IconButton>
               </Tooltip>
             </div>
@@ -145,7 +147,7 @@ const RowItemPage = () => {
 
             <div>
               <a href={downloadUrl} className='download'>
-                <Tooltip placement='bottom' title='Download'>
+                <Tooltip placement='bottom' title='دانلود'>
                   <IconButton aria-label='download'>
                     <GetAppRounded fontSize='large' />
                   </IconButton>
@@ -154,7 +156,7 @@ const RowItemPage = () => {
             </div>
 
             <div>
-              <Tooltip placement='right' title='Add'>
+              <Tooltip placement='bottom' title='اضافه به لیست'>
                 <IconButton aria-label='Add'>
                   <PlaylistAdd className='Add' fontSize='large' />
                 </IconButton>
@@ -171,7 +173,7 @@ const RowItemPage = () => {
       </div>
 
       <div className='rowList mb-3 mt-5  pt-5 '>
-        <h3 className='text-light pb-3'>
+        <h3 className='text-light text-right pb-3 mr-4'>
           <span>پیشنهاداتی برای شما</span>
         </h3>
         <Flickity className='carousel  px-2 py-0' options={flickityOptions}>

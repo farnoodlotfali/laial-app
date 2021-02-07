@@ -1,0 +1,255 @@
+.register {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to bottom, rgb(34, 35, 39), black);
+}
+
+.register .color {
+  position: absolute;
+  filter: blur(150px);
+}
+
+.register .color:nth-child(1) {
+  top: -350px;
+  width: 600px;
+  height: 600px;
+  background: rgb(18, 18, 18);
+}
+
+.register .color:nth-child(2) {
+  bottom: 25px;
+  left: 100px;
+  width: 500px;
+  height: 500px;
+  overflow: hidden;
+  background: rgb(34, 35, 39);
+}
+
+.register .color:nth-child(3) {
+  bottom: 25px;
+  right: 200px;
+  width: 300px;
+  height: 300px;
+  background: rgb(184, 177, 212);
+}
+
+.register .box {
+  position: relative;
+}
+
+.register .box .square {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 25px 45px rgba(134, 128, 128, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  animation: squareBox 10s linear infinite;
+  /* animation-delay: calc(1s * var(i)); */
+}
+@keyframes squareBox {
+  0%,
+  100% {
+    transform: translateY(-40px);
+  }
+  50% {
+    transform: translateY(40px);
+  }
+}
+.register .box .square:nth-child(1) {
+  top: -50px;
+  right: -60px;
+  width: 100px;
+  height: 100px;
+  animation-delay: -1s;
+}
+.register .box .square:nth-child(2) {
+  top: 150px;
+  left: -100px;
+  width: 120px;
+  height: 120px;
+  animation-delay: -2s;
+  z-index: 2;
+}
+.register .box .square:nth-child(3) {
+  bottom: 50px;
+  right: -60px;
+  width: 80px;
+  height: 80px;
+  animation-delay: -3s;
+  z-index: 2;
+}
+.register .box .square:nth-child(4) {
+  bottom: -80px;
+  left: 100px;
+  width: 50px;
+  animation-delay: -4s;
+  height: 50px;
+}
+.register .box .square:nth-child(5) {
+  top: -80px;
+  left: 140px;
+  width: 60px;
+  height: 60px;
+  animation-delay: -5s;
+}
+
+.register__container {
+  position: relative;
+  width: 400px;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 25px 45px rgba(5, 4, 10, 0.2);
+  border: 1px solid gray;
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.register__container .form {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+}
+
+.register .form h2 {
+  position: relative;
+  color: #fff;
+  font-style: 24px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 40px;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+}
+
+/* .form h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 80px;
+  height: 4px;
+  background: white;
+} */
+
+.register .form .inputBox {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.register .form .inputBox input {
+  text-align: right;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  outline: none;
+  padding: 10px 20px;
+  border-radius: 35px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: white;
+  box-shadow: 0 5px 15px rgba(173, 173, 173, 0.05);
+}
+.register .form .inputBox input:focus {
+  box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
+}
+.register .form .inputBox input::placeholder {
+  color: rgba(255, 255, 255, 0.438);
+  text-align: right;
+}
+
+.register .form .inputBox input[type='submit'] {
+  background-color: white;
+  color: #666;
+  cursor: pointer;
+  max-width: 100px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.register .formMsg {
+  color: rgb(18, 18, 18);
+}
+
+@media (max-width: 768px) {
+  .register__container {
+    width: 300px;
+  }
+
+  .register__container .form {
+    padding: 15px;
+  }
+  .register .color:nth-child(1) {
+    /* top: -10px; */
+    width: 200px;
+    height: 200px;
+  }
+
+  .register .color:nth-child(2) {
+    top: 50%;
+    left: 10%;
+    height: 200px;
+    width: 200px;
+    background: rgb(216, 207, 207);
+  }
+
+  .register .color:nth-child(3) {
+    background: rgb(15, 15, 15);
+    width: 200px;
+    height: 200px;
+  }
+
+  .register .box .square:nth-child(2) {
+    top: 150px;
+    left: -10px;
+    width: 120px;
+    height: 120px;
+    z-index: 0;
+  }
+  .register .box .square:nth-child(3) {
+    bottom: 50px;
+    right: -60px;
+    width: 80px;
+    height: 80px;
+    z-index: 2;
+  }
+  .register .box .square:nth-child(4) {
+    bottom: -20px;
+    left: -10px;
+    width: 50px;
+    height: 50px;
+    z-index: 2;
+  }
+  .register .box .square:nth-child(5) {
+    top: -80px;
+    left: 10px;
+    width: 60px;
+    height: 60px;
+  }
+
+  @keyframes squareBox {
+    0%,
+    100% {
+      transform: translateX(-40px);
+    }
+    50% {
+      transform: translateX(40px);
+    }
+  }
+}

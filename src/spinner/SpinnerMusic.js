@@ -10,10 +10,12 @@ const SpinnerMusic = () => {
         height: '114px',
         opacity: 0.5,
         position: 'absolute',
-        top: '1%',
+        // top: '1%',
+        // transla,
       }}
     >
       <img
+        className='mr-auto'
         src={spinner}
         alt='..loading'
         style={{ widows: '200px', display: 'block' }}

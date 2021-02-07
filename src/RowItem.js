@@ -1,9 +1,4 @@
-import {
-  Pause,
-  PlayArrowRounded,
-  PlayCircleFilled,
-  PlaylistAdd,
-} from '@material-ui/icons';
+import { Pause, PlayArrowRounded } from '@material-ui/icons';
 import React, { useContext } from 'react';
 import { Badge } from 'react-bootstrap';
 import AppContext from './contexts/appContext';
@@ -14,7 +9,7 @@ import playerContext from './player/playerContext';
 import axios from './axios/axios';
 
 import SpinnerLoading from './spinner/SpinnerLoading';
-import rowItemPageContext from './rowItemPageState/rowItemPageContext';
+import authContext from './auth/authContext';
 const urls = [
   {
     url:
@@ -42,6 +37,7 @@ const urls = [
 ];
 
 const RowItem = ({ media, person, slug, context }) => {
+  // let { slug } = useParams();
   // eslint-disable-next-line
   const { ChangeShowMusic, ChangeshowCenter, showMusic } = useContext(
     AppContext
@@ -55,8 +51,9 @@ const RowItem = ({ media, person, slug, context }) => {
     setIds,
     playAndPauseMusic,
   } = useContext(playerContext);
-  // console.log(context);
 
+  const { testAuth } = useContext(authContext);
+  // console.log(context);
   const playMusicAndShowMusicBar = async () => {
     // نشان دادن موزیک و پخش موزیک
     setIds(
@@ -94,7 +91,7 @@ const RowItem = ({ media, person, slug, context }) => {
             <SpinnerLoading />
           </div>
         ) : playing && media?.id === songId ? (
-          <div className=' moblie_play' onClick={playMusicAndShowMusicBar}>
+          <div className=' moblie_play' onClick={() => playAndPauseMusic()}>
             <Pause style={{ fontSize: '100px' }} />
             {/* <img src={logo} alt='' /> */}
           </div>
@@ -111,7 +108,7 @@ const RowItem = ({ media, person, slug, context }) => {
             <SpinnerLoading />
           </div>
         ) : playing && media?.id === songId ? (
-          <div className=' play__music'>
+          <div className=' play__music' onClick={() => playAndPauseMusic()}>
             <Pause />
           </div>
         ) : (
@@ -133,13 +130,21 @@ const RowItem = ({ media, person, slug, context }) => {
         </div>
       </div>{' '} */}
       <div className='rowItem__info '>
-        <Link to={`/song/${slug}`} className='visit '>
+        <Link
+          to={`/song/${slug}`}
+          className='visit '
+          onClick={() => testAuth()}
+        >
           <h4 className='rowItem__title text-center'>
             {truncate(media?.name, 4)}
             {/* {media?.name} */}
           </h4>
         </Link>
-        <Link to={`/person/${person?.[0]?.slug}`} className='visit '>
+        <Link
+          to={`/person/${person?.[0]?.slug}`}
+          className='visit '
+          onClick={() => testAuth()}
+        >
           <h4 className='rowItem__person text-center'>
             {/* حاج محمد شریفی */}
             {person?.[0]?.name}

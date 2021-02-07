@@ -1,33 +1,35 @@
 .navbar {
   padding: 0 !important;
-
+  z-index: 1;
   direction: rtl;
   /* background-color: #fafafa; */
   background-color: rgb(34, 35, 39);
 }
-
-.navbar ul {
+.navbar-nav {
+  display: contents !important;
+}
+.navs ul {
   list-style: none;
-  display: flex;
+  display: contents !important;
   padding: 0px;
   margin: 0px;
 }
 .selected {
   color: rgb(103, 94, 165) !important;
 }
-.navbar li {
+.navs li {
   /* margin: 10px;
   padding: 10px; */
   transition: transform 450ms ease-out;
 }
 
-.navbar li:hover {
+.navs li:hover {
   transform: scale(1.08);
   opacity: 0.8;
   color: black;
 }
 
-.navbar a {
+.navs a {
   display: flex;
   margin-right: 15px;
   color: white;
@@ -37,11 +39,59 @@
   transition: transform 450ms ease-out;
 }
 
-.navbar a:hover {
+.navs a:hover {
   text-decoration: none;
   color: rgb(185, 184, 184);
   transform: scale(1.08);
   opacity: 0.8;
+}
+.register__login__btn a:hover {
+  text-decoration: none;
+}
+.user_btn:focus {
+  outline: none;
+  box-shadow: none !important;
+}
+.user-menu .MuiMenuItem-root {
+  direction: rtl;
+  font-family: vazir;
+  /* font-weight: 700; */
+}
+.user-menu .MuiMenuItem-root:hover {
+  background: rgb(49, 50, 54);
+}
+.user-menu .MuiMenu-paper {
+  background: rgb(34, 35, 39);
+  color: white;
+
+  box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
+  opacity: 1;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.register__login__btn .show {
+  display: grid;
+}
+.register__login__btn .dropdown-menu {
+  background: rgb(34, 35, 39);
+  color: white;
+
+  box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
+  opacity: 1;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.register__login__btn .dropdown-item {
+  display: flex;
+  font-size: 16px;
+  /* color: red !important; */
+  justify-content: space-between;
+  padding: 5px 10px 2px 5px;
+  color: white;
+}
+.register__login__btn .dropdown-item:hover {
+  background: rgb(49, 50, 54);
+  color: white;
+  cursor: pointer;
 }
 /* .navbar a:focus {
   color: rgb(233, 47, 47);
