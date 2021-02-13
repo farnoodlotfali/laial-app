@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import { useReducer, useState } from 'react';
 import axios from '../axios/axios';
 import AppContext from './appContext';
 import appReducer from './appReducer';
@@ -84,11 +84,11 @@ const AppState = (props) => {
         Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
       },
     };
-
+    // console.log(config);
     try {
       // eslint-disable-next-line
-      const like = await axios.instanceApi.post(`/post/${slug}`, config);
-      console.log(like.data);
+      const like = await axios.instanceApi.post(`/post/${slug}/`, null, config);
+      // console.log(like.data);
       dispatch({
         type: LIKE_SONG,
         payload: like.data.data.likes,
@@ -101,7 +101,27 @@ const AppState = (props) => {
       });
     }
   };
+  const getSongPage = async (newSlug) => {
+    dispatch({
+      type: SET_LOADING,
+    });
+    try {
+      const res = await axios.instanceApi.get(`post/${newSlug}`);
+      // console.log(res.data.data.likes);
+      getSongPageUrl(res.data.data.media[0].telegram_id);
 
+      dispatch({
+        type: GET_SONG_PAGE,
+        payload: res.data.data,
+      });
+    } catch (error) {
+      // console.log(error);
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
   const getHome = async () => {
     dispatch({
       type: SET_LOADING,
@@ -164,27 +184,7 @@ const AppState = (props) => {
       });
     }
   };
-  const getSongPage = async (newSlug) => {
-    dispatch({
-      type: SET_LOADING,
-    });
-    try {
-      const res = await axios.instanceApi.get(`post/${newSlug}`);
-      // console.log(res.data.data.likes);
-      getSongPageUrl(res.data.data.media[0].telegram_id);
 
-      dispatch({
-        type: GET_SONG_PAGE,
-        payload: res.data.data,
-      });
-    } catch (error) {
-      // console.log(error);
-      dispatch({
-        type: ERROR,
-        payload: error,
-      });
-    }
-  };
   const getSongPageUrl = async (telegramId) => {
     try {
       const res = await axios.downloader.get(`/${telegramId}`);

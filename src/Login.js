@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import authContext from './auth/authContext';
 import './Login.css';
 
 const Login = (props) => {
-  const { login, loadUser, user } = useContext(authContext);
+  let history = useHistory();
+  const { error, login, loadUser, user } = useContext(authContext);
   const [userInfo, setUserInfo] = useState({
     username: '',
     email: '',
@@ -14,9 +15,10 @@ const Login = (props) => {
   useEffect(() => {
     loadUser();
     if (user !== null) {
-      props.history.push('/');
+      // props.history.back();
+      history.goBack();
     }
-  }, [user, props.history]);
+  }, [user, history]);
 
   const onchange = (e) => {
     setUserInfo({
@@ -85,6 +87,7 @@ const Login = (props) => {
                   minLength='8'
                 />
               </div>
+              <div className='error__msg__login pt-2 '>{error?.error} *</div>
               <div className='notRegister pt-2'>
                 <span>ثبت نام نکرده اید؟</span>
 

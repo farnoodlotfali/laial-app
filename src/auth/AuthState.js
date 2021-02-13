@@ -87,9 +87,10 @@ const AuthState = (props) => {
 
       loadUser();
     } catch (error) {
+      console.log(error.response);
       dispatch({
         type: LOGIN_FAIL,
-        payload: error,
+        payload: error?.response?.data,
       });
     }
   };
@@ -125,6 +126,7 @@ const AuthState = (props) => {
         testAuth,
         isAuth: state.isAuth,
         user: state.user,
+        error: state.error,
         // tokenAccess: state.tokenAccess,
         // tokenRefresh: state.tokenRefresh,
       }}

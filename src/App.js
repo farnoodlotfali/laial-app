@@ -20,22 +20,15 @@ import RowItemPage from './RowItemPage';
 import PhoneMenu from './PhoneMenu';
 import MoreSong from './MoreSong';
 import Person from './Person';
-import axios from 'axios';
 import Foooter from './Foooter';
 import Test from './Test';
 import Register from './Register';
 import Login from './Login';
 import AuthState from './auth/AuthState';
-import authContext from './auth/authContext';
 
 const App = () => {
   return (
     <div className='app '>
-      {/* <Test /> */}
-      {/* <AuthState>
-        <Register />
-      </AuthState> */}
-      {/* <Login /> */}
       <AppState>
         <Playerstate>
           <SearchState>

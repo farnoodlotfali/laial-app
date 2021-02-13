@@ -187,3 +187,7 @@
   font-weight: 700;
   text-decoration: none;
 }
+
+.error__msg__login {
+  color: darkred;
+}

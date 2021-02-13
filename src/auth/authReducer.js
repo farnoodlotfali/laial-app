@@ -37,7 +37,7 @@ export default (state, action) => {
         isAuth: false,
         loading: false,
         user: null,
-        // error: action.payload,
+        error: action.payload,
       };
 
     case USER_LOADED:
