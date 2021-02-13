@@ -45,7 +45,7 @@ const AuthState = (props) => {
     });
 
     try {
-      const res = await axios.instance.post(
+      const res = await axios.instanceApi.post(
         '/account/register/',
         formData,
         config
@@ -78,7 +78,7 @@ const AuthState = (props) => {
       formData.append(key, form[key]);
     });
     try {
-      const res = await axios.instance.post('/account/login/', form, config);
+      const res = await axios.instanceApi.post('/account/login/', form, config);
       // console.log(res);
       dispatch({
         type: LOGIN_SUCCESS,
@@ -108,7 +108,7 @@ const AuthState = (props) => {
       },
     };
     try {
-      const res = await axios.instance.get('/test-auth/', config);
+      const res = await axios.instanceApi.get('/test-auth/', config);
       // console.log(res.data);
     } catch (error) {
       console.log(error);

@@ -62,7 +62,7 @@ const AppState = (props) => {
   const viewPage = async (slug) => {
     try {
       // eslint-disable-next-line
-      const view = await axios.instance.get(`/post/${slug}/?state=views`);
+      const view = await axios.instanceApi.get(`/post/${slug}/?state=views`);
       // console.log(view.data.data);
       dispatch({
         type: VIEWS_PAGE,
@@ -78,16 +78,23 @@ const AppState = (props) => {
   };
 
   const likeSong = async (slug) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+      },
+    };
+
     try {
       // eslint-disable-next-line
-      const like = await axios.instance.get(`/post/${slug}/?state=likes`);
-      // console.log(like.data.data);
+      const like = await axios.instanceApi.post(`/post/${slug}`, config);
+      console.log(like.data);
       dispatch({
         type: LIKE_SONG,
         payload: like.data.data.likes,
       });
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       dispatch({
         type: ERROR,
         payload: error,
@@ -100,7 +107,7 @@ const AppState = (props) => {
       type: SET_LOADING,
     });
     try {
-      const res = await axios.instance.get(`page/home`);
+      const res = await axios.instanceApi.get(`page/home`);
       dispatch({
         type: GET_HOME,
         payload: res.data.data[0].block,
@@ -119,7 +126,7 @@ const AppState = (props) => {
       type: SET_LOADING,
     });
     try {
-      const res = await axios.instance.get(`block/${newSlug}`);
+      const res = await axios.instanceApi.get(`block/${newSlug}`);
       dispatch({
         type: GET_BLOCK,
         payload: {
@@ -142,7 +149,7 @@ const AppState = (props) => {
       type: SET_LOADING,
     });
     try {
-      const res = await axios.instance.get(`persons/${newSlug}`);
+      const res = await axios.instanceApi.get(`persons/${newSlug}`);
       // console.log(res.data);
       dispatch({
         type: GET_PERSON,
@@ -162,7 +169,7 @@ const AppState = (props) => {
       type: SET_LOADING,
     });
     try {
-      const res = await axios.instance.get(`post/${newSlug}`);
+      const res = await axios.instanceApi.get(`post/${newSlug}`);
       // console.log(res.data.data.likes);
       getSongPageUrl(res.data.data.media[0].telegram_id);
 
@@ -196,7 +203,7 @@ const AppState = (props) => {
   };
   const getRecommender = async () => {
     try {
-      const res = await axios.instance.get(`/recommender`);
+      const res = await axios.instanceApi.get(`/recommender`);
       // console.log(res.data.data);
       dispatch({
         type: GET_RECOMMENDER,

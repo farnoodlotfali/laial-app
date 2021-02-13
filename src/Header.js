@@ -13,7 +13,12 @@ import { Button, Menu, MenuItem } from '@material-ui/core';
 // for fix to top use fixed-top in  className='fixed-top'
 const Header = () => {
   const { ChangeshowCenter, ChangeShowLeft } = useContext(appContext);
-  const { isAuth, user, logout } = useContext(authContext);
+  const {
+    isAuth,
+
+    user,
+    logout,
+  } = useContext(authContext);
 
   const [anchorEl, setAnchorEl] = useState(null);
 
