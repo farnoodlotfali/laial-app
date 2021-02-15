@@ -191,3 +191,27 @@
 .error__msg__login {
   color: darkred;
 }
+
+@media (max-width: 768px) {
+  .login {
+    height: 90vh;
+  }
+  .login__container {
+    width: auto;
+  }
+
+  .login .color:nth-child(1) {
+    width: 200px;
+    height: 200px;
+  }
+
+  .login .color:nth-child(2) {
+    width: 200px;
+    height: 200px;
+  }
+
+  .login .color:nth-child(3) {
+    width: 200px;
+    height: 200px;
+  }
+}

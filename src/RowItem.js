@@ -1,5 +1,5 @@
 import { Pause, PlayArrowRounded } from '@material-ui/icons';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Badge } from 'react-bootstrap';
 import AppContext from './contexts/appContext';
 import logo1 from './assets/0.jpg';

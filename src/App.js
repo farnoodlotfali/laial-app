@@ -25,6 +25,8 @@ import Test from './Test';
 import Register from './Register';
 import Login from './Login';
 import AuthState from './auth/AuthState';
+import ScrollToTop from './ScrollToTop';
+import PhoneList from './PhoneList';
 
 const App = () => {
   return (
@@ -33,6 +35,8 @@ const App = () => {
         <Playerstate>
           <SearchState>
             <AuthState>
+              <ScrollToTop />
+              <PhoneList />
               <Center />
               <Left />
               <Header />

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import './Foooter.css';
 import logo from './assets/10.jpg';
 import logo1 from './assets/9.jpg';

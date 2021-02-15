@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useRef, useState } from 'react';
+import { Fragment, useContext, useRef, useState } from 'react';
 import { Divider, IconButton, Tooltip } from '@material-ui/core';
 import { Close, Edit } from '@material-ui/icons';
 import appContext from './contexts/appContext';

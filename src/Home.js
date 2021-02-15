@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from 'react';
+import { Fragment, useContext, useEffect } from 'react';
 import Banner from './Banner';
 import RowList from './RowList';
 import './Home.css';
@@ -8,18 +8,23 @@ import Spinner from './spinner/Spinner';
 import authContext from './auth/authContext';
 
 const Home = () => {
-  const { loading, getHome, home } = useContext(appContext);
-  const { loadUser, tokenAccess } = useContext(authContext);
+  const { setHalfHourRefresh, loading, getHome, home } = useContext(appContext);
+  const { user, loadUser, tokenAccess } = useContext(authContext);
 
   // let params = useParams();
   // let his = useHistory();
   // console.log(params.slug);
   useEffect(() => {
-    getHome();
+    if (home === null) {
+      getHome();
+      // console.log(11);
+    }
+
     loadUser();
 
+    // console.log(IsHalfHourRefreshFinished());
     // eslint-disable-next-line
-  }, []);
+  }, [home, user]);
 
   return (
     <Fragment>

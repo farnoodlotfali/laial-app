@@ -8,7 +8,7 @@ import {
   SkipNextRounded,
   SkipPreviousRounded,
 } from '@material-ui/icons';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import AppContext from './contexts/appContext';
 import logo from './assets/0.jpg';
 import './Left.css';

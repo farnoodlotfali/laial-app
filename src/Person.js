@@ -1,18 +1,22 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import appContext from './contexts/appContext';
 import './Person.css';
 import Spinner from './spinner/Spinner';
 import RowItem from './RowItem';
 import { useParams } from 'react-router';
 const Person = () => {
-  const { personList, getPerson, loading } = useContext(appContext);
+  const { personList, getPerson, personkSlug, loading } = useContext(
+    appContext
+  );
 
   let params = useParams();
 
   useEffect(() => {
-    getPerson(params.slug);
+    if (personkSlug !== params.slug) {
+      getPerson(params.slug);
+    }
     // eslint-disable-next-line
-  }, []);
+  }, [params.slug]);
   // console.log(personList);
   return loading ? (
     <Spinner />

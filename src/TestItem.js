@@ -1,5 +1,3 @@
-import React from 'react';
-
 const TestItem = ({ logo }) => {
   return (
     <div className='carousel-cell'>

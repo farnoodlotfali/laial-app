@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react';
+import { Fragment, useContext } from 'react';
 import RowItem from '../RowItem';
 import Spinner from '../spinner/Spinner';
 import SearchContext from './searchContext';

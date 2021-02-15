@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react';
+import { Fragment, useContext, useState } from 'react';
 import './Header.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import appContext from './contexts/appContext';

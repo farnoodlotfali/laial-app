@@ -1,4 +1,3 @@
-import React from 'react';
 import Flickity from 'react-flickity-component';
 import './TileBanner.css';
 import logo from './assets/0.jpg';

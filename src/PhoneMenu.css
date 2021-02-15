@@ -32,6 +32,20 @@
 .phoneMenu__item {
   display: grid;
 }
+
+.phoneList__loginBTn {
+  color: white;
+}
+.phoneList__loginBTn a {
+  text-decoration: none;
+}
+.phoneList__loginBTn:hover {
+  text-decoration: none;
+  color: whitesmoke;
+}
+.phoneList__user {
+  direction: rtl;
+}
 /* .phoneMenu .phoneMenu__items {
   background-color: rgb(34, 35, 39) !important;
 } */

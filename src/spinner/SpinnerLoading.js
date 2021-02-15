@@ -1,4 +1,3 @@
-import React from 'react';
 import SpinnerLoad from './SpinnerLoad.gif';
 
 const SpinnerLoading = () => {

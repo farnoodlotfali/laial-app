@@ -1,7 +1,7 @@
 import { Backdrop, IconButton, Modal, Slide, Tooltip } from '@material-ui/core';
 // eslint-disable-next-line
-import { Close, Edit, PlaylistAdd } from '@material-ui/icons';
-import React, { useContext, useEffect } from 'react';
+import { PlaylistAdd } from '@material-ui/icons';
+import { useContext, useEffect } from 'react';
 import './Center.css';
 import md5 from 'md5';
 import AppContext from './contexts/appContext';

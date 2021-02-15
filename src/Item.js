@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Item = ({ logo }) => {
   return (
     <div className='item'>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import './MoreSong.css';
 import RowItem from './RowItem';
 import appContext from './contexts/appContext';
@@ -7,13 +7,18 @@ import Spinner from './spinner/Spinner';
 import { useParams } from 'react-router';
 
 const MoreSong = () => {
-  const { BlockListName, loading, getBlock, block } = useContext(appContext);
+  const { BlockListName, loading, getBlock, block, blockSlug } = useContext(
+    appContext
+  );
   // console.log(props.location.pathname);
   let params = useParams();
-  // console.log(params);
+  // console.log(params.slug);
+  // console.log(blockSlug);
 
   useEffect(() => {
-    getBlock(params.slug);
+    if (blockSlug !== params.slug) {
+      getBlock(params.slug);
+    }
     // eslint-disable-next-line
   }, [params.slug]);
 

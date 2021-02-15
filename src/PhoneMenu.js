@@ -5,17 +5,19 @@ import {
   MusicNote,
   Search,
 } from '@material-ui/icons';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import appContext from './contexts/appContext';
 import './PhoneMenu.css';
 const PhoneMenu = () => {
-  const { ChangeshowCenter, ChangeShowMusic } = useContext(appContext);
+  const { ChangeshowCenter, ChangeShowMusic, showx, x } = useContext(
+    appContext
+  );
 
   return (
     <div className='phoneMenu'>
       <div className='phoneMenu__items d-flex justify-content-around py-2 '>
-        <div className={`phoneMenu__item`}>
+        <div className={`phoneMenu__item`} onClick={() => showx(true)}>
           <MenuRounded fontSize='large' />
           {/* <span> منو </span> */}
         </div>

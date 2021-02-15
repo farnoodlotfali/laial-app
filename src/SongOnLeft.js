@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { IconButton, Tooltip } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 import logo from './assets/0.jpg';

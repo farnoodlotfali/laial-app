@@ -1,4 +1,3 @@
-import React from 'react';
 import './Navigation.css';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import { Link } from 'react-router-dom';

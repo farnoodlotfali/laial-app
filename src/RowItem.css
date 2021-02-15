@@ -48,6 +48,9 @@
   display: flex;
   transition: transform 450ms ease-in-out;
   justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .rowItem__title:hover {
   /* color: rgb(161, 161, 161); */

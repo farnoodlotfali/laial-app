@@ -1,5 +1,5 @@
 import { Slider } from '@material-ui/core';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import './PhoneMusicBar.css';
 import playerContext from './player/playerContext';
 const PhoneMusicBar = () => {

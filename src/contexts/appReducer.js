@@ -30,13 +30,15 @@ export default (state, action) => {
         ...state,
         block: action.payload.block,
         BlockListName: action.payload.BlockListName,
+        blockSlug: action.payload.blockSlug,
         loading: false,
       };
 
     case GET_PERSON:
       return {
         ...state,
-        personList: action.payload,
+        personList: action.payload.personList,
+        personkSlug: action.payload.personkSlug,
         loading: false,
       };
     case GET_SONG_PAGE:
@@ -72,6 +74,7 @@ export default (state, action) => {
         ...state,
         error: action.payload,
       };
+
     default:
       return { ...state };
   }

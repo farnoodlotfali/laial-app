@@ -13,6 +13,7 @@ import {
   VIEWS_PAGE,
   GET_RECOMMENDER,
   LIKE_SONG,
+  SET_HALF_HOUR_REFRESH,
 } from './types';
 const AppState = (props) => {
   const initialState = {
@@ -20,7 +21,8 @@ const AppState = (props) => {
     loading: false,
     block: null,
     BlockListName: '',
-    slug: null,
+    blockSlug: null,
+    personkSlug: null,
     error: null,
     personList: null,
     dataSongPage: null,
@@ -35,13 +37,12 @@ const AppState = (props) => {
   const [showLeft, setShowLeft] = useState(false);
   const [showCenter, setShowCenter] = useState(false);
   const [x, setx] = useState(false);
-  // const [loading, setLoading] = useState(true);
-  // const [slug, setSlug] = useState('home');
   const [lists, setLists] = useState([]);
-  const showx = () => {
+  const showx = (newValue) => {
     // setx(!x);
     setx(!x);
   };
+
   const ChangeShowMusic = () => {
     setShowMusic(!showMusic);
   };
@@ -152,6 +153,7 @@ const AppState = (props) => {
         payload: {
           block: res.data.results,
           BlockListName: res.data?.block[0]?.name,
+          blockSlug: newSlug,
         },
       });
       // console.log(res);
@@ -173,7 +175,7 @@ const AppState = (props) => {
       // console.log(res.data);
       dispatch({
         type: GET_PERSON,
-        payload: res.data.results,
+        payload: { personList: res.data.results, personkSlug: newSlug },
       });
       // console.log(res.data.results);
     } catch (error) {
@@ -234,14 +236,17 @@ const AppState = (props) => {
         getSongPage,
         viewPage,
         likeSong,
+
         getRecommender,
         showx,
         x,
         home: state.home,
         block: state.block,
+        blockSlug: state.blockSlug,
         dataSongPage: state.dataSongPage,
         BlockListName: state.BlockListName,
         personList: state.personList,
+        personkSlug: state.personkSlug,
         loading: state.loading,
         downloadUrl: state.downloadUrl,
         viewsPage: state.viewsPage,

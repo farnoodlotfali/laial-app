@@ -12,6 +12,68 @@
   border-radius: 10px;
   box-shadow: 0px 0px 5px 5px rgba(168, 179, 211, 0.7);
 }
+.favoritePopUp__login .modal-content {
+  background: rgb(34, 35, 39);
+  box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.favoritePopUp__login .modal-header {
+  justify-content: flex-end !important ;
+}
+.favoritePopUp__login .modal-title {
+  font-size: 20px;
+  font-family: vazir !important;
+  font-weight: 600;
+  color: white;
+}
+
+.favoritePopUp__login .close {
+  color: white;
+  margin: -1rem -1rem -1rem 0px;
+}
+
+.formGp input {
+  direction: rtl;
+  background-color: lightgray;
+  border-radius: 7px;
+  overflow: visible;
+  font-family: vazir !important;
+  padding: 5px;
+}
+.favoritePopUp__login .notRegister {
+  font-family: vazir !important;
+  color: lightgrey;
+  display: flex;
+  justify-content: center;
+  direction: rtl;
+}
+.favoritePopUp__login .modal-body {
+  background: rgb(18, 18, 18);
+}
+
+.formGp__btn {
+  border-top: 1px solid whitesmoke;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+.formGp__btn .inputBox__login {
+  flex: 0.7;
+}
+
+.formGp__btn .inputBox__login input {
+  width: 100%;
+  font-family: vazir !important;
+  border-radius: 7px;
+}
+
+.formGp__btn .inputBox__close {
+  flex: 0.2;
+}
+.formGp__btn .inputBox__close button {
+  width: 100%;
+  font-family: vazir !important;
+  border-radius: 7px;
+}
 
 /* .view_like {
   display: none;musicInfo 
@@ -108,5 +170,15 @@
   .musicInfo__image {
     width: 200px;
     height: 200px;
+  }
+  .formGp {
+    display: grid !important;
+  }
+
+  .favoritePopUp__login .modal-title {
+    font-size: 16px;
+  }
+  .rowItemPage .rowList {
+    padding-bottom: 40px;
   }
 }

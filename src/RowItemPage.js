@@ -1,4 +1,4 @@
-import { IconButton, Tooltip } from '@material-ui/core';
+import { Divider, IconButton, Tooltip } from '@material-ui/core';
 import {
   Favorite,
   GetAppRounded,
@@ -6,7 +6,7 @@ import {
   PlaylistAdd,
   Visibility,
 } from '@material-ui/icons';
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router';
 import axios from './axios/axios';
 import AppContext from './contexts/appContext';
@@ -15,6 +15,10 @@ import './RowItemPage.css';
 import Flickity from 'react-flickity-component';
 import Spinner from './spinner/Spinner';
 import RowItem from './RowItem';
+import authContext from './auth/authContext';
+import { Button, Modal } from 'react-bootstrap';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 const urls = [
   {
     url:
@@ -47,6 +51,14 @@ const urls = [
   },
 ];
 const RowItemPage = () => {
+  const [show, setShow] = useState(false);
+  const [userInfo, setUserInfo] = useState({
+    username: '',
+    email: '',
+    password: '',
+  });
+  const { username, email, password } = userInfo;
+
   const flickityOptions = {
     // initialIndex: 2,
     contain: true,
@@ -69,6 +81,8 @@ const RowItemPage = () => {
     likeSong,
   } = useContext(AppContext);
   const { setUrl, playMusic, setIds } = useContext(playerContext);
+  const { error, login, loadUser, user } = useContext(authContext);
+  const { isAuth } = useContext(authContext);
   // console.log(item);
   let params = useParams();
   useEffect(() => {
@@ -101,6 +115,13 @@ const RowItemPage = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const onchange = (e) => {
+    setUserInfo({
+      ...userInfo,
+      [e.target.name]: e.target.value,
+    });
   };
   return loading ? (
     <Spinner />
@@ -138,11 +159,87 @@ const RowItemPage = () => {
             <div className='favorite'>
               <IconButton
                 aria-label='Favorite'
-                onClick={() => likeSong(params.slug)}
+                onClick={() => (isAuth ? likeSong(params.slug) : setShow(true))}
               >
                 <Favorite className='Favorite' fontSize='large' />
               </IconButton>
               {like}
+
+              <Modal
+                show={!isAuth && show}
+                onHide={() => setShow(false)}
+                className='favoritePopUp__login'
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>
+                    برای لایک کردن، باید وارد حساب کاربری شوید
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      login({
+                        email,
+                        password,
+                      });
+                    }}
+                  >
+                    <div className='formGp d-flex justify-content-around'>
+                      <div className='inputBox'>
+                        <input
+                          required
+                          onChange={onchange}
+                          name='password'
+                          value={password}
+                          type='password'
+                          placeholder='رمز ورود'
+                          minLength='8'
+                        />
+                      </div>
+                      <div className='inputBox '>
+                        <input
+                          onChange={onchange}
+                          name='email'
+                          type='email'
+                          value={email}
+                          placeholder='ایمیل'
+                          required
+                        />
+                      </div>{' '}
+                    </div>
+                    <div className='error__msg__login pt-2 '>
+                      {error?.error} *
+                    </div>
+                    <div className='notRegister pt-2'>
+                      {' '}
+                      <span> ثبت نام نکرده اید؟ </span>{' '}
+                      <Link to='/register'>
+                        {' '}
+                        <span> ثبت نام </span>{' '}
+                      </Link>
+                    </div>
+                    {/* <div className='formMsg pt-2'>{errorMsg}</div> */}
+                    <div className='formGp__btn d-flex justify-content-around '>
+                      <div className='inputBox__login'>
+                        <input type='submit' value='ورود' />
+                      </div>
+                      <div className='inputBox__close'>
+                        <button onClick={() => setShow(false)}>بستن</button>
+                      </div>
+                    </div>
+                  </form>
+                </Modal.Body>
+                {/* <Modal.Footer>
+                  <div className='inputBox'>
+                    <input type='submit' value='ورود' />
+                  </div>
+
+                  <Button variant='secondary' onClick={() => setShow(false)}>
+                    بستن
+                  </Button>
+                </Modal.Footer> */}
+              </Modal>
             </div>
 
             <div>
@@ -172,7 +269,7 @@ const RowItemPage = () => {
         </div>
       </div>
 
-      <div className='rowList mb-3 mt-5  pt-5 '>
+      <div className='rowList  mt-5  pt-5 '>
         <h3 className='text-light text-right pb-3 mr-4'>
           <span>پیشنهاداتی برای شما</span>
         </h3>

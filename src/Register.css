@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: auto;
   background: linear-gradient(to bottom, rgb(34, 35, 39), black);
 }
 
@@ -189,7 +189,8 @@
 
 @media (max-width: 768px) {
   .register__container {
-    width: 300px;
+    width: auto;
+    margin: 10px 0px 80px 0px;
   }
 
   .register__container .form {
