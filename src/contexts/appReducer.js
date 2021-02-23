@@ -13,6 +13,7 @@ import {
   IS_ADDING_NEW_SONG_TO_PLAYLIST,
   ADD_SONG_SUCCESS,
   CHANGE_SHOW_CENTER,
+  CHANGE_SHOW_MUSIC,
   SET_SONG_ID,
 } from './types';
 // eslint-disable-next-line
@@ -97,6 +98,11 @@ export default (state, action) => {
         ...state,
         showCenter: !state.showCenter,
         isAddingSong: false,
+      };
+    case CHANGE_SHOW_MUSIC:
+      return {
+        ...state,
+        showMusic: !state.showMusic,
       };
     case SET_SONG_ID:
       return {

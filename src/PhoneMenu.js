@@ -9,10 +9,21 @@ import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import appContext from './contexts/appContext';
 import './PhoneMenu.css';
+import playerContext from './player/playerContext';
 const PhoneMenu = () => {
   const { ChangeshowCenter, ChangeShowMusic, showx, x } = useContext(
     appContext
   );
+  const {
+    showMusicBarOnMoblieRatio,
+    setShowMusicBarOnMoblieRatio,
+  } = useContext(playerContext);
+  const showMusic = () => {
+    if (showMusicBarOnMoblieRatio) {
+      setShowMusicBarOnMoblieRatio();
+    }
+    ChangeShowMusic();
+  };
 
   return (
     <div className='phoneMenu'>
@@ -37,7 +48,7 @@ const PhoneMenu = () => {
           <Headset fontSize='large' />
           {/* <span>لیست من</span> */}
         </div>{' '}
-        <div className='phoneMenu__item' onClick={ChangeShowMusic}>
+        <div className='phoneMenu__item' onClick={() => showMusic()}>
           <MusicNote fontSize='large' />
           {/* <span>آهنگ</span> */}
         </div>

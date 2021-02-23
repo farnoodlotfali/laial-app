@@ -107,7 +107,7 @@ const Playerstate = (props) => {
 
   const location = useLocation();
   const audioRef = useRef();
-  const { showMusic, ChangeShowLeft, ChangeShowMusi, showLeft } = useContext(
+  const { showMusic, ChangeShowLeft, ChangeShowMusic, showLeft } = useContext(
     AppContext
   );
   const initialState = {
@@ -464,7 +464,8 @@ const Playerstate = (props) => {
         totalDuration: state.totalDuration,
         songId: state.songId,
         loading: state.loading,
-
+        showMusicBarOnMoblieRatio: state.showMusicBarOnMoblieRatio,
+        setShowMusicBarOnMoblieRatio,
         changeVolume,
         changeDuration,
         nextMusic,

@@ -18,12 +18,14 @@ import {
   ADD_SONG_SUCCESS,
   CHANGE_SHOW_CENTER,
   SET_SONG_ID,
+  CHANGE_SHOW_MUSIC,
 } from './types';
 const AppState = (props) => {
   const initialState = {
     home: null,
     loading: false,
     showCenter: false,
+    showMusic: false,
     isAddingSong: false,
     whichSongToSaveInPlaylist: null,
     block: null,
@@ -49,8 +51,9 @@ const AppState = (props) => {
     userPlaylists: null,
     // x: false,
   };
+
   const [state, dispatch] = useReducer(appReducer, initialState);
-  const [showMusic, setShowMusic] = useState(false);
+  // const [showMusic, setShowMusic] = useState(false);
   const [showLeft, setShowLeft] = useState(false);
   // const [showCenter, setShowCenter] = useState(false);
   const [x, setx] = useState(false);
@@ -60,7 +63,11 @@ const AppState = (props) => {
   };
 
   const ChangeShowMusic = () => {
-    setShowMusic(!showMusic);
+    // setShowMusic(!showMusic);
+
+    dispatch({
+      type: CHANGE_SHOW_MUSIC,
+    });
   };
 
   const ChangeShowLeft = (newShowleft) => {
@@ -249,7 +256,6 @@ const AppState = (props) => {
   };
 
   const getAllPlaylists = async () => {
-    console.log(99009);
     const config = {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
@@ -399,7 +405,7 @@ const AppState = (props) => {
     <AppContext.Provider
       value={{
         ChangeShowMusic,
-        showMusic,
+
         ChangeShowLeft,
         showLeft,
         ChangeshowCenter,
@@ -423,6 +429,7 @@ const AppState = (props) => {
         block: state.block,
         blockUrls: state.blockUrls,
         showCenter: state.showCenter,
+        showMusic: state.showMusic,
         blockSlug: state.blockSlug,
         dataSongPage: state.dataSongPage,
         BlockListName: state.BlockListName,
