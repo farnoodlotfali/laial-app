@@ -1,5 +1,6 @@
-import React, { useReducer } from 'react';
+import React, { useContext, useReducer } from 'react';
 import axios from '../axios/axios';
+import appContext from '../contexts/appContext';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
 import {
@@ -20,7 +21,7 @@ const AuthState = (props) => {
     user: JSON.parse(localStorage.getItem('user')),
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
-
+  const { getAllPlaylists } = useContext(appContext);
   //load user
   const loadUser = async () => {
     // console.log(localStorage.tokenAccess);
@@ -86,6 +87,7 @@ const AuthState = (props) => {
       });
 
       loadUser();
+      getAllPlaylists();
     } catch (error) {
       console.log(error.response);
       dispatch({

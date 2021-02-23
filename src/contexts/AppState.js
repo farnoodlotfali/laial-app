@@ -249,6 +249,7 @@ const AppState = (props) => {
   };
 
   const getAllPlaylists = async () => {
+    console.log(99009);
     const config = {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),

@@ -19,6 +19,7 @@ const Center = () => {
   } = useContext(AppContext);
 
   useEffect(() => {
+    // console.log(1112);
     if (userPlaylists === null && !loading) {
       getAllPlaylists();
     }

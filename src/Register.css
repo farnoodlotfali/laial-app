@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: auto;
+  height: 100vh;
   background: linear-gradient(to bottom, rgb(34, 35, 39), black);
 }
 
@@ -188,6 +188,9 @@
 }
 
 @media (max-width: 768px) {
+  .register {
+    height: 92vh;
+  }
   .register__container {
     width: auto;
     margin: 10px 0px 80px 0px;
