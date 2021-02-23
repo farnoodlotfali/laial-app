@@ -97,7 +97,8 @@ export default (state, action) => {
       return {
         ...state,
         showCenter: !state.showCenter,
-        isAddingSong: false,
+
+        isAddingSong: state.isAddingSong && false,
       };
     case CHANGE_SHOW_MUSIC:
       return {

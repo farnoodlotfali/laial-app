@@ -371,15 +371,13 @@ const AppState = (props) => {
       );
       console.log(res.data);
       getAllPlaylists();
-
-      setTimeout(() => {
-        dispatch({
-          type: ADD_SONG_SUCCESS,
-        });
-        ChangeshowCenter();
-
-        // setShowCenter(false);
-      }, 3000);
+      dispatch({
+        type: ADD_SONG_SUCCESS,
+      });
+      ChangeshowCenter();
+      // setTimeout(() => {
+      // setShowCenter(false);
+      // }, 3000);
     } catch (error) {
       dispatch({
         type: ERROR,
@@ -389,6 +387,8 @@ const AppState = (props) => {
   };
 
   const setWhichSongToSaveInPlaylist = (songId) => {
+    ChangeshowCenter();
+
     dispatch({
       type: SET_SONG_ID,
       payload: songId,
@@ -396,7 +396,6 @@ const AppState = (props) => {
     dispatch({
       type: IS_ADDING_NEW_SONG_TO_PLAYLIST,
     });
-    ChangeshowCenter();
   };
 
   const getMenu = async () => {};
