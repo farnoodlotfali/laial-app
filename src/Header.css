@@ -4,6 +4,7 @@
   direction: rtl;
   /* background-color: #fafafa; */
   background-color: rgb(34, 35, 39);
+  box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
 }
 .navbar-nav {
   display: contents !important;
