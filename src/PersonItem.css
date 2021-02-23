@@ -1,0 +1,35 @@
+.personItem {
+  display: grid;
+  margin-right: 10px;
+  justify-content: center;
+  align-self: center;
+  /* height: 200px; */
+}
+
+.personItem img {
+  height: 200px;
+  width: 200px;
+
+  /* border-radius: 100px;   */
+}
+
+.personItem__person {
+  text-decoration: none;
+  font-size: 13px;
+  color: #757575;
+  font-weight: 900;
+  transition: transform 450ms ease-in-out;
+}
+.personItem__person:hover {
+  transform: scale(1.1);
+}
+.personItem a:hover {
+  text-decoration: none !important;
+}
+
+@media (max-width: 768px) {
+  .personItem img {
+    height: 90px;
+    width: 90px;
+  }
+}

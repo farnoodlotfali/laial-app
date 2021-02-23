@@ -89,9 +89,9 @@ const RowItemPage = () => {
     getSongPage(params.slug);
     viewPage(params.slug);
     getRecommender();
-
+    loadUser();
     // eslint-disable-next-line
-  }, [params.slug]);
+  }, [params.slug, user]);
   // console.log(dataSongPage);
   // نشان دادن موزیک و پخش موزیک
   const playMusicAndShowMusicBar = async () => {

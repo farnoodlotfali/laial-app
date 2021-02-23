@@ -9,13 +9,14 @@ export default function ScrollToTop() {
     appContext
   );
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     if (showLeft) {
       ChangeShowLeft(false);
     }
     if (showCenter) {
       ChangeshowCenter();
     }
-    window.scrollTo(0, 0);
   }, [pathname]);
 
   return null;

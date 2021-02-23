@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './App.css';
 import {
   // BrowserRouter as Router,
@@ -32,9 +32,9 @@ const App = () => {
   return (
     <div className='app '>
       <AppState>
-        <Playerstate>
-          <SearchState>
-            <AuthState>
+        <AuthState>
+          <Playerstate>
+            <SearchState>
               <ScrollToTop />
               <PhoneList />
               <Center />
@@ -73,9 +73,9 @@ const App = () => {
               <Foooter />
 
               <PhoneMenu />
-            </AuthState>{' '}
-          </SearchState>
-        </Playerstate>
+            </SearchState>
+          </Playerstate>
+        </AuthState>
       </AppState>
     </div>
   );

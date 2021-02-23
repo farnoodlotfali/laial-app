@@ -12,6 +12,7 @@ instanceApi.interceptors.response.use(
   },
 
   async (error) => {
+    console.log(error.config);
     // const { logout } = useContext(authContext);
     // console.log(tryCount);
     // console.log(
@@ -23,7 +24,7 @@ instanceApi.interceptors.response.use(
     // );
     if (error.config && error.response && error.response.status === 401) {
       if (tryCount === 3) {
-        console.log(tryCount);
+        console.log(66);
         localStorage.clear();
         window.location = '/login';
         return Promise.reject(error);
@@ -41,10 +42,13 @@ instanceApi.interceptors.response.use(
       return instanceApi
         .post('/token/refresh/', form, config)
         .then((response) => {
-          // console.log(response);
-          localStorage.setItem('tokenAccess', response.data.access);
-          error.config.headers.Authorization = response.data.access;
-          return axios(error.config);
+          if (response.status === 200 || response.status === 201) {
+            // console.log(response);
+            localStorage.setItem('tokenAccess', response.data.access);
+            error.config.headers.Authorization =
+              'Bearer ' + response.data.access;
+            return instanceApi.request(error.config);
+          }
         });
       // .catch((error) => {
       //   if (error.response && error.response.status === 401) {

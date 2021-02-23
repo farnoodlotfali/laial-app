@@ -1,61 +1,47 @@
 import { Backdrop, IconButton, Modal, Slide, Tooltip } from '@material-ui/core';
 // eslint-disable-next-line
-import { PlaylistAdd } from '@material-ui/icons';
+import { PostAddRounded } from '@material-ui/icons';
 import { useContext, useEffect } from 'react';
 import './Center.css';
+// eslint-disable-next-line
 import md5 from 'md5';
 import AppContext from './contexts/appContext';
 import CenterItem from './CenterItem';
 const Center = () => {
-  const { lists, ChangeLists, showCenter, ChangeshowCenter } = useContext(
-    AppContext
-  );
+  const {
+    showCenter,
+    ChangeshowCenter,
+    userPlaylists,
+    getAllPlaylists,
+    makeNewPlaylist,
+    loading,
+    isAddingSong,
+  } = useContext(AppContext);
 
   useEffect(() => {
-    getLists();
+    if (userPlaylists === null && !loading) {
+      getAllPlaylists();
+    }
     // eslint-disable-next-line
-  }, []);
-
-  const getLists = () => {
-    let keys = Object.keys(localStorage);
-    let lists = [];
-    keys.forEach((value) => {
-      if (value.substr(0, 5) === 'list-') {
-        lists.push(JSON.parse(localStorage.getItem(value)));
-      }
-    });
-    lists.sort((a, b) => b.time - a.time);
-    ChangeLists(lists);
-  };
+  }, [userPlaylists, loading, showCenter]);
 
   const addList = () => {
-    let d = new Date();
-    let key =
-      'list-' +
-      d.getFullYear() +
-      '-' +
-      d.getMonth() +
-      '-' +
-      d.getDay() +
-      '-' +
-      d.getHours() +
-      '-' +
-      d.getMinutes() +
-      '-' +
-      d.getSeconds() +
-      '-' +
-      md5(Date.now());
-
-    let name = 'myList';
-    localStorage.setItem(
-      key,
-      JSON.stringify({
+    /*let d = new Date();
+    let key ='list-'+d.getFullYear()+'-' +d.getMonth()+'-' +d.getDay()+'-'+d.getHours()+'-'+d.getMinutes()+'-'+d.getSeconds()+'-'+md5(Date.now());*/
+    let i = 0;
+    let name = '';
+    do {
+      i++;
+      name = 'myList ' + i;
+    } while (userPlaylists.findIndex((list) => list.name === name) !== -1);
+    // console.log(name);
+    let form = [
+      {
         name: name,
-        key: key,
-        time: Date.now(),
-      })
-    );
-    getLists();
+        status: 'publish',
+      },
+    ];
+    makeNewPlaylist(form);
   };
 
   return (
@@ -75,49 +61,34 @@ const Center = () => {
           timeout={500}
           in={showCenter}
         >
-          <div className='playlist py-3  px-4 bg-white'>
-            <div className='playlist__title d-flex '>
-              <div className='title ml-4'>افزودن به لیست</div>
+          <div className='playlist py-3 pl-1  pr-4 text-white'>
+            <div className='playlist__title justify-content-center pl-3 d-flex '>
+              <div className='title ml-4'>
+                {isAddingSong ? (
+                  <span>آهنگ به کدام لیست اضافه شود؟</span>
+                ) : (
+                  <span>لیست های من</span>
+                )}{' '}
+              </div>
               <div className='addBtn'>
-                <Tooltip placement='left' title='Add'>
+                <Tooltip placement='left' title='لیست جدید'>
                   <IconButton aria-label='add' onClick={addList}>
-                    <PlaylistAdd />
+                    <PostAddRounded fontSize='large' />
                   </IconButton>
                 </Tooltip>
               </div>
             </div>
+            <div className='my-2 ml-4 playlist__line' />
             <div className='playlist__lists'>
-              {lists.map((list) => (
-                <CenterItem key={list.key} name={list.name} id={list.key} />
-                // <div
-                //   key={list.key}
-                //   className='list d-flex justify-content-between'
-                // >
-                //   <input type='text' value={list.name} disabled />
-                //   <div className='list__icons'>
-                //     <Tooltip placement='left' title='Edit'>
-                //       <IconButton aria-label='edit'>
-                //         <Edit />
-                //       </IconButton>
-                //     </Tooltip>
-                //     <Tooltip placement='right' title='Remove'>
-                //       <IconButton
-                //         aria-label='remove'
-                //         onClick={() => {
-                //           localStorage.removeItem(list.key);
-                //           setLists(
-                //             lists.filter((listCurrent) => {
-                //               return listCurrent.key !== list.key;
-                //             })
-                //           );
-                //         }}
-                //       >
-                //         <Close />
-                //       </IconButton>
-                //     </Tooltip>
-                //   </div>
-                // </div>
-              ))}
+              {userPlaylists !== null &&
+                userPlaylists.map((list) => (
+                  <CenterItem
+                    key={list.id}
+                    name={list.name}
+                    id={list.id}
+                    items={list.items}
+                  />
+                ))}
             </div>
           </div>
         </Slide>

@@ -13,6 +13,7 @@ import {
   SET_IDS,
   SET_PROGRESS,
   SEEKING,
+  CHANGE_SHOW_MUSICBAR_ON_MOBILE_RATIO,
 } from './types';
 // eslint-disable-next-line
 export default (state, action) => {
@@ -87,6 +88,11 @@ export default (state, action) => {
         ...state,
         seeking: action.payload,
       };
+    case CHANGE_SHOW_MUSICBAR_ON_MOBILE_RATIO:
+      return {
+        ...state,
+        showMusicBarOnMoblieRatio: !state.showMusicBarOnMoblieRatio,
+      };
     case SET_IDS:
       return {
         ...state,
@@ -100,6 +106,6 @@ export default (state, action) => {
       };
 
     default:
-      return state;
+      return { ...state };
   }
 };

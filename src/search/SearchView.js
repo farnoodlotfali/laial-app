@@ -9,13 +9,13 @@ const SearchView = () => {
     <Fragment>
       {!loading ? (
         <Fragment>
-          {filtered !== null
+          {/* {filtered !== null
             ? filtered.map((option, i) => (
                 <RowItem key={i} persons={option.persons} />
               ))
             : allSongs.map((option, i) => (
                 <RowItem key={i} persons={option.persons} />
-              ))}
+              ))} */}
         </Fragment>
       ) : (
         <Spinner />

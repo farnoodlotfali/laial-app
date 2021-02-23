@@ -33,6 +33,19 @@ body {
   border-radius: 5px;
 }
 
+.modal {
+  /* display: block !important; I added this to see the modal, you don't need this */
+}
+
+/* Important part */
+.modal-dialog {
+  overflow-y: initial !important;
+}
+.modal-body {
+  height: 80vh;
+  overflow-y: scroll !important;
+}
+
 @media (max-width: 768px) {
   .carousel-cell {
     width: 50%;

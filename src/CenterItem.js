@@ -1,78 +1,69 @@
-import { Fragment, useContext, useRef, useState } from 'react';
+import { Fragment, useContext, useEffect, useRef, useState } from 'react';
 import { Divider, IconButton, Tooltip } from '@material-ui/core';
-import { Close, Edit } from '@material-ui/icons';
+import { CheckRounded, Close, Edit } from '@material-ui/icons';
 import appContext from './contexts/appContext';
-const CenterItem = ({ name, id }) => {
-  const { ChangeLists, lists } = useContext(appContext);
-  const [isEdit, setIsEdit] = useState(true);
+const CenterItem = ({ name, id, items }) => {
+  const {
+    removePlaylist,
+
+    isAddingSong,
+    addMusicToPlaylist,
+  } = useContext(appContext);
+  const [edit, setEdit] = useState(false);
   const [listName, setListName] = useState(name);
-  let inputRef = useRef();
-
+  const inputValue = useRef();
+  useEffect(() => {
+    inputValue.current.focus();
+  }, [edit, isAddingSong]);
   const editName = () => {
-    // console.log(inputRef.current.focus);
-    inputRef.current.focus();
-    setIsEdit(!isEdit);
-    localStorage.setItem(
-      id,
-      JSON.stringify({
-        name: listName,
-        key: id,
-        time: Date.now(),
-      })
-    );
-
-    ChangeLists(
-      lists.map((list) => {
-        if (list.name === name) {
-          list.name = listName;
-        }
-        return list;
-      })
-    );
+    setEdit(true);
+    // console.log(inputValue.current.value);
   };
 
   const removeList = () => {
-    // console.log(id);
-    localStorage.removeItem(id);
-    ChangeLists(
-      lists.filter((listCurrent) => {
-        return listCurrent.key !== id;
-      })
-    );
+    console.log(id);
+    // removePlaylist();
   };
 
   const onChange = (e) => {
-    if (inputRef.current.value !== null) {
-      setListName(inputRef.current.value);
-      // console.log(listName);
-    }
+    setListName(inputValue.current.value);
   };
   return (
     <Fragment>
-      <div className='list d-flex justify-content-between'>
+      <div
+        className='list d-flex justify-content-between'
+        onClick={() => isAddingSong && addMusicToPlaylist(id)}
+      >
         <input
-          autoFocus
-          style={{
-            fontSize: isEdit ? '15px' : '18px',
-            fontWeight: isEdit ? '400' : '700',
-          }}
+          className={`list__name ${
+            edit ? 'list__name_edit' : 'list__name_save'
+          }`}
           type='text'
           value={listName}
-          ref={inputRef}
           onChange={onChange}
-          disabled={isEdit}
+          disabled={!edit}
+          ref={inputValue}
         />
         <div className='list__icons'>
-          <Tooltip placement='left' title={isEdit ? 'Edit' : 'Save'}>
+          {edit ? (
+            // <Tooltip placement='right' title={'ذخیره'}>
+            <IconButton aria-label='save'>
+              <CheckRounded />
+            </IconButton>
+          ) : (
+            // </Tooltip>
+            // <Tooltip placement='right' title={'تغییر ا سم'}>
             <IconButton aria-label='edit' onClick={editName}>
-              <Edit className={!isEdit ? 'text-success' : ''} />
+              <Edit />
             </IconButton>
-          </Tooltip>
-          <Tooltip placement='right' title='Remove'>
-            <IconButton aria-label='remove' onClick={removeList}>
-              <Close />
-            </IconButton>
-          </Tooltip>
+            // </Tooltip>
+          )}
+
+          {/* <Tooltip placement='right' title='حذف لیست'> */}
+          <IconButton aria-label='remove' onClick={removeList}>
+            <Close />
+          </IconButton>
+          {/* </Tooltip> */}
         </div>
       </div>
       <Divider />

@@ -9,6 +9,11 @@ import {
   VIEWS_PAGE,
   GET_RECOMMENDER,
   LIKE_SONG,
+  GET_PLAYLISTS,
+  IS_ADDING_NEW_SONG_TO_PLAYLIST,
+  ADD_SONG_SUCCESS,
+  CHANGE_SHOW_CENTER,
+  SET_SONG_ID,
 } from './types';
 // eslint-disable-next-line
 export default (state, action) => {
@@ -31,6 +36,7 @@ export default (state, action) => {
         block: action.payload.block,
         BlockListName: action.payload.BlockListName,
         blockSlug: action.payload.blockSlug,
+        blockUrls: action.payload.blockUrls,
         loading: false,
       };
 
@@ -38,6 +44,7 @@ export default (state, action) => {
       return {
         ...state,
         personList: action.payload.personList,
+        personUrls: action.payload.personUrls,
         personkSlug: action.payload.personkSlug,
         loading: false,
       };
@@ -68,6 +75,33 @@ export default (state, action) => {
       return {
         ...state,
         recommender: action.payload,
+      };
+    case GET_PLAYLISTS:
+      return {
+        ...state,
+        userPlaylists: action.payload,
+      };
+    case IS_ADDING_NEW_SONG_TO_PLAYLIST:
+      return {
+        ...state,
+        isAddingSong: true,
+      };
+    case ADD_SONG_SUCCESS:
+      return {
+        ...state,
+        isAddingSong: false,
+      };
+    case CHANGE_SHOW_CENTER:
+      // console.log(state.showCenter);
+      return {
+        ...state,
+        showCenter: !state.showCenter,
+        isAddingSong: false,
+      };
+    case SET_SONG_ID:
+      return {
+        ...state,
+        whichSongToSaveInPlaylist: action.payload,
       };
     case ERROR:
       return {

@@ -13,23 +13,73 @@
   border-radius: 10px;
   min-width: 450px;
   outline-width: 0;
+  background-color: rgb(18, 18, 18) !important;
+  box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
   z-index: 99999;
+}
+
+.playlist .MuiIconButton-label {
+  color: whitesmoke;
+}
+.playlist__lists {
+  height: 30vh;
+  overflow-y: scroll;
+}
+
+.playlist__lists::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.playlist__lists::-webkit-scrollbar-track {
+  /* box-shadow: inset 0 0 5px rgba(83, 83, 83, 0.021); */
+  border-radius: 10px;
+}
+
+/* Handle */
+.playlist__lists::-webkit-scrollbar-thumb {
+  background: rgba(105, 104, 109, 0.685);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.playlist__lists::-webkit-scrollbar-thumb:hover {
+  background: rgb(63, 63, 63);
 }
 
 .playlist__title .title {
   /* flex: 0.7; */
+  font-family: vazir;
   font-size: 25px;
   font-weight: 900;
   display: flex;
   align-items: center;
 }
-
+.playlist__line {
+  border-top: 1px solid whitesmoke;
+}
+.list:hover {
+  /* border-top: 1px solid whitesmoke !important; */
+  box-shadow: 10px 0px 14px 0px rgba(255, 255, 255, 0.24) !important;
+  /* background-color: rgba(34, 35, 39, 0.185) !important; */
+  /* background: red !important; */
+  cursor: pointer;
+}
 .list input {
-  background: white;
+  background: rgb(18, 18, 18);
   height: 30px;
   align-self: center;
   border: 0;
+  padding: 10px;
+  border-radius: 5px;
   /* outline-width: 0; */
+  color: white;
+  cursor: pointer;
+}
+
+.list input:focus {
+  background-color: whitesmoke;
+  color: black;
 }
 
 @media (max-width: 768px) {
@@ -41,5 +91,8 @@
   }
   .playlist__title .title {
     font-size: 18px;
+  }
+  .playlist__lists::-webkit-scrollbar {
+    width: 5px;
   }
 }

@@ -13,31 +13,47 @@ import {
   VIEWS_PAGE,
   GET_RECOMMENDER,
   LIKE_SONG,
-  SET_HALF_HOUR_REFRESH,
+  GET_PLAYLISTS,
+  IS_ADDING_NEW_SONG_TO_PLAYLIST,
+  ADD_SONG_SUCCESS,
+  CHANGE_SHOW_CENTER,
+  SET_SONG_ID,
 } from './types';
 const AppState = (props) => {
   const initialState = {
     home: null,
     loading: false,
+    showCenter: false,
+    isAddingSong: false,
+    whichSongToSaveInPlaylist: null,
     block: null,
     BlockListName: '',
     blockSlug: null,
     personkSlug: null,
     error: null,
     personList: null,
+    personListInfinteList: null,
+    personUrls: {
+      next: null,
+      previous: null,
+    },
+    blockUrls: {
+      next: null,
+      previous: null,
+    },
     dataSongPage: null,
     downloadUrl: null,
     viewsPage: 0,
     like: 0,
     recommender: null,
+    userPlaylists: null,
     // x: false,
   };
   const [state, dispatch] = useReducer(appReducer, initialState);
   const [showMusic, setShowMusic] = useState(false);
   const [showLeft, setShowLeft] = useState(false);
-  const [showCenter, setShowCenter] = useState(false);
+  // const [showCenter, setShowCenter] = useState(false);
   const [x, setx] = useState(false);
-  const [lists, setLists] = useState([]);
   const showx = (newValue) => {
     // setx(!x);
     setx(!x);
@@ -54,10 +70,11 @@ const AppState = (props) => {
     if (showLeft) {
       ChangeShowLeft();
     }
-    setShowCenter(!showCenter);
-  };
-  const ChangeLists = (newLists) => {
-    setLists(newLists);
+    dispatch({
+      type: CHANGE_SHOW_CENTER,
+    });
+    // setShowCenter(!showCenter);
+    // console.log(1);
   };
 
   const viewPage = async (slug) => {
@@ -153,6 +170,10 @@ const AppState = (props) => {
         payload: {
           block: res.data.results,
           BlockListName: res.data?.block[0]?.name,
+          blockUrls: {
+            next: res.data.next,
+            previous: res.data.previous,
+          },
           blockSlug: newSlug,
         },
       });
@@ -175,7 +196,14 @@ const AppState = (props) => {
       // console.log(res.data);
       dispatch({
         type: GET_PERSON,
-        payload: { personList: res.data.results, personkSlug: newSlug },
+        payload: {
+          personList: res.data.results,
+          personUrls: {
+            next: res.data.next,
+            previous: res.data.previous,
+          },
+          personkSlug: newSlug,
+        },
       });
       // console.log(res.data.results);
     } catch (error) {
@@ -219,6 +247,153 @@ const AppState = (props) => {
       });
     }
   };
+
+  const getAllPlaylists = async () => {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+      },
+    };
+
+    try {
+      const res = await axios.instanceApi.get('/account/playlist/', config);
+      // console.log(res.data);
+      dispatch({
+        type: GET_PLAYLISTS,
+        payload: res.data,
+      });
+    } catch (error) {
+      // console.log(error);
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+
+  const makeNewPlaylist = async (form) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+      },
+    };
+
+    try {
+      const res = await axios.instanceApi.post(
+        '/account/playlist/',
+        form,
+        config
+      );
+      console.log(res.data);
+      getAllPlaylists();
+    } catch (error) {
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+
+  const removePlaylist = async (form) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+      },
+    };
+
+    try {
+      const res = await axios.instanceApi.delete(
+        '/account/playlist/',
+        form,
+        config
+      );
+      console.log(res.data);
+      getAllPlaylists();
+    } catch (error) {
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+
+  const removeSongFromPlaylist = async (form) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+      },
+    };
+
+    try {
+      const res = await axios.instanceApi.delete(
+        '/account/playlist/',
+        form,
+        config
+      );
+      console.log(res.data);
+      getAllPlaylists();
+    } catch (error) {
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+
+  const addMusicToPlaylist = async (form) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+      },
+    };
+    const formData = {
+      playlist: form,
+      fileItem: state.whichSongToSaveInPlaylist,
+    };
+    console.log(formData);
+
+    try {
+      const res = await axios.instanceApi.post(
+        '/account/playlist/item/',
+        formData,
+        config
+      );
+      console.log(res.data);
+      getAllPlaylists();
+
+      setTimeout(() => {
+        dispatch({
+          type: ADD_SONG_SUCCESS,
+        });
+        ChangeshowCenter();
+
+        // setShowCenter(false);
+      }, 3000);
+    } catch (error) {
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+
+  const setWhichSongToSaveInPlaylist = (songId) => {
+    dispatch({
+      type: SET_SONG_ID,
+      payload: songId,
+    });
+    dispatch({
+      type: IS_ADDING_NEW_SONG_TO_PLAYLIST,
+    });
+    ChangeshowCenter();
+  };
+
+  const getMenu = async () => {};
+
   return (
     <AppContext.Provider
       value={{
@@ -227,31 +402,40 @@ const AppState = (props) => {
         ChangeShowLeft,
         showLeft,
         ChangeshowCenter,
-        showCenter,
-        ChangeLists,
-        lists,
+
         getHome,
         getPerson,
         getBlock,
         getSongPage,
         viewPage,
         likeSong,
-
+        getAllPlaylists,
+        makeNewPlaylist,
+        removePlaylist,
+        removeSongFromPlaylist,
         getRecommender,
+        addMusicToPlaylist,
+        setWhichSongToSaveInPlaylist,
         showx,
         x,
         home: state.home,
         block: state.block,
+        blockUrls: state.blockUrls,
+        showCenter: state.showCenter,
         blockSlug: state.blockSlug,
         dataSongPage: state.dataSongPage,
         BlockListName: state.BlockListName,
         personList: state.personList,
+        personUrls: state.personUrls,
         personkSlug: state.personkSlug,
+        userPlaylists: state.userPlaylists,
         loading: state.loading,
         downloadUrl: state.downloadUrl,
         viewsPage: state.viewsPage,
         like: state.like,
         recommender: state.recommender,
+        isAddingSong: state.isAddingSong,
+        whichSongToSaveInPlaylist: state.whichSongToSaveInPlaylist,
       }}
     >
       {props.children}

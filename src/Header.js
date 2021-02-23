@@ -66,9 +66,12 @@ const Header = () => {
             >
               جستجو
             </NavLink>
-            <NavLink to='#' className=' mx-3 ' onClick={ChangeshowCenter}>
-              لیست من
-            </NavLink>
+            {isAuth && (
+              <NavLink to='#' className=' mx-3 ' onClick={ChangeshowCenter}>
+                لیست من
+              </NavLink>
+            )}
+
             <NavLink
               activeClassName='selected'
               to='/aboutus'

@@ -1,19 +1,81 @@
 .search {
   background-color: rgb(18, 18, 18);
 }
-.ُsearch__title {
+.search__title {
   color: white;
   display: flex;
   justify-content: flex-end;
 }
-.categoreis .MuiBottomNavigation-root {
-  width: 100%;
-  background-color: rgb(18, 18, 18) !important;
-  justify-content: flex-start !important;
-  direction: rtl !important;
+.searchFields__option {
+  direction: rtl;
+}
+.searchFields__option input[type='text'] {
+  border-radius: 30px;
+  padding: 10px;
+  direction: rtl;
+  box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
+  outline-width: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid whitesmoke;
+  color: white;
+  width: 50%;
 }
 
-.categoreis .categoryBtn {
+.searchFields__option input::placeholder {
+  color: rgba(255, 255, 255, 0.438);
+  text-align: right;
+}
+
+.searchFields__option input[type='submit'] {
+  border-radius: 7px;
+  padding: 7px;
+  width: 20%;
+  outline-width: 0;
+  box-shadow: 0 5px 15px rgb(173 173 173 / 73%);
+  background-color: rgb(212, 208, 208);
+  border: 1px solid gray;
+  font-weight: bold;
+  font-size: 15px;
+}
+.search .infinite-scroll-component {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100vh;
+  justify-content: center;
+}
+/* .searchView {
+  padding: 0 10px 0 0;
+  display: flex;
+
+  flex-wrap: wrap;
+  justify-content: center;
+} */
+@media (max-width: 768px) {
+  /* .searchFields__top {
+    display: grid;
+  }
+  .searchFields__down {
+    display: grid;
+  } */
+  .searchFields__option {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 !important;
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+}
+
+/* .searchFields {
+  direction: rtl;
+} */
+/* .searchFields__top {
+  display: flex;
+}
+.searchFields__down {
+  display: flex;
+} */
+/* .categoreis .categoryBtn {
   margin: 10px !important;
   border: 2px solid rgb(255, 255, 255) !important;
   border-radius: 10px !important;
@@ -21,9 +83,15 @@
   outline-width: 0 !important;
   font-size: 18px !important;
   background-color: white !important;
-}
+} */
+/* .categoreis .MuiBottomNavigation-root {
+  width: 100%;
+  background-color: rgb(18, 18, 18) !important;
+  justify-content: flex-start !important;
+  direction: rtl !important;
+} */
 
-.categoreis .MuiBottomNavigation-root {
+/* .categoreis .MuiBottomNavigation-root {
   padding-top: 10px !important;
 }
 .categoreis .MuiBottomNavigationAction-label {
@@ -48,20 +116,9 @@
 }
 .searchFields #multiselectContainerReact {
   direction: rtl !important;
-  /* background-color: red; */
-}
+} */
 
-.searchFields {
-  direction: rtl;
-}
-.searchFields__top {
-  display: flex;
-}
-.searchFields__down {
-  display: flex;
-}
-
-.searchFields .MuiChip-root {
+/* .searchFields .MuiChip-root {
   padding-left: 8px !important;
   font-weight: 700;
 }
@@ -87,12 +144,12 @@
 }
 .searchFields .MuiAutocomplete-tag {
   color: white;
-}
+} */
 /* .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
   border-color: rgb(255, 255, 255) !important;
 } */
 
-.searchFields .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+/* .searchFields .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
   border-color: rgb(255, 255, 255) !important;
 }
 
@@ -103,20 +160,18 @@
 .Mui-selected {
   background-color: red;
   color: green;
-}
+} */
 .MuiAutocomplete-option[data-focus='true'] {
   /* direction: rtl; */
   /* background-color: red; */
   /* color: green; */
 }
-.MuiAutocomplete-option {
+/* .MuiAutocomplete-option {
   direction: rtl;
   font-size: 15px;
   font-weight: 700;
 
-  /* background-color: red;
-  color: green; */
-}
+} */
 
 /* .searchFields input::-webkit-input-placeholder {
   direction: rtl;
@@ -125,25 +180,3 @@
 .searchFields .MuiInputLabel-root {
   direction: rtl !important;
 } */
-
-.searchView {
-  padding: 0 10px 0 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-@media (max-width: 768px) {
-  .searchFields__top {
-    display: grid;
-  }
-  .searchFields__down {
-    display: grid;
-  }
-  .searchFields__option {
-    width: 100% !important;
-    max-width: 100% !important;
-    flex: 1 !important;
-    margin-bottom: 5px;
-    margin-top: 5px;
-  }
-}

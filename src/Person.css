@@ -1,12 +1,29 @@
 .person__img img {
   padding: 10px;
-  width: 30%;
+  width: 460px;
   height: 30%;
 }
 
-.person__items {
+/* .person__items {
   padding: 0 10px 0 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+} */
+.person .infinite-scroll-component {
+  /* padding: 0 10px 0 0; */
+  display: flex;
+  flex-wrap: wrap;
+  height: 100vh;
+  justify-content: center;
+}
+
+.infinite-scroll-component::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .person__img img {
+    width: 320px;
+  }
 }

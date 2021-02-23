@@ -8,7 +8,7 @@ import Spinner from './spinner/Spinner';
 import authContext from './auth/authContext';
 
 const Home = () => {
-  const { setHalfHourRefresh, loading, getHome, home } = useContext(appContext);
+  const { loading, getHome, home } = useContext(appContext);
   const { user, loadUser, tokenAccess } = useContext(authContext);
 
   // let params = useParams();
@@ -17,12 +17,9 @@ const Home = () => {
   useEffect(() => {
     if (home === null) {
       getHome();
-      // console.log(11);
     }
 
     loadUser();
-
-    // console.log(IsHalfHourRefreshFinished());
     // eslint-disable-next-line
   }, [home, user]);
 

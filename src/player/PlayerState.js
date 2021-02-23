@@ -28,6 +28,7 @@ import {
   PlayArrowRounded,
   PlayCircleFilledRounded,
   PlayCircleFilledWhiteRounded,
+  PlaylistAddRounded,
   QueueMusic,
   RepeatRounded,
   ShuffleRounded,
@@ -50,10 +51,12 @@ import {
   SET_IDS,
   SET_LOADING,
   SET_PROGRESS,
+  CHANGE_SHOW_MUSICBAR_ON_MOBILE_RATIO,
 } from './types';
 import { useLocation } from 'react-router';
 import PhoneMusicBar from '../PhoneMusicBar';
 import axios from '../axios/axios';
+import authContext from '../auth/authContext';
 // eslint-disable-next-line
 
 const detectMob = () => {
@@ -99,13 +102,16 @@ const browser = () => {
 };
 
 const Playerstate = (props) => {
+  const { setWhichSongToSaveInPlaylist } = useContext(AppContext);
+  const { isAuth } = useContext(authContext);
+
   const location = useLocation();
   const audioRef = useRef();
   const { showMusic, ChangeShowLeft, ChangeShowMusi, showLeft } = useContext(
     AppContext
   );
   const initialState = {
-    // playList: [],
+    playList: [],
     playing: false,
     loading: false,
     mute: false,
@@ -120,13 +126,16 @@ const Playerstate = (props) => {
     songName: '',
     songSinger: '',
     currentProgress: 0,
+    showMusicBarOnMoblieRatio: false,
   };
   const [state, dispatch] = useReducer(playerReducer, initialState);
+  const { playList } = state;
+
   const [shuffle, setShuffle] = useState(false);
   const [loop, setLopp] = useState(false);
   const [musicChangeList, setMusicChangeList] = useState([]);
-  const [showMusiBar, setShowMusicBar] = useState(false);
-  const [playList, setPlayList] = useState([]);
+  // const [showMusiBar, setShowMusicBar] = useState(false);
+  // const [playList, setPlayList] = useState([]);
 
   useEffect(() => {
     //   حرکت خواهد کردprogress اگر در حال پخش بود
@@ -160,6 +169,10 @@ const Playerstate = (props) => {
       };
     }
   }, [state.playing, state.loading, state.seek]);
+
+  const setShowMusicBarOnMoblieRatio = () => {
+    dispatch({ type: CHANGE_SHOW_MUSICBAR_ON_MOBILE_RATIO });
+  };
 
   const setNewProgress = (progress) => {
     progress = parseFloat(progress);
@@ -210,14 +223,14 @@ const Playerstate = (props) => {
     setNewProgress(0);
   };
 
-  // const setPlayList = (playlist) => {
-  //   if (playlist !== state.playList) {
-  //     dispatch({
-  //       type: SET_PALYLIST,
-  //       payload: playlist,
-  //     });
-  //   }
-  // };
+  const setPlayList = (playlist) => {
+    if (playlist !== state.playList) {
+      dispatch({
+        type: SET_PALYLIST,
+        payload: playlist,
+      });
+    }
+  };
 
   const zeroPad = (num, places) => String(num).padStart(places, '0');
 
@@ -440,8 +453,8 @@ const Playerstate = (props) => {
         volume: state.volume,
         duration: state.duration,
         currentUrl: state.currentUrl,
-        // playList: state.playList,
-        playList: playList,
+        playList: state.playList,
+        // playList: playList,
         // progress: state.progress,
         currentProgress: state.currentProgress,
         songSinger: state.songSinger,
@@ -451,6 +464,7 @@ const Playerstate = (props) => {
         totalDuration: state.totalDuration,
         songId: state.songId,
         loading: state.loading,
+
         changeVolume,
         changeDuration,
         nextMusic,
@@ -465,8 +479,6 @@ const Playerstate = (props) => {
     >
       {props.children}
 
-      {/* <MusicBar url={state.currentUrl} /> */}
-      {/* {state.currentUrl !== null ? ( */}
       <Fragment>
         <div id='audio'>
           <audio
@@ -492,9 +504,9 @@ const Playerstate = (props) => {
               variant='persistent'
               className='phoneMusicBar__slide'
               anchor={'bottom'}
-              open={showMusiBar}
-              onClose={() => setShowMusicBar(false)}
-              onOpen={() => setShowMusicBar(true)}
+              open={state.showMusicBarOnMoblieRatio}
+              onClose={() => setShowMusicBarOnMoblieRatio()}
+              onOpen={() => setShowMusicBarOnMoblieRatio()}
             >
               <div className='player__zone d-flex text-light '>
                 <div className='current-time align-self-center '>
@@ -522,12 +534,21 @@ const Playerstate = (props) => {
               <div className='d-flex text-light pb-2 px-2 justify-content-between'>
                 <div className='player__actions d-flex justify-content-center '>
                   <div
-                    className='icon playlist_sound_playlist d-flex justify-content-end align-self-end mr-2 align-self-center'
+                    className='icon playlist_sound_playlist d-flex justify-content-between align-self-end mr-2 align-self-center'
                     onClick={showPlaylist}
                   >
                     <QueueMusic style={{ fontSize: 22 }} />
                   </div>
-
+                  <div className='mr-2 '>
+                    {isAuth && (
+                      <PlaylistAddRounded
+                        style={{ fontSize: 22 }}
+                        onClick={() =>
+                          setWhichSongToSaveInPlaylist(state.songId)
+                        }
+                      />
+                    )}
+                  </div>
                   <div
                     onClick={() => changeShuffle(!shuffle)}
                     className={`icon mr-2 ${
@@ -607,9 +628,9 @@ const Playerstate = (props) => {
                   </div>
                   <div
                     className='icon'
-                    onClick={() => setShowMusicBar(!showMusiBar)}
+                    onClick={() => setShowMusicBarOnMoblieRatio()}
                   >
-                    {showMusiBar ? (
+                    {state.showMusicBarOnMoblieRatio ? (
                       <ExpandMoreRounded style={{ fontSize: '25px' }} />
                     ) : (
                       <ExpandLessRounded style={{ fontSize: '25px' }} />
@@ -714,12 +735,24 @@ const Playerstate = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className='playlist_sound  musicBar__left mt-3 mb-2'>
-                  <div
-                    className='icon playlist_sound_playlist d-flex justify-content-end align-self-end mb-2 '
-                    onClick={showPlaylist}
-                  >
-                    <QueueMusic fontSize='large' />
+                <div className='playlist_sound   musicBar__left mt-3 mb-2'>
+                  <div className='d-flex justify-content-between'>
+                    <div className='icon'>
+                      {isAuth && (
+                        <PlaylistAddRounded
+                          fontSize='large'
+                          onClick={() =>
+                            setWhichSongToSaveInPlaylist(state.songId)
+                          }
+                        />
+                      )}
+                    </div>
+                    <div
+                      className='icon playlist_sound_playlist d-flex justify-content-end align-self-end mb-2 '
+                      onClick={showPlaylist}
+                    >
+                      <QueueMusic fontSize='large' />
+                    </div>
                   </div>
 
                   <div className='sound  d-flex '>
