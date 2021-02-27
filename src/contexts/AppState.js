@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import axios from '../axios/axios';
 import AppContext from './appContext';
 import appReducer from './appReducer';
@@ -19,10 +19,12 @@ import {
   CHANGE_SHOW_CENTER,
   SET_SONG_ID,
   CHANGE_SHOW_MUSIC,
+  GET_MENU,
 } from './types';
 const AppState = (props) => {
   const initialState = {
     home: null,
+    menu: null,
     loading: false,
     showCenter: false,
     showMusic: false,
@@ -127,6 +129,7 @@ const AppState = (props) => {
     }
   };
   const getSongPage = async (newSlug) => {
+    getMenu();
     dispatch({
       type: SET_LOADING,
     });
@@ -148,6 +151,7 @@ const AppState = (props) => {
     }
   };
   const getHome = async () => {
+    getMenu();
     dispatch({
       type: SET_LOADING,
     });
@@ -167,6 +171,7 @@ const AppState = (props) => {
   };
 
   const getBlock = async (newSlug) => {
+    getMenu();
     dispatch({
       type: SET_LOADING,
     });
@@ -195,6 +200,7 @@ const AppState = (props) => {
   };
 
   const getPerson = async (newSlug) => {
+    getMenu();
     dispatch({
       type: SET_LOADING,
     });
@@ -398,7 +404,22 @@ const AppState = (props) => {
     });
   };
 
-  const getMenu = async () => {};
+  const getMenu = async () => {
+    try {
+      const res = await axios.instanceApi.get(`/menu/`);
+      // console.log(res.data);
+      dispatch({
+        type: GET_MENU,
+        payload: res.data.results,
+      });
+    } catch (error) {
+      // console.log(error);
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
 
   return (
     <AppContext.Provider
@@ -410,6 +431,7 @@ const AppState = (props) => {
         ChangeshowCenter,
 
         getHome,
+        getMenu,
         getPerson,
         getBlock,
         getSongPage,

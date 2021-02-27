@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import authContext from './auth/authContext';
 import './Register.css';
 const Register = (props) => {
-  const { isAuth, loadUser, user, register } = useContext(authContext);
+  const { isAuth, loadUser, user, register, error } = useContext(authContext);
   const [userInfo, setUserInfo] = useState({
     username: '',
     email: '',
@@ -13,6 +13,7 @@ const Register = (props) => {
   });
   useEffect(() => {
     loadUser();
+
     if (user !== null) {
       props.history.push('/');
     }
@@ -139,6 +140,9 @@ const Register = (props) => {
                 />
               </div>{' '}
               <div className='formMsg pt-2'>{errorMsg}</div>
+              <div className='error__msg__register'>
+                {error && '  نام کاربری ویا ایمیل در سیستم موجود است'}
+              </div>
               <div className='inputBox'>
                 <input
                   type='submit'

@@ -2,6 +2,7 @@ import { Pause, PlayArrowRounded } from '@material-ui/icons';
 import { useContext } from 'react';
 import { Badge } from 'react-bootstrap';
 import AppContext from './contexts/appContext';
+import defualtPhoto from './assets/defualtPhoto.jpeg';
 import logo1 from './assets/0.jpg';
 import './RowItem.css';
 import { Link } from 'react-router-dom';
@@ -61,7 +62,8 @@ const RowItem = ({ media, person, slug, context }) => {
       media?.id,
       media?.duration,
       media?.name,
-      person?.[0]?.name
+      person?.[0]?.name,
+      media?.image !== null ? media?.image : person?.[0]?.image.full_image_url
     );
     // console.log(media?.name, person?.[0]?.name);
     try {
@@ -79,11 +81,20 @@ const RowItem = ({ media, person, slug, context }) => {
   const truncate = (str, no_words) => {
     return str?.split(' ').splice(0, no_words).join(' ');
   };
-
+  // console.log(media);
   return (
     <div className='carousel-cellRowItem rowItem '>
       <div className='rowItem__image'>
-        <img src={logo1} alt='logo' />
+        <img
+          src={
+            media?.image !== null
+              ? media?.image
+              : person?.[0]?.image.full_image_url !== null
+              ? person?.[0]?.image.full_image_url
+              : defualtPhoto
+          }
+          alt='logo'
+        />
 
         {/* mobile ratio  */}
         {loading && media?.id === songId ? (

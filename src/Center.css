@@ -24,6 +24,7 @@
 .playlist__lists {
   height: 30vh;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .playlist__lists::-webkit-scrollbar {
@@ -59,11 +60,16 @@
   border-top: 1px solid whitesmoke;
 }
 .list:hover {
+  background-color: rgba(0, 0, 0, 0.658);
   /* border-top: 1px solid whitesmoke !important; */
-  box-shadow: 10px 0px 14px 0px rgba(255, 255, 255, 0.24) !important;
+  /* box-shadow: 10px 0px 14px 0px rgba(255, 255, 255, 0.24) !important; */
   /* background-color: rgba(34, 35, 39, 0.185) !important; */
   /* background: red !important; */
   cursor: pointer;
+}
+
+.list:hover input {
+  background-color: rgba(0, 0, 0, 0.658);
 }
 .list input {
   background: rgb(18, 18, 18);
@@ -73,6 +79,7 @@
   padding: 10px;
   border-radius: 5px;
   /* outline-width: 0; */
+  margin-right: 2px;
   color: white;
   cursor: pointer;
 }
@@ -80,6 +87,19 @@
 .list input:focus {
   background-color: whitesmoke;
   color: black;
+}
+
+.list .list__icons .see {
+  margin-left: -14px;
+  color: rgba(255, 255, 255, 0.384);
+  z-index: 1;
+}
+.list .list__icons .note {
+  color: rgb(255, 255, 255);
+}
+
+.list__icons .MuiButtonBase-root:hover {
+  background-color: rgba(36, 36, 36, 0.322);
 }
 
 @media (max-width: 768px) {
@@ -94,5 +114,9 @@
   }
   .playlist__lists::-webkit-scrollbar {
     width: 5px;
+  }
+
+  .list__icons .MuiButtonBase-root {
+    padding: 8px !important;
   }
 }

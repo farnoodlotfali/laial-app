@@ -10,6 +10,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from '../axios/axios';
 import RowItem from '../RowItem';
 import PersonItem from '../PersonItem';
+import appContext from '../contexts/appContext';
 
 // const options = [
 //   {
@@ -121,6 +122,7 @@ const Search = () => {
     searchValueInput,
   } = useContext(searchContext);
   const { user, loadUser } = useContext(authContext);
+  const { getMenu } = useContext(appContext);
   const [next, setNext] = useState({
     next: '',
     listResults: null,
@@ -133,6 +135,8 @@ const Search = () => {
   // eslint-disable-next-line
   const [searchValue, setSearchValue] = useState(searchValueInput);
   useEffect(() => {
+    getMenu();
+
     loadUser();
 
     if (
@@ -145,7 +149,12 @@ const Search = () => {
         listResults: resultsSearch,
         listPersons: personsSearch,
         hasMore: nextSearchPageUrl ? true : false,
-        loaderMsg: 'Loading...',
+        loaderMsg:
+          nextSearchPageUrl === null
+            ? next.listResults === null
+              ? ''
+              : 'Finish :)'
+            : 'Loading...',
       });
     }
   }, [user, loading, nextSearchPageUrl, personsSearch, resultsSearch]);
@@ -204,9 +213,14 @@ const Search = () => {
   return (
     <div
       className='search '
-      style={{ height: next.listResults === null ? '100vh' : '' }}
+      style={{
+        height:
+          next.listResults === null || next.listResults.length === 0
+            ? '100vh'
+            : '',
+      }}
     >
-      <Navigation />
+      {/* <Navigation /> */}
       <div className='search__title mr-5 pt-2'>
         <h1>جستجو</h1>
       </div>

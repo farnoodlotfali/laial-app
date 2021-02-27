@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useHistory } from 'react-router';
 let tryCount = 0;
 
 const instanceApi = axios.create({
@@ -13,6 +12,7 @@ instanceApi.interceptors.response.use(
 
   async (error) => {
     console.log(error.config);
+    // console.log(error.response);
     // const { logout } = useContext(authContext);
     // console.log(tryCount);
     // console.log(
@@ -22,9 +22,14 @@ instanceApi.interceptors.response.use(
     //   error.response.status,
     //   error.config
     // );
+    if (error.config && error.response && error.response.status === 404) {
+      window.location = '/aboutus';
+      return Promise.reject(error);
+    }
+
     if (error.config && error.response && error.response.status === 401) {
       if (tryCount === 3) {
-        console.log(66);
+        // console.log(66);
         localStorage.clear();
         window.location = '/login';
         return Promise.reject(error);
@@ -67,8 +72,12 @@ instanceApi.interceptors.response.use(
 const downloader = axios.create({
   baseURL: 'http://downloader.7negare.ir/download',
 });
-const auth = axios.create({
-  baseURL: 'http://laial.7negare.ir/api/account',
-});
+// const auth = axios.create({
+//   baseURL: 'http://laial.7negare.ir/api/account',
+// });
 // eslint-disable-next-line
-export default { instanceApi, downloader, auth };
+export default {
+  instanceApi,
+  downloader,
+  // , auth
+};

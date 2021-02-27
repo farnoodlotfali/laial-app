@@ -18,6 +18,7 @@ import RowItem from './RowItem';
 import authContext from './auth/authContext';
 import { Button, Modal } from 'react-bootstrap';
 import { useState } from 'react';
+import defualtPhoto from './assets/defualtPhoto.jpeg';
 import { Link } from 'react-router-dom';
 const urls = [
   {
@@ -79,10 +80,12 @@ const RowItemPage = () => {
     getRecommender,
     recommender,
     likeSong,
+    setWhichSongToSaveInPlaylist,
   } = useContext(AppContext);
-  const { setUrl, playMusic, setIds } = useContext(playerContext);
+  const { setUrl, playMusic, setIds, songId } = useContext(playerContext);
   const { error, login, loadUser, user } = useContext(authContext);
   const { isAuth } = useContext(authContext);
+
   // console.log(item);
   let params = useParams();
   useEffect(() => {
@@ -100,7 +103,10 @@ const RowItemPage = () => {
       dataSongPage?.media?.[0]?.id,
       dataSongPage?.media?.[0]?.duration,
       dataSongPage?.media?.[0]?.name,
-      dataSongPage?.person?.[0]?.name
+      dataSongPage?.person?.[0]?.name,
+      dataSongPage?.media?.[0]?.image !== null
+        ? dataSongPage?.media?.[0]?.image
+        : dataSongPage?.person?.[0]?.image.full_image_url
     );
     try {
       const res = await axios.downloader.get(
@@ -116,7 +122,6 @@ const RowItemPage = () => {
       console.log(error);
     }
   };
-
   const onchange = (e) => {
     setUserInfo({
       ...userInfo,
@@ -131,8 +136,14 @@ const RowItemPage = () => {
         <div className='musicInfo__right '>
           <img
             className='musicInfo__image'
-            src='https://www.ganja2music.com/Image/Post/10.2020/Behnam%20Bani%20-%20Khoshhalam.jpg'
-            alt=''
+            src={
+              dataSongPage?.media?.[0]?.image !== null
+                ? dataSongPage?.media?.[0]?.image
+                : dataSongPage?.person?.[0]?.image.full_image_url !== null
+                ? dataSongPage?.person?.[0]?.image.full_image_url
+                : defualtPhoto
+            }
+            alt='logo'
           />
         </div>
         <div className='musicInfo__left text-light   justify-content-start align-items-center'>
@@ -252,7 +263,11 @@ const RowItemPage = () => {
               </a>
             </div>
 
-            <div>
+            <div
+              onClick={() =>
+                setWhichSongToSaveInPlaylist(dataSongPage?.media?.[0]?.id)
+              }
+            >
               <Tooltip placement='bottom' title='اضافه به لیست'>
                 <IconButton aria-label='Add'>
                   <PlaylistAdd className='Add' fontSize='large' />

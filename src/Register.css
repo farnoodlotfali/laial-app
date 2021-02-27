@@ -187,6 +187,10 @@
   color: rgb(18, 18, 18);
 }
 
+.error__msg__register {
+  color: darkred;
+}
+
 @media (max-width: 768px) {
   .register {
     height: 92vh;

@@ -12,7 +12,7 @@ const AboutUs = () => {
   // console.log(slug);
   return (
     <div>
-      <Navigation />
+      {/* <Navigation /> */}
       <NotFound />
     </div>
   );

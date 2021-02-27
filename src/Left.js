@@ -11,6 +11,7 @@ import {
 import { useContext } from 'react';
 import AppContext from './contexts/appContext';
 import logo from './assets/0.jpg';
+import defualtPhoto from './assets/defualtPhoto.jpeg';
 import './Left.css';
 import playerContext from './player/playerContext';
 import SongOnLeft from './SongOnLeft';
@@ -34,6 +35,7 @@ const Left = () => {
     loop,
     songSinger,
     songName,
+    songPhoto,
   } = useContext(playerContext);
 
   // console.log(totalDuration);
@@ -50,7 +52,7 @@ const Left = () => {
           <Close className='closeBtn' onClick={removeLeft} fontSize='large' />
           <div className='playerInfo d-flex '>
             <div className='info__image mr-3'>
-              <img src={logo} alt='' />
+              <img src={songPhoto !== null ? songPhoto : defualtPhoto} alt='' />
             </div>
             <div className='info mr-3'>
               <div className='info__title mb-2'>{songName}</div>

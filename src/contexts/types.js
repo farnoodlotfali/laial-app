@@ -14,3 +14,4 @@ export const ADD_SONG_SUCCESS = 'ADD_SONG_SUCCESS';
 export const CHANGE_SHOW_CENTER = 'CHANGE_SHOW_CENTER';
 export const CHANGE_SHOW_MUSIC = 'CHANGE_SHOW_MUSIC';
 export const SET_SONG_ID = 'SET_SONG_ID';
+export const GET_MENU = 'GET_MENU';

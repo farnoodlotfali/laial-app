@@ -11,16 +11,18 @@ import appContext from './contexts/appContext';
 import './PhoneMenu.css';
 import playerContext from './player/playerContext';
 const PhoneMenu = () => {
-  const { ChangeshowCenter, ChangeShowMusic, showx, x } = useContext(
+  const { ChangeshowCenter, ChangeShowMusic, showx, x, showMusic } = useContext(
     appContext
   );
   const {
     showMusicBarOnMoblieRatio,
     setShowMusicBarOnMoblieRatio,
   } = useContext(playerContext);
-  const showMusic = () => {
+  const showMusicBar = () => {
     if (showMusicBarOnMoblieRatio) {
       setShowMusicBarOnMoblieRatio();
+    }
+    if (showMusic) {
     }
     ChangeShowMusic();
   };
@@ -48,7 +50,7 @@ const PhoneMenu = () => {
           <Headset fontSize='large' />
           {/* <span>لیست من</span> */}
         </div>{' '}
-        <div className='phoneMenu__item' onClick={() => showMusic()}>
+        <div className='phoneMenu__item' onClick={() => showMusicBar()}>
           <MusicNote fontSize='large' />
           {/* <span>آهنگ</span> */}
         </div>

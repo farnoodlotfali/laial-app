@@ -15,6 +15,7 @@ import {
   CHANGE_SHOW_CENTER,
   CHANGE_SHOW_MUSIC,
   SET_SONG_ID,
+  GET_MENU,
 } from './types';
 // eslint-disable-next-line
 export default (state, action) => {
@@ -24,6 +25,11 @@ export default (state, action) => {
         ...state,
         home: action.payload,
         loading: false,
+      };
+    case GET_MENU:
+      return {
+        ...state,
+        menu: action.payload,
       };
     case SET_LOADING:
       return {

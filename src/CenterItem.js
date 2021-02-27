@@ -1,6 +1,12 @@
 import { Fragment, useContext, useEffect, useRef, useState } from 'react';
 import { Divider, IconButton, Tooltip } from '@material-ui/core';
-import { CheckRounded, Close, Edit } from '@material-ui/icons';
+import {
+  Audiotrack,
+  CheckRounded,
+  Close,
+  Edit,
+  Visibility,
+} from '@material-ui/icons';
 import appContext from './contexts/appContext';
 const CenterItem = ({ name, id, items }) => {
   const {
@@ -11,13 +17,13 @@ const CenterItem = ({ name, id, items }) => {
   } = useContext(appContext);
   const [edit, setEdit] = useState(false);
   const [listName, setListName] = useState(name);
-  const inputValue = useRef();
+  const inputRef = useRef();
   useEffect(() => {
-    inputValue.current.focus();
+    inputRef.current.focus();
   }, [edit, isAddingSong]);
   const editName = () => {
     setEdit(true);
-    // console.log(inputValue.current.value);
+    // console.log(inputRef.current.value);
   };
 
   const removeList = () => {
@@ -26,13 +32,19 @@ const CenterItem = ({ name, id, items }) => {
   };
 
   const onChange = (e) => {
-    setListName(inputValue.current.value);
+    setListName(inputRef.current.value);
+  };
+  const handleClick = (e) => {
+    if (isAddingSong) {
+      addMusicToPlaylist(id);
+    } else console.log(items);
   };
   return (
     <Fragment>
       <div
         className='list d-flex justify-content-between'
-        onClick={() => isAddingSong && addMusicToPlaylist(id)}
+        onClick={() => handleClick()}
+        // onClick={() => !isAddingSong && console.log(1)}
       >
         <input
           className={`list__name ${
@@ -42,9 +54,13 @@ const CenterItem = ({ name, id, items }) => {
           value={listName}
           onChange={onChange}
           disabled={!edit}
-          ref={inputValue}
+          ref={inputRef}
         />
-        <div className='list__icons'>
+        <div className='list__icons d-flex'>
+          {/* <IconButton aria-label='see'>
+            <Visibility className='see' />
+            <Audiotrack className='note' />
+          </IconButton> */}
           {edit ? (
             // <Tooltip placement='right' title={'ذخیره'}>
             <IconButton aria-label='save'>
@@ -58,11 +74,10 @@ const CenterItem = ({ name, id, items }) => {
             </IconButton>
             // </Tooltip>
           )}
-
           {/* <Tooltip placement='right' title='حذف لیست'> */}
           <IconButton aria-label='remove' onClick={removeList}>
             <Close />
-          </IconButton>
+          </IconButton>{' '}
           {/* </Tooltip> */}
         </div>
       </div>

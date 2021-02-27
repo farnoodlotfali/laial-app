@@ -9,14 +9,18 @@ const TileBanner = ({ imgs }) => {
     pageDots: false,
     rightToLeft: true,
   };
-  //   console.log(imgs);
+  // console.log(imgs);
   return (
     <div className='tileBanner'>
       <Flickity className='carousel ' options={flickityOptions}>
         {imgs.map((img, i) => (
           // console.log(img.src),
           <div key={i} className='carousel-cell'>
-            <img className='carousel-cell-image' src={logo} alt='logo' />
+            <img
+              className='carousel-cell-image'
+              src={img?.full_image_url}
+              alt='logo'
+            />
           </div>
         ))}
       </Flickity>

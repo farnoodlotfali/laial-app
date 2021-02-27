@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import appContext from './contexts/appContext';
 import './Person.css';
+import defualtPhoto from './assets/defualtPhoto.jpeg';
 import Spinner from './spinner/Spinner';
 import RowItem from './RowItem';
 import { useParams } from 'react-router';
@@ -70,8 +71,14 @@ const Person = () => {
     <div className='person'>
       <div className='person__img '>
         <img
-          src='https://www.ganja2music.com/Image/Post/10.2020/Behnam%20Bani%20-%20Khoshhalam.jpg'
-          alt=''
+          src={
+            personList?.[0]?.media[0]?.image !== null
+              ? personList?.[0]?.media[0]?.image
+              : personList?.[0]?.person[0]?.image.full_image_url !== null
+              ? personList?.[0]?.person[0]?.image.full_image_url
+              : defualtPhoto
+          }
+          alt='logo'
         />
       </div>
       <div className='person__info text-light mb-5'>

@@ -89,6 +89,7 @@
   height: 80px;
   width: 80px;
   border-radius: 10px;
+  position: relative;
 }
 
 .song__image img {
@@ -131,12 +132,101 @@
 .songs .number {
   font-size: larger;
   font-weight: bold;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 .songs {
   direction: rtl;
   overflow-y: scroll;
 }
+.overlay {
+  /* display: none; */
+}
+.overlay {
+  display: block;
 
+  transform: translate(-50%, -50%);
+  left: 50%;
+  position: absolute;
+  /* top: 0; */
+  color: red;
+  font-weight: 900;
+  top: 50%;
+  background: linear-gradient(130deg, #4db94d8e 10%, #1414f341 100%);
+  height: 100%;
+  width: 100%;
+  /* opacity: 0.4; */
+  border-radius: 10px;
+}
+.playing {
+  position: relative;
+  top: 30%;
+  display: block;
+  /* margin-left: 10px; */
+  /*    left: 50%;*/
+  /*    width: auto;*/
+  /*    transform:translateY(-50%);*/
+}
+.now.playing .bar {
+  display: inline-block;
+  position: relative;
+  top: -100%;
+  margin-right: 1px;
+  width: 4px;
+  height: 4px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #000000 10%, #334275 100%);
+  color: transparent;
+  animation-name: pulse;
+  animation-duration: 1s;
+  opacity: 0.8;
+  animation-iteration-count: infinite;
+}
+
+.playing-container {
+  /* margin-left: 10px; */
+}
+.paused.playing .bar {
+  animation-iteration-count: 1;
+}
+.n1 {
+  animation-delay: -0.5s;
+}
+.n2 {
+  animation-delay: 0.2s;
+}
+.n3 {
+  animation-delay: 3.1s;
+}
+.n4 {
+  animation-delay: 1.9s;
+}
+@keyframes pulse {
+  0% {
+    height: 4px;
+    margin-top: 0;
+  }
+  10% {
+    height: 9px;
+    margin-top: -40px;
+  }
+  50% {
+    height: 15px;
+    margin-top: -20px;
+  }
+  60% {
+    height: 9px;
+    margin-top: -30px;
+  }
+  80% {
+    height: 15px;
+    margin-top: -60px;
+  }
+  100% {
+    height: 4px;
+    margin-top: 0;
+  }
+}
 .songs::-webkit-scrollbar {
   width: 10px;
 }
@@ -185,12 +275,42 @@
   .song__title {
     font-size: 13px;
   }
+  .song__image {
+    position: relative;
+    height: 70px;
+    width: 70px;
+  }
   .song__image img {
     height: 70px;
     width: 70px;
   }
+
+  .overlay {
+    display: block;
+
+    transform: translate(-50%, -50%);
+    left: 50%;
+    position: absolute;
+    /* top: 0; */
+    color: red;
+    font-weight: 900;
+    top: 50%;
+    background: linear-gradient(130deg, #4db94d8e 10%, #1414f341 100%);
+    height: 70px;
+    width: 70px;
+    /* opacity: 0.4; */
+    border-radius: 10px;
+  }
+
   .icons {
     margin-bottom: 0 !important;
+  }
+  .songs .number {
+    margin-left: 7px;
+    margin-right: 13px;
+  }
+  .deleteSongBtn .MuiIconButton-root {
+    padding: 5px !important;
   }
 
   .songs::-webkit-scrollbar-track {

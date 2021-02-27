@@ -103,6 +103,7 @@ export default (state, action) => {
         songId: action.payload.songId,
         songSinger: action.payload.songSinger,
         songName: action.payload.songName,
+        songPhoto: action.payload.songPhoto,
       };
 
     default:

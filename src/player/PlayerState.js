@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import '../MusicBar.css';
 import PlayerContext from './playerContext';
+import defualtPhoto from '.././assets/defualtPhoto.jpeg';
 import playerReducer from './playerReducer';
 import {
   ClickAwayListener,
@@ -123,6 +124,7 @@ const Playerstate = (props) => {
     volume: 1,
     telegramId: null,
     songId: null,
+    songPhoto: null,
     songName: '',
     songSinger: '',
     currentProgress: 0,
@@ -181,7 +183,7 @@ const Playerstate = (props) => {
       payload: progress === NaN ? 0 : progress,
     });
   };
-  const setIds = (tId, id, duration, name, singer) => {
+  const setIds = (tId, id, duration, name, singer, photo) => {
     if (audioRef.current.played) {
       audioRef.current.pause();
     }
@@ -193,6 +195,7 @@ const Playerstate = (props) => {
         totalDuration: duration,
         songName: name,
         songSinger: singer,
+        songPhoto: photo,
       },
     });
 
@@ -321,7 +324,10 @@ const Playerstate = (props) => {
             chosen.media[0]?.id,
             chosen.media[0]?.duration,
             chosen.media[0]?.name,
-            chosen.person?.[0]?.name
+            chosen.person?.[0]?.name,
+            chosen?.media?.[0]?.image !== null
+              ? chosen?.media?.[0]?.image
+              : chosen?.person?.[0]?.image.full_image_url
           );
           try {
             const res = await axios.downloader.get(
@@ -358,7 +364,10 @@ const Playerstate = (props) => {
             chosen.media[0]?.id,
             chosen.media[0]?.duration,
             chosen.media[0]?.name,
-            chosen.person?.[0]?.name
+            chosen.person?.[0]?.name,
+            chosen?.media?.[0]?.image !== null
+              ? chosen?.media?.[0]?.image
+              : chosen?.person?.[0]?.image.full_image_url
           );
           try {
             const res = await axios.downloader.get(
@@ -463,6 +472,7 @@ const Playerstate = (props) => {
         loop: loop,
         totalDuration: state.totalDuration,
         songId: state.songId,
+        songPhoto: state.songPhoto,
         loading: state.loading,
         showMusicBarOnMoblieRatio: state.showMusicBarOnMoblieRatio,
         setShowMusicBarOnMoblieRatio,
@@ -595,7 +605,13 @@ const Playerstate = (props) => {
                   className='phoneMusicBar__left d-flex align-self-center 
           justify-content-start'
                 >
-                  <img className='phoneMusicBar__img m-2' src={logo} alt='' />
+                  <img
+                    className='phoneMusicBar__img m-2'
+                    src={
+                      state.songPhoto !== null ? state.songPhoto : defualtPhoto
+                    }
+                    alt=''
+                  />
                   <div className='phoneMusicBar__info align-self-center mr-2'>
                     <div className='phoneMusicBar__title'>
                       <div className='scroll'>
@@ -655,7 +671,14 @@ const Playerstate = (props) => {
                 <div className='musicBar__right'>
                   <div className='musicBar__info'>
                     <div className='musicBar__infoImage'>
-                      <img src={logo} alt='logo' />
+                      <img
+                        src={
+                          state.songPhoto !== null
+                            ? state.songPhoto
+                            : defualtPhoto
+                        }
+                        alt='logo'
+                      />
                     </div>
                     <div className='musicBar__infoDesc'>
                       <div className='infoDesc__title'>

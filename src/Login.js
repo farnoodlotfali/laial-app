@@ -18,7 +18,7 @@ const Login = (props) => {
       // props.history.back();
       history.goBack();
     }
-  }, [user, history]);
+  }, [user, history, error]);
 
   const onchange = (e) => {
     setUserInfo({
@@ -26,6 +26,9 @@ const Login = (props) => {
       [e.target.name]: e.target.value,
     });
   };
+
+  // ('! کاربری با این مشخصات یافت نشد');
+
   return (
     <div className='login'>
       <div className='color'></div>
@@ -87,7 +90,9 @@ const Login = (props) => {
                   minLength='8'
                 />
               </div>
-              <div className='error__msg__login pt-2 '>{error?.error} *</div>
+              <div className='error__msg__login pt-2 '>
+                {error && '! کاربری با این مشخصات یافت نشد'}
+              </div>
               <div className='notRegister pt-2'>
                 <span>ثبت نام نکرده اید؟</span>
 
