@@ -45,6 +45,25 @@
 }
 .phoneList__user {
   direction: rtl;
+  border: 1px solid white;
+  padding: 5px 15px;
+  border-radius: 14px;
+}
+.phoneList__title {
+  direction: rtl;
+}
+
+.phoneList__title__close {
+  cursor: pointer;
+}
+
+.phoneList__list a {
+  color: white;
+}
+
+.phoneList__list a:hover {
+  text-decoration: none;
+  color: rgb(179, 181, 187);
 }
 /* .phoneMenu .phoneMenu__items {
   background-color: rgb(34, 35, 39) !important;

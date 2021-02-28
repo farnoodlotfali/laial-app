@@ -69,30 +69,58 @@ const Person = () => {
     <Spinner />
   ) : (
     <div className='person'>
-      <div className='person__img '>
-        <img
-          src={
-            personList?.[0]?.media[0]?.image !== null
-              ? personList?.[0]?.media[0]?.image
-              : personList?.[0]?.person[0]?.image.full_image_url !== null
-              ? personList?.[0]?.person[0]?.image.full_image_url
-              : defualtPhoto
-          }
-          alt='logo'
-        />
-      </div>
-      <div className='person__info text-light mb-5'>
-        <div className='my-2'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate, in
-          incidunt? At.
+      {/* <div className='d-flex'>
+        <div className='person__img '>
+          <img
+            src={
+              personList?.[0]?.media[0]?.image !== null
+                ? personList?.[0]?.media[0]?.image
+                : personList?.[0]?.person[0]?.image.full_image_url !== null
+                ? personList?.[0]?.person[0]?.image.full_image_url
+                : defualtPhoto
+            }
+            alt='logo'
+          />
         </div>
-        <div className='my-2'>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cupiditate
-          suscipit accusamus vitae laboriosam perspiciatis labore cum modi
-          officiis similique sapiente nesciunt non sint corrupti aliquid, error
-          explicabo. Est, id magnam?
+        <div className='person__info text-light mb-5'>
+          <div className='my-2'>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate,
+            in incidunt? At.
+          </div>
+          <div className='my-2'>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cupiditate
+            suscipit accusamus vitae laboriosam perspiciatis labore cum modi
+            officiis similique sapiente nesciunt non sint corrupti aliquid,
+            error explicabo. Est, id magnam?
+          </div>
         </div>
       </div>
+     */}
+      <div className='person__infoAndImg py-4 d-flex justify-content-center align-items-center'>
+        <div className='card__person'>
+          <div className='circle__person'>
+            <div className='content__person'>
+              <h2>Franood lotfali</h2>
+              <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Repellendus voluptatum dolorebus animi explicabo ullam est
+                expedita dolore? Praesentium excepturi delectus illo culpa.
+              </p>
+            </div>
+            <img
+              src={
+                personList?.[0]?.media[0]?.image !== null
+                  ? personList?.[0]?.media[0]?.image
+                  : personList?.[0]?.person[0]?.image.full_image_url !== null
+                  ? personList?.[0]?.person[0]?.image.full_image_url
+                  : defualtPhoto
+              }
+              alt=''
+            />
+          </div>
+        </div>
+      </div>
+
       {next?.list && (
         <InfiniteScroll
           dataLength={next?.list?.length}

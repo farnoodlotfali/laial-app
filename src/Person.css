@@ -1,5 +1,5 @@
 .person__img img {
-  margin-top: 20px;
+  /* margin-top: 20px; */
   padding: 10px;
   width: 460px;
   height: 30%;
@@ -23,6 +23,133 @@
 
 .infinite-scroll-component::-webkit-scrollbar {
   display: none;
+}
+
+.card__person {
+  position: relative;
+  width: 700px;
+  height: 380px;
+  /* background-color: whitesmoke; */
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  transition: 0.5s;
+}
+
+.card__person .circle__person {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* background: blue; */
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.card__person .circle__person::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #b7b7be;
+  clip-path: circle(150px at center);
+  transition: 0.5s;
+}
+.card__person:hover .circle__person:before {
+  background-color: rgb(34, 35, 39);
+
+  clip-path: circle(500px at center);
+}
+
+.card__person img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 280px;
+  transition: 0.5s;
+  pointer-events: none;
+  box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
+  border-radius: 10px;
+}
+
+.card__person:hover img {
+  /* top: 72%; */
+  height: 340px;
+  box-shadow: none;
+  left: 72%;
+}
+
+.card__person .content__person {
+  position: relative;
+  width: 50%;
+  left: 20%;
+  padding: 20px 20px 20px 40px;
+  transition: 0.15s;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.card__person:hover .content__person {
+  left: 0;
+  opacity: 1;
+  visibility: visible;
+}
+
+.card__person .content__person h2 {
+  color: white;
+  text-transform: uppercase;
+  font-size: 2em;
+  line-height: 1em;
+  margin-bottom: 10px;
+}
+
+.card__person .content__person p {
+  color: white;
+}
+
+.card__person .content__person a {
+  position: relative;
+  color: white;
+  padding: 10px 20px;
+  background-color: white;
+  color: black;
+  margin-top: 10px;
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .card__person {
+    /* width: auto; */
+    max-width: 350px;
+    align-items: flex-start;
+    margin: 10px;
+  }
+
+  .card__person:hover {
+    height: 600px;
+  }
+  .card__person .content__person {
+    width: 100%;
+    left: 0;
+    padding: 30px;
+  }
+  .card__person:hover img {
+    top: 70%;
+    left: 50%;
+    height: 300px;
+  }
+}
+
+@media (max-width: 420px) {
+  .card__person .content__person {
+    padding: 20px;
+  }
 }
 
 @media (max-width: 768px) {

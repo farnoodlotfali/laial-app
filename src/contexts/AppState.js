@@ -53,7 +53,9 @@ const AppState = (props) => {
     userPlaylists: null,
     // x: false,
   };
-
+  useEffect(() => {
+    getMenu();
+  }, []);
   const [state, dispatch] = useReducer(appReducer, initialState);
   // const [showMusic, setShowMusic] = useState(false);
   const [showLeft, setShowLeft] = useState(false);
@@ -129,7 +131,7 @@ const AppState = (props) => {
     }
   };
   const getSongPage = async (newSlug) => {
-    getMenu();
+    // getMenu();
     dispatch({
       type: SET_LOADING,
     });
@@ -151,7 +153,7 @@ const AppState = (props) => {
     }
   };
   const getHome = async () => {
-    getMenu();
+    // getMenu();
     dispatch({
       type: SET_LOADING,
     });
@@ -171,17 +173,18 @@ const AppState = (props) => {
   };
 
   const getBlock = async (newSlug) => {
-    getMenu();
+    // getMenu();
     dispatch({
       type: SET_LOADING,
     });
     try {
       const res = await axios.instanceApi.get(`block/${newSlug}`);
+      console.log(res.data);
       dispatch({
         type: GET_BLOCK,
         payload: {
           block: res.data.results,
-          BlockListName: res.data?.block[0]?.name,
+          BlockListName: res.data?.block?.name,
           blockUrls: {
             next: res.data.next,
             previous: res.data.previous,
@@ -200,13 +203,13 @@ const AppState = (props) => {
   };
 
   const getPerson = async (newSlug) => {
-    getMenu();
+    // getMenu();
     dispatch({
       type: SET_LOADING,
     });
     try {
       const res = await axios.instanceApi.get(`persons/${newSlug}`);
-      // console.log(res.data);
+      console.log(res.data);
       dispatch({
         type: GET_PERSON,
         payload: {
@@ -404,21 +407,23 @@ const AppState = (props) => {
     });
   };
 
-  const getMenu = async () => {
-    try {
-      const res = await axios.instanceApi.get(`/menu/`);
-      // console.log(res.data);
-      dispatch({
-        type: GET_MENU,
-        payload: res.data.results,
-      });
-    } catch (error) {
-      // console.log(error);
-      dispatch({
-        type: ERROR,
-        payload: error,
-      });
-    }
+  const getMenu = () => {
+    axios.instanceApi
+      .get(`/menu/`)
+      .then((res) =>
+        //  console.log(res.data)
+        dispatch({
+          type: GET_MENU,
+          payload: res.data.results,
+        })
+      )
+      .catch((error) =>
+        // console.log(error),
+        dispatch({
+          type: ERROR,
+          payload: error,
+        })
+      );
   };
 
   return (
@@ -447,6 +452,7 @@ const AppState = (props) => {
         showx,
         x,
         home: state.home,
+        menu: state.menu,
         block: state.block,
         blockUrls: state.blockUrls,
         showCenter: state.showCenter,

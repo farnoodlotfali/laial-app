@@ -89,6 +89,12 @@
   padding: 5px 10px 2px 5px;
   color: white;
 }
+
+.dropdown {
+  border: 1px solid white;
+  border-radius: 14px;
+}
+
 .register__login__btn .dropdown-item:hover {
   background: rgb(49, 50, 54);
   color: white;

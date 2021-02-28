@@ -1,71 +1,22 @@
-import { useState } from 'react';
-import { Button, Modal } from 'react-bootstrap';
 import './Test.css';
+import logo from './assets/0.jpg';
 const Test = (props) => {
-  const [modalShow, setModalShow] = useState(false);
   return (
-    <div>
-      <Button variant='primary' onClick={() => setModalShow(true)}>
-        Launch vertically centered modal
-      </Button>
-      <Modal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        {...props}
-        size='lg'
-        aria-labelledby='contained-modal-title-vcenter'
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id='contained-modal-title-vcenter'>
-            Modal heading
-          </Modal.Title>
-        </Modal.Header>
-        <div className='x'>
-          <Modal.Body>
-            <h4>Centered Modal</h4>
+    <div className='test'>
+      <div className='cardfa'>
+        <div className='circle'>
+          <div className='content'>
+            <h2>Franood lotfali</h2>
             <p>
-              Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-              dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-              ac consectetur ac, vestibulum at eros.
-            </p>{' '}
-            <p>
-              Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-              dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-              ac consectetur ac, vestibulum at eros.
-            </p>{' '}
-            <p>
-              Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-              dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-              ac consectetur ac, vestibulum at eros.
-            </p>{' '}
-            <p>
-              Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-              dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-              ac consectetur ac, vestibulum at eros.
-            </p>{' '}
-            <p>
-              Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-              dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-              ac consectetur ac, vestibulum at eros.
-            </p>{' '}
-            <p>
-              Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-              dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-              ac consectetur ac, vestibulum at eros.
-            </p>{' '}
-            <p>
-              Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-              dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-              ac consectetur ac, vestibulum at eros.
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              Repellendus voluptatum dolorebus animi explicabo ullam est
+              expedita dolore? Praesentium excepturi delectus illo culpa.
             </p>
-          </Modal.Body>
+            <a href='https://github.com/farnoodlotfali/laial-app'>see now</a>
+          </div>
+          <img src={logo} alt='' />
         </div>
-
-        <Modal.Footer>
-          <Button onClick={props.onHide}>Close</Button>
-        </Modal.Footer>
-      </Modal>
+      </div>
     </div>
   );
 };

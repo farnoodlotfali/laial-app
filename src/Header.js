@@ -13,7 +13,7 @@ import Headroom from 'react-headroom';
 import { Button, Menu, MenuItem } from '@material-ui/core';
 // for fix to top use fixed-top in  className='fixed-top'
 const Header = () => {
-  const { ChangeshowCenter, ChangeShowLeft } = useContext(appContext);
+  const { ChangeshowCenter, ChangeShowLeft, showx } = useContext(appContext);
   const {
     isAuth,
 
@@ -54,7 +54,10 @@ const Header = () => {
         >
           <ul className='navbar-nav   mt-2 mt-lg-0'>
             <div className='navs'>
-              <NavLink
+              <NavLink to='#' className='   mx-3' onClick={() => showx(true)}>
+                منو اصلی
+              </NavLink>{' '}
+              {/* <NavLink
                 activeClassName='selected'
                 exact
                 to='/'
@@ -62,7 +65,7 @@ const Header = () => {
                 onClick={() => ChangeShowLeft(false)}
               >
                 خانه
-              </NavLink>
+              </NavLink> */}
               <NavLink
                 activeClassName='selected'
                 to='/search'
@@ -76,15 +79,14 @@ const Header = () => {
                   لیست من
                 </NavLink>
               )}
-
-              <NavLink
+              {/* <NavLink
                 activeClassName='selected'
                 to='/aboutus'
                 className='  mx-3'
                 onClick={() => ChangeShowLeft(false)}
               >
                 درباره ی ما
-              </NavLink>
+              </NavLink> */}
             </div>
             <div className='register__login__btn mr-auto ml-3'>
               {' '}

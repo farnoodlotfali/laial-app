@@ -135,7 +135,7 @@ const Search = () => {
   // eslint-disable-next-line
   const [searchValue, setSearchValue] = useState(searchValueInput);
   useEffect(() => {
-    getMenu();
+    // getMenu();
 
     loadUser();
 
