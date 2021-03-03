@@ -1,4 +1,4 @@
-import { Divider, IconButton, Tooltip } from '@material-ui/core';
+import { IconButton, Tooltip } from '@material-ui/core';
 import {
   Favorite,
   GetAppRounded,
@@ -16,41 +16,11 @@ import Flickity from 'react-flickity-component';
 import Spinner from './spinner/Spinner';
 import RowItem from './RowItem';
 import authContext from './auth/authContext';
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { useState } from 'react';
 import defualtPhoto from './assets/defualtPhoto.jpeg';
 import { Link } from 'react-router-dom';
-const urls = [
-  {
-    url:
-      'https://dl.ganja2music.com/Ganja2Music/128/Archive/B/Behnam%20Bani/Single/Behnam%20Bani%20-%20Khoshhalam%20(128).mp3',
-    name: 'rewq',
-    id: 111,
-  },
-  {
-    url:
-      'https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3',
-    name: 'darya',
-    id: 323,
-  },
-  {
-    url: 'http://dl.musicdam.net/Downloads/mp3/Hayedeh%20-%20Soghati%20128.mp3',
-    name: 'hayde2',
-    id: 881,
-  },
-  {
-    url:
-      'http://dl.musicdam.net/Downloads/mp3/Hayedeh%20-%20Bordi%20Az%20Yadam%20128.mp3',
-    name: 'darya1',
-    id: 413,
-  },
-  {
-    url:
-      'http://dl.musicdam.net/Downloads/mp3/Hayedeh%20-%20Badeh%20Foroosh%20128.mp3',
-    name: 'hayde1',
-    id: 901,
-  },
-];
+
 const RowItemPage = () => {
   const [show, setShow] = useState(false);
   const [userInfo, setUserInfo] = useState({
@@ -58,7 +28,7 @@ const RowItemPage = () => {
     email: '',
     password: '',
   });
-  const { username, email, password } = userInfo;
+  const { email, password } = userInfo;
 
   const flickityOptions = {
     // initialIndex: 2,
@@ -82,7 +52,7 @@ const RowItemPage = () => {
     likeSong,
     setWhichSongToSaveInPlaylist,
   } = useContext(AppContext);
-  const { setUrl, playMusic, setIds, songId } = useContext(playerContext);
+  const { setUrl, playMusic, setIds } = useContext(playerContext);
   const { error, login, loadUser, user } = useContext(authContext);
   const { isAuth } = useContext(authContext);
 

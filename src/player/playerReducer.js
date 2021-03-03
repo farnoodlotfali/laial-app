@@ -14,6 +14,7 @@ import {
   SET_PROGRESS,
   SEEKING,
   CHANGE_SHOW_MUSICBAR_ON_MOBILE_RATIO,
+  CHANGE_SHUFFLE,
 } from './types';
 // eslint-disable-next-line
 export default (state, action) => {
@@ -53,6 +54,11 @@ export default (state, action) => {
       return {
         ...state,
         playList: action.payload,
+      };
+    case CHANGE_SHUFFLE:
+      return {
+        ...state,
+        shuffle: !state.shuffle,
       };
     case NEXT_MUSIC:
       return {

@@ -19,15 +19,21 @@
   color: rgb(103, 94, 165) !important;
 }
 .navs li {
-  /* margin: 10px;
-  padding: 10px; */
+  display: flex;
+  margin-right: 15px;
+  color: white;
+  float: right;
+  font-weight: 900;
+  cursor: pointer;
+  font-size: 22px;
   transition: transform 450ms ease-out;
 }
 
 .navs li:hover {
+  text-decoration: none;
+  color: rgb(185, 184, 184);
   transform: scale(1.08);
   opacity: 0.8;
-  color: black;
 }
 
 .navs a {

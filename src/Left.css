@@ -183,6 +183,11 @@
   animation-iteration-count: infinite;
 }
 
+.icon__title {
+  font-size: 10px;
+  display: grid;
+}
+
 .playing-container {
   /* margin-left: 10px; */
 }

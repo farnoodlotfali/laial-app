@@ -11,7 +11,7 @@ import appContext from './contexts/appContext';
 import './PhoneMenu.css';
 import playerContext from './player/playerContext';
 const PhoneMenu = () => {
-  const { ChangeshowCenter, ChangeShowMusic, showx, x, showMusic } = useContext(
+  const { ChangeshowCenter, ChangeShowMusic, showx, showMusic } = useContext(
     appContext
   );
   const {

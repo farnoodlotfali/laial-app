@@ -1,8 +1,8 @@
-import { Fragment, useContext, useState } from 'react';
+import { Fragment, useContext } from 'react';
 import './Header.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import appContext from './contexts/appContext';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import {
   AccountCircleRounded,
   ExitToAppRounded,
@@ -10,8 +10,6 @@ import {
 } from '@material-ui/icons';
 import authContext from './auth/authContext';
 import Headroom from 'react-headroom';
-import { Button, Menu, MenuItem } from '@material-ui/core';
-// for fix to top use fixed-top in  className='fixed-top'
 const Header = () => {
   const { ChangeshowCenter, ChangeShowLeft, showx } = useContext(appContext);
   const {
@@ -21,15 +19,15 @@ const Header = () => {
     logout,
   } = useContext(authContext);
 
-  const [anchorEl, setAnchorEl] = useState(null);
+  // const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
 
   return (
     <Headroom>
@@ -75,9 +73,9 @@ const Header = () => {
                 جستجو
               </NavLink>
               {isAuth && (
-                <NavLink to='#' className=' mx-3 ' onClick={ChangeshowCenter}>
+                <li className=' mx-3 ' onClick={ChangeshowCenter}>
                   لیست من
-                </NavLink>
+                </li>
               )}
               {/* <NavLink
                 activeClassName='selected'
@@ -108,10 +106,12 @@ const Header = () => {
                       className='dropdown-menu'
                       aria-labelledby='dropdownMenuButton'
                     >
-                      <a className='dropdown-item'>
+                      {/* eslint-disable-next-line */}
+                      <Link to='/myprofile' className='dropdown-item'>
                         <span>پروفایل</span>
                         <PersonRounded className='' />
-                      </a>
+                      </Link>
+                      {/* eslint-disable-next-line */}
                       <a className='dropdown-item' onClick={() => logout()}>
                         <span> خروج از حساب</span>
                         <ExitToAppRounded className='' />

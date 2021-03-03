@@ -34,6 +34,7 @@ const Center = () => {
     do {
       i++;
       name = 'myList ' + i;
+      // eslint-disable-next-line
     } while (userPlaylists.findIndex((list) => list.name === name) !== -1);
     // console.log(name);
     let form = [

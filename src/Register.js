@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import authContext from './auth/authContext';
 import './Register.css';
 const Register = (props) => {
-  const { isAuth, loadUser, user, register, error } = useContext(authContext);
+  const { loadUser, user, register, error } = useContext(authContext);
   const [userInfo, setUserInfo] = useState({
     username: '',
     email: '',
@@ -17,6 +17,7 @@ const Register = (props) => {
     if (user !== null) {
       props.history.push('/');
     }
+    // eslint-disable-next-line
   }, [user, props.history]);
   const [errorMsg, setErrorMsg] = useState('');
   const {

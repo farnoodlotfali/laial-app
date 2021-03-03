@@ -21,14 +21,12 @@ import {
 } from '@material-ui/core';
 import AppContext from '../contexts/appContext';
 import { detect } from 'detect-browser';
-import logo from '../assets/0.jpg';
 import {
   ExpandLessRounded,
   ExpandMoreRounded,
   Pause,
   PlayArrowRounded,
   PlayCircleFilledRounded,
-  PlayCircleFilledWhiteRounded,
   PlaylistAddRounded,
   QueueMusic,
   RepeatRounded,
@@ -53,11 +51,13 @@ import {
   SET_LOADING,
   SET_PROGRESS,
   CHANGE_SHOW_MUSICBAR_ON_MOBILE_RATIO,
+  CHANGE_SHUFFLE,
 } from './types';
 import { useLocation } from 'react-router';
 import PhoneMusicBar from '../PhoneMusicBar';
 import axios from '../axios/axios';
 import authContext from '../auth/authContext';
+import SpinnerLoading from '../spinner/SpinnerLoading';
 // eslint-disable-next-line
 
 const detectMob = () => {
@@ -108,15 +108,19 @@ const Playerstate = (props) => {
 
   const location = useLocation();
   const audioRef = useRef();
-  const { showMusic, ChangeShowLeft, ChangeShowMusic, showLeft } = useContext(
-    AppContext
-  );
+  const {
+    showMusic,
+    ChangeShowLeft,
+    showLeft,
+    addMusicToMAINPlaylist,
+  } = useContext(AppContext);
   const initialState = {
     playList: [],
     playing: false,
     loading: false,
     mute: false,
     seek: false,
+    shuffle: false,
     duration: 0,
     totalDuration: 0,
     currentUrl: null,
@@ -133,7 +137,6 @@ const Playerstate = (props) => {
   const [state, dispatch] = useReducer(playerReducer, initialState);
   const { playList } = state;
 
-  const [shuffle, setShuffle] = useState(false);
   const [loop, setLopp] = useState(false);
   const [musicChangeList, setMusicChangeList] = useState([]);
   // const [showMusiBar, setShowMusicBar] = useState(false);
@@ -199,6 +202,40 @@ const Playerstate = (props) => {
       },
     });
 
+    // set if user listen this song twice or more if true add to mainplaylist,
+
+    if (JSON.parse(localStorage.getItem('mainPlaylist')) === null) {
+      let mainPlaylist = [];
+      const item = { songId: id, count: 1 };
+      mainPlaylist.push(item);
+
+      localStorage.setItem('mainPlaylist', JSON.stringify(mainPlaylist));
+    } else {
+      let mainPlaylist = JSON.parse(localStorage.getItem('mainPlaylist'));
+      let item = mainPlaylist.find((x) => x.songId === id);
+
+      if (item === undefined) {
+        const newItem = { songId: id, count: 1 };
+        mainPlaylist.push(newItem);
+        localStorage.setItem('mainPlaylist', JSON.stringify(mainPlaylist));
+      } else {
+        let newMainPlaylist = mainPlaylist.filter((file) => {
+          return file.songId !== id;
+        });
+        let newItem = { songId: id, count: item.count + 1 };
+        newMainPlaylist.push(newItem);
+        console.log(newMainPlaylist);
+
+        localStorage.setItem('mainPlaylist', JSON.stringify(newMainPlaylist));
+        addMusicToMAINPlaylist(id);
+      }
+
+      // console.log(item);
+      // console.log(newMainPlaylist);
+      // const item = { songId: id, count: 1 };
+      // mainPlaylist.push(item);
+      // localStorage.setItem('mainPlaylist', JSON.stringify(mainPlaylist));
+    }
     // setIds({ telegramId: tId, songId: id });
   };
 
@@ -259,6 +296,7 @@ const Playerstate = (props) => {
     if (audioElement) {
       audioElement.pause();
       audioElement.load();
+
       // audioElement.play();
     }
     dispatch({
@@ -315,10 +353,15 @@ const Playerstate = (props) => {
     // console.log(playList);
     if (playList !== undefined) {
       for (let i = 0; i < playList.length; i++) {
-        // console.log(555);
         if (state.songId === playList[i].media[0].id) {
+          let which;
+          if (state.shuffle) {
+            which = Math.floor(Math.random() * Math.floor(playList?.length));
+          } else {
+            which = i + 1;
+          }
           let chosen =
-            playList[i + 1] !== undefined ? playList[i + 1] : playList[0];
+            playList[which] !== undefined ? playList[which] : playList[0];
           setIds(
             chosen.media[0]?.telegram_id,
             chosen.media[0]?.id,
@@ -350,13 +393,18 @@ const Playerstate = (props) => {
 
     putToMusicChangeList(audioElement.currentTime, 'previous');
     let last = null;
-    // console.log(playList);
     if (playList !== undefined) {
       for (let i = 0; i < playList.length; i++) {
         if (state.songId === playList[i].media[0].id) {
+          let which;
+          if (state.shuffle) {
+            which = Math.floor(Math.random() * Math.floor(playList?.length));
+          } else {
+            which = i - 1;
+          }
           let chosen =
-            playList[i - 1] !== undefined
-              ? playList[i - 1]
+            playList[which] !== undefined
+              ? playList[which]
               : playList[playList.length - 1];
 
           setIds(
@@ -383,37 +431,6 @@ const Playerstate = (props) => {
       }
     }
     setNewProgress(0);
-
-    // putToMusicChangeList(audioElement.currentTime, 'previous');
-    // let oldSrc = audioElement.src;
-    // // let oldSrc = audioElement.childNodes[0].attributes.src.value;
-    // if (state.playList !== undefined) {
-    //   for (let i = 0; i < state.playList.length; i++) {
-    //     if (oldSrc === state.playList[i].url) {
-    //       if (state.playList[i - 1] !== undefined) {
-    //         dispatch({
-    //           type: PREVIOUS_MUSIC,
-    //           payload: state.playList[i - 1].url,
-    //         });
-    //       } else {
-    //         dispatch({
-    //           type: PREVIOUS_MUSIC,
-    //           payload: state.playList[state.playList.length - 1].url,
-    //         });
-    //       }
-    //     }
-    //   }
-    // }
-    // // setProgress(0);
-    // setNewProgress(0);
-    // if (audioElement) {
-    //   audioElement.pause();
-    //   audioElement.load();
-    //   audioElement.play();
-    //   dispatch({
-    //     type: PLAY_MUSIC,
-    //   });
-    // }
   };
 
   const changeDuration = (audioElement, newDuration) => {
@@ -445,7 +462,8 @@ const Playerstate = (props) => {
   };
 
   const changeShuffle = () => {
-    setShuffle(!shuffle);
+    dispatch({ type: CHANGE_SHUFFLE });
+    // setShuffle(!shuffle);
   };
   const changeLoop = () => {
     setLopp(!loop);
@@ -468,7 +486,7 @@ const Playerstate = (props) => {
         currentProgress: state.currentProgress,
         songSinger: state.songSinger,
         songName: state.songName,
-        shuffle: shuffle,
+        shuffle: state.shuffle,
         loop: loop,
         totalDuration: state.totalDuration,
         songId: state.songId,
@@ -496,11 +514,11 @@ const Playerstate = (props) => {
             ref={audioRef}
             className='player'
             autoPlay={state.playing}
-            // src={state.currentUrl}
+            src={state.currentUrl}
             // src={'http://dl.rovzenews.ir/telegram/763/763.mp3'}
-            src={
-              'https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3'
-            }
+            // src={
+            //   'https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3'
+            // }
             type='audio/mpeg'
             preload='metadata'
           ></audio>
@@ -561,9 +579,9 @@ const Playerstate = (props) => {
                     )}
                   </div>
                   <div
-                    onClick={() => changeShuffle(!shuffle)}
+                    onClick={() => changeShuffle()}
                     className={`icon mr-2 ${
-                      shuffle ? 'icon-press' : ''
+                      state.shuffle ? 'icon-press' : ''
                     } align-self-center`}
                   >
                     <ShuffleRounded style={{ fontSize: 20 }} />
@@ -630,14 +648,24 @@ const Playerstate = (props) => {
                   <div className='icon ' onClick={handleNext}>
                     <SkipNextRounded style={{ fontSize: '25px' }} />
                   </div>
-                  <div
-                    className='icon '
-                    onClick={() => playAndPauseMusic(audioRef.current)}
-                  >
-                    {state.playing ? (
-                      <Pause style={{ fontSize: '25px' }} />
+                  <div className='icon '>
+                    {/* SpinnerLoading */}
+                    {state.loading ? (
+                      <SpinnerLoading />
+                    ) : state.playing ? (
+                      <div
+                        className=''
+                        onClick={() => playAndPauseMusic(audioRef.current)}
+                      >
+                        <Pause style={{ fontSize: '25px' }} />
+                      </div>
                     ) : (
-                      <PlayCircleFilledRounded style={{ fontSize: '25px' }} />
+                      <div
+                        className=''
+                        onClick={() => playAndPauseMusic(audioRef.current)}
+                      >
+                        <PlayCircleFilledRounded style={{ fontSize: '25px' }} />
+                      </div>
                     )}
                   </div>
                   <div className='icon' onClick={handlePrevious}>
@@ -693,9 +721,9 @@ const Playerstate = (props) => {
                 <div className='player musicBar__center mt-3'>
                   <div className='player__actions d-flex justify-content-center '>
                     <div
-                      onClick={() => changeShuffle(!shuffle)}
+                      onClick={() => changeShuffle()}
                       className={`icon mr-4 ${
-                        shuffle ? 'icon-press' : ''
+                        state.shuffle ? 'icon-press' : ''
                       } align-self-center`}
                     >
                       <ShuffleRounded style={{ fontSize: 25 }} />
@@ -703,14 +731,23 @@ const Playerstate = (props) => {
                     <div className='icon mr-4 ' onClick={handlePrevious}>
                       <SkipPreviousRounded style={{ fontSize: 35 }} />
                     </div>
-                    <div
-                      className='icon mr-4  '
-                      onClick={() => playAndPauseMusic(audioRef.current)}
-                    >
-                      {state.playing ? (
-                        <Pause style={{ fontSize: 35 }} />
+                    <div className='icon mr-4 align-self-center '>
+                      {state.loading ? (
+                        <SpinnerLoading />
+                      ) : state.playing ? (
+                        <div
+                          className=''
+                          onClick={() => playAndPauseMusic(audioRef.current)}
+                        >
+                          <Pause style={{ fontSize: 35 }} />
+                        </div>
                       ) : (
-                        <PlayArrowRounded style={{ fontSize: 35 }} />
+                        <div
+                          className=''
+                          onClick={() => playAndPauseMusic(audioRef.current)}
+                        >
+                          <PlayArrowRounded style={{ fontSize: 35 }} />
+                        </div>
                       )}
                     </div>
                     <div className='icon mr-4  ' onClick={handleNext}>
@@ -726,7 +763,7 @@ const Playerstate = (props) => {
                     </div>
                   </div>
                   <div className='player__zone d-flex mt-2'>
-                    <div className='current-time align-self-center '>
+                    <div className='current-time align-self-center text-right'>
                       {Math.floor(audioRef.current?.currentTime / 60) +
                         ':' +
                         zeroPad(
@@ -752,7 +789,7 @@ const Playerstate = (props) => {
                       </div>
                     </ClickAwayListener>
 
-                    <div className='last-time align-self-center '>
+                    <div className='last-time align-self-center text-left '>
                       {Math.floor(state.totalDuration / 60) +
                         ':' +
                         zeroPad(Math.floor(state.totalDuration % 60), 2)}
@@ -760,7 +797,7 @@ const Playerstate = (props) => {
                   </div>
                 </div>
                 <div className='playlist_sound   musicBar__left mt-3 mb-2'>
-                  <div className='d-flex justify-content-between'>
+                  <div className='d-flex justify-content-around  '>
                     <div className='icon'>
                       {isAuth && (
                         <PlaylistAddRounded

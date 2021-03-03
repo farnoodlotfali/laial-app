@@ -1,20 +1,9 @@
 import { Fragment, useContext, useEffect, useRef, useState } from 'react';
-import { Divider, IconButton, Tooltip } from '@material-ui/core';
-import {
-  Audiotrack,
-  CheckRounded,
-  Close,
-  Edit,
-  Visibility,
-} from '@material-ui/icons';
+import { Divider, IconButton } from '@material-ui/core';
+import { CheckRounded, Close, Edit } from '@material-ui/icons';
 import appContext from './contexts/appContext';
 const CenterItem = ({ name, id, items }) => {
-  const {
-    removePlaylist,
-
-    isAddingSong,
-    addMusicToPlaylist,
-  } = useContext(appContext);
+  const { isAddingSong, addMusicToPlaylist } = useContext(appContext);
   const [edit, setEdit] = useState(false);
   const [listName, setListName] = useState(name);
   const inputRef = useRef();

@@ -4,13 +4,13 @@ import {
   Pause,
   PlayArrowRounded,
   Repeat,
+  RepeatOneOutlined,
   Shuffle,
   SkipNextRounded,
   SkipPreviousRounded,
 } from '@material-ui/icons';
 import { useContext } from 'react';
 import AppContext from './contexts/appContext';
-import logo from './assets/0.jpg';
 import defualtPhoto from './assets/defualtPhoto.jpeg';
 import './Left.css';
 import playerContext from './player/playerContext';
@@ -20,7 +20,7 @@ const Left = () => {
   const { showLeft, ChangeShowLeft } = useContext(AppContext);
   const {
     playList,
-    progress,
+    // progress,
     currentProgress,
     handleChange,
     previousMusic,
@@ -61,12 +61,13 @@ const Left = () => {
           </div>
           <div className='icons d-flex justify-content-around mt-3 mb-4'>
             <div
-              className={`icon d-flex ${
+              className={`icon align-self-center ${
                 shuffle ? 'icon-press' : ''
               } align-items-center`}
               onClick={() => changeShuffle()}
             >
               <Shuffle style={{ fontSize: 25 }} />
+              {shuffle && <span className='icon__title'>shuffle</span>}
             </div>
             <div className='icon  ' onClick={() => previousMusic()}>
               <SkipPreviousRounded style={{ fontSize: 35 }} />
@@ -88,6 +89,7 @@ const Left = () => {
               } align-items-center`}
             >
               <Repeat style={{ fontSize: 25 }} />
+              <RepeatOneOutlined style={{ fontSize: 25 }} />
             </div>
           </div>
           <div className='playlist__musicBar m d-flex mb-4 mt-2 justify-content-center'>

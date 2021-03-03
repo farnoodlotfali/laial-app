@@ -8,6 +8,7 @@ import { useParams } from 'react-router';
 import authContext from './auth/authContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from './axios/axios';
+import LoadingIcon from './spinner/LoadingIcon';
 
 const MoreSong = () => {
   const {
@@ -18,15 +19,15 @@ const MoreSong = () => {
     blockSlug,
     blockUrls,
   } = useContext(appContext);
-  const { user, loadUser, tokenAccess } = useContext(authContext);
+  const { user, loadUser } = useContext(authContext);
   const [next, setNext] = useState({
     next: '',
     list: [],
     hasMore: false,
     page: 2,
     loaderMsg: '',
+    loading: false,
   });
-  const [x, setX] = useState(1);
   let params = useParams();
   // console.log(params.slug);
   // console.log(blockSlug);
@@ -39,6 +40,7 @@ const MoreSong = () => {
       setNext({
         ...next,
         next: blockUrls.next,
+        loading: false,
         list: block,
         hasMore: blockUrls.next ? true : false,
         loaderMsg: 'Loading...',
@@ -50,22 +52,29 @@ const MoreSong = () => {
   }, [params.slug, user, blockUrls, loading, block]);
 
   const infiniteList = async () => {
-    try {
-      const res = await axios.instanceApi.get(
-        `/block/${params.slug}/?page=${next.page}`
-      );
-      // console.log(res.data.results);
-      setNext({
-        next: res.data.next,
-        hasMore: res.data.next ? true : false,
-        list: next.list.concat(res.data.results),
-        page: ++next.page,
-        loaderMsg: res.data.next ? 'Loading...' : 'Finish :)',
-      });
-      //  next.list.concat(res.data.results);
-    } catch (error) {
-      console.log(error);
-    }
+    setNext({
+      ...next,
+      loading: true,
+    });
+    setTimeout(async () => {
+      try {
+        const res = await axios.instanceApi.get(
+          `/block/${params.slug}/?page=${next.page}`
+        );
+        // console.log(res.data.results);
+        setNext({
+          next: res.data.next,
+          hasMore: res.data.next ? true : false,
+          list: next.list.concat(res.data.results),
+          loading: false,
+          page: ++next.page,
+          loaderMsg: res.data.next ? 'Loading...' : 'Finish :)',
+        });
+        //  next.list.concat(res.data.results);
+      } catch (error) {
+        console.log(error);
+      }
+    }, 1200);
   };
 
   return loading ? (
@@ -101,7 +110,18 @@ const MoreSong = () => {
               ))}
           </InfiniteScroll>
         )}
-        <h4 className='text-white mb-5 mt-3'>{next.loaderMsg}</h4>
+        <div
+          className='loading-message'
+          // ref={loadingRef}
+          style={{
+            opacity: next.loading ? '1' : '0',
+            transform: next.loading && 'translate(-50%, 0px)',
+          }}
+        >
+          <LoadingIcon color='#fff' />
+          <span>در حال دریافت</span>
+        </div>
+        {/* <h4 className='text-white mb-5 mt-3'>{next.loaderMsg}</h4> */}
       </div>
     </div>
   );

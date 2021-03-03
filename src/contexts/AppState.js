@@ -20,6 +20,8 @@ import {
   SET_SONG_ID,
   CHANGE_SHOW_MUSIC,
   GET_MENU,
+  GET_ALL_PERSONS,
+  FIND_MAIN_PLAYLIST,
 } from './types';
 const AppState = (props) => {
   const initialState = {
@@ -35,9 +37,15 @@ const AppState = (props) => {
     blockSlug: null,
     personkSlug: null,
     error: null,
+    allPersons: null,
+    mainPlaylistId: null,
     personList: null,
     personListInfinteList: null,
     personUrls: {
+      next: null,
+      previous: null,
+    },
+    AllpersonsUrls: {
       next: null,
       previous: null,
     },
@@ -55,6 +63,7 @@ const AppState = (props) => {
   };
   useEffect(() => {
     getMenu();
+    getAllPersons();
   }, []);
   const [state, dispatch] = useReducer(appReducer, initialState);
   // const [showMusic, setShowMusic] = useState(false);
@@ -202,6 +211,24 @@ const AppState = (props) => {
     }
   };
 
+  const getAllPersons = () => {
+    axios.instanceApi
+      .get('/persons/')
+      .then((res) =>
+        dispatch({
+          type: GET_ALL_PERSONS,
+          payload: {
+            allPersons: res.data.results,
+            AllpersonsUrls: {
+              next: res.data.next,
+              previous: res.data.previous,
+            },
+          },
+        })
+      )
+      .catch((err) => dispatch({ type: ERROR, payload: err }));
+  };
+
   const getPerson = async (newSlug) => {
     // getMenu();
     dispatch({
@@ -209,7 +236,7 @@ const AppState = (props) => {
     });
     try {
       const res = await axios.instanceApi.get(`persons/${newSlug}`);
-      console.log(res.data);
+      // console.log(res.data);
       dispatch({
         type: GET_PERSON,
         payload: {
@@ -274,6 +301,7 @@ const AppState = (props) => {
     try {
       const res = await axios.instanceApi.get('/account/playlist/', config);
       // console.log(res.data);
+      findMainPlaylist(res.data);
       dispatch({
         type: GET_PLAYLISTS,
         payload: res.data,
@@ -286,7 +314,14 @@ const AppState = (props) => {
       });
     }
   };
-
+  const findMainPlaylist = (list) => {
+    list.map((item) => {
+      {
+        item.name === 'main playlist' &&
+          dispatch({ type: FIND_MAIN_PLAYLIST, payload: item.id });
+      }
+    });
+  };
   const makeNewPlaylist = async (form) => {
     const config = {
       headers: {
@@ -407,6 +442,42 @@ const AppState = (props) => {
     });
   };
 
+  const addMusicToMAINPlaylist = async (songId) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+      },
+    };
+
+    const formData = {
+      playlist: state.mainPlaylistId,
+      fileItem: songId,
+    };
+
+    console.log(formData);
+
+    try {
+      const res = await axios.instanceApi.post(
+        '/account/playlist/item/',
+        formData,
+        config
+      );
+      console.log(res.data);
+      getAllPlaylists();
+
+      // ChangeshowCenter();
+      // setTimeout(() => {
+      // setShowCenter(false);
+      // }, 3000);
+    } catch (error) {
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+
   const getMenu = () => {
     axios.instanceApi
       .get(`/menu/`)
@@ -449,12 +520,15 @@ const AppState = (props) => {
         getRecommender,
         addMusicToPlaylist,
         setWhichSongToSaveInPlaylist,
+        addMusicToMAINPlaylist,
         showx,
         x,
         home: state.home,
         menu: state.menu,
         block: state.block,
         blockUrls: state.blockUrls,
+        allPersons: state.allPersons,
+        AllpersonsUrls: state.AllpersonsUrls,
         showCenter: state.showCenter,
         showMusic: state.showMusic,
         blockSlug: state.blockSlug,
@@ -469,6 +543,7 @@ const AppState = (props) => {
         viewsPage: state.viewsPage,
         like: state.like,
         recommender: state.recommender,
+        mainPlaylistId: state.mainPlaylistId,
         isAddingSong: state.isAddingSong,
         whichSongToSaveInPlaylist: state.whichSongToSaveInPlaylist,
       }}

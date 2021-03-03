@@ -1,8 +1,5 @@
 import { useState, useContext } from 'react';
-import Navigation from '../Navigation';
 import './Search.css';
-
-import SearchView from './SearchView';
 import searchContext from './searchContext';
 import { useEffect } from 'react';
 import authContext from '../auth/authContext';
@@ -10,108 +7,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from '../axios/axios';
 import RowItem from '../RowItem';
 import PersonItem from '../PersonItem';
-import appContext from '../contexts/appContext';
+import LoadingIcon from '../spinner/LoadingIcon';
 
-// const options = [
-//   {
-//     categories: 'محرم',
-//     languages: 'فارسی',
-//     persons: 'محمد',
-//     modes: 'شور',
-//     years: '1994',
-//   },
-//   {
-//     categories: 'شب سوم محرم',
-//     languages: 'فارسی',
-//     persons: 'غلام',
-//     modes: 'شور',
-//     years: '1994',
-//   },
-//   {
-//     categories: 'شب اول محرم',
-//     languages: 'فارسی',
-//     persons: 'فرید',
-//     modes: 'شور',
-//     years: '1994',
-//   },
-//   {
-//     categories: 'محرم',
-//     languages: 'فارسی',
-//     persons: 'علی',
-//     modes: 'روضه',
-//     years: '1994',
-//   },
-//   {
-//     categories: 'شب اول محرم',
-//     languages: 'ترکی',
-//     persons: 'محمد',
-//     modes: 'روضه',
-//     years: '1994',
-//   },
-//   {
-//     categories: 'شب اول محرم',
-//     languages: 'فارسی',
-//     persons: 'قاسم',
-//     modes: 'روضه',
-//     years: '1994',
-//   },
-//   {
-//     categories: 'محرم',
-//     languages: 'فارسی',
-//     persons: 'صمد',
-//     modes: 'روضه',
-//     years: '1994',
-//   },
-//   {
-//     categories: 'شب سوم محرم',
-//     languages: 'فارسی',
-//     persons: 'سام',
-//     modes: 'شور',
-//     years: '1994',
-//   },
-//   {
-//     categories: 'محرم',
-//     languages: 'فارسی',
-//     persons: 'شایان',
-//     modes: 'شور',
-//     years: '2001',
-//   },
-//   {
-//     categories: 'شهادت',
-//     languages: 'ترکی',
-//     persons: 'لاله',
-//     modes: 'دودمه',
-//     years: '2001',
-//   },
-//   {
-//     categories: 'شهادت',
-//     languages: 'ترکی',
-//     persons: 'فرنود',
-//     modes: 'دودمه',
-//     years: '2001',
-//   },
-//   {
-//     categories: 'شهادت',
-//     languages: 'فارسی',
-//     persons: 'مجید',
-//     modes: 'شور',
-//     years: '2001',
-//   },
-//   {
-//     categories: 'محرم',
-//     languages: 'ترکی',
-//     persons: 'سامی',
-//     modes: 'دودمه',
-//     years: '1994',
-//   },
-//   {
-//     categories: 'شب سوم محرم',
-//     languages: 'فارسی',
-//     persons: 'محمد',
-//     modes: 'دودمه',
-//     years: '2001',
-//   },
-// ];
 const Search = () => {
   const {
     search,
@@ -122,7 +19,6 @@ const Search = () => {
     searchValueInput,
   } = useContext(searchContext);
   const { user, loadUser } = useContext(authContext);
-  const { getMenu } = useContext(appContext);
   const [next, setNext] = useState({
     next: '',
     listResults: null,
@@ -130,13 +26,11 @@ const Search = () => {
     hasMore: false,
     page: 2,
     loaderMsg: '',
-    empty: false,
+    loading: false,
   });
   // eslint-disable-next-line
   const [searchValue, setSearchValue] = useState(searchValueInput);
   useEffect(() => {
-    // getMenu();
-
     loadUser();
 
     if (
@@ -147,6 +41,7 @@ const Search = () => {
         ...next,
         next: nextSearchPageUrl,
         listResults: resultsSearch,
+        loading: false,
         listPersons: personsSearch,
         hasMore: nextSearchPageUrl ? true : false,
         loaderMsg:
@@ -157,8 +52,8 @@ const Search = () => {
             : 'Loading...',
       });
     }
+    // eslint-disable-next-line
   }, [user, loading, nextSearchPageUrl, personsSearch, resultsSearch]);
-
   // const changePersons = (newPersons) => {
   //   setLoading(true);
   //   state.filtered = state.allSongs.filter((song) => {
@@ -176,38 +71,46 @@ const Search = () => {
   };
   const onSubmitHandle = (e) => {
     setNext({
+      ...next,
       next: '',
       listResults: null,
       listPersons: null,
       hasMore: false,
+      loading: true,
       page: 2,
       loaderMsg: '',
-      empty: false,
     });
     e.preventDefault();
     search(searchValue);
   };
 
   const infiniteList = async () => {
-    console.log(2);
-    try {
-      const res = await axios.instanceApi.get(
-        `/search/?page=${next.page}&q=${searchValue}`
-      );
-      // console.log(res.data);
-      // next.listResults.concat(res.data.results);
-      setNext({
-        next: res.data.next,
-        hasMore: res.data.next ? true : false,
-        listResults: next.listResults.concat(res.data.results),
-        listPersons: next.listPersons,
-        page: ++next.page,
-        loaderMsg: res.data.next ? 'Loading...' : 'Finish :)',
-      });
-      // console.log(next.page);
-    } catch (error) {
-      console.log(error);
-    }
+    // console.log(2);
+    setNext({
+      ...next,
+      loading: true,
+    });
+    setTimeout(async () => {
+      try {
+        const res = await axios.instanceApi.get(
+          `/search/?page=${next.page}&q=${searchValue}`
+        );
+        // console.log(res.data);
+        // next.listResults.concat(res.data.results);
+        setNext({
+          next: res.data.next,
+          hasMore: res.data.next ? true : false,
+          listResults: next.listResults.concat(res.data.results),
+          listPersons: next.listPersons,
+          page: ++next.page,
+          loaderMsg: res.data.next ? 'Loading...' : 'Finish :)',
+          loading: false,
+        });
+        // console.log(next.page);
+      } catch (error) {
+        console.log(error);
+      }
+    }, 1200);
   };
 
   return (
@@ -253,8 +156,6 @@ const Search = () => {
             dataLength={next?.listPersons?.length}
             next={() => infiniteList()}
             hasMore={next.hasMore}
-
-            // height={'100vh'}
           >
             {next.listPersons &&
               next.listPersons?.map((item, i) => {
@@ -275,14 +176,11 @@ const Search = () => {
         {next?.listResults && (
           <h2 className='text-white my-5'>نتایج براساس آهنگ</h2>
         )}
-        {/* <SearchView /> */}
         {next?.listResults && (
           <InfiniteScroll
             dataLength={next?.listResults?.length}
             next={() => infiniteList()}
             hasMore={next.hasMore}
-
-            // height={'100vh'}
           >
             {next.listResults &&
               next.listResults?.map((item, i) => {
@@ -300,7 +198,18 @@ const Search = () => {
         )}
       </div>
 
-      <h4 className='text-white mb-5 mt-3'>{next.loaderMsg}</h4>
+      <div
+        className='loading-message'
+        // ref={loadingRef}
+        style={{
+          opacity: next.loading ? '1' : '0',
+          transform: next.loading && 'translate(-50%, 0px)',
+        }}
+      >
+        <LoadingIcon color='#fff' />
+        <span>در حال دریافت</span>
+      </div>
+      {/* <h4 className='text-white mb-5 mt-3'>{next.loaderMsg}</h4> */}
     </div>
   );
 };

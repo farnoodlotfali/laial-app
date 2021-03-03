@@ -9,7 +9,7 @@ import authContext from './auth/authContext';
 
 const Home = () => {
   const { loading, getHome, home } = useContext(appContext);
-  const { user, loadUser, tokenAccess } = useContext(authContext);
+  const { user, loadUser } = useContext(authContext);
 
   // let params = useParams();
   // let his = useHistory();

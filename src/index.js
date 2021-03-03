@@ -8,7 +8,9 @@ import { BrowserRouter as Router } from 'react-router-dom';
 ReactDOM.render(
   // <React.StrictMode><App/></React.StrictMode>
   <Fragment>
-    <Router>
+    <Router
+    // forceRefresh={true}
+    >
       <App />
     </Router>
   </Fragment>,

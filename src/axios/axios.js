@@ -4,7 +4,6 @@ let tryCount = 0;
 const instanceApi = axios.create({
   baseURL: 'http://laial.7negare.ir/api',
 });
-
 instanceApi.interceptors.response.use(
   (response) => {
     return response;
@@ -22,10 +21,10 @@ instanceApi.interceptors.response.use(
     //   error.response.status,
     //   error.config
     // );
-    if (error.config && error.response && error.response.status === 404) {
-      window.location = '/aboutus';
-      return Promise.reject(error);
-    }
+    // if (error.config && error.response && error.response.status === 404) {
+    //   window.location = '/aboutus';
+    //   return Promise.reject(error);
+    // }
 
     if (error.config && error.response && error.response.status === 401) {
       if (tryCount === 3) {
@@ -72,6 +71,8 @@ instanceApi.interceptors.response.use(
 const downloader = axios.create({
   baseURL: 'http://downloader.7negare.ir/download',
 });
+// cancelTokenSource.cancel();
+
 // const auth = axios.create({
 //   baseURL: 'http://laial.7negare.ir/api/account',
 // });

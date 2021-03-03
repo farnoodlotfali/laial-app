@@ -111,7 +111,7 @@ const AuthState = (props) => {
       },
     };
     try {
-      const res = await axios.instanceApi.get('/test-auth/', config);
+      await axios.instanceApi.get('/test-auth/', config);
       // console.log(res.data);
     } catch (error) {
       console.log(error);

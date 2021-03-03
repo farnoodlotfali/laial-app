@@ -1,0 +1,362 @@
+.myProfile {
+  min-height: 100vh;
+  padding-top: 50px;
+}
+
+.myProfile__content {
+  display: flex;
+  border: 1px solid rgb(180, 178, 190);
+  margin: 20px;
+  border-radius: 10px;
+  background: rgb(34, 35, 39);
+  padding: 50px 20px;
+  box-shadow: 0 5px 15px rgb(173 173 173 / 73%);
+}
+
+.myProfile__content__left {
+  flex: 0.4;
+  justify-content: center;
+  align-self: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.myProfile__list__all {
+  flex: 0.4;
+}
+
+.myProfile__content__left__title {
+  width: 100%;
+}
+.myProfile__allAndShow {
+  display: flex;
+  width: 100%;
+  direction: rtl;
+}
+.myProfile__list__show {
+  flex: 0.7;
+  overflow-y: scroll;
+  border: 1px solid rgb(233, 233, 233);
+  padding: 7px;
+  height: 250px;
+  border-radius: 10px;
+  box-shadow: 0 15px 15px rgb(9 14 31 / 88%);
+}
+.myProfile__list {
+  background-color: rgb(0, 0, 0);
+  border: 1px solid rgb(157, 159, 165);
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px;
+}
+.myProfile__list span {
+  font-size: 14px;
+}
+.myProfile__list:hover {
+  cursor: pointer;
+  background: linear-gradient(135deg, #000000 10%, #334275 100%);
+}
+.myProfile__img {
+  margin: 0px 30px;
+  border-radius: 10rem;
+  height: 270px;
+  border: 1px solid rgb(190, 255, 10);
+  background: grey;
+  box-shadow: 0 5px 15px rgb(173 173 173 / 73%);
+}
+.myProfile__imgAndPass {
+  flex: 0.2;
+}
+.myProfile__img img {
+  padding: 10px;
+}
+
+.myProfile__content__right {
+  flex: 0.4;
+  align-self: center;
+}
+
+.myProfile__imgAndPass input[type='file'] {
+  box-shadow: 0 5px 15px rgb(173 173 173 / 73%);
+  border: 1px solid rgb(184, 184, 184);
+  border-radius: 10px;
+}
+.myProfile__content__right .inputBox {
+  width: 48%;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.myProfile__content__right .inputBox input {
+  margin-left: 5px;
+  text-align: right;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  outline: none;
+  padding: 10px 20px;
+  border-radius: 35px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: white;
+  box-shadow: 0 15px 15px rgba(9, 14, 31, 0.877);
+}
+.myProfile__reset__password .inputBox {
+  margin: 0 0 5px 0;
+  width: 50%;
+}
+.myProfile__reset__password .inputBox input {
+  margin-top: 5px 0 0 0;
+  text-align: right;
+  width: 80%;
+  background: rgba(255, 255, 255, 0.3);
+  outline: none;
+  padding: 10px 20px;
+  border-radius: 35px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: white;
+  box-shadow: 0 15px 15px rgba(9, 14, 31, 0.877);
+}
+.myProfile__reset__password .inputBox input::placeholder {
+  color: rgba(255, 255, 255, 0.438);
+  text-align: right;
+}
+
+.choose__photo {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.myProfile__reset__password .inputBox input[type='submit'] {
+  background-color: white;
+  color: #666;
+  cursor: pointer;
+  text-align: center;
+  /* max-width: 100px; */
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.myProfile__song__info {
+  display: flex;
+  direction: rtl;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+.myProfile__song__info__names {
+  width: 100%;
+  justify-content: space-evenly;
+  display: flex;
+  overflow: hidden;
+  align-self: center;
+  margin-right: 15px;
+  margin-left: 15px;
+}
+.myProfile__song__info__name {
+  width: 100px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.myProfile__song__info__singer {
+  font-size: 12px;
+  color: gray;
+}
+
+.song__img {
+  width: 45px;
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 45px;
+  cursor: pointer;
+}
+.song__img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.myProfile__song__info__time {
+  align-self: center;
+  font-size: 12px;
+}
+
+.myProfile__list__show::-webkit-scrollbar {
+  width: 10px;
+  display: none;
+}
+
+.myProfile__reset__password form {
+  display: flex;
+  direction: rtl;
+  flex-wrap: wrap;
+}
+
+.myProfile__list__all .user_btn {
+  width: 100%;
+  padding: 0;
+}
+.photo__onMobile {
+  display: flex;
+  display: none;
+  justify-content: center;
+  margin-top: -70px;
+  margin-bottom: 10px;
+}
+.photo__lines {
+  width: 120px;
+  height: 120px;
+}
+.photo__lines img {
+  width: 100%;
+  border: 1px solid rgba(245, 245, 245, 0.651);
+  box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
+  height: 100%;
+  padding: 10px;
+}
+/* .myProfile__list__show::-webkit-scrollbar-track {
+  border-radius: 40px;
+}
+
+.myProfile__list__show::-webkit-scrollbar-thumb {
+  background: rgba(105, 104, 109, 0.685);
+  border-radius: 40px;
+}
+
+.myProfile__list__show::-webkit-scrollbar-thumb:hover {
+  background: rgb(63, 63, 63);
+} */
+
+.myProfile__list .dropdown {
+  border: none;
+}
+.myProfile__list__all .dropdown {
+  border: none;
+}
+
+.myProfile__list__all .dropdown-menu {
+  background: rgb(34, 35, 39);
+  color: white;
+  z-index: 0;
+  width: 100%;
+  height: 150px;
+  overflow-y: scroll;
+  transform: translate3d(0px, 40px, 0px) !important;
+  box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
+  opacity: 1;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.myProfile__list__all .dropdown-menu::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.myProfile__list__all .dropdown-menu::-webkit-scrollbar-track {
+  /* box-shadow: inset 0 0 5px rgba(83, 83, 83, 0.021); */
+  border-radius: 10px;
+}
+
+/* Handle */
+.myProfile__list__all .dropdown-menu::-webkit-scrollbar-thumb {
+  background: rgba(105, 104, 109, 0.685);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.myProfile__list__all .dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background: rgb(63, 63, 63);
+}
+
+.myProfile__list__all .dropdown-item {
+  display: flex;
+  font-size: 16px;
+  /* color: red !important; */
+  justify-content: center;
+  padding: 5px 10px 2px 5px;
+  color: white;
+  margin-bottom: 5px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+.myProfile__list__all .dropdown-item:hover {
+  background: rgb(49, 50, 54);
+  color: white;
+  cursor: pointer;
+}
+
+.myProfile__reset__password__title {
+  margin: 10px 0px;
+}
+
+.myProfile__song__info__name {
+  animation: animate 4s linear infinite;
+}
+@keyframes animate {
+  0% {
+    transform: translateX(150%);
+  }
+  100% {
+    transform: translateX(-150%);
+  }
+}
+
+@media (max-width: 992px) {
+  .myProfile {
+    height: auto;
+  }
+  .myProfile__content {
+    display: grid;
+    justify-content: center;
+    padding: 20px;
+  }
+  .photo__onMobile {
+    display: flex;
+  }
+  .myProfile__content__left {
+    display: grid;
+    justify-content: initial;
+  }
+  .myProfile__imgAndPass {
+    display: none;
+  }
+  .myProfile__allAndShow {
+    display: grid;
+  }
+  .myProfile__list__show {
+    width: 100%;
+  }
+  .song__img {
+    width: 35px;
+    height: 35px;
+  }
+  .myProfile__song__info .number {
+    font-size: 8px;
+  }
+  .myProfile__song__info__name {
+    font-size: 12px;
+  }
+  .myProfile__song__info__singer {
+    font-size: 9px;
+  }
+  .myProfile__song__info__time {
+    font-size: 9px;
+  }
+  .myProfile__content__right {
+    margin-top: 20px;
+  }
+  .myProfile__content__right .inputBox {
+    width: 100%;
+    margin: 0px 0px 0px -5px;
+  }
+  .form__names {
+    display: grid !important;
+  }
+  .myProfile__reset__password .inputBox {
+    margin-top: 10px;
+  }
+}

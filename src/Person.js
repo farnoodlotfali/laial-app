@@ -8,6 +8,7 @@ import { useParams } from 'react-router';
 import authContext from './auth/authContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from './axios/axios';
+import LoadingIcon from './spinner/LoadingIcon';
 const Person = () => {
   const {
     personList,
@@ -18,12 +19,13 @@ const Person = () => {
   } = useContext(appContext);
   let params = useParams();
 
-  const { user, loadUser, tokenAccess } = useContext(authContext);
+  const { user, loadUser } = useContext(authContext);
   const [next, setNext] = useState({
     next: '',
     list: null,
     hasMore: false,
     page: 2,
+    loading: false,
     loaderMsg: '',
   });
   useEffect(() => {
@@ -34,6 +36,7 @@ const Person = () => {
       setNext({
         ...next,
         next: personUrls.next,
+        loading: false,
         list: personList,
         hasMore: personUrls.next ? true : false,
         loaderMsg: 'Loading...',
@@ -47,23 +50,30 @@ const Person = () => {
   }, [params.slug, user, personUrls, loading, personList]);
 
   const infiniteList = async () => {
-    try {
-      const res = await axios.instanceApi.get(
-        `/persons/${params.slug}/?page=${next.page}`
-      );
-      // console.log(res.data);
+    setNext({
+      ...next,
+      loading: true,
+    });
+    setTimeout(async () => {
+      try {
+        const res = await axios.instanceApi.get(
+          `/persons/${params.slug}/?page=${next.page}`
+        );
+        // console.log(res.data);
 
-      setNext({
-        next: res.data.next,
-        hasMore: res.data.next ? true : false,
-        list: next.list.concat(res.data.results),
-        page: ++next.page,
-        loaderMsg: res.data.next ? 'Loading...' : 'Finish :)',
-      });
-      // console.log(next.page);
-    } catch (error) {
-      console.log(error);
-    }
+        setNext({
+          next: res.data.next,
+          hasMore: res.data.next ? true : false,
+          list: next.list.concat(res.data.results),
+          page: ++next.page,
+          loading: false,
+          loaderMsg: res.data.next ? 'Loading...' : 'Finish :)',
+        });
+        // console.log(next.page);
+      } catch (error) {
+        console.log(error);
+      }
+    }, 1200);
   };
   return loading ? (
     <Spinner />
@@ -148,7 +158,20 @@ const Person = () => {
             })}
         </InfiniteScroll>
       )}
-      <h4 className='text-white mb-5 mt-3'>{next.loaderMsg}</h4>
+
+      <div
+        className='loading-message'
+        // ref={loadingRef}
+        style={{
+          opacity: next.loading ? '1' : '0',
+          transform: next.loading && 'translate(-50%, 0px)',
+        }}
+      >
+        <LoadingIcon color='#fff' />
+        <span>در حال دریافت</span>
+      </div>
+
+      {/* <h4 className='text-white mb-5 mt-3'>{next.loaderMsg}</h4> */}
     </div>
   );
 };

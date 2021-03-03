@@ -11,13 +11,14 @@ const Login = (props) => {
     email: '',
     password: '',
   });
-  const { username, email, password } = userInfo;
+  const { email, password } = userInfo;
   useEffect(() => {
     loadUser();
     if (user !== null) {
       // props.history.back();
       history.goBack();
     }
+    // eslint-disable-next-line
   }, [user, history, error]);
 
   const onchange = (e) => {

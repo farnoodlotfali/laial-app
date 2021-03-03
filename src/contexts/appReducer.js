@@ -16,6 +16,8 @@ import {
   CHANGE_SHOW_MUSIC,
   SET_SONG_ID,
   GET_MENU,
+  GET_ALL_PERSONS,
+  FIND_MAIN_PLAYLIST,
 } from './types';
 // eslint-disable-next-line
 export default (state, action) => {
@@ -54,6 +56,12 @@ export default (state, action) => {
         personUrls: action.payload.personUrls,
         personkSlug: action.payload.personkSlug,
         loading: false,
+      };
+    case GET_ALL_PERSONS:
+      return {
+        ...state,
+        allPersons: action.payload.allPersons,
+        AllpersonsUrls: action.payload.AllpersonsUrls,
       };
     case GET_SONG_PAGE:
       return {
@@ -116,6 +124,12 @@ export default (state, action) => {
         ...state,
         whichSongToSaveInPlaylist: action.payload,
       };
+    case FIND_MAIN_PLAYLIST:
+      return {
+        ...state,
+        mainPlaylistId: action.payload,
+      };
+
     case ERROR:
       return {
         ...state,

@@ -23,6 +23,7 @@
   height: 90px;
   margin: 10px 0;
   border-radius: 5px;
+  box-shadow: 0 5px 15px rgb(173 173 173 / 73%);
   overflow: hidden;
   position: relative;
 }
@@ -41,6 +42,7 @@
 }
 
 .infoDesc__title {
+  width: 200px;
   white-space: nowrap;
   font-weight: 900;
   font-size: 20px;
@@ -96,13 +98,28 @@
 }
 
 .musicBar__left {
-  flex: 0.1;
+  flex: 0.15;
+  margin-left: 15px;
 }
 .musicBar__right {
+  margin-right: 15px;
   flex: 0.3;
 }
 .musicBar__center {
-  flex: 0.5;
+  flex: 1;
+}
+
+.musicBar__center .spinner {
+  width: 30px !important;
+  height: 30px !important;
+  position: inherit !important;
+  transform: none !important;
+}
+
+.musicBar__center .spinner img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
 }
 .playlist_sound .sound {
   display: flex !important;

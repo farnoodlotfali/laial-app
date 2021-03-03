@@ -1,0 +1,32 @@
+.loading-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  padding: 5px 20px;
+  color: white;
+  background-color: black;
+  border-radius: 30px;
+  position: fixed;
+  bottom: 45px;
+  left: 50%;
+  z-index: 1005;
+  transform: translate(-50%, 300px);
+  transition: opacity 0.3s, transform 0.3s;
+  /* opacity: 0; */
+}
+.loading-message svg {
+  width: 45px;
+  height: 45px;
+  fill: white;
+}
+
+.loading-message.active {
+  /* transform: translate(-50%, 0px); */
+  /* opacity: 1; */
+}
+
+/* @media (max-width: 480px) {
+    font-size: 14px;
+    bottom: 75px;
+} */

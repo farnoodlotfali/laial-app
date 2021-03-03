@@ -21,6 +21,18 @@
 .phoneMusicBar__right {
   flex: 0.4;
 }
+.phoneMusicBar__right .spinner {
+  width: 30px !important;
+  height: 30px !important;
+  position: inherit !important;
+  transform: none !important;
+}
+
+.phoneMusicBar__right .spinner img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
 .phoneMusicBar__img {
   width: 40px;
   height: 40px;

@@ -1,42 +1,19 @@
 import { Pause, PlayArrowRounded } from '@material-ui/icons';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Badge } from 'react-bootstrap';
 import AppContext from './contexts/appContext';
 import defualtPhoto from './assets/defualtPhoto.jpeg';
-import logo1 from './assets/0.jpg';
 import './RowItem.css';
 import { Link } from 'react-router-dom';
 import playerContext from './player/playerContext';
 import axios from './axios/axios';
+import Axios from 'axios';
 
 import SpinnerLoading from './spinner/SpinnerLoading';
 import authContext from './auth/authContext';
-const urls = [
-  {
-    url:
-      'https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3',
-    name: 'darya',
-    id: 323,
-  },
-  {
-    url: 'http://dl.musicdam.net/Downloads/mp3/Hayedeh%20-%20Soghati%20128.mp3',
-    name: 'hayde2',
-    id: 881,
-  },
-  {
-    url:
-      'http://dl.musicdam.net/Downloads/mp3/Hayedeh%20-%20Bordi%20Az%20Yadam%20128.mp3',
-    name: 'darya1',
-    id: 413,
-  },
-  {
-    url:
-      'http://dl.musicdam.net/Downloads/mp3/Hayedeh%20-%20Badeh%20Foroosh%20128.mp3',
-    name: 'hayde1',
-    id: 901,
-  },
-];
+const CancelToken = Axios.CancelToken;
 
+let cancel;
 const RowItem = ({ media, person, slug, context }) => {
   // let { slug } = useParams();
   // eslint-disable-next-line
@@ -57,24 +34,36 @@ const RowItem = ({ media, person, slug, context }) => {
   // console.log(context);
   const playMusicAndShowMusicBar = async () => {
     // نشان دادن موزیک و پخش موزیک
-    setIds(
-      media?.telegram_id,
-      media?.id,
-      media?.duration,
-      media?.name,
-      person?.[0]?.name,
-      media?.image !== null ? media?.image : person?.[0]?.image.full_image_url
-    );
-    // console.log(media?.name, person?.[0]?.name);
-    try {
-      const res = await axios.downloader.get(`/${media?.telegram_id}`);
-      setUrl(res.data.download_link, context);
-      if (!showMusic) {
-        ChangeShowMusic();
+
+    if (media?.id === songId) {
+      playAndPauseMusic();
+    } else {
+      setIds(
+        media?.telegram_id,
+        media?.id,
+        media?.duration,
+        media?.name,
+        person?.[0]?.name,
+        media?.image !== null ? media?.image : person?.[0]?.image.full_image_url
+      );
+      if (cancel !== undefined) {
+        cancel();
       }
-      playMusic();
-    } catch (error) {
-      console.log(error);
+      // console.log(media?.name, person?.[0]?.name);
+      try {
+        const res = await axios.downloader.get(`/${media?.telegram_id}`, {
+          cancelToken: new CancelToken(function executor(c) {
+            cancel = c;
+          }),
+        });
+        setUrl(res.data.download_link, context);
+        if (!showMusic) {
+          ChangeShowMusic();
+        }
+        playMusic();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 

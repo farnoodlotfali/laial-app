@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { IconButton, Tooltip } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
-import logo from './assets/0.jpg';
 import playerContext from './player/playerContext';
 import defualtPhoto from './assets/defualtPhoto.jpeg';
 
@@ -11,13 +10,12 @@ import appContext from './contexts/appContext';
 const SongOnLeft = ({ item, playlist, number, zeroPad }) => {
   // eslint-disable-next-line
   const {
-    playAndPauseMusic,
     playing,
     setUrl,
     playList,
     playMusic,
     setIds,
-    setPlayList,
+
     songId,
   } = useContext(playerContext);
   const { ChangeShowMusic, showMusic } = useContext(appContext);

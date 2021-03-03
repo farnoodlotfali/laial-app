@@ -40,7 +40,7 @@
 .search .infinite-scroll-component {
   display: flex;
   flex-wrap: wrap;
-  height: 100vh;
+  min-height: 100vh;
   justify-content: center;
 }
 /* .searchView {

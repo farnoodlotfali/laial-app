@@ -21,12 +21,13 @@ import PhoneMenu from './PhoneMenu';
 import MoreSong from './MoreSong';
 import Person from './Person';
 import Foooter from './Foooter';
-import Test from './Test';
 import Register from './Register';
 import Login from './Login';
 import AuthState from './auth/AuthState';
 import ScrollToTop from './ScrollToTop';
 import PhoneList from './PhoneList';
+import AllPerson from './AllPerson';
+import MyProfile from './MyProfile';
 
 const App = () => {
   return (
@@ -49,22 +50,27 @@ const App = () => {
                   exact
                   path={`/song/:slug`}
                   component={RowItemPage}
-                  exact
                 />
                 <Route exact path='/search' component={Search} />
+                <Route exact path='/myprofile' component={MyProfile} />
                 <Route
                   sensitive
                   exact
                   path='/list/:slug'
                   component={MoreSong}
                 />
-
                 <Route exact path='/aboutus' component={AboutUs} />
                 <Route
                   sensitive
                   exact
                   path='/person/:slug'
                   component={Person}
+                />{' '}
+                <Route
+                  sensitive
+                  exact
+                  path='/allpersons'
+                  component={AllPerson}
                 />
                 <Route exact path='/:slug' component={Home} />
                 <Route exact path='/**' component={AboutUs} />

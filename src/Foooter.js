@@ -1,10 +1,9 @@
-import { useContext } from 'react';
+// import { useContext } from 'react';
 import './Foooter.css';
-import logo from './assets/10.jpg';
-import logo1 from './assets/9.jpg';
-import appContext from './contexts/appContext';
+
+// import appContext from './contexts/appContext';
 const Foooter = () => {
-  const { loading } = useContext(appContext);
+  //   const { loading } = useContext(appContext);
   return (
     <div className='bg-black block pb-3'></div>
     // <div

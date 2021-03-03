@@ -1,0 +1,17 @@
+.allPerson {
+  padding: 20px;
+  padding-top: 40px;
+}
+/* .allPerson__item {
+  height: 260px;
+  margin: 0px 10px;
+} */
+.allPerson .infinite-scroll-component__outerdiv {
+  min-height: 100vh !important;
+}
+.allPerson .infinite-scroll-component {
+  /* padding: 0 10px 0 0; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

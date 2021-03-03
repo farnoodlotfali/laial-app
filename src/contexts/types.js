@@ -15,3 +15,5 @@ export const CHANGE_SHOW_CENTER = 'CHANGE_SHOW_CENTER';
 export const CHANGE_SHOW_MUSIC = 'CHANGE_SHOW_MUSIC';
 export const SET_SONG_ID = 'SET_SONG_ID';
 export const GET_MENU = 'GET_MENU';
+export const GET_ALL_PERSONS = 'GET_ALL_PERSONS';
+export const FIND_MAIN_PLAYLIST = 'FIND_MAIN_PLAYLIST';

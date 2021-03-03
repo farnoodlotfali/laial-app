@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(to bottom, rgb(34, 35, 39), black);
 }
 
@@ -193,7 +193,7 @@
 
 @media (max-width: 768px) {
   .register {
-    height: 92vh;
+    min-height: 92vh;
   }
   .register__container {
     width: auto;
