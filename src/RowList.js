@@ -40,6 +40,7 @@ const RowList = ({ id, title, slug = '', data }) => {
 
       <Flickity className='carousel col px-2 py-0' options={flickityOptions}>
         {context.map((item, i) => {
+          // console.log(item);
           return (
             <RowItem
               key={item.id}

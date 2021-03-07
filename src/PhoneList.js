@@ -73,7 +73,7 @@ const PhoneList = () => {
               )}
             {user && (
               <div className='phoneList__item'>
-                <Link to='/myprofile'>
+                <Link to='/myprofile' onClick={() => showx(false)}>
                   <ListItem button key={'پروفایل'}>
                     <PersonRounded className='' />
 
@@ -83,7 +83,10 @@ const PhoneList = () => {
               </div>
             )}
             {user && (
-              <div className='phoneList__item' onClick={() => logout()}>
+              <div
+                className='phoneList__item'
+                onClick={() => logout() & showx(false)}
+              >
                 <ListItem button key={'خروج از حساب'}>
                   <ExitToAppRounded className='' />
 

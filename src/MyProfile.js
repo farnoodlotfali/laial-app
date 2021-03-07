@@ -71,9 +71,18 @@ const MyProfile = () => {
                         <div
                           key={i}
                           className='dropdown-item'
-                          onClick={() => changeListShow(item.items)}
+                          onClick={() =>
+                            changeListShow(item.items) & console.log(item)
+                          }
                         >
-                          {item.name}
+                          <span>{item.name}</span>
+                          {mainPlaylistId !== item.id ? (
+                            <DeleteRounded />
+                          ) : (
+                            <span className='align-self-center ml-2 centerItem__info'>
+                              لیست ثابت سایت
+                            </span>
+                          )}
                         </div>
                       );
                     })}

@@ -35,7 +35,7 @@ body {
 }
 .rowList .carousel {
   outline-width: 0px;
-  height: 377px;
+  height: 400px;
   padding-bottom: 20px;
   padding-top: 10px;
   background-color: rgb(18, 18, 18);
@@ -44,12 +44,13 @@ body {
 }
 
 .rowList .flickity-viewport {
-  height: 376px;
+  height: 399px !important;
 }
 .rowList .carousel-cell {
   left: 0 !important;
 }
 .rowList .flickity-slider {
+  padding-top: 10px;
   /* transform: translateX(0%) !important ; */
   /* background-color: red; */
 }
@@ -255,11 +256,11 @@ https://flickity.metafizzy.co
     font-size: 15px;
   }
   .rowList .carousel {
-    height: 200px;
+    height: 210px;
   }
 
   .rowList .flickity-viewport {
-    height: 190.8px;
+    height: 190.8px !important;
   }
 
   .rowList__title .moreSong {

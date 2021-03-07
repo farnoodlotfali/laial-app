@@ -224,7 +224,7 @@ const Playerstate = (props) => {
         });
         let newItem = { songId: id, count: item.count + 1 };
         newMainPlaylist.push(newItem);
-        console.log(newMainPlaylist);
+        // console.log(newMainPlaylist);
 
         localStorage.setItem('mainPlaylist', JSON.stringify(newMainPlaylist));
         addMusicToMAINPlaylist(id);

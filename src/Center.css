@@ -102,6 +102,13 @@
   background-color: rgba(36, 36, 36, 0.322);
 }
 
+.list .centerItem__info {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  color: lightgreen;
+  font-family: Vazir;
+}
+
 @media (max-width: 768px) {
   .playlist {
     min-width: 350px;
@@ -118,5 +125,8 @@
 
   .list__icons .MuiButtonBase-root {
     padding: 8px !important;
+  }
+  .list .centerItem__info {
+    font-size: 9px;
   }
 }

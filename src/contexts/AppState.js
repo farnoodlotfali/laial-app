@@ -353,11 +353,42 @@ const AppState = (props) => {
         Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
       },
     };
-
+    const formdate = {
+      id: form,
+      status: 'delete',
+    };
     try {
-      const res = await axios.instanceApi.delete(
-        '/account/playlist/',
-        form,
+      const res = await axios.instanceApi.patch(
+        '/account/playlist/update/',
+        formdate,
+        config
+      );
+      console.log(res.data);
+      getAllPlaylists();
+    } catch (error) {
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+
+  const updatePlaylistName = async (id, newName) => {
+    // console.log(9090);
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+      },
+    };
+    const formdate = {
+      id: id,
+      name: newName,
+    };
+    try {
+      const res = await axios.instanceApi.patch(
+        '/account/playlist/update/',
+        formdate,
         config
       );
       console.log(res.data);
@@ -377,11 +408,14 @@ const AppState = (props) => {
         Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
       },
     };
-
+    const formdate = {
+      id: form,
+      status: 'delete',
+    };
     try {
-      const res = await axios.instanceApi.delete(
-        '/account/playlist/',
-        form,
+      const res = await axios.instanceApi.patch(
+        '/account/playlist/item/',
+        formdate,
         config
       );
       console.log(res.data);
@@ -455,7 +489,7 @@ const AppState = (props) => {
       fileItem: songId,
     };
 
-    console.log(formData);
+    // console.log(formData);
 
     try {
       const res = await axios.instanceApi.post(
@@ -463,7 +497,7 @@ const AppState = (props) => {
         formData,
         config
       );
-      console.log(res.data);
+      // console.log(res.data);
       getAllPlaylists();
 
       // ChangeshowCenter();
@@ -516,6 +550,7 @@ const AppState = (props) => {
         getAllPlaylists,
         makeNewPlaylist,
         removePlaylist,
+        updatePlaylistName,
         removeSongFromPlaylist,
         getRecommender,
         addMusicToPlaylist,

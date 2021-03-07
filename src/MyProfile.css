@@ -277,7 +277,11 @@
   display: flex;
   font-size: 16px;
   /* color: red !important; */
-  justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-wrap: wrap;
+  justify-content: space-between;
   padding: 5px 10px 2px 5px;
   color: white;
   margin-bottom: 5px;
@@ -294,15 +298,22 @@
 }
 
 .myProfile__song__info__name {
-  animation: animate 4s linear infinite;
+  animation: animate 5s linear infinite;
 }
 @keyframes animate {
   0% {
-    transform: translateX(150%);
+    transform: translateX(250%);
   }
   100% {
-    transform: translateX(-150%);
+    transform: translateX(-250%);
   }
+}
+
+.myProfile .centerItem__info {
+  /* margin-top: 12px; */
+  color: lightgreen;
+  font-family: Vazir;
+  font-size: 10px;
 }
 
 @media (max-width: 992px) {
