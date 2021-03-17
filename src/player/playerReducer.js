@@ -23,6 +23,7 @@ export default (state, action) => {
       return {
         ...state,
         playing: true,
+        loading: false,
       };
     case PAUSE_MUSIC:
       return {
@@ -81,7 +82,7 @@ export default (state, action) => {
       return {
         ...state,
         currentUrl: action.payload,
-        loading: false,
+        // loading: false,
       };
     case SET_PROGRESS:
       return {

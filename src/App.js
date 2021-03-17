@@ -20,7 +20,6 @@ import RowItemPage from './RowItemPage';
 import PhoneMenu from './PhoneMenu';
 import MoreSong from './MoreSong';
 import Person from './Person';
-import Foooter from './Foooter';
 import Register from './Register';
 import Login from './Login';
 import AuthState from './auth/AuthState';
@@ -28,6 +27,7 @@ import ScrollToTop from './ScrollToTop';
 import PhoneList from './PhoneList';
 import AllPerson from './AllPerson';
 import MyProfile from './MyProfile';
+import PasswordReset from './PasswordReset';
 
 const App = () => {
   return (
@@ -72,11 +72,10 @@ const App = () => {
                   path='/allpersons'
                   component={AllPerson}
                 />
+                <Route exact path='/password_reset' component={PasswordReset} />
                 <Route exact path='/:slug' component={Home} />
                 <Route exact path='/**' component={AboutUs} />
               </Switch>
-
-              <Foooter />
 
               <PhoneMenu />
             </SearchState>

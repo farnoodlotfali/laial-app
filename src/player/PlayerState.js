@@ -10,15 +10,7 @@ import '../MusicBar.css';
 import PlayerContext from './playerContext';
 import defualtPhoto from '.././assets/defualtPhoto.jpeg';
 import playerReducer from './playerReducer';
-import {
-  ClickAwayListener,
-  Drawer,
-  ListItem,
-  ListItemText,
-  Slide,
-  Slider,
-  SwipeableDrawer,
-} from '@material-ui/core';
+import { ClickAwayListener, Drawer, Slide, Slider } from '@material-ui/core';
 import AppContext from '../contexts/appContext';
 import { detect } from 'detect-browser';
 import {
@@ -203,39 +195,41 @@ const Playerstate = (props) => {
     });
 
     // set if user listen this song twice or more if true add to mainplaylist,
+    if (isAuth) {
+      if (JSON.parse(localStorage.getItem('mainPlaylist')) === null) {
+        let mainPlaylist = [];
+        const item = { songId: id, count: 1 };
+        mainPlaylist.push(item);
 
-    if (JSON.parse(localStorage.getItem('mainPlaylist')) === null) {
-      let mainPlaylist = [];
-      const item = { songId: id, count: 1 };
-      mainPlaylist.push(item);
-
-      localStorage.setItem('mainPlaylist', JSON.stringify(mainPlaylist));
-    } else {
-      let mainPlaylist = JSON.parse(localStorage.getItem('mainPlaylist'));
-      let item = mainPlaylist.find((x) => x.songId === id);
-
-      if (item === undefined) {
-        const newItem = { songId: id, count: 1 };
-        mainPlaylist.push(newItem);
         localStorage.setItem('mainPlaylist', JSON.stringify(mainPlaylist));
       } else {
-        let newMainPlaylist = mainPlaylist.filter((file) => {
-          return file.songId !== id;
-        });
-        let newItem = { songId: id, count: item.count + 1 };
-        newMainPlaylist.push(newItem);
+        let mainPlaylist = JSON.parse(localStorage.getItem('mainPlaylist'));
+        let item = mainPlaylist.find((x) => x.songId === id);
+
+        if (item === undefined) {
+          const newItem = { songId: id, count: 1 };
+          mainPlaylist.push(newItem);
+          localStorage.setItem('mainPlaylist', JSON.stringify(mainPlaylist));
+        } else {
+          let newMainPlaylist = mainPlaylist.filter((file) => {
+            return file.songId !== id;
+          });
+          let newItem = { songId: id, count: item.count + 1 };
+          newMainPlaylist.push(newItem);
+          // console.log(newMainPlaylist);
+
+          localStorage.setItem('mainPlaylist', JSON.stringify(newMainPlaylist));
+          addMusicToMAINPlaylist(id);
+        }
+
+        // console.log(item);
         // console.log(newMainPlaylist);
-
-        localStorage.setItem('mainPlaylist', JSON.stringify(newMainPlaylist));
-        addMusicToMAINPlaylist(id);
+        // const item = { songId: id, count: 1 };
+        // mainPlaylist.push(item);
+        // localStorage.setItem('mainPlaylist', JSON.stringify(mainPlaylist));
       }
-
-      // console.log(item);
-      // console.log(newMainPlaylist);
-      // const item = { songId: id, count: 1 };
-      // mainPlaylist.push(item);
-      // localStorage.setItem('mainPlaylist', JSON.stringify(mainPlaylist));
     }
+
     // setIds({ telegramId: tId, songId: id });
   };
 
@@ -529,13 +523,13 @@ const Playerstate = (props) => {
         // for mobile ratio
         >
           <div className='phoneMusicBar__slide'>
-            <SwipeableDrawer
+            <Drawer
               variant='persistent'
               className='phoneMusicBar__slide'
               anchor={'bottom'}
               open={state.showMusicBarOnMoblieRatio}
               onClose={() => setShowMusicBarOnMoblieRatio()}
-              onOpen={() => setShowMusicBarOnMoblieRatio()}
+              // onOpen={() => setShowMusicBarOnMoblieRatio()}
             >
               <div className='player__zone d-flex text-light '>
                 <div className='current-time align-self-center '>
@@ -614,77 +608,77 @@ const Playerstate = (props) => {
                   />
                 </div>
               </div>
-            </SwipeableDrawer>
+            </Drawer>
           </div>
-          {state.currentUrl && (
-            <Slide direction='up' timeout={500} in={showMusic}>
-              <div className='phoneMusicBar bg-dark d-flex text-light'>
-                <div
-                  className='phoneMusicBar__left d-flex align-self-center 
+          {/* {state.currentUrl && ( */}
+          <Slide direction='up' timeout={500} in={showMusic}>
+            <div className='phoneMusicBar bg-dark d-flex text-light'>
+              <div
+                className='phoneMusicBar__left d-flex align-self-center 
           justify-content-start'
-                >
-                  <img
-                    className='phoneMusicBar__img m-2'
-                    src={
-                      state.songPhoto !== null ? state.songPhoto : defualtPhoto
-                    }
-                    alt=''
-                  />
-                  <div className='phoneMusicBar__info align-self-center mr-2'>
-                    <div className='phoneMusicBar__title'>
-                      <div className='scroll'>
-                        <span>{state.songName}</span>
-                      </div>
-                    </div>
-                    <div className='phoneMusicBar__singer'>
-                      <span>{state.songSinger}</span>
+              >
+                <img
+                  className='phoneMusicBar__img m-2'
+                  src={
+                    state.songPhoto !== null ? state.songPhoto : defualtPhoto
+                  }
+                  alt=''
+                />
+                <div className='phoneMusicBar__info align-self-center mr-2'>
+                  <div className='phoneMusicBar__title'>
+                    <div className='scroll'>
+                      <span>{state.songName}</span>
                     </div>
                   </div>
-                </div>
-                <div
-                  className='phoneMusicBar__right d-flex align-self-center 
-          justify-content-around'
-                >
-                  <div className='icon ' onClick={handleNext}>
-                    <SkipNextRounded style={{ fontSize: '25px' }} />
-                  </div>
-                  <div className='icon '>
-                    {/* SpinnerLoading */}
-                    {state.loading ? (
-                      <SpinnerLoading />
-                    ) : state.playing ? (
-                      <div
-                        className=''
-                        onClick={() => playAndPauseMusic(audioRef.current)}
-                      >
-                        <Pause style={{ fontSize: '25px' }} />
-                      </div>
-                    ) : (
-                      <div
-                        className=''
-                        onClick={() => playAndPauseMusic(audioRef.current)}
-                      >
-                        <PlayCircleFilledRounded style={{ fontSize: '25px' }} />
-                      </div>
-                    )}
-                  </div>
-                  <div className='icon' onClick={handlePrevious}>
-                    <SkipPreviousRounded style={{ fontSize: '25px' }} />
-                  </div>
-                  <div
-                    className='icon'
-                    onClick={() => setShowMusicBarOnMoblieRatio()}
-                  >
-                    {state.showMusicBarOnMoblieRatio ? (
-                      <ExpandMoreRounded style={{ fontSize: '25px' }} />
-                    ) : (
-                      <ExpandLessRounded style={{ fontSize: '25px' }} />
-                    )}
+                  <div className='phoneMusicBar__singer'>
+                    <span>{state.songSinger}</span>
                   </div>
                 </div>
               </div>
-            </Slide>
-          )}
+              <div
+                className='phoneMusicBar__right d-flex align-self-center 
+          justify-content-around'
+              >
+                <div className='icon ' onClick={handleNext}>
+                  <SkipNextRounded style={{ fontSize: '25px' }} />
+                </div>
+                <div className='icon '>
+                  {/* SpinnerLoading */}
+                  {state.loading ? (
+                    <SpinnerLoading />
+                  ) : state.playing ? (
+                    <div
+                      className=''
+                      onClick={() => playAndPauseMusic(audioRef.current)}
+                    >
+                      <Pause style={{ fontSize: '25px' }} />
+                    </div>
+                  ) : (
+                    <div
+                      className=''
+                      onClick={() => playAndPauseMusic(audioRef.current)}
+                    >
+                      <PlayCircleFilledRounded style={{ fontSize: '25px' }} />
+                    </div>
+                  )}
+                </div>
+                <div className='icon' onClick={handlePrevious}>
+                  <SkipPreviousRounded style={{ fontSize: '25px' }} />
+                </div>
+                <div
+                  className='icon'
+                  onClick={() => setShowMusicBarOnMoblieRatio()}
+                >
+                  {state.showMusicBarOnMoblieRatio ? (
+                    <ExpandMoreRounded style={{ fontSize: '25px' }} />
+                  ) : (
+                    <ExpandLessRounded style={{ fontSize: '25px' }} />
+                  )}
+                </div>
+              </div>
+            </div>
+          </Slide>
+          {/* )} */}
         </Fragment>
         {/* for web ratio */}
         <Fragment

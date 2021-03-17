@@ -108,6 +108,26 @@
   color: lightgreen;
   font-family: Vazir;
 }
+.addBtn {
+  font-family: 'vazir';
+  justify-content: center;
+  margin-left: 17px;
+  box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
+  height: 40px;
+  margin-top: 10px;
+  cursor: pointer;
+  border: 1px solid rgba(245, 245, 245, 0.384);
+  border-radius: 10px;
+}
+.addBtn:hover {
+  background-color: whitesmoke;
+  box-shadow: 0 5px 15px rgba(21, 9, 87, 0.733);
+  color: black;
+}
+
+.addBtn:hover svg {
+  color: black;
+}
 
 @media (max-width: 768px) {
   .playlist {

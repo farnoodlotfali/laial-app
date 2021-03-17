@@ -187,11 +187,75 @@
   font-weight: 700;
   text-decoration: none;
 }
-
+.forgetPassBtn {
+  color: rgba(4, 30, 177, 0.658);
+  cursor: pointer;
+}
+.forgetPassBtn:hover {
+  color: rgb(4, 30, 177);
+  font-weight: 700;
+}
 .error__msg__login {
   color: darkred;
 }
+.forgetPassModal {
+  display: flex;
+  align-items: center;
+  background-color: rgba(18, 18, 18, 0.822);
+  justify-content: center;
+}
+.forgetPass__content {
+  border: 1px solid #f5f5f566;
+  box-shadow: 0 5px 15px #3df8f8;
+  border-radius: 20px;
+  padding: 20px;
+  outline: 0;
+  min-height: 450px;
+  background-color: rgb(59, 59, 59);
+  width: 400px;
+  display: grid;
+  align-content: center;
+}
+.forgetPass__content h2 {
+  font-family: vazir;
+  text-align: center;
+  margin-bottom: 30px;
+  color: white;
+}
+.forgetPass__content p {
+  font-family: vazir;
+  text-align: center;
+  color: whitesmoke;
+}
+.forgetPass__form {
+  display: grid;
+}
+.forgetPass__form input,
+.forgetPass__form button {
+  margin-top: 20px;
+  border-radius: 20px;
+  outline: 0;
+  border: 1px solid white;
+  padding: 10px 5px;
+  font-family: vazir;
+  box-shadow: 0 5px 15px rgba(122, 135, 207, 0.733);
+}
+.forgetPass__form button {
+  background-color: rgba(177, 176, 176, 0.548);
+  color: white;
+}
+.forgetPass__form button:hover {
+  background-color: rgb(177, 176, 176);
+  color: black;
+}
 
+.forgetPasswordMsg {
+  font-weight: 700;
+  text-align: center;
+  margin-top: 20px;
+  font-family: vazir;
+  color: rgb(177, 196, 14);
+}
 @media (max-width: 768px) {
   .login {
     min-height: 92vh;

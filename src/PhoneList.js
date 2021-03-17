@@ -39,7 +39,11 @@ const PhoneList = () => {
                 <AccountCircleRounded />
               </div>
             ) : (
-              <Link className='phoneList__loginBTn' to='/login'>
+              <Link
+                className='phoneList__loginBTn'
+                to='/login'
+                onClick={() => showx(false)}
+              >
                 ورود/ثبت نام
               </Link>
             )}

@@ -28,7 +28,7 @@ const AppState = (props) => {
     home: null,
     menu: null,
     loading: false,
-    showCenter: false,
+    showCenter: true,
     showMusic: false,
     isAddingSong: false,
     whichSongToSaveInPlaylist: null,
@@ -168,6 +168,7 @@ const AppState = (props) => {
     });
     try {
       const res = await axios.instanceApi.get(`page/home`);
+      console.log(res.data.data);
       dispatch({
         type: GET_HOME,
         payload: res.data.data[0].block,
@@ -316,10 +317,10 @@ const AppState = (props) => {
   };
   const findMainPlaylist = (list) => {
     list.map((item) => {
-      {
+      return (
         item.name === 'main playlist' &&
-          dispatch({ type: FIND_MAIN_PLAYLIST, payload: item.id });
-      }
+        dispatch({ type: FIND_MAIN_PLAYLIST, payload: item.id })
+      );
     });
   };
   const makeNewPlaylist = async (form) => {
@@ -492,6 +493,7 @@ const AppState = (props) => {
     // console.log(formData);
 
     try {
+      // eslint-disable-next-line
       const res = await axios.instanceApi.post(
         '/account/playlist/item/',
         formData,
@@ -530,7 +532,124 @@ const AppState = (props) => {
         })
       );
   };
+  const getOnePlayList = async (id) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+      },
+    };
+    try {
+      const res = await axios.instanceApi.get(
+        `/account/playlist/?playlist=${id}`,
+        config
+      );
+      return res.data?.[0]?.items;
+    } catch (error) {
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+  const forgetPassword = async (email) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
 
+    const formData = {
+      email: email,
+    };
+    try {
+      const res = await axios.instanceApi.post(
+        `/account/password_reset/`,
+        formData,
+        config
+      );
+      // console.log(res.status);
+
+      return res.status;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const validaTetokenForgetPassword = async (token) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const formData = {
+      token: token,
+    };
+
+    try {
+      const res = await axios.instanceApi.post(
+        `/account/password_reset/validate_token/`,
+        formData,
+        config
+      );
+      // console.log(res.status);
+
+      return res.status;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const confrimRestPassword = async (token, pass) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const formData = {
+      token: token,
+      password: pass,
+    };
+
+    try {
+      const res = await axios.instanceApi.post(
+        `/account/password_reset/confirm/`,
+        formData,
+        config
+      );
+      console.log(res.status);
+
+      return res.status;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const changeCurrentPassword = async (oldPass, newPass) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+      },
+    };
+
+    const formData = {
+      old_password: oldPass,
+      new_password: newPass,
+    };
+    try {
+      const res = await axios.instanceApi.put(
+        `/account/change-password/`,
+        formData,
+        config
+      );
+      console.log(res.status);
+
+      return res.status;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <AppContext.Provider
       value={{
@@ -548,11 +667,16 @@ const AppState = (props) => {
         viewPage,
         likeSong,
         getAllPlaylists,
+        getOnePlayList,
         makeNewPlaylist,
         removePlaylist,
         updatePlaylistName,
         removeSongFromPlaylist,
         getRecommender,
+        changeCurrentPassword,
+        confrimRestPassword,
+        validaTetokenForgetPassword,
+        forgetPassword,
         addMusicToPlaylist,
         setWhichSongToSaveInPlaylist,
         addMusicToMAINPlaylist,

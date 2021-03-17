@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import './AllPerson.css';
 import authContext from './auth/authContext';
@@ -10,7 +10,6 @@ import LoadingIcon from './spinner/LoadingIcon';
 const AllPerson = () => {
   const { allPersons, AllpersonsUrls } = useContext(appContext);
   const { user, loadUser } = useContext(authContext);
-  let loadingRef = useRef();
 
   const [next, setNext] = useState({
     next: '',

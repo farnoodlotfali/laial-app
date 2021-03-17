@@ -21,14 +21,16 @@
     "react-flickity": "^1.0.8",
     "react-flickity-component": "^3.6.0",
     "react-headroom": "^3.1.0",
+    "react-helmet": "^6.1.0",
     "react-infinite-scroll-component": "^6.0.0",
+    "react-password-strength-bar": "^0.3.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "set PORT=3008 && react-scripts start",
+    "start": "set PORT=3005 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

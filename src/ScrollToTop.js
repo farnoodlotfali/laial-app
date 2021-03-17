@@ -17,6 +17,7 @@ export default function ScrollToTop() {
     if (showCenter) {
       ChangeshowCenter();
     }
+    // console.log(pathname);
     // eslint-disable-next-line
   }, [pathname]);
 

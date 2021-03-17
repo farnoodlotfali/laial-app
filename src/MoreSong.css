@@ -6,7 +6,6 @@
 }
 
 .moreSong .infinite-scroll-component {
-  /* padding: 0 10px 0 0; */
   display: flex;
   flex-wrap: wrap;
   min-height: 100vh;

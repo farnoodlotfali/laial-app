@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react';
 import authContext from './auth/authContext';
+// eslint-disable-next-line
 // import Navigation from './Navigation';
 import NotFound from './NotFound';
 

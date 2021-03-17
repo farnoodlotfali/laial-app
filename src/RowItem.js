@@ -1,5 +1,5 @@
 import { Pause, PlayArrowRounded } from '@material-ui/icons';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { Badge } from 'react-bootstrap';
 import AppContext from './contexts/appContext';
 import defualtPhoto from './assets/defualtPhoto.jpeg';
@@ -34,7 +34,9 @@ const RowItem = ({ media, person, slug, context }) => {
   // console.log(context);
   const playMusicAndShowMusicBar = async () => {
     // نشان دادن موزیک و پخش موزیک
-
+    if (!showMusic) {
+      ChangeShowMusic();
+    }
     if (media?.id === songId) {
       playAndPauseMusic();
     } else {
@@ -57,9 +59,9 @@ const RowItem = ({ media, person, slug, context }) => {
           }),
         });
         setUrl(res.data.download_link, context);
-        if (!showMusic) {
-          ChangeShowMusic();
-        }
+        // if (!showMusic) {
+        //   ChangeShowMusic();
+        // }
         playMusic();
       } catch (error) {
         console.log(error);

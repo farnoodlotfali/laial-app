@@ -141,19 +141,6 @@ const Header = () => {
         {/* </div> */}
       </nav>
     </Headroom>
-
-    // <div className=''>
-    //   <div className='header'>
-    //     <ul>
-    //       <li>
-    //         <a href='/'>Github</a>
-    //       </li>
-    //       <li>
-    //         <a href='/'>FaceBook</a>
-    //       </li>
-    //     </ul>
-    //   </div>
-    // </div>
   );
 };
 

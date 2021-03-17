@@ -61,7 +61,7 @@ const SongOnLeft = ({ item, playlist, number, zeroPad }) => {
               }
               alt=''
             />
-            {playing && item.media[0]?.id === songId ? (
+            {item.media[0]?.id === songId ? (
               <div className='overlay'>
                 <div className='now playing' id='music'>
                   <span className='bar n1'>A</span>

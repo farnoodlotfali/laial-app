@@ -33,7 +33,7 @@ instanceApi.interceptors.response.use(
         window.location = '/login';
         return Promise.reject(error);
       }
-      // console.log(error.config);
+      console.log(tryCount);
       // console.log(error.response && error.response.status === 401);
       const config = {
         headers: {

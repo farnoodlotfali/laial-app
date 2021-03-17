@@ -1,4 +1,8 @@
 @media (max-width: 768px) {
+  .home {
+    padding-bottom: 25px;
+  }
+
   .home .rowlists {
     background-color: rgb(18, 18, 18);
     border-top-left-radius: 40px !important;

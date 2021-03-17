@@ -40,7 +40,7 @@ const PhoneMenu = () => {
             {/* <span> خانه </span> */}
           </NavLink>
         </div>
-        <div className={`phoneMenu__item }`}>
+        <div className={`phoneMenu__item `}>
           <NavLink activeClassName='selected' exact to='/search'>
             <Search fontSize='large' />
             {/* <span>جستجو</span> */}

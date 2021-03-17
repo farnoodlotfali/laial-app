@@ -1,10 +1,10 @@
-import { Backdrop, IconButton, Modal, Slide, Tooltip } from '@material-ui/core';
+import { Backdrop, IconButton, Modal, Slide } from '@material-ui/core';
 // eslint-disable-next-line
 import { PostAddRounded } from '@material-ui/icons';
 import { useContext, useEffect } from 'react';
 import './Center.css';
 // eslint-disable-next-line
-import md5 from 'md5';
+// import md5 from 'md5';
 import AppContext from './contexts/appContext';
 import CenterItem from './CenterItem';
 const Center = () => {
@@ -12,7 +12,6 @@ const Center = () => {
     showCenter,
     ChangeshowCenter,
     userPlaylists,
-    getAllPlaylists,
     makeNewPlaylist,
     loading,
     isAddingSong,
@@ -20,9 +19,9 @@ const Center = () => {
 
   useEffect(() => {
     // console.log(1112);
-    if (userPlaylists === null && !loading) {
-      getAllPlaylists();
-    }
+    // if (userPlaylists === null && !loading) {
+    //   getAllPlaylists();
+    // }
     // eslint-disable-next-line
   }, [userPlaylists, loading, showCenter]);
 
@@ -72,13 +71,15 @@ const Center = () => {
                   <span>لیست های من</span>
                 )}{' '}
               </div>
-              <div className='addBtn'>
+              {/* <div className='addBtn'>
                 <Tooltip placement='left' title='لیست جدید'>
                   <IconButton aria-label='add' onClick={addList}>
                     <PostAddRounded fontSize='large' />
                   </IconButton>
                 </Tooltip>
               </div>
+            
+             */}
             </div>
             <div className='my-2 ml-4 playlist__line' />
             <div className='playlist__lists'>
@@ -91,6 +92,14 @@ const Center = () => {
                     items={list.items}
                   />
                 ))}
+            </div>
+            <div className='addBtn d-flex' onClick={addList}>
+              <h5 className=' align-self-center m-0'> ساخت لیست جدید </h5>
+              {/* <Tooltip placement='left' title='لیست جدید'> */}
+              <IconButton aria-label='add'>
+                <PostAddRounded fontSize='large' />
+              </IconButton>
+              {/* </Tooltip> */}
             </div>
           </div>
         </Slide>

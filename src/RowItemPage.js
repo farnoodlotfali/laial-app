@@ -53,8 +53,7 @@ const RowItemPage = () => {
     setWhichSongToSaveInPlaylist,
   } = useContext(AppContext);
   const { setUrl, playMusic, setIds } = useContext(playerContext);
-  const { error, login, loadUser, user } = useContext(authContext);
-  const { isAuth } = useContext(authContext);
+  const { error, login, loadUser, user, isAuth } = useContext(authContext);
 
   // console.log(item);
   let params = useParams();

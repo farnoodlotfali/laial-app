@@ -89,7 +89,7 @@ const AuthState = (props) => {
       loadUser();
       getAllPlaylists();
     } catch (error) {
-      console.log(error.response);
+      console.log(error.response.data);
       dispatch({
         type: LOGIN_FAIL,
         payload: error?.response?.data,

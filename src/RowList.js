@@ -16,7 +16,7 @@ const RowList = ({ id, title, slug = '', data }) => {
   const { context, pageinate } = data;
   // console.log(context);
   return (
-    <div className={`rowList mb-3 mt-5 `}>
+    <div className={`rowList pb-3 mt-5 `}>
       <div className={`rowList__title d-flex ${id === 1 ? 'top__radius' : ''}`}>
         <Link
           to={`/list/${slug}`}

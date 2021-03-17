@@ -1,8 +1,6 @@
 .phoneMusicBar {
   direction: rtl;
   position: fixed;
-  display: flex;
-  /* bottom: 7%; */
   z-index: 12200;
   height: 61px;
   bottom: 49px;
@@ -46,7 +44,7 @@
 }
 
 .scroll {
-  animation: animate 4s linear infinite;
+  animation: animate 6s linear infinite;
 }
 @keyframes animate {
   0% {
