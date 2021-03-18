@@ -26,6 +26,13 @@ import {
 const AppState = (props) => {
   const initialState = {
     home: null,
+    homeMeta: {
+      meta_description: null,
+      meta_title: null,
+      name: null,
+      slug: null,
+      id: null,
+    },
     menu: null,
     loading: false,
     showCenter: true,
@@ -54,6 +61,13 @@ const AppState = (props) => {
       previous: null,
     },
     dataSongPage: null,
+    dataSongPageMeta: {
+      meta_description: null,
+      meta_title: null,
+      name: null,
+      slug: null,
+      id: null,
+    },
     downloadUrl: null,
     viewsPage: 0,
     like: 0,
@@ -146,7 +160,7 @@ const AppState = (props) => {
     });
     try {
       const res = await axios.instanceApi.get(`post/${newSlug}`);
-      // console.log(res.data.data.likes);
+      // console.log(res.data.data);
       getSongPageUrl(res.data.data.media[0].telegram_id);
 
       dispatch({
@@ -171,7 +185,7 @@ const AppState = (props) => {
       console.log(res.data.data);
       dispatch({
         type: GET_HOME,
-        payload: res.data.data[0].block,
+        payload: res.data.data[0],
       });
     } catch (error) {
       // console.log(error);
@@ -237,7 +251,7 @@ const AppState = (props) => {
     });
     try {
       const res = await axios.instanceApi.get(`persons/${newSlug}`);
-      // console.log(res.data);
+      console.log(res.data);
       dispatch({
         type: GET_PERSON,
         payload: {
@@ -683,6 +697,7 @@ const AppState = (props) => {
         showx,
         x,
         home: state.home,
+        homeMeta: state.homeMeta,
         menu: state.menu,
         block: state.block,
         blockUrls: state.blockUrls,
@@ -692,6 +707,7 @@ const AppState = (props) => {
         showMusic: state.showMusic,
         blockSlug: state.blockSlug,
         dataSongPage: state.dataSongPage,
+        dataSongPageMeta: state.dataSongPageMeta,
         BlockListName: state.BlockListName,
         personList: state.personList,
         personUrls: state.personUrls,

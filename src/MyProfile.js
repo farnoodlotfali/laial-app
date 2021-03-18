@@ -193,7 +193,7 @@ const MyProfile = () => {
             <div className='listShow d-flex'>
               <div className='myMadeListsShow'>
                 <div className='myMadeListShow__title'>
-                  <span className='align-self-center'>
+                  <span className='align-self-center myMadeListShow__title__span'>
                     نام لیست : {listname}
                   </span>
                   {/* <span className='showListBtn'>نمایش لیست</span> */}

@@ -1,3 +1,4 @@
+import { ChevronLeft } from '@material-ui/icons';
 import Flickity from 'react-flickity-component';
 import './TileBanner.css';
 const TileBanner = ({ imgs }) => {
@@ -20,6 +21,15 @@ const TileBanner = ({ imgs }) => {
               src={img?.full_image_url}
               alt='logo'
             />
+            {/* <div className='tileBanner__box'> */}
+            <div className='tileBanner__show'>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              نمایش
+            </div>
+            {/* </div> */}
           </div>
         ))}
       </Flickity>

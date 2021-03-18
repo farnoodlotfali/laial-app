@@ -25,6 +25,108 @@
   max-height: 100%;
 }
 
+/* .tileBanner__show {
+  border: 1px solid rgba(255, 255, 255, 0.315);
+  min-width: 80px;
+  border-radius: 10px;
+  position: absolute;
+  cursor: pointer;
+  bottom: 10%;
+  left: 10%;
+  color: whitesmoke;
+  background-color: rgba(255, 255, 255, 0.219);
+}
+
+.tileBanner__show:hover {
+  background-color: rgba(0, 0, 0, 0.219);
+  box-shadow: 0 5px 15px rgba(229, 233, 14, 0.205);
+} */
+
+.tileBanner__show {
+  position: absolute;
+  display: inline-block;
+  padding: 10px;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  overflow: hidden;
+  transition: 0.2s;
+  bottom: 10%;
+  left: 8%;
+  min-width: 70px;
+  border: 1px solid rgb(150, 150, 150);
+  /* background-color: rgb(0, 0, 0); */
+  border-radius: 12px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.tileBanner__show:hover {
+  text-decoration: none;
+  color: black;
+  background-color: whitesmoke;
+  box-shadow: 0 0 10px whitesmoke, 0 0 40px whitesmoke, 0 0 80px whitesmoke;
+  transition-delay: 1s;
+  /* border: none; */
+  cursor: pointer;
+  font-weight: 700;
+}
+.tileBanner__show span {
+  position: absolute;
+  display: block;
+}
+
+.tileBanner__show span:nth-child(1) {
+  top: 0;
+  left: -100%;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, whitesmoke);
+}
+
+.tileBanner__show:hover span:nth-child(1) {
+  left: 100%;
+  transition: 1s;
+}
+.tileBanner__show span:nth-child(3) {
+  bottom: 0;
+  right: -100%;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(270deg, transparent, whitesmoke);
+}
+
+.tileBanner__show:hover span:nth-child(3) {
+  right: 100%;
+  transition: 1s;
+  transition-delay: 0.5s;
+}
+.tileBanner__show span:nth-child(2) {
+  top: -100%;
+  right: 0;
+  height: 100%;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, whitesmoke);
+}
+
+.tileBanner__show:hover span:nth-child(2) {
+  top: 100%;
+  transition: 1s;
+  transition-delay: 0.25s;
+}
+.tileBanner__show span:nth-child(4) {
+  bottom: -100%;
+  left: 0;
+  height: 100%;
+  width: 2px;
+  background: linear-gradient(360deg, transparent, whitesmoke);
+}
+
+.tileBanner__show:hover span:nth-child(4) {
+  bottom: 100%;
+  transition: 1s;
+  transition-delay: 0.75s;
+}
+
 @media (max-width: 768px) {
   .tileBanner .carousel-cell {
     height: 150px;
@@ -33,5 +135,9 @@
   .tileBanner .carousel-cell-image {
     height: 149px;
     width: 100%;
+  }
+  .tileBanner__show {
+    min-width: 50px;
+    font-size: 12px;
   }
 }

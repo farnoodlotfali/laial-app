@@ -27,6 +27,8 @@ const AuthState = (props) => {
     // console.log(localStorage.tokenAccess);
     if (localStorage.tokenAccess) {
       // axios.instance.defaults.headers.common['auth-token'] = state.tokenAccess;
+      getAllPlaylists();
+
       dispatch({
         type: USER_LOADED,
       });

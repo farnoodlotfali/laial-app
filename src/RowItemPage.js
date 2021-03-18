@@ -6,7 +6,7 @@ import {
   PlaylistAdd,
   Visibility,
 } from '@material-ui/icons';
-import { useContext, useEffect } from 'react';
+import { Fragment, useContext, useEffect } from 'react';
 import { useParams } from 'react-router';
 import axios from './axios/axios';
 import AppContext from './contexts/appContext';
@@ -20,6 +20,7 @@ import { Modal } from 'react-bootstrap';
 import { useState } from 'react';
 import defualtPhoto from './assets/defualtPhoto.jpeg';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const RowItemPage = () => {
   const [show, setShow] = useState(false);
@@ -51,6 +52,7 @@ const RowItemPage = () => {
     recommender,
     likeSong,
     setWhichSongToSaveInPlaylist,
+    dataSongPageMeta,
   } = useContext(AppContext);
   const { setUrl, playMusic, setIds } = useContext(playerContext);
   const { error, login, loadUser, user, isAuth } = useContext(authContext);
@@ -64,6 +66,8 @@ const RowItemPage = () => {
     loadUser();
     // eslint-disable-next-line
   }, [params.slug, user]);
+  // console.log(dataSongPageMeta);
+
   // console.log(dataSongPage);
   // نشان دادن موزیک و پخش موزیک
   const playMusicAndShowMusicBar = async () => {
@@ -97,120 +101,147 @@ const RowItemPage = () => {
       [e.target.name]: e.target.value,
     });
   };
-  return loading ? (
-    <Spinner />
-  ) : (
-    <div className='rowItemPage py-4  '>
-      <div className='musicInfo d-flex justify-content-around'>
-        <div className='musicInfo__right '>
-          <img
-            className='musicInfo__image'
-            src={
-              dataSongPage?.media?.[0]?.image !== null
-                ? dataSongPage?.media?.[0]?.image
-                : dataSongPage?.person?.[0]?.image.full_image_url !== null
-                ? dataSongPage?.person?.[0]?.image.full_image_url
-                : defualtPhoto
-            }
-            alt='logo'
-          />
-        </div>
-        <div className='musicInfo__left text-light   justify-content-start align-items-center'>
-          <div className='musicInfo__name mt-5 mb-3 d-flex'>
-            نام آهنگ : {dataSongPage?.media?.[0]?.name}
-          </div>{' '}
-          <div className='musicInfo__singer mb-3 d-flex'>
-            خواننده : {dataSongPage?.person?.[0]?.name}
-          </div>
-          <div className='musicInfo__mode mb-3 d-flex'>سبک : شور</div>
-          <hr />
-          <div className='actions d-flex justify-content-around'>
-            <div onClick={playMusicAndShowMusicBar}>
-              <Tooltip placement='bottom' title='پخش آهنگ'>
-                <IconButton aria-label='play'>
-                  <PlayArrowRounded
-                    style={{ fontSize: '40px' }}
-                    className='icon'
-                  />
-                </IconButton>
-              </Tooltip>
+  return (
+    <Fragment>
+      <Helmet>
+        <title>{dataSongPageMeta?.meta_title}</title>
+        <meta name='title' content={dataSongPageMeta?.meta_title} />
+        <meta name='description' content={dataSongPageMeta?.meta_description} />
+        <meta property='og:type' content='website' />
+        <meta property='og:url' content={dataSongPageMeta?.slug} />
+        <meta property='og:title' content={dataSongPageMeta?.meta_title} />
+        <meta
+          property='og:description'
+          content={dataSongPageMeta?.meta_description}
+        />
+        <meta property='twitter:card' content='summary_large_image' />
+        <meta property='twitter:url' content='http:app.7negare.ir/' />
+        <meta property='twitter:title' content={dataSongPageMeta?.meta_title} />
+        <meta
+          property='twitter:description'
+          content={dataSongPageMeta?.meta_description}
+        />
+        {/* {dataSongPageMeta['image'] && (
+          <meta property='twitter:image' content={dataSongPageMeta['image']} />
+        )} */}
+      </Helmet>
+
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div className='rowItemPage py-4  '>
+          <div className='musicInfo d-flex justify-content-around'>
+            <div className='musicInfo__right '>
+              <img
+                className='musicInfo__image'
+                src={
+                  dataSongPage?.media?.[0]?.image !== null
+                    ? dataSongPage?.media?.[0]?.image
+                    : dataSongPage?.person?.[0]?.image.full_image_url !== null
+                    ? dataSongPage?.person?.[0]?.image.full_image_url
+                    : defualtPhoto
+                }
+                alt='logo'
+              />
             </div>
+            <div className='musicInfo__left text-light   justify-content-start align-items-center'>
+              <div className='musicInfo__name mt-5 mb-3 d-flex'>
+                نام آهنگ : {dataSongPage?.media?.[0]?.name}
+              </div>{' '}
+              <div className='musicInfo__singer mb-3 d-flex'>
+                خواننده : {dataSongPage?.person?.[0]?.name}
+              </div>
+              <div className='musicInfo__mode mb-3 d-flex'>سبک : شور</div>
+              <hr />
+              <div className='actions d-flex justify-content-around'>
+                <div onClick={playMusicAndShowMusicBar}>
+                  <Tooltip placement='bottom' title='پخش آهنگ'>
+                    <IconButton aria-label='play'>
+                      <PlayArrowRounded
+                        style={{ fontSize: '40px' }}
+                        className='icon'
+                      />
+                    </IconButton>
+                  </Tooltip>
+                </div>
 
-            <div className='favorite'>
-              <IconButton
-                aria-label='Favorite'
-                onClick={() => (isAuth ? likeSong(params.slug) : setShow(true))}
-              >
-                <Favorite className='Favorite' fontSize='large' />
-              </IconButton>
-              {like}
-
-              <Modal
-                show={!isAuth && show}
-                onHide={() => setShow(false)}
-                className='favoritePopUp__login'
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title>
-                    برای لایک کردن، باید وارد حساب کاربری شوید
-                  </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      login({
-                        email,
-                        password,
-                      });
-                    }}
+                <div className='favorite'>
+                  <IconButton
+                    aria-label='Favorite'
+                    onClick={() =>
+                      isAuth ? likeSong(params.slug) : setShow(true)
+                    }
                   >
-                    <div className='formGp d-flex justify-content-around'>
-                      <div className='inputBox'>
-                        <input
-                          required
-                          onChange={onchange}
-                          name='password'
-                          value={password}
-                          type='password'
-                          placeholder='رمز ورود'
-                          minLength='8'
-                        />
-                      </div>
-                      <div className='inputBox '>
-                        <input
-                          onChange={onchange}
-                          name='email'
-                          type='email'
-                          value={email}
-                          placeholder='ایمیل'
-                          required
-                        />
-                      </div>{' '}
-                    </div>
-                    <div className='error__msg__login pt-2 '>
-                      {error?.error} *
-                    </div>
-                    <div className='notRegister pt-2'>
-                      {' '}
-                      <span> ثبت نام نکرده اید؟ </span>{' '}
-                      <Link to='/register'>
-                        {' '}
-                        <span> ثبت نام </span>{' '}
-                      </Link>
-                    </div>
-                    {/* <div className='formMsg pt-2'>{errorMsg}</div> */}
-                    <div className='formGp__btn d-flex justify-content-around '>
-                      <div className='inputBox__login'>
-                        <input type='submit' value='ورود' />
-                      </div>
-                      <div className='inputBox__close'>
-                        <button onClick={() => setShow(false)}>بستن</button>
-                      </div>
-                    </div>
-                  </form>
-                </Modal.Body>
-                {/* <Modal.Footer>
+                    <Favorite className='Favorite' fontSize='large' />
+                  </IconButton>
+                  {like}
+
+                  <Modal
+                    show={!isAuth && show}
+                    onHide={() => setShow(false)}
+                    className='favoritePopUp__login'
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title>
+                        برای لایک کردن، باید وارد حساب کاربری شوید
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          login({
+                            email,
+                            password,
+                          });
+                        }}
+                      >
+                        <div className='formGp d-flex justify-content-around'>
+                          <div className='inputBox'>
+                            <input
+                              required
+                              onChange={onchange}
+                              name='password'
+                              value={password}
+                              type='password'
+                              placeholder='رمز ورود'
+                              minLength='8'
+                            />
+                          </div>
+                          <div className='inputBox '>
+                            <input
+                              onChange={onchange}
+                              name='email'
+                              type='email'
+                              value={email}
+                              placeholder='ایمیل'
+                              required
+                            />
+                          </div>{' '}
+                        </div>
+                        <div className='error__msg__login pt-2 '>
+                          {error?.error} *
+                        </div>
+                        <div className='notRegister pt-2'>
+                          {' '}
+                          <span> ثبت نام نکرده اید؟ </span>{' '}
+                          <Link to='/register'>
+                            {' '}
+                            <span> ثبت نام </span>{' '}
+                          </Link>
+                        </div>
+                        {/* <div className='formMsg pt-2'>{errorMsg}</div> */}
+                        <div className='formGp__btn d-flex justify-content-around '>
+                          <div className='inputBox__login'>
+                            <input type='submit' value='ورود' />
+                          </div>
+                          <div className='inputBox__close'>
+                            <button onClick={() => setShow(false)}>بستن</button>
+                          </div>
+                        </div>
+                      </form>
+                    </Modal.Body>
+                    {/* <Modal.Footer>
                   <div className='inputBox'>
                     <input type='submit' value='ورود' />
                   </div>
@@ -219,60 +250,62 @@ const RowItemPage = () => {
                     بستن
                   </Button>
                 </Modal.Footer> */}
-              </Modal>
-            </div>
+                  </Modal>
+                </div>
 
-            <div>
-              <a href={downloadUrl} className='download'>
-                <Tooltip placement='bottom' title='دانلود'>
-                  <IconButton aria-label='download'>
-                    <GetAppRounded fontSize='large' />
+                <div>
+                  <a href={downloadUrl} className='download'>
+                    <Tooltip placement='bottom' title='دانلود'>
+                      <IconButton aria-label='download'>
+                        <GetAppRounded fontSize='large' />
+                      </IconButton>
+                    </Tooltip>
+                  </a>
+                </div>
+
+                <div
+                  onClick={() =>
+                    setWhichSongToSaveInPlaylist(dataSongPage?.media?.[0]?.id)
+                  }
+                >
+                  <Tooltip placement='bottom' title='اضافه به لیست'>
+                    <IconButton aria-label='Add'>
+                      <PlaylistAdd className='Add' fontSize='large' />
+                    </IconButton>
+                  </Tooltip>
+                </div>
+                <div className='view'>
+                  <IconButton aria-label='View'>
+                    <Visibility className='View' fontSize='large' />
                   </IconButton>
-                </Tooltip>
-              </a>
-            </div>
-
-            <div
-              onClick={() =>
-                setWhichSongToSaveInPlaylist(dataSongPage?.media?.[0]?.id)
-              }
-            >
-              <Tooltip placement='bottom' title='اضافه به لیست'>
-                <IconButton aria-label='Add'>
-                  <PlaylistAdd className='Add' fontSize='large' />
-                </IconButton>
-              </Tooltip>
-            </div>
-            <div className='view'>
-              <IconButton aria-label='View'>
-                <Visibility className='View' fontSize='large' />
-              </IconButton>
-              {viewsPage}
+                  {viewsPage}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div className='rowList  mt-5  pt-5 '>
-        <h3 className='text-light text-right pb-3 mr-4'>
-          <span>پیشنهاداتی برای شما</span>
-        </h3>
-        <Flickity className='carousel  px-2 py-0' options={flickityOptions}>
-          {recommender &&
-            recommender.map((item, i) => {
-              return (
-                <RowItem
-                  key={item.id}
-                  logo={item.image}
-                  media={item.media[0]}
-                  person={item.person}
-                  slug={item.slug}
-                />
-              );
-            })}
-        </Flickity>
-      </div>
-    </div>
+          <div className='rowList  mt-5  pt-5 '>
+            <h3 className='text-light text-right pb-3 mr-4'>
+              <span>پیشنهاداتی برای شما</span>
+            </h3>
+            <Flickity className='carousel  px-2 py-0' options={flickityOptions}>
+              {recommender &&
+                recommender.map((item, i) => {
+                  return (
+                    <RowItem
+                      key={item.id}
+                      logo={item.image}
+                      media={item.media[0]}
+                      person={item.person}
+                      slug={item.slug}
+                    />
+                  );
+                })}
+            </Flickity>
+          </div>
+        </div>
+      )}
+    </Fragment>
   );
 };
 

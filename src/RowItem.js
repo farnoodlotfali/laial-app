@@ -75,14 +75,14 @@ const RowItem = ({ media, person, slug, context }) => {
   // console.log(media);
   return (
     <div className='carousel-cellRowItem rowItem '>
-      {media?.id === songId && (
+      {/* {media?.id === songId && (
         <>
           <span></span>
           <span></span>
           <span></span>
           <span></span>
         </>
-      )}
+      )} */}
 
       <div className='rowItem__image'>
         <img

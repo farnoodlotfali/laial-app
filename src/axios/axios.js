@@ -21,10 +21,10 @@ instanceApi.interceptors.response.use(
     //   error.response.status,
     //   error.config
     // );
-    // if (error.config && error.response && error.response.status === 404) {
-    //   window.location = '/aboutus';
-    //   return Promise.reject(error);
-    // }
+    if (error.config && error.response && error.response.status === 404) {
+      window.location = '/aboutus';
+      return Promise.reject(error);
+    }
 
     if (error.config && error.response && error.response.status === 401) {
       if (tryCount === 3) {

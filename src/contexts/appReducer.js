@@ -25,7 +25,14 @@ export default (state, action) => {
     case GET_HOME:
       return {
         ...state,
-        home: action.payload,
+        home: action.payload.block,
+        homeMeta: {
+          meta_description: action.payload.meta_description,
+          meta_title: action.payload.meta_title,
+          name: action.payload.name,
+          slug: action.payload.slug,
+          id: action.payload.id,
+        },
         loading: false,
       };
     case GET_MENU:
@@ -68,6 +75,13 @@ export default (state, action) => {
         ...state,
         dataSongPage: action.payload,
         like: action.payload.likes,
+        dataSongPageMeta: {
+          meta_description: action.payload.meta_description,
+          meta_title: action.payload.meta_title,
+          name: action.payload.name,
+          slug: action.payload.slug,
+          id: action.payload.id,
+        },
         // loading: false,
       };
     case GET_SONG_PAGE_URL:
