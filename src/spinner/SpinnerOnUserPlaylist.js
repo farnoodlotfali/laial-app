@@ -1,13 +1,14 @@
 import spinner2 from "./Spinner2.gif";
 
-const Spinner = () => {
+const SpinnerOnUserPlaylist = () => {
   return (
-    <div className="spinner" style={{ display: "flex", height: "100vh" }}>
+    <div className="spinner" style={{ width: "120px", height: "120px" }}>
       <img
         src={spinner2}
         alt="..loading"
         style={{
-          widows: "200px",
+          width: "100%",
+          height: "100%",
           margin: "auto",
           display: "block",
         }}
@@ -16,4 +17,4 @@ const Spinner = () => {
   );
 };
 
-export default Spinner;
+export default SpinnerOnUserPlaylist;

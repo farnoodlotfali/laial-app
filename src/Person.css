@@ -1,3 +1,6 @@
+.person {
+  height: 100%;
+}
 .person__img img {
   /* margin-top: 20px; */
   padding: 10px;
@@ -48,7 +51,7 @@
 }
 
 .card__person .circle__person::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;

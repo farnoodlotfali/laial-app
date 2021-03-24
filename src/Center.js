@@ -1,12 +1,12 @@
-import { Backdrop, IconButton, Modal, Slide } from '@material-ui/core';
+import { Backdrop, IconButton, Modal, Slide } from "@material-ui/core";
 // eslint-disable-next-line
-import { PostAddRounded } from '@material-ui/icons';
-import { useContext, useEffect } from 'react';
-import './Center.css';
+import { PostAddRounded } from "@material-ui/icons";
+import { useContext, useEffect } from "react";
+import "./Center.css";
 // eslint-disable-next-line
 // import md5 from 'md5';
-import AppContext from './contexts/appContext';
-import CenterItem from './CenterItem';
+import AppContext from "./contexts/appContext";
+import CenterItem from "./CenterItem";
 const Center = () => {
   const {
     showCenter,
@@ -15,6 +15,7 @@ const Center = () => {
     makeNewPlaylist,
     loading,
     isAddingSong,
+    mainPlaylistId,
   } = useContext(AppContext);
 
   useEffect(() => {
@@ -29,17 +30,17 @@ const Center = () => {
     /*let d = new Date();
     let key ='list-'+d.getFullYear()+'-' +d.getMonth()+'-' +d.getDay()+'-'+d.getHours()+'-'+d.getMinutes()+'-'+d.getSeconds()+'-'+md5(Date.now());*/
     let i = 0;
-    let name = '';
+    let name = "";
     do {
       i++;
-      name = 'myList ' + i;
+      name = "myList " + i;
       // eslint-disable-next-line
     } while (userPlaylists.findIndex((list) => list.name === name) !== -1);
     // console.log(name);
     let form = [
       {
         name: name,
-        status: 'publish',
+        status: "publish",
       },
     ];
     makeNewPlaylist(form);
@@ -48,7 +49,7 @@ const Center = () => {
   return (
     <div>
       <Modal
-        className='modal'
+        className="modal"
         open={showCenter}
         onClose={ChangeshowCenter}
         closeAfterTransition
@@ -62,14 +63,14 @@ const Center = () => {
           timeout={500}
           in={showCenter}
         >
-          <div className='playlist py-3 pl-1  pr-4 text-white'>
-            <div className='playlist__title justify-content-center pl-3 d-flex '>
-              <div className='title ml-4'>
+          <div className="playlist py-3 pl-1  pr-4 text-white">
+            <div className="playlist__title justify-content-center pl-3 d-flex ">
+              <div className="title ml-4">
                 {isAddingSong ? (
                   <span>آهنگ به کدام لیست اضافه شود؟</span>
                 ) : (
                   <span>لیست های من</span>
-                )}{' '}
+                )}
               </div>
               {/* <div className='addBtn'>
                 <Tooltip placement='left' title='لیست جدید'>
@@ -81,23 +82,26 @@ const Center = () => {
             
              */}
             </div>
-            <div className='my-2 ml-4 playlist__line' />
-            <div className='playlist__lists'>
+            <div className="my-2 ml-4 playlist__line" />
+            <div className="playlist__lists">
               {userPlaylists !== null &&
-                userPlaylists.map((list) => (
-                  <CenterItem
-                    key={list.id}
-                    name={list.name}
-                    id={list.id}
-                    items={list.items}
-                  />
-                ))}
+                userPlaylists.map(
+                  (list) =>
+                    mainPlaylistId !== list.id && (
+                      <CenterItem
+                        key={list.id}
+                        name={list.name}
+                        id={list.id}
+                        items={list.items}
+                      />
+                    )
+                )}
             </div>
-            <div className='addBtn d-flex' onClick={addList}>
-              <h5 className=' align-self-center m-0'> ساخت لیست جدید </h5>
+            <div className="addBtn d-flex" onClick={addList}>
+              <h5 className=" align-self-center m-0"> ساخت لیست جدید </h5>
               {/* <Tooltip placement='left' title='لیست جدید'> */}
-              <IconButton aria-label='add'>
-                <PostAddRounded fontSize='large' />
+              <IconButton aria-label="add">
+                <PostAddRounded fontSize="large" />
               </IconButton>
               {/* </Tooltip> */}
             </div>

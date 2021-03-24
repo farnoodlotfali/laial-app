@@ -1,17 +1,19 @@
-import { Fragment, useContext } from 'react';
-import './Header.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import appContext from './contexts/appContext';
-import { Link, NavLink } from 'react-router-dom';
+import { Fragment, useContext } from "react";
+import "./Header.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import appContext from "./contexts/appContext";
+import { Link, NavLink } from "react-router-dom";
 import {
   AccountCircleRounded,
   ExitToAppRounded,
   PersonRounded,
-} from '@material-ui/icons';
-import authContext from './auth/authContext';
-import Headroom from 'react-headroom';
+} from "@material-ui/icons";
+import authContext from "./auth/authContext";
+import Headroom from "react-headroom";
 const Header = () => {
-  const { ChangeshowCenter, ChangeShowLeft, showx } = useContext(appContext);
+  const { ChangeshowCenter, ChangeShowLeft, ChangeShowRight } = useContext(
+    appContext
+  );
   const {
     isAuth,
 
@@ -31,7 +33,7 @@ const Header = () => {
 
   return (
     <Headroom>
-      <nav className='header navbar navbar-expand-sm  py-4 '>
+      <nav className="header navbar navbar-expand-sm  py-4 ">
         {/* <button
         className='navbar-toggler text-white'
         type='button'
@@ -47,14 +49,14 @@ const Header = () => {
       </button> */}
 
         <div
-          className='collapse navs__items navbar-collapse  '
-          id='header__nav'
+          className="collapse navs__items navbar-collapse  "
+          id="header__nav"
         >
-          <ul className='navbar-nav   mt-2 mt-lg-0'>
-            <div className='navs'>
-              <NavLink to='#' className='   mx-3' onClick={() => showx(true)}>
+          <ul className="navbar-nav   mt-2 mt-lg-0">
+            <div className="navs">
+              <li className="   mx-3" onClick={() => ChangeShowRight(true)}>
                 منو اصلی
-              </NavLink>{' '}
+              </li>
               {/* <NavLink
                 activeClassName='selected'
                 exact
@@ -65,15 +67,16 @@ const Header = () => {
                 خانه
               </NavLink> */}
               <NavLink
-                activeClassName='selected'
-                to='/search'
-                className=' mx-3'
+                activeClassName="selected"
+                to="/search"
+                className=" mx-3"
                 onClick={() => ChangeShowLeft(false)}
               >
                 جستجو
               </NavLink>
+
               {isAuth && (
-                <li className=' mx-3 ' onClick={ChangeshowCenter}>
+                <li className=" mx-3 " onClick={ChangeshowCenter}>
                   لیست من
                 </li>
               )}
@@ -86,35 +89,35 @@ const Header = () => {
                 درباره ی ما
               </NavLink> */}
             </div>
-            <div className='register__login__btn mr-auto ml-3'>
-              {' '}
+            <div className="register__login__btn mr-auto ml-3">
+              {" "}
               {user !== null ? (
                 <Fragment>
-                  <div className='dropdown'>
+                  <div className="dropdown">
                     <button
-                      className='btn text-light user_btn '
-                      type='button'
-                      id='dropdownMenuButton'
-                      data-toggle='dropdown'
-                      aria-haspopup='true'
-                      aria-expanded='false'
+                      className="btn text-light user_btn "
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
                     >
-                      <span className='ml-2'>{user.first_name}</span>
+                      <span className="ml-2">{user.first_name}</span>
                       <AccountCircleRounded />
                     </button>
                     <div
-                      className='dropdown-menu'
-                      aria-labelledby='dropdownMenuButton'
+                      className="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton"
                     >
                       {/* eslint-disable-next-line */}
-                      <Link to='/myprofile' className='dropdown-item'>
+                      <Link to="/myprofile" className="dropdown-item">
                         <span>پروفایل</span>
-                        <PersonRounded className='' />
+                        <PersonRounded className="" />
                       </Link>
                       {/* eslint-disable-next-line */}
-                      <a className='dropdown-item' onClick={() => logout()}>
+                      <a className="dropdown-item" onClick={() => logout()}>
                         <span> خروج از حساب</span>
-                        <ExitToAppRounded className='' />
+                        <ExitToAppRounded className="" />
                       </a>
                     </div>
                   </div>
@@ -128,9 +131,9 @@ const Header = () => {
                 // </div>
                 // </NavLink>
                 // <span>{user.first_name}</span>
-                <NavLink exact to='/login' className='d-flex text-light'>
+                <NavLink exact to="/login" className="d-flex text-light">
                   ورود/ثبت نام
-                  <span className='d-flex  justify-content-center align-self-center'>
+                  <span className="d-flex  justify-content-center align-self-center">
                     <AccountCircleRounded />
                   </span>
                 </NavLink>

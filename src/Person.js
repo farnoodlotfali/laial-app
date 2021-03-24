@@ -1,14 +1,14 @@
-import { useContext, useEffect, useState } from 'react';
-import appContext from './contexts/appContext';
-import './Person.css';
-import defualtPhoto from './assets/defualtPhoto.jpeg';
-import Spinner from './spinner/Spinner';
-import RowItem from './RowItem';
-import { useParams } from 'react-router';
-import authContext from './auth/authContext';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import axios from './axios/axios';
-import LoadingIcon from './spinner/LoadingIcon';
+import { useContext, useEffect, useState } from "react";
+import appContext from "./contexts/appContext";
+import "./Person.css";
+import defualtPhoto from "./assets/defualtPhoto.jpeg";
+import Spinner from "./spinner/Spinner";
+import RowItem from "./RowItem";
+import { useParams } from "react-router";
+import authContext from "./auth/authContext";
+import InfiniteScroll from "react-infinite-scroll-component";
+import axios from "./axios/axios";
+import LoadingIcon from "./spinner/LoadingIcon";
 const Person = () => {
   const {
     personList,
@@ -21,12 +21,12 @@ const Person = () => {
 
   const { user, loadUser } = useContext(authContext);
   const [next, setNext] = useState({
-    next: '',
+    next: "",
     list: null,
     hasMore: false,
     page: 2,
     loading: false,
-    loaderMsg: '',
+    loaderMsg: "",
   });
   useEffect(() => {
     if (personkSlug !== params.slug) {
@@ -39,7 +39,7 @@ const Person = () => {
         loading: false,
         list: personList,
         hasMore: personUrls.next ? true : false,
-        loaderMsg: 'Loading...',
+        loaderMsg: "Loading...",
       });
     }
     // console.log(next.page);
@@ -67,7 +67,7 @@ const Person = () => {
           list: next.list.concat(res.data.results),
           page: ++next.page,
           loading: false,
-          loaderMsg: res.data.next ? 'Loading...' : 'Finish :)',
+          loaderMsg: res.data.next ? "Loading..." : "Finish :)",
         });
         // console.log(next.page);
       } catch (error) {
@@ -78,7 +78,7 @@ const Person = () => {
   return loading ? (
     <Spinner />
   ) : (
-    <div className='person'>
+    <div className="person">
       {/* <div className='d-flex'>
         <div className='person__img '>
           <img
@@ -106,10 +106,10 @@ const Person = () => {
         </div>
       </div>
      */}
-      <div className='person__infoAndImg py-4 d-flex justify-content-center align-items-center'>
-        <div className='card__person'>
-          <div className='circle__person'>
-            <div className='content__person'>
+      <div className="person__infoAndImg py-4 d-flex justify-content-center align-items-center">
+        <div className="card__person">
+          <div className="circle__person">
+            <div className="content__person">
               <h2>Franood lotfali</h2>
               <p>
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit.
@@ -125,7 +125,7 @@ const Person = () => {
                   ? personList?.[0]?.person[0]?.image.full_image_url
                   : defualtPhoto
               }
-              alt=''
+              alt=""
             />
           </div>
         </div>
@@ -153,6 +153,7 @@ const Person = () => {
                   media={item.media[0]}
                   person={item.person}
                   slug={item.slug}
+                  context={next?.list}
                 />
               );
             })}
@@ -160,14 +161,14 @@ const Person = () => {
       )}
 
       <div
-        className='loading-message'
+        className="loading-message"
         // ref={loadingRef}
         style={{
-          opacity: next.loading ? '1' : '0',
-          transform: next.loading && 'translate(-50%, 0px)',
+          opacity: next.loading ? "1" : "0",
+          transform: next.loading && "translate(-50%, 0px)",
         }}
       >
-        <LoadingIcon color='#fff' />
+        <LoadingIcon color="#fff" />
         <span>در حال دریافت</span>
       </div>
 

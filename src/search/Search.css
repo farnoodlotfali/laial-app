@@ -1,5 +1,6 @@
 .search {
   background-color: rgb(18, 18, 18);
+  height: 100%;
 }
 .search__title {
   color: white;
@@ -9,7 +10,7 @@
 .searchFields__option {
   direction: rtl;
 }
-.searchFields__option input[type='text'] {
+.searchFields__option input[type="text"] {
   border-radius: 30px;
   padding: 10px;
   direction: rtl;
@@ -26,7 +27,7 @@
   text-align: right;
 }
 
-.searchFields__option input[type='submit'] {
+.searchFields__option input[type="submit"] {
   border-radius: 7px;
   padding: 7px;
   width: 20%;
@@ -40,7 +41,9 @@
 .search .infinite-scroll-component {
   display: flex;
   flex-wrap: wrap;
-  min-height: 100vh;
+  /* min-height: 100vh; */
+  height: 100%;
+
   justify-content: center;
 }
 /* .searchView {
@@ -161,7 +164,7 @@
   background-color: red;
   color: green;
 } */
-.MuiAutocomplete-option[data-focus='true'] {
+.MuiAutocomplete-option[data-focus="true"] {
   /* direction: rtl; */
   /* background-color: red; */
   /* color: green; */

@@ -2,6 +2,8 @@
   padding-top: 40px;
   min-height: 100vh;
   /* display: grid; */
+  height: 100%;
+
   justify-content: center;
 }
 .myprofile__top {
@@ -10,13 +12,13 @@
   justify-content: space-between;
   margin-right: 20px;
   margin-left: 20px;
-  padding: 15px;
-  box-shadow: 0 5px 15px rgba(183, 223, 3, 0.644);
+  padding: 7px 10px;
+  box-shadow: 0 5px 15px rgba(216, 216, 216, 0.644);
   border-radius: 10px;
 }
 .userImg {
-  height: 120px;
-  width: 120px;
+  height: 90px;
+  width: 90px;
   border-radius: 10px;
 }
 .userImg img {
@@ -89,11 +91,16 @@
   color: whitesmoke;
 }
 .userinfo__inputbox {
-  margin-right: 20px;
+  margin-right: 50px;
   display: grid;
 }
 .userinfo__inputbox label {
   color: whitesmoke;
+  font-size: 18px;
+  font-weight: 600;
+}
+.userinfo__inputbox span {
+  color: white;
 }
 
 .userinfo__inputbox input {
@@ -138,16 +145,18 @@
 }
 
 .myListsOption {
-  background: linear-gradient(135deg, #000000 10%, #16359e 100%);
-  color: rgba(255, 255, 255, 0.555);
+  background: linear-gradient(135deg, #00000075 10%, #70707086 100%);
+  color: rgb(255, 255, 255);
   border: 1px solid rgb(212, 212, 212);
   padding: 8px;
   border-radius: 10px;
   margin-bottom: 7px;
+  transition: 0.5s;
 }
 
 .myListsOption:hover {
-  background: linear-gradient(135deg, #16359e 10%, #000000 100%);
+  background: linear-gradient(135deg, #000000 10%, #707070 100%);
+
   cursor: pointer;
   color: whitesmoke;
 }
@@ -222,12 +231,12 @@
   border-radius: 10px;
   border: 1px solid white;
   margin-bottom: 10px;
-  background: linear-gradient(135deg, #171920 10%, #474747 100%);
-  color: rgba(245, 245, 245, 0.349);
+  background: linear-gradient(135deg, #17192073 10%, #47474769 100%);
+  color: rgb(255, 255, 255);
   padding: 5px 0px;
+  transition: 0.5s;
 }
 .list__name:hover {
-  color: rgb(245, 245, 245);
   background: linear-gradient(135deg, #474747 10%, #171920 100%);
 }
 .listItemsShow {
@@ -238,6 +247,11 @@
   flex: 0.6;
   overflow-y: scroll;
   height: 272px;
+}
+.listItemsShow__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .listItemsShow::-webkit-scrollbar {
   width: 10px;

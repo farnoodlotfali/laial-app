@@ -5,14 +5,15 @@ import React, {
   useRef,
   useState,
   Fragment,
-} from 'react';
-import '../MusicBar.css';
-import PlayerContext from './playerContext';
-import defualtPhoto from '.././assets/defualtPhoto.jpeg';
-import playerReducer from './playerReducer';
-import { ClickAwayListener, Drawer, Slide, Slider } from '@material-ui/core';
-import AppContext from '../contexts/appContext';
-import { detect } from 'detect-browser';
+} from "react";
+// import "../MusicBar.css";
+import "./Player.css";
+import PlayerContext from "./playerContext";
+import defualtPhoto from ".././assets/defualtPhoto.jpeg";
+import playerReducer from "./playerReducer";
+import { ClickAwayListener, Drawer, Slide, Slider } from "@material-ui/core";
+import AppContext from "../contexts/appContext";
+import { detect } from "detect-browser";
 import {
   ExpandLessRounded,
   ExpandMoreRounded,
@@ -21,13 +22,14 @@ import {
   PlayCircleFilledRounded,
   PlaylistAddRounded,
   QueueMusic,
+  RepeatOneRounded,
   RepeatRounded,
   ShuffleRounded,
   SkipNextRounded,
   SkipPreviousRounded,
   VolumeOff,
   VolumeUp,
-} from '@material-ui/icons';
+} from "@material-ui/icons";
 import {
   MUTE_MUSIC,
   PLAY_MUSIC,
@@ -44,12 +46,14 @@ import {
   SET_PROGRESS,
   CHANGE_SHOW_MUSICBAR_ON_MOBILE_RATIO,
   CHANGE_SHUFFLE,
-} from './types';
-import { useLocation } from 'react-router';
-import PhoneMusicBar from '../PhoneMusicBar';
-import axios from '../axios/axios';
-import authContext from '../auth/authContext';
-import SpinnerLoading from '../spinner/SpinnerLoading';
+  CHANGE_LOOP,
+  CHANGE_LOOP_STATE,
+} from "./types";
+import { useLocation } from "react-router";
+import PhoneMusicBar from "../PhoneMusicBar";
+import axios from "../axios/axios";
+import authContext from "../auth/authContext";
+import SpinnerLoading from "../spinner/SpinnerLoading";
 // eslint-disable-next-line
 
 const detectMob = () => {
@@ -71,15 +75,15 @@ const getTimeToday = () => {
   var today = new Date();
   let date =
     today.getFullYear() +
-    '-' +
+    "-" +
     (today.getMonth() + 1) +
-    '-' +
+    "-" +
     today.getDate() +
-    '/' +
+    "/" +
     today.getHours() +
-    '-' +
+    "-" +
     today.getMinutes() +
-    '-' +
+    "-" +
     today.getSeconds();
   return date;
 };
@@ -95,9 +99,7 @@ const browser = () => {
 };
 
 const Playerstate = (props) => {
-  const { setWhichSongToSaveInPlaylist } = useContext(AppContext);
   const { isAuth } = useContext(authContext);
-
   const location = useLocation();
   const audioRef = useRef();
   const {
@@ -105,6 +107,7 @@ const Playerstate = (props) => {
     ChangeShowLeft,
     showLeft,
     addMusicToMAINPlaylist,
+    setWhichSongToSaveInPlaylist,
   } = useContext(AppContext);
   const initialState = {
     playList: [],
@@ -113,6 +116,9 @@ const Playerstate = (props) => {
     mute: false,
     seek: false,
     shuffle: false,
+    loop: false,
+    repeatOne: false,
+    noneOrLoopOrRepeat: 0,
     duration: 0,
     totalDuration: 0,
     currentUrl: null,
@@ -121,18 +127,15 @@ const Playerstate = (props) => {
     telegramId: null,
     songId: null,
     songPhoto: null,
-    songName: '',
-    songSinger: '',
+    songName: "",
+    songSinger: "",
     currentProgress: 0,
     showMusicBarOnMoblieRatio: false,
   };
   const [state, dispatch] = useReducer(playerReducer, initialState);
   const { playList } = state;
 
-  const [loop, setLopp] = useState(false);
   const [musicChangeList, setMusicChangeList] = useState([]);
-  // const [showMusiBar, setShowMusicBar] = useState(false);
-  // const [playList, setPlayList] = useState([]);
 
   useEffect(() => {
     //   حرکت خواهد کردprogress اگر در حال پخش بود
@@ -141,7 +144,9 @@ const Playerstate = (props) => {
       //progress سرعت جلو رفتن
       const timer = setInterval(() => {
         if (audioRef?.current && audioRef?.current?.ended && !state.seek) {
-          nextMusic();
+          if (state.repeatOne) {
+            repeatSongAgain();
+          } else nextMusic();
         } else if (
           audioRef?.current?.paused &&
           state.currentUrl !== null &&
@@ -196,20 +201,20 @@ const Playerstate = (props) => {
 
     // set if user listen this song twice or more if true add to mainplaylist,
     if (isAuth) {
-      if (JSON.parse(localStorage.getItem('mainPlaylist')) === null) {
+      if (JSON.parse(localStorage.getItem("mainPlaylist")) === null) {
         let mainPlaylist = [];
         const item = { songId: id, count: 1 };
         mainPlaylist.push(item);
 
-        localStorage.setItem('mainPlaylist', JSON.stringify(mainPlaylist));
+        localStorage.setItem("mainPlaylist", JSON.stringify(mainPlaylist));
       } else {
-        let mainPlaylist = JSON.parse(localStorage.getItem('mainPlaylist'));
+        let mainPlaylist = JSON.parse(localStorage.getItem("mainPlaylist"));
         let item = mainPlaylist.find((x) => x.songId === id);
 
         if (item === undefined) {
           const newItem = { songId: id, count: 1 };
           mainPlaylist.push(newItem);
-          localStorage.setItem('mainPlaylist', JSON.stringify(mainPlaylist));
+          localStorage.setItem("mainPlaylist", JSON.stringify(mainPlaylist));
         } else {
           let newMainPlaylist = mainPlaylist.filter((file) => {
             return file.songId !== id;
@@ -218,7 +223,7 @@ const Playerstate = (props) => {
           newMainPlaylist.push(newItem);
           // console.log(newMainPlaylist);
 
-          localStorage.setItem('mainPlaylist', JSON.stringify(newMainPlaylist));
+          localStorage.setItem("mainPlaylist", JSON.stringify(newMainPlaylist));
           addMusicToMAINPlaylist(id);
         }
 
@@ -266,7 +271,7 @@ const Playerstate = (props) => {
     }
   };
 
-  const zeroPad = (num, places) => String(num).padStart(places, '0');
+  const zeroPad = (num, places) => String(num).padStart(places, "0");
 
   const playAndPauseMusic = (audioElement = audioRef.current) => {
     // پلی و استپ کردن آهنگ
@@ -327,6 +332,8 @@ const Playerstate = (props) => {
   };
 
   const setUrl = (url, playlist) => {
+    console.log(url);
+
     if (playlist !== state.playList) {
       setPlayList(playlist);
     }
@@ -342,7 +349,7 @@ const Playerstate = (props) => {
   const nextMusic = async (audioElement = audioRef.current) => {
     audioElement.pause();
 
-    putToMusicChangeList(audioElement.currentTime, 'next');
+    putToMusicChangeList(audioElement.currentTime, "next");
     let last = null;
     // console.log(playList);
     if (playList !== undefined) {
@@ -385,7 +392,7 @@ const Playerstate = (props) => {
   const previousMusic = async (audioElement = audioRef.current) => {
     audioElement.pause();
 
-    putToMusicChangeList(audioElement.currentTime, 'previous');
+    putToMusicChangeList(audioElement.currentTime, "previous");
     let last = null;
     if (playList !== undefined) {
       for (let i = 0; i < playList.length; i++) {
@@ -459,8 +466,16 @@ const Playerstate = (props) => {
     dispatch({ type: CHANGE_SHUFFLE });
     // setShuffle(!shuffle);
   };
-  const changeLoop = () => {
-    setLopp(!loop);
+
+  const repeatSongAgain = (audioElement = audioRef.current) => {
+    audioElement.pause();
+    audioElement.load();
+    setNewProgress(0);
+    audioElement.play();
+  };
+
+  const changeNoneOrLoopOrRepeat = () => {
+    dispatch({ type: CHANGE_LOOP_STATE });
   };
 
   return (
@@ -475,19 +490,19 @@ const Playerstate = (props) => {
         duration: state.duration,
         currentUrl: state.currentUrl,
         playList: state.playList,
-        // playList: playList,
-        // progress: state.progress,
+        noneOrLoopOrRepeat: state.noneOrLoopOrRepeat,
         currentProgress: state.currentProgress,
         songSinger: state.songSinger,
         songName: state.songName,
         shuffle: state.shuffle,
-        loop: loop,
+        loop: state.loop,
         totalDuration: state.totalDuration,
         songId: state.songId,
         songPhoto: state.songPhoto,
         loading: state.loading,
         showMusicBarOnMoblieRatio: state.showMusicBarOnMoblieRatio,
         setShowMusicBarOnMoblieRatio,
+        changeNoneOrLoopOrRepeat,
         changeVolume,
         changeDuration,
         nextMusic,
@@ -496,25 +511,23 @@ const Playerstate = (props) => {
         playMusic,
         handleChange,
         changeShuffle,
-        changeLoop,
         setIds,
       }}
     >
       {props.children}
 
       <Fragment>
-        <div id='audio'>
+        <div id="audio">
           <audio
             ref={audioRef}
-            className='player'
+            className="player"
             autoPlay={state.playing}
             src={state.currentUrl}
-            // src={'http://dl.rovzenews.ir/telegram/763/763.mp3'}
             // src={
             //   'https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3'
             // }
-            type='audio/mpeg'
-            preload='metadata'
+            type="audio/mpeg"
+            preload="metadata"
           ></audio>
         </div>
 
@@ -522,47 +535,47 @@ const Playerstate = (props) => {
         <Fragment
         // for mobile ratio
         >
-          <div className='phoneMusicBar__slide'>
+          <div className="phoneMusicBar__slide">
             <Drawer
-              variant='persistent'
-              className='phoneMusicBar__slide'
-              anchor={'bottom'}
+              variant="persistent"
+              className="phoneMusicBar__slide"
+              anchor={"bottom"}
               open={state.showMusicBarOnMoblieRatio}
               onClose={() => setShowMusicBarOnMoblieRatio()}
               // onOpen={() => setShowMusicBarOnMoblieRatio()}
             >
-              <div className='player__zone d-flex text-light '>
-                <div className='current-time align-self-center '>
+              <div className="player__zone d-flex text-light ">
+                <div className="current-time align-self-center ">
                   {Math.floor(audioRef.current?.currentTime / 60) +
-                    ':' +
+                    ":" +
                     zeroPad(Math.floor(audioRef.current?.currentTime % 60), 2)}
                 </div>
 
-                <div className='player'>
+                <div className="player">
                   <Slider
-                    variant='determinate'
+                    variant="determinate"
                     value={state.currentProgress}
                     onChange={(e, newDuration) => handleChange(newDuration)}
                   />
                 </div>
 
-                <div className='last-time align-self-center '>
-                  {' '}
+                <div className="last-time align-self-center ">
+                  {" "}
                   {Math.floor(state.totalDuration / 60) +
-                    ':' +
+                    ":" +
                     zeroPad(Math.floor(state.totalDuration % 60), 2)}
                 </div>
               </div>
 
-              <div className='d-flex text-light pb-2 px-2 justify-content-between'>
-                <div className='player__actions d-flex justify-content-center '>
+              <div className="d-flex text-light pb-2 px-2 justify-content-between">
+                <div className="player__actions d-flex justify-content-center ">
                   <div
-                    className='icon playlist_sound_playlist d-flex justify-content-between align-self-end mr-2 align-self-center'
+                    className="icon playlist_sound_playlist d-flex justify-content-between align-self-end mr-2 align-self-center"
                     onClick={showPlaylist}
                   >
                     <QueueMusic style={{ fontSize: 22 }} />
                   </div>
-                  <div className='mr-2 '>
+                  <div className="mr-2 ">
                     {isAuth && (
                       <PlaylistAddRounded
                         style={{ fontSize: 22 }}
@@ -574,105 +587,119 @@ const Playerstate = (props) => {
                   </div>
                   <div
                     onClick={() => changeShuffle()}
-                    className={`icon mr-2 ${
-                      state.shuffle ? 'icon-press' : ''
+                    className={`icon__shuffle mr-2 ${
+                      state.shuffle ? "icon__shuffle__press" : ""
                     } align-self-center`}
                   >
                     <ShuffleRounded style={{ fontSize: 20 }} />
                   </div>
 
-                  <div
-                    onClick={changeLoop}
-                    className={`icon mr-2  ${
-                      loop ? 'icon-press' : ''
-                    } align-self-center `}
-                  >
-                    <RepeatRounded style={{ fontSize: 20 }} />
-                  </div>
+                  {state.noneOrLoopOrRepeat === 0 ? (
+                    <div
+                      onClick={() => changeNoneOrLoopOrRepeat()}
+                      className={` mr-2 icon__loop align-self-center `}
+                    >
+                      <RepeatRounded style={{ fontSize: 20 }} />
+                    </div>
+                  ) : state.noneOrLoopOrRepeat === 1 ? (
+                    <div
+                      onClick={() => changeNoneOrLoopOrRepeat()}
+                      className={`mr-2 icon__loop__press align-self-center `}
+                    >
+                      <RepeatRounded style={{ fontSize: 20 }} />
+                    </div>
+                  ) : (
+                    <div
+                      onClick={() => changeNoneOrLoopOrRepeat()}
+                      className={`mr-2 icon__repeatOne__press align-self-center `}
+                    >
+                      <RepeatOneRounded style={{ fontSize: 20 }} />
+                    </div>
+                  )}
                 </div>
-                <div className='d-flex mobileSound mr-2'>
+                <div className="d-flex mobileSound mr-2">
                   <div
-                    className='icon col-2 p-0 d-flex align-self-center mr-2'
+                    className="icon col-2 p-0 d-flex align-self-center mr-2"
                     onClick={() => muteAndUnmuteMusic(audioRef.current)}
                   >
                     {state.mute ? <VolumeOff /> : <VolumeUp />}
                   </div>
 
                   <Slider
-                    className='mobileSound '
+                    className="mobileSound "
                     value={state.volume * 100}
                     onChange={(e, newVolume) =>
                       changeVolume(audioRef.current, newVolume)
                     }
-                    aria-labelledby='continuous-slider'
+                    aria-labelledby="continuous-slider"
                   />
                 </div>
               </div>
             </Drawer>
           </div>
           {/* {state.currentUrl && ( */}
-          <Slide direction='up' timeout={500} in={showMusic}>
-            <div className='phoneMusicBar bg-dark d-flex text-light'>
+          <Slide direction="up" timeout={500} in={showMusic}>
+            <div className="phoneMusicBar bg-dark d-flex text-light">
               <div
-                className='phoneMusicBar__left d-flex align-self-center 
-          justify-content-start'
+                className="phoneMusicBar__left d-flex align-self-center 
+          justify-content-start"
               >
                 <img
-                  className='phoneMusicBar__img m-2'
+                  className="phoneMusicBar__img m-2"
                   src={
                     state.songPhoto !== null ? state.songPhoto : defualtPhoto
                   }
-                  alt=''
+                  alt=""
                 />
-                <div className='phoneMusicBar__info align-self-center mr-2'>
-                  <div className='phoneMusicBar__title'>
-                    <div className='scroll'>
+                <div className="phoneMusicBar__info align-self-center mr-2">
+                  <div className="phoneMusicBar__title">
+                    <div className="scroll">
                       <span>{state.songName}</span>
                     </div>
                   </div>
-                  <div className='phoneMusicBar__singer'>
+                  <div className="phoneMusicBar__singer">
                     <span>{state.songSinger}</span>
                   </div>
                 </div>
               </div>
               <div
-                className='phoneMusicBar__right d-flex align-self-center 
-          justify-content-around'
+                className="phoneMusicBar__right d-flex align-self-center 
+          justify-content-around"
               >
-                <div className='icon ' onClick={handleNext}>
-                  <SkipNextRounded style={{ fontSize: '25px' }} />
+                <div className="icon " onClick={handleNext}>
+                  <SkipNextRounded style={{ fontSize: "25px" }} />
                 </div>
-                <div className='icon '>
+                <div className="icon ">
                   {/* SpinnerLoading */}
                   {state.loading ? (
                     <SpinnerLoading />
                   ) : state.playing ? (
                     <div
-                      className=''
+                      className=""
                       onClick={() => playAndPauseMusic(audioRef.current)}
                     >
-                      <Pause style={{ fontSize: '25px' }} />
+                      <Pause style={{ fontSize: "25px" }} />
                     </div>
                   ) : (
                     <div
-                      className=''
+                      className=""
                       onClick={() => playAndPauseMusic(audioRef.current)}
                     >
-                      <PlayCircleFilledRounded style={{ fontSize: '25px' }} />
+                      <PlayCircleFilledRounded style={{ fontSize: "25px" }} />
                     </div>
                   )}
                 </div>
-                <div className='icon' onClick={handlePrevious}>
-                  <SkipPreviousRounded style={{ fontSize: '25px' }} />
+                <div className="icon" onClick={handlePrevious}>
+                  <SkipPreviousRounded style={{ fontSize: "25px" }} />
                 </div>
                 <div
-                  className='icon'
+                  className="icon"
                   onClick={() => setShowMusicBarOnMoblieRatio()}
                 >
                   {state.showMusicBarOnMoblieRatio ? (
-                    <ExpandMoreRounded style={{ fontSize: '25px' }} />
+                    <ExpandMoreRounded style={{ fontSize: "25px" }} />
                   ) : (
-                    <ExpandLessRounded style={{ fontSize: '25px' }} />
+                    <ExpandLessRounded style={{ fontSize: "25px" }} />
                   )}
                 </div>
               </div>
@@ -684,82 +711,96 @@ const Playerstate = (props) => {
         <Fragment
         //for web ratio
         >
-          <Slide direction='up' timeout={500} in={showMusic}>
+          <Slide direction="up" timeout={500} in={showMusic}>
             <div
-              className=' musicBar text-light'
-              style={{ display: showMusic ? 'block' : 'none' }}
+              className=" musicBar text-light"
+              style={{ display: showMusic ? "block" : "none" }}
             >
-              <div className='position d-flex justify-content-around'>
-                <div className='musicBar__right'>
-                  <div className='musicBar__info'>
-                    <div className='musicBar__infoImage'>
+              <div className="position d-flex justify-content-around">
+                <div className="musicBar__right">
+                  <div className="musicBar__info">
+                    <div className="musicBar__infoImage">
                       <img
                         src={
                           state.songPhoto !== null
                             ? state.songPhoto
                             : defualtPhoto
                         }
-                        alt='logo'
+                        alt="logo"
                       />
                     </div>
-                    <div className='musicBar__infoDesc'>
-                      <div className='infoDesc__title'>
-                        <div className='scroll'>
+                    <div className="musicBar__infoDesc">
+                      <div className="infoDesc__title">
+                        <div className="scroll">
                           <span>{state.songName}</span>
                         </div>
                       </div>
-                      <div className='infoDesc__person'>{state.songSinger}</div>
+                      <div className="infoDesc__person">{state.songSinger}</div>
                     </div>
                   </div>
                 </div>
-                <div className='player musicBar__center mt-3'>
-                  <div className='player__actions d-flex justify-content-center '>
+                <div className="player musicBar__center mt-3">
+                  <div className="player__actions d-flex justify-content-center ">
                     <div
                       onClick={() => changeShuffle()}
-                      className={`icon mr-4 ${
-                        state.shuffle ? 'icon-press' : ''
+                      className={`icon__shuffle mr-4 ${
+                        state.shuffle ? "icon__shuffle__press" : ""
                       } align-self-center`}
                     >
                       <ShuffleRounded style={{ fontSize: 25 }} />
                     </div>
-                    <div className='icon mr-4 ' onClick={handlePrevious}>
+                    <div className="icon mr-4 " onClick={handlePrevious}>
                       <SkipPreviousRounded style={{ fontSize: 35 }} />
                     </div>
-                    <div className='icon mr-4 align-self-center '>
+                    <div className="icon mr-4 align-self-center ">
                       {state.loading ? (
                         <SpinnerLoading />
                       ) : state.playing ? (
                         <div
-                          className=''
+                          className=""
                           onClick={() => playAndPauseMusic(audioRef.current)}
                         >
                           <Pause style={{ fontSize: 35 }} />
                         </div>
                       ) : (
                         <div
-                          className=''
+                          className=""
                           onClick={() => playAndPauseMusic(audioRef.current)}
                         >
                           <PlayArrowRounded style={{ fontSize: 35 }} />
                         </div>
                       )}
                     </div>
-                    <div className='icon mr-4  ' onClick={handleNext}>
+                    <div className="icon mr-4  " onClick={handleNext}>
                       <SkipNextRounded style={{ fontSize: 35 }} />
                     </div>
-                    <div
-                      onClick={changeLoop}
-                      className={`icon mr-4  ${
-                        loop ? 'icon-press' : ''
-                      } align-self-center `}
-                    >
-                      <RepeatRounded style={{ fontSize: 25 }} />
-                    </div>
+                    {state.noneOrLoopOrRepeat === 0 ? (
+                      <div
+                        onClick={() => changeNoneOrLoopOrRepeat()}
+                        className={`mr-4  icon__loop align-self-center `}
+                      >
+                        <RepeatRounded style={{ fontSize: 25 }} />
+                      </div>
+                    ) : state.noneOrLoopOrRepeat === 1 ? (
+                      <div
+                        onClick={() => changeNoneOrLoopOrRepeat()}
+                        className={`mr-4 icon__loop__press align-self-center `}
+                      >
+                        <RepeatRounded style={{ fontSize: 25 }} />
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => changeNoneOrLoopOrRepeat()}
+                        className={`mr-4 icon__repeatOne__press align-self-center `}
+                      >
+                        <RepeatOneRounded style={{ fontSize: 25 }} />
+                      </div>
+                    )}
                   </div>
-                  <div className='player__zone d-flex mt-2'>
-                    <div className='current-time align-self-center text-right'>
+                  <div className="player__zone d-flex mt-2">
+                    <div className="current-time align-self-center text-right">
                       {Math.floor(audioRef.current?.currentTime / 60) +
-                        ':' +
+                        ":" +
                         zeroPad(
                           Math.floor(audioRef.current?.currentTime % 60),
                           2
@@ -770,11 +811,11 @@ const Playerstate = (props) => {
                         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
                     <ClickAwayListener onClickAway={() => (state.seek = false)}>
                       <div
-                        className='player mt-1 align-self-center mx-3 '
+                        className="player mt-1 align-self-center mx-3 "
                         onMouseUp={() => (state.seek = false)}
                       >
                         <Slider
-                          variant='determinate'
+                          variant="determinate"
                           value={state.currentProgress}
                           onChange={(e, newDuration) =>
                             handleChange(newDuration)
@@ -783,19 +824,19 @@ const Playerstate = (props) => {
                       </div>
                     </ClickAwayListener>
 
-                    <div className='last-time align-self-center text-left '>
+                    <div className="last-time align-self-center text-left ">
                       {Math.floor(state.totalDuration / 60) +
-                        ':' +
+                        ":" +
                         zeroPad(Math.floor(state.totalDuration % 60), 2)}
                     </div>
                   </div>
                 </div>
-                <div className='playlist_sound   musicBar__left mt-3 mb-2'>
-                  <div className='d-flex justify-content-around  '>
-                    <div className='icon'>
+                <div className="playlist_sound   musicBar__left mt-3 mb-2">
+                  <div className="d-flex justify-content-around  ">
+                    <div className="icon">
                       {isAuth && (
                         <PlaylistAddRounded
-                          fontSize='large'
+                          fontSize="large"
                           onClick={() =>
                             setWhichSongToSaveInPlaylist(state.songId)
                           }
@@ -803,25 +844,25 @@ const Playerstate = (props) => {
                       )}
                     </div>
                     <div
-                      className='icon playlist_sound_playlist d-flex justify-content-end align-self-end mb-2 '
+                      className="icon playlist_sound_playlist d-flex justify-content-end align-self-end mb-2 "
                       onClick={showPlaylist}
                     >
-                      <QueueMusic fontSize='large' />
+                      <QueueMusic fontSize="large" />
                     </div>
                   </div>
 
-                  <div className='sound  d-flex '>
-                    <div className='progressBar p-0  w-100 mt-1 '>
+                  <div className="sound  d-flex ">
+                    <div className="progressBar p-0  w-100 mt-1 ">
                       <Slider
                         value={state.volume * 100}
                         onChange={(e, newVolume) =>
                           changeVolume(audioRef.current, newVolume)
                         }
-                        aria-labelledby='continuous-slider'
+                        aria-labelledby="continuous-slider"
                       />
                     </div>
                     <div
-                      className='icon col-2 p-0 d-flex align-self-center mr-2'
+                      className="icon col-2 p-0 d-flex align-self-center mr-2"
                       onClick={() => muteAndUnmuteMusic(audioRef.current)}
                     >
                       {state.mute ? <VolumeOff /> : <VolumeUp />}

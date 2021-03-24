@@ -1,61 +1,63 @@
-import { ListItem, ListItemText, SwipeableDrawer } from '@material-ui/core';
+import { ListItem, ListItemText, SwipeableDrawer } from "@material-ui/core";
 import {
   AccountCircleRounded,
   CloseRounded,
   ExitToAppRounded,
   PersonRounded,
-} from '@material-ui/icons';
-import { Fragment, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import authContext from './auth/authContext';
-import appContext from './contexts/appContext';
-import './PhoneList.css';
+} from "@material-ui/icons";
+import { Fragment, useContext } from "react";
+import { Link } from "react-router-dom";
+import authContext from "./auth/authContext";
+import appContext from "./contexts/appContext";
+import "./PhoneList.css";
 
 const PhoneList = () => {
-  const { showx, x, menu } = useContext(appContext);
+  const { showRight, ChangeShowRight, menu } = useContext(appContext);
   const { user, logout } = useContext(authContext);
 
   // console.log(menu);
   return (
-    <div className='phoneList '>
-      <Fragment key={'right'}>
-        {/* <Button onClick={() => showx(true)}>{'right'}</Button> */}
+    <div className="phoneList ">
+      <Fragment>
+        {/* <Button onClick={() => ChangeShowRight(true)}>{'right'}</Button> */}
         <SwipeableDrawer
-          anchor={'right'}
-          open={x}
-          onClose={() => showx(false)}
-          onOpen={() => showx(true)}
+          anchor={"right"}
+          open={showRight}
+          onClose={() => ChangeShowRight(false)}
+          onOpen={() => ChangeShowRight(true)}
         >
-          <h4 className='phoneList__title p-3 d-flex justify-content-around text-light'>
+          <h4 className="phoneList__title p-3 d-flex justify-content-around text-light">
             <div
-              className=' phoneList__title__close   align-self-center'
-              onClick={() => showx(false)}
+              className=" phoneList__title__close   align-self-center"
+              onClick={() => ChangeShowRight(false)}
             >
               <CloseRounded />
             </div>
             {user ? (
-              <div className='phoneList__user'>
-                <span className='ml-2'>{user.first_name}</span>
+              <div className="phoneList__user">
+                <span className="ml-2">{user.first_name}</span>
                 <AccountCircleRounded />
               </div>
             ) : (
               <Link
-                className='phoneList__loginBTn'
-                to='/login'
-                onClick={() => showx(false)}
+                className="phoneList__loginBTn"
+                to="/login"
+                onClick={() => ChangeShowRight(false)}
               >
                 ورود/ثبت نام
               </Link>
             )}
           </h4>
-          <div className='phoneList__list text-light'>
+          <div className="phoneList__list text-light">
             {menu &&
               menu.map((item) =>
                 item.absolute === true ? (
                   <div
                     key={item.id}
-                    className='phoneList__item'
-                    onClick={() => window.open(`${item.url}`) & showx(false)}
+                    className="phoneList__item"
+                    onClick={() =>
+                      window.open(`${item.url}`) & ChangeShowRight(false)
+                    }
                   >
                     <ListItem button key={item.name}>
                       <ListItemText primary={item.name} />
@@ -63,11 +65,11 @@ const PhoneList = () => {
                   </div>
                 ) : (
                   <Link
-                    onClick={() => showx(false)}
+                    onClick={() => ChangeShowRight(false)}
                     key={item.id}
-                    to={`${item.url === '/' ? item.url : '/' + item.url}`}
+                    to={`${item.url === "/" ? item.url : "/" + item.url}`}
                   >
-                    <div className='phoneList__item'>
+                    <div className="phoneList__item">
                       <ListItem button key={item.name}>
                         <ListItemText primary={item.name} />
                       </ListItem>
@@ -76,25 +78,25 @@ const PhoneList = () => {
                 )
               )}
             {user && (
-              <div className='phoneList__item'>
-                <Link to='/myprofile' onClick={() => showx(false)}>
-                  <ListItem button key={'پروفایل'}>
-                    <PersonRounded className='' />
+              <div className="phoneList__item">
+                <Link to="/myprofile" onClick={() => ChangeShowRight(false)}>
+                  <ListItem button key={"پروفایل"}>
+                    <PersonRounded className="" />
 
-                    <ListItemText primary={'پروفایل'} />
+                    <ListItemText primary={"پروفایل"} />
                   </ListItem>
                 </Link>
               </div>
             )}
             {user && (
               <div
-                className='phoneList__item'
-                onClick={() => logout() & showx(false)}
+                className="phoneList__item"
+                onClick={() => logout() & ChangeShowRight(false)}
               >
-                <ListItem button key={'خروج از حساب'}>
-                  <ExitToAppRounded className='' />
+                <ListItem button key={"خروج از حساب"}>
+                  <ExitToAppRounded className="" />
 
-                  <ListItemText primary={'خروج از حساب'} />
+                  <ListItemText primary={"خروج از حساب"} />
                 </ListItem>
               </div>
             )}

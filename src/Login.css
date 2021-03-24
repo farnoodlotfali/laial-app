@@ -8,6 +8,7 @@
   align-items: center;
   min-height: 100vh;
   background: linear-gradient(to bottom, rgb(34, 35, 39), black);
+  height: 100%;
 }
 
 .login .color {
@@ -165,7 +166,7 @@
   text-align: right;
 }
 
-.login .form .inputBox input[type='submit'] {
+.login .form .inputBox input[type="submit"] {
   background-color: white;
   color: #666;
   cursor: pointer;
@@ -188,7 +189,7 @@
   text-decoration: none;
 }
 .forgetPassBtn {
-  color: rgba(4, 30, 177, 0.658);
+  color: rgba(138, 156, 255, 0.658);
   cursor: pointer;
 }
 .forgetPassBtn:hover {

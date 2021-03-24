@@ -15,7 +15,9 @@ import {
   SEEKING,
   CHANGE_SHOW_MUSICBAR_ON_MOBILE_RATIO,
   CHANGE_SHUFFLE,
-} from './types';
+  CHANGE_LOOP,
+  CHANGE_LOOP_STATE,
+} from "./types";
 // eslint-disable-next-line
 export default (state, action) => {
   switch (action.type) {
@@ -61,6 +63,11 @@ export default (state, action) => {
         ...state,
         shuffle: !state.shuffle,
       };
+    case CHANGE_LOOP:
+      return {
+        ...state,
+        loop: !state.loop,
+      };
     case NEXT_MUSIC:
       return {
         ...state,
@@ -95,6 +102,31 @@ export default (state, action) => {
         ...state,
         seeking: action.payload,
       };
+    case CHANGE_LOOP_STATE:
+      switch (state.noneOrLoopOrRepeat) {
+        case 0:
+          return {
+            ...state,
+            noneOrLoopOrRepeat: 1,
+            loop: true,
+            repeatOne: false,
+          };
+        case 1:
+          return {
+            ...state,
+            noneOrLoopOrRepeat: 2,
+            loop: false,
+            repeatOne: true,
+          };
+        default:
+          return {
+            ...state,
+            noneOrLoopOrRepeat: 0,
+            loop: false,
+            repeatOne: false,
+          };
+      }
+
     case CHANGE_SHOW_MUSICBAR_ON_MOBILE_RATIO:
       return {
         ...state,

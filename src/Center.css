@@ -109,7 +109,7 @@
   font-family: Vazir;
 }
 .addBtn {
-  font-family: 'vazir';
+  font-family: "vazir";
   justify-content: center;
   margin-left: 17px;
   box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
@@ -118,6 +118,7 @@
   cursor: pointer;
   border: 1px solid rgba(245, 245, 245, 0.384);
   border-radius: 10px;
+  transition: 0.5s;
 }
 .addBtn:hover {
   background-color: whitesmoke;

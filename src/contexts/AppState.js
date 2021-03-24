@@ -1,7 +1,7 @@
-import { useEffect, useReducer, useState } from 'react';
-import axios from '../axios/axios';
-import AppContext from './appContext';
-import appReducer from './appReducer';
+import { useEffect, useReducer, useState } from "react";
+import axios from "../axios/axios";
+import AppContext from "./appContext";
+import appReducer from "./appReducer";
 import {
   GET_HOME,
   ERROR,
@@ -22,7 +22,10 @@ import {
   GET_MENU,
   GET_ALL_PERSONS,
   FIND_MAIN_PLAYLIST,
-} from './types';
+  SET_LOADING_ON_USER_PLAYLIST,
+  REMOVE_LOADING_ON_USER_PLAYLIST,
+  CHANGE_SHOW_RIGHT,
+} from "./types";
 const AppState = (props) => {
   const initialState = {
     home: null,
@@ -37,10 +40,12 @@ const AppState = (props) => {
     loading: false,
     showCenter: true,
     showMusic: false,
+    showRight: false,
     isAddingSong: false,
+    loadingOnUserPlaylist: false,
     whichSongToSaveInPlaylist: null,
     block: null,
-    BlockListName: '',
+    BlockListName: "",
     blockSlug: null,
     personkSlug: null,
     error: null,
@@ -61,13 +66,13 @@ const AppState = (props) => {
       previous: null,
     },
     dataSongPage: null,
-    dataSongPageMeta: {
-      meta_description: null,
-      meta_title: null,
-      name: null,
-      slug: null,
-      id: null,
-    },
+    // dataSongPageMeta: {
+    //   meta_description: null,
+    //   meta_title: null,
+    //   name: null,
+    //   slug: null,
+    //   id: null,
+    // },
     downloadUrl: null,
     viewsPage: 0,
     like: 0,
@@ -83,17 +88,20 @@ const AppState = (props) => {
   // const [showMusic, setShowMusic] = useState(false);
   const [showLeft, setShowLeft] = useState(false);
   // const [showCenter, setShowCenter] = useState(false);
-  const [x, setx] = useState(false);
-  const showx = (newValue) => {
-    // setx(!x);
-    setx(!x);
-  };
 
   const ChangeShowMusic = () => {
     // setShowMusic(!showMusic);
 
     dispatch({
       type: CHANGE_SHOW_MUSIC,
+    });
+  };
+  const ChangeShowRight = (newValue) => {
+    // setShowMusic(!showMusic);
+
+    dispatch({
+      type: CHANGE_SHOW_RIGHT,
+      payload: newValue,
     });
   };
 
@@ -132,8 +140,8 @@ const AppState = (props) => {
   const likeSong = async (slug) => {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("tokenAccess"),
       },
     };
     // console.log(config);
@@ -182,7 +190,7 @@ const AppState = (props) => {
     });
     try {
       const res = await axios.instanceApi.get(`page/home`);
-      console.log(res.data.data);
+      // console.log(res.data.data);
       dispatch({
         type: GET_HOME,
         payload: res.data.data[0],
@@ -228,7 +236,7 @@ const AppState = (props) => {
 
   const getAllPersons = () => {
     axios.instanceApi
-      .get('/persons/')
+      .get("/persons/")
       .then((res) =>
         dispatch({
           type: GET_ALL_PERSONS,
@@ -251,7 +259,7 @@ const AppState = (props) => {
     });
     try {
       const res = await axios.instanceApi.get(`persons/${newSlug}`);
-      console.log(res.data);
+      // console.log(res.data);
       dispatch({
         type: GET_PERSON,
         payload: {
@@ -309,12 +317,12 @@ const AppState = (props) => {
   const getAllPlaylists = async () => {
     const config = {
       headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+        Authorization: "Bearer " + localStorage.getItem("tokenAccess"),
       },
     };
 
     try {
-      const res = await axios.instanceApi.get('/account/playlist/', config);
+      const res = await axios.instanceApi.get("/account/playlist/", config);
       // console.log(res.data);
       findMainPlaylist(res.data);
       dispatch({
@@ -332,7 +340,7 @@ const AppState = (props) => {
   const findMainPlaylist = (list) => {
     list.map((item) => {
       return (
-        item.name === 'main playlist' &&
+        item.name === "main playlist" &&
         dispatch({ type: FIND_MAIN_PLAYLIST, payload: item.id })
       );
     });
@@ -340,14 +348,14 @@ const AppState = (props) => {
   const makeNewPlaylist = async (form) => {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("tokenAccess"),
       },
     };
 
     try {
       const res = await axios.instanceApi.post(
-        '/account/playlist/',
+        "/account/playlist/",
         form,
         config
       );
@@ -364,17 +372,17 @@ const AppState = (props) => {
   const removePlaylist = async (form) => {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("tokenAccess"),
       },
     };
     const formdate = {
       id: form,
-      status: 'delete',
+      status: "delete",
     };
     try {
       const res = await axios.instanceApi.patch(
-        '/account/playlist/update/',
+        "/account/playlist/update/",
         formdate,
         config
       );
@@ -392,8 +400,8 @@ const AppState = (props) => {
     // console.log(9090);
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("tokenAccess"),
       },
     };
     const formdate = {
@@ -402,7 +410,7 @@ const AppState = (props) => {
     };
     try {
       const res = await axios.instanceApi.patch(
-        '/account/playlist/update/',
+        "/account/playlist/update/",
         formdate,
         config
       );
@@ -419,17 +427,17 @@ const AppState = (props) => {
   const removeSongFromPlaylist = async (form) => {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("tokenAccess"),
       },
     };
     const formdate = {
       id: form,
-      status: 'delete',
+      status: "delete",
     };
     try {
       const res = await axios.instanceApi.patch(
-        '/account/playlist/item/',
+        "/account/playlist/item/",
         formdate,
         config
       );
@@ -446,8 +454,8 @@ const AppState = (props) => {
   const addMusicToPlaylist = async (form) => {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("tokenAccess"),
       },
     };
     const formData = {
@@ -458,7 +466,7 @@ const AppState = (props) => {
 
     try {
       const res = await axios.instanceApi.post(
-        '/account/playlist/item/',
+        "/account/playlist/item/",
         formData,
         config
       );
@@ -494,8 +502,8 @@ const AppState = (props) => {
   const addMusicToMAINPlaylist = async (songId) => {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("tokenAccess"),
       },
     };
 
@@ -509,7 +517,7 @@ const AppState = (props) => {
     try {
       // eslint-disable-next-line
       const res = await axios.instanceApi.post(
-        '/account/playlist/item/',
+        "/account/playlist/item/",
         formData,
         config
       );
@@ -547,10 +555,13 @@ const AppState = (props) => {
       );
   };
   const getOnePlayList = async (id) => {
+    dispatch({
+      type: SET_LOADING_ON_USER_PLAYLIST,
+    });
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("tokenAccess"),
       },
     };
     try {
@@ -558,6 +569,10 @@ const AppState = (props) => {
         `/account/playlist/?playlist=${id}`,
         config
       );
+      // console.log(res.data?.[0]?.items);
+      dispatch({
+        type: REMOVE_LOADING_ON_USER_PLAYLIST,
+      });
       return res.data?.[0]?.items;
     } catch (error) {
       dispatch({
@@ -569,7 +584,7 @@ const AppState = (props) => {
   const forgetPassword = async (email) => {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     };
 
@@ -589,10 +604,10 @@ const AppState = (props) => {
       console.log(error);
     }
   };
-  const validaTetokenForgetPassword = async (token) => {
+  const validateTokenForgetPassword = async (token) => {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     };
 
@@ -601,7 +616,7 @@ const AppState = (props) => {
     };
 
     try {
-      const res = await axios.instanceApi.post(
+      const res = await axios.simpleApi.post(
         `/account/password_reset/validate_token/`,
         formData,
         config
@@ -617,7 +632,7 @@ const AppState = (props) => {
   const confrimRestPassword = async (token, pass) => {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     };
 
@@ -642,8 +657,8 @@ const AppState = (props) => {
   const changeCurrentPassword = async (oldPass, newPass) => {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("tokenAccess"),
       },
     };
 
@@ -668,11 +683,10 @@ const AppState = (props) => {
     <AppContext.Provider
       value={{
         ChangeShowMusic,
-
         ChangeShowLeft,
         showLeft,
         ChangeshowCenter,
-
+        ChangeShowRight,
         getHome,
         getMenu,
         getPerson,
@@ -689,13 +703,11 @@ const AppState = (props) => {
         getRecommender,
         changeCurrentPassword,
         confrimRestPassword,
-        validaTetokenForgetPassword,
+        validateTokenForgetPassword,
         forgetPassword,
         addMusicToPlaylist,
         setWhichSongToSaveInPlaylist,
         addMusicToMAINPlaylist,
-        showx,
-        x,
         home: state.home,
         homeMeta: state.homeMeta,
         menu: state.menu,
@@ -705,9 +717,11 @@ const AppState = (props) => {
         AllpersonsUrls: state.AllpersonsUrls,
         showCenter: state.showCenter,
         showMusic: state.showMusic,
+        showRight: state.showRight,
         blockSlug: state.blockSlug,
-        dataSongPage: state.dataSongPage,
+        // dataSongPage: state.dataSongPage,
         dataSongPageMeta: state.dataSongPageMeta,
+        loadingOnUserPlaylist: state.loadingOnUserPlaylist,
         BlockListName: state.BlockListName,
         personList: state.personList,
         personUrls: state.personUrls,

@@ -1,11 +1,11 @@
-import React from 'react';
-import RowItem from './RowItem';
-import Flickity from 'react-flickity-component';
-import './RowList.css';
-import { Link } from 'react-router-dom';
-import { ChevronLeftRounded } from '@material-ui/icons';
+import React from "react";
+import RowItem from "./RowItem";
+import Flickity from "react-flickity-component";
+import "./RowList.css";
+import { Link } from "react-router-dom";
+import { ChevronLeftRounded } from "@material-ui/icons";
 
-const RowList = ({ id, title, slug = '', data }) => {
+const RowList = ({ id, title, slug = "", data }) => {
   const flickityOptions = {
     // initialIndex: 2,
     contain: true,
@@ -17,28 +17,29 @@ const RowList = ({ id, title, slug = '', data }) => {
   // console.log(context);
   return (
     <div className={`rowList pb-3 mt-5 `}>
-      <div className={`rowList__title d-flex ${id === 1 ? 'top__radius' : ''}`}>
+      <div className={`rowList__title d-flex ${id === 1 ? "top__radius" : ""}`}>
         <Link
           to={`/list/${slug}`}
-          className=' text-light moreSong  d-flex   ml-3'
+          className=" text-light moreSong  d-flex   ml-3"
         >
-          <div className=' text-light title mr-3'>{title}</div>
+          <div className=" text-light title mr-3">{title}</div>
         </Link>
-        <div className='d-flex  align-items-center '>
+        <div className="d-flex  align-items-center ">
           {pageinate === true ? (
             <Link
               to={`/list/${slug}`}
-              className=' text-light moreSong mr-5 d-flex   ml-3'
+              className=" text-light moreSong mr-5 d-flex   ml-3"
             >
-              نمایش همه <ChevronLeftRounded className='align-self-center' />
+              <span className="rowList__showMore">نمایش همه </span>
+              <ChevronLeftRounded className="align-self-center rowList__showMore__icon" />
             </Link>
           ) : (
-            ''
+            ""
           )}
         </div>
       </div>
 
-      <Flickity className='carousel col px-2 py-0' options={flickityOptions}>
+      <Flickity className="carousel col px-2 py-0" options={flickityOptions}>
         {context.map((item, i) => {
           // console.log(item);
           return (

@@ -18,7 +18,10 @@ import {
   GET_MENU,
   GET_ALL_PERSONS,
   FIND_MAIN_PLAYLIST,
-} from './types';
+  SET_LOADING_ON_USER_PLAYLIST,
+  REMOVE_LOADING_ON_USER_PLAYLIST,
+  CHANGE_SHOW_RIGHT,
+} from "./types";
 // eslint-disable-next-line
 export default (state, action) => {
   switch (action.type) {
@@ -75,13 +78,14 @@ export default (state, action) => {
         ...state,
         dataSongPage: action.payload,
         like: action.payload.likes,
-        dataSongPageMeta: {
-          meta_description: action.payload.meta_description,
-          meta_title: action.payload.meta_title,
-          name: action.payload.name,
-          slug: action.payload.slug,
-          id: action.payload.id,
-        },
+
+        // dataSongPageMeta: {
+        //   meta_description: action.payload.meta_description,
+        //   meta_title: action.payload.meta_title,
+        //   name: action.payload.name,
+        //   slug: action.payload.slug,
+        //   id: action.payload.id,
+        // },
         // loading: false,
       };
     case GET_SONG_PAGE_URL:
@@ -133,6 +137,11 @@ export default (state, action) => {
         ...state,
         showMusic: !state.showMusic,
       };
+    case CHANGE_SHOW_RIGHT:
+      return {
+        ...state,
+        showRight: action.payload,
+      };
     case SET_SONG_ID:
       return {
         ...state,
@@ -144,6 +153,16 @@ export default (state, action) => {
         mainPlaylistId: action.payload,
       };
 
+    case SET_LOADING_ON_USER_PLAYLIST:
+      return {
+        ...state,
+        loadingOnUserPlaylist: true,
+      };
+    case REMOVE_LOADING_ON_USER_PLAYLIST:
+      return {
+        ...state,
+        loadingOnUserPlaylist: false,
+      };
     case ERROR:
       return {
         ...state,

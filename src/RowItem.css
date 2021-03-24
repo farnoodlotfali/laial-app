@@ -250,6 +250,13 @@
   }
 }
 
+.play__music___spinner {
+  position: relative;
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 @media (max-width: 768px) {
   .rowItem__onHover {
     display: none !important;

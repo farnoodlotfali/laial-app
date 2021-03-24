@@ -1,36 +1,35 @@
-import { IconButton, Tooltip } from '@material-ui/core';
+import { IconButton, Tooltip } from "@material-ui/core";
 import {
   Favorite,
   GetAppRounded,
   PlayArrowRounded,
   PlaylistAdd,
   Visibility,
-} from '@material-ui/icons';
-import { Fragment, useContext, useEffect } from 'react';
-import { useParams } from 'react-router';
-import axios from './axios/axios';
-import AppContext from './contexts/appContext';
-import playerContext from './player/playerContext';
-import './RowItemPage.css';
-import Flickity from 'react-flickity-component';
-import Spinner from './spinner/Spinner';
-import RowItem from './RowItem';
-import authContext from './auth/authContext';
-import { Modal } from 'react-bootstrap';
-import { useState } from 'react';
-import defualtPhoto from './assets/defualtPhoto.jpeg';
-import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+} from "@material-ui/icons";
+import { Fragment, useContext, useEffect } from "react";
+import { useParams } from "react-router";
+import axios from "./axios/axios";
+import AppContext from "./contexts/appContext";
+import playerContext from "./player/playerContext";
+import "./RowItemPage.css";
+import Flickity from "react-flickity-component";
+import Spinner from "./spinner/Spinner";
+import RowItem from "./RowItem";
+import authContext from "./auth/authContext";
+import { Modal } from "react-bootstrap";
+import { useState } from "react";
+import defualtPhoto from "./assets/defualtPhoto.jpeg";
+import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const RowItemPage = () => {
   const [show, setShow] = useState(false);
   const [userInfo, setUserInfo] = useState({
-    username: '',
-    email: '',
-    password: '',
+    username: "",
+    email: "",
+    password: "",
   });
   const { email, password } = userInfo;
-
   const flickityOptions = {
     // initialIndex: 2,
     contain: true,
@@ -66,7 +65,7 @@ const RowItemPage = () => {
     loadUser();
     // eslint-disable-next-line
   }, [params.slug, user]);
-  // console.log(dataSongPageMeta);
+  // console.log(dataSongPage);
 
   // console.log(dataSongPage);
   // نشان دادن موزیک و پخش موزیک
@@ -86,7 +85,6 @@ const RowItemPage = () => {
         `/${dataSongPage?.media?.[0]?.telegram_id}`
       );
       setUrl(res.data.download_link);
-
       if (!showMusic) {
         ChangeShowMusic();
       }
@@ -104,36 +102,36 @@ const RowItemPage = () => {
   return (
     <Fragment>
       <Helmet>
-        <title>{dataSongPageMeta?.meta_title}</title>
-        <meta name='title' content={dataSongPageMeta?.meta_title} />
-        <meta name='description' content={dataSongPageMeta?.meta_description} />
-        <meta property='og:type' content='website' />
-        <meta property='og:url' content={dataSongPageMeta?.slug} />
-        <meta property='og:title' content={dataSongPageMeta?.meta_title} />
+        <title>{dataSongPage?.meta_title}</title>
+        <meta name="title" content={dataSongPage?.meta_title} />
+        <meta name="description" content={dataSongPage?.meta_description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={dataSongPage?.slug} />
+        <meta property="og:title" content={dataSongPage?.meta_title} />
         <meta
-          property='og:description'
-          content={dataSongPageMeta?.meta_description}
+          property="og:description"
+          content={dataSongPage?.meta_description}
         />
-        <meta property='twitter:card' content='summary_large_image' />
-        <meta property='twitter:url' content='http:app.7negare.ir/' />
-        <meta property='twitter:title' content={dataSongPageMeta?.meta_title} />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="http:app.7negare.ir/" />
+        <meta property="twitter:title" content={dataSongPage?.meta_title} />
         <meta
-          property='twitter:description'
-          content={dataSongPageMeta?.meta_description}
+          property="twitter:description"
+          content={dataSongPage?.meta_description}
         />
-        {/* {dataSongPageMeta['image'] && (
-          <meta property='twitter:image' content={dataSongPageMeta['image']} />
+        {/* {dataSongPage['image'] && (
+          <meta property='twitter:image' content={dataSongPage['image']} />
         )} */}
       </Helmet>
 
       {loading ? (
         <Spinner />
       ) : (
-        <div className='rowItemPage py-4  '>
-          <div className='musicInfo d-flex justify-content-around'>
-            <div className='musicInfo__right '>
+        <div className="rowItemPage py-4  ">
+          <div className="musicInfo d-flex px-2 justify-content-around">
+            <div className="musicInfo__right ">
               <img
-                className='musicInfo__image'
+                className="musicInfo__image"
                 src={
                   dataSongPage?.media?.[0]?.image !== null
                     ? dataSongPage?.media?.[0]?.image
@@ -141,45 +139,48 @@ const RowItemPage = () => {
                     ? dataSongPage?.person?.[0]?.image.full_image_url
                     : defualtPhoto
                 }
-                alt='logo'
+                alt="logo"
               />
             </div>
-            <div className='musicInfo__left text-light   justify-content-start align-items-center'>
-              <div className='musicInfo__name mt-5 mb-3 d-flex'>
+            <div className="musicInfo__left text-light   justify-content-start align-items-center">
+              <div className="musicInfo__name mt-5 mb-3 d-flex">
                 نام آهنگ : {dataSongPage?.media?.[0]?.name}
-              </div>{' '}
-              <div className='musicInfo__singer mb-3 d-flex'>
+              </div>
+              <div className="musicInfo__singer mb-3 d-flex">
                 خواننده : {dataSongPage?.person?.[0]?.name}
               </div>
-              <div className='musicInfo__mode mb-3 d-flex'>سبک : شور</div>
+              <div className=" mb-3 d-flex">
+                توضیحات : {dataSongPage?.desciption}
+              </div>
+              <div className="musicInfo__mode mb-3 d-flex">سبک : شور</div>
               <hr />
-              <div className='actions d-flex justify-content-around'>
+              <div className="actions d-flex justify-content-around">
                 <div onClick={playMusicAndShowMusicBar}>
-                  <Tooltip placement='bottom' title='پخش آهنگ'>
-                    <IconButton aria-label='play'>
+                  <Tooltip placement="bottom" title="پخش آهنگ">
+                    <IconButton aria-label="play">
                       <PlayArrowRounded
-                        style={{ fontSize: '40px' }}
-                        className='icon'
+                        style={{ fontSize: "40px" }}
+                        className="icon"
                       />
                     </IconButton>
                   </Tooltip>
                 </div>
 
-                <div className='favorite'>
+                <div className="favorite">
                   <IconButton
-                    aria-label='Favorite'
+                    aria-label="Favorite"
                     onClick={() =>
                       isAuth ? likeSong(params.slug) : setShow(true)
                     }
                   >
-                    <Favorite className='Favorite' fontSize='large' />
+                    <Favorite className="Favorite" fontSize="large" />
                   </IconButton>
                   {like}
 
                   <Modal
                     show={!isAuth && show}
                     onHide={() => setShow(false)}
-                    className='favoritePopUp__login'
+                    className="favoritePopUp__login"
                   >
                     <Modal.Header closeButton>
                       <Modal.Title>
@@ -196,46 +197,44 @@ const RowItemPage = () => {
                           });
                         }}
                       >
-                        <div className='formGp d-flex justify-content-around'>
-                          <div className='inputBox'>
+                        <div className="formGp d-flex justify-content-around">
+                          <div className="inputBox">
                             <input
                               required
                               onChange={onchange}
-                              name='password'
+                              name="password"
                               value={password}
-                              type='password'
-                              placeholder='رمز ورود'
-                              minLength='8'
+                              type="password"
+                              placeholder="رمز ورود"
+                              minLength="8"
                             />
                           </div>
-                          <div className='inputBox '>
+                          <div className="inputBox ">
                             <input
                               onChange={onchange}
-                              name='email'
-                              type='email'
+                              name="email"
+                              type="email"
                               value={email}
-                              placeholder='ایمیل'
+                              placeholder="ایمیل"
                               required
                             />
-                          </div>{' '}
+                          </div>
                         </div>
-                        <div className='error__msg__login pt-2 '>
+                        <div className="error__msg__login pt-2 ">
                           {error?.error} *
                         </div>
-                        <div className='notRegister pt-2'>
-                          {' '}
-                          <span> ثبت نام نکرده اید؟ </span>{' '}
-                          <Link to='/register'>
-                            {' '}
-                            <span> ثبت نام </span>{' '}
+                        <div className="notRegister pt-2">
+                          <span> ثبت نام نکرده اید؟ </span>
+                          <Link to="/register">
+                            <span> ثبت نام </span>
                           </Link>
                         </div>
                         {/* <div className='formMsg pt-2'>{errorMsg}</div> */}
-                        <div className='formGp__btn d-flex justify-content-around '>
-                          <div className='inputBox__login'>
-                            <input type='submit' value='ورود' />
+                        <div className="formGp__btn d-flex justify-content-around ">
+                          <div className="inputBox__login">
+                            <input type="submit" value="ورود" />
                           </div>
-                          <div className='inputBox__close'>
+                          <div className="inputBox__close">
                             <button onClick={() => setShow(false)}>بستن</button>
                           </div>
                         </div>
@@ -254,10 +253,10 @@ const RowItemPage = () => {
                 </div>
 
                 <div>
-                  <a href={downloadUrl} className='download'>
-                    <Tooltip placement='bottom' title='دانلود'>
-                      <IconButton aria-label='download'>
-                        <GetAppRounded fontSize='large' />
+                  <a href={downloadUrl} className="download">
+                    <Tooltip placement="bottom" title="دانلود">
+                      <IconButton aria-label="download">
+                        <GetAppRounded fontSize="large" />
                       </IconButton>
                     </Tooltip>
                   </a>
@@ -268,15 +267,15 @@ const RowItemPage = () => {
                     setWhichSongToSaveInPlaylist(dataSongPage?.media?.[0]?.id)
                   }
                 >
-                  <Tooltip placement='bottom' title='اضافه به لیست'>
-                    <IconButton aria-label='Add'>
-                      <PlaylistAdd className='Add' fontSize='large' />
+                  <Tooltip placement="bottom" title="اضافه به لیست">
+                    <IconButton aria-label="Add">
+                      <PlaylistAdd className="Add" fontSize="large" />
                     </IconButton>
                   </Tooltip>
                 </div>
-                <div className='view'>
-                  <IconButton aria-label='View'>
-                    <Visibility className='View' fontSize='large' />
+                <div className="view">
+                  <IconButton aria-label="View">
+                    <Visibility className="View" fontSize="large" />
                   </IconButton>
                   {viewsPage}
                 </div>
@@ -284,11 +283,11 @@ const RowItemPage = () => {
             </div>
           </div>
 
-          <div className='rowList  mt-5  pt-5 '>
-            <h3 className='text-light text-right pb-3 mr-4'>
+          <div className="rowList  mt-5  pt-5 ">
+            <h3 className="text-light text-right pb-3 mr-4">
               <span>پیشنهاداتی برای شما</span>
             </h3>
-            <Flickity className='carousel  px-2 py-0' options={flickityOptions}>
+            <Flickity className="carousel  px-2 py-0" options={flickityOptions}>
               {recommender &&
                 recommender.map((item, i) => {
                   return (
@@ -298,6 +297,7 @@ const RowItemPage = () => {
                       media={item.media[0]}
                       person={item.person}
                       slug={item.slug}
+                      context={recommender}
                     />
                   );
                 })}

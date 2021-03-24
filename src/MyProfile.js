@@ -1,20 +1,22 @@
-import './MyProfile.css';
-import logo from './assets/defualtPhoto.jpeg';
-import { useContext, useEffect, useState } from 'react';
-import authContext from './auth/authContext';
-import { DeleteRounded } from '@material-ui/icons';
-import appContext from './contexts/appContext';
-import { useHistory } from 'react-router';
-import { Button, Modal } from 'react-bootstrap';
+import "./MyProfile.css";
+import logo from "./assets/defualtPhoto.jpeg";
+import { useContext, useEffect, useState } from "react";
+import authContext from "./auth/authContext";
+import { DeleteRounded } from "@material-ui/icons";
+import appContext from "./contexts/appContext";
+import { useHistory } from "react-router";
+import { Button, Modal } from "react-bootstrap";
+import SpinnerOnUserPlaylist from "./spinner/SpinnerOnUserPlaylist";
 
 const MyProfile = () => {
   const { user, loadUser } = useContext(authContext);
   const [listShow, setListShow] = useState(null);
+  const [deleteBtn, setDeleteBtn] = useState(false);
   const hisotry = useHistory();
   useEffect(() => {
     loadUser();
     if (user === null) {
-      hisotry.push('/');
+      hisotry.push("/");
     }
     // eslint-disable-next-line
   }, [user, listShow]);
@@ -24,24 +26,25 @@ const MyProfile = () => {
     mainPlaylistId,
     getOnePlayList,
     changeCurrentPassword,
+    loadingOnUserPlaylist,
   } = useContext(appContext);
-  const [passwordMsg, setPasswordMsg] = useState('');
+  const [passwordMsg, setPasswordMsg] = useState("");
 
   const [changePassword, setchangePassword] = useState({
-    currentPassword: '',
-    changePassword1: '',
-    changePassword2: '',
+    currentPassword: "",
+    changePassword1: "",
+    changePassword2: "",
   });
   const { currentPassword, changePassword1, changePassword2 } = changePassword;
   const changePasswordMsg = (msg) => {
     setPasswordMsg(msg);
     setTimeout(() => {
-      setPasswordMsg('');
+      setPasswordMsg("");
       setPasswordModal(false);
       setchangePassword({
-        currentPassword: '',
-        changePassword1: '',
-        changePassword2: '',
+        currentPassword: "",
+        changePassword1: "",
+        changePassword2: "",
       });
     }, 3000);
   };
@@ -52,40 +55,47 @@ const MyProfile = () => {
     });
   };
   const [passwordModal, setPasswordModal] = useState(false);
-  const [listname, setListName] = useState('');
+  const [listname, setListName] = useState("");
 
   const truncate = (str, no_words) => {
-    return str?.split(' ').splice(0, no_words).join(' ');
+    return str?.split(" ").splice(0, no_words).join(" ");
   };
-  const zeroPad = (num, places) => String(num).padStart(places, '0');
+  const zeroPad = (num, places) => String(num).padStart(places, "0");
   return (
-    <div className='myprofile'>
+    <div className="myprofile">
       {user && (
         <div>
-          <div className='myprofile__top d-flex'>
-            <div className='userImg '>
-              <img src={logo} alt='userImg' />
+          <div className="myprofile__top d-flex">
+            <div className="userImg ">
+              <img src={logo} alt="userImg" />
             </div>
-            <div className='userinfo d-flex'>
-              <div className='userinfo__inputbox'>
+            <div className="userinfo d-flex">
+              <div className="userinfo__inputbox">
                 <label> نام </label>
-                <input value={user.first_name} type='text' disabled />
+                {/* <input value={user.first_name} type='text' disabled /> */}
+                <span>{user.first_name} </span>
               </div>
-              <div className='userinfo__inputbox'>
+              <div className="userinfo__inputbox">
                 <label> نام خانوادگی</label>
-                <input value={user.last_name} type='text' disabled />
+                <span>{user.last_name}</span>
+
+                {/* <input value={user.last_name} type="text" disabled /> */}
               </div>
-              <div className='userinfo__inputbox'>
+              <div className="userinfo__inputbox">
                 <label> ایمیل</label>
-                <input value={user.email} type='email' disabled />
+                <span>{user.email} </span>
+
+                {/* <input value={user.email} type="email" disabled /> */}
               </div>
-              <div className='userinfo__inputbox'>
+              <div className="userinfo__inputbox">
                 <label> نام کاربری</label>
-                <input value={user.username} type='text' disabled />
+                <span>{user.username} </span>
+
+                {/* <input value={user.username} type="text" disabled /> */}
               </div>
             </div>
-            <div className='changeCurrentPass'>
-              <Button variant='primary' onClick={() => setPasswordModal(true)}>
+            <div className="changeCurrentPass">
+              <Button variant="primary" onClick={() => setPasswordModal(true)}>
                 تغییر رمز
               </Button>
 
@@ -94,19 +104,19 @@ const MyProfile = () => {
                 onHide={() =>
                   setPasswordModal(false) &
                   setchangePassword({
-                    currentPassword: '',
-                    changePassword1: '',
-                    changePassword2: '',
+                    currentPassword: "",
+                    changePassword1: "",
+                    changePassword2: "",
                   })
                 }
-                className='passModal'
+                className="passModal"
               >
-                <Modal.Header className='modalHeaderPass'>
-                  <Modal.Title className='modalTitlePass'>
+                <Modal.Header className="modalHeaderPass">
+                  <Modal.Title className="modalTitlePass">
                     تغییر رمز عبور
                   </Modal.Title>
                 </Modal.Header>
-                <Modal.Body className='modalBodyPass'>
+                <Modal.Body className="modalBodyPass">
                   {/* <form
                     onSubmit={(e) => {
                       e.preventDefault();
@@ -119,52 +129,52 @@ const MyProfile = () => {
                   > */}
                   <input
                     onChange={onchange}
-                    name='currentPassword'
-                    type='password'
+                    name="currentPassword"
+                    type="password"
                     value={currentPassword}
-                    placeholder='رمز فعلی'
+                    placeholder="رمز فعلی"
                   />
                   <input
-                    name='changePassword1'
+                    name="changePassword1"
                     onChange={onchange}
                     value={changePassword1}
-                    type='text'
-                    minLength='8'
-                    placeholder='رمز جدید'
+                    type="text"
+                    minLength="8"
+                    placeholder="رمز جدید"
                   />
                   <input
-                    name='changePassword2'
+                    name="changePassword2"
                     onChange={onchange}
                     value={changePassword2}
-                    type='text'
-                    minLength='8'
-                    placeholder='تکرار رمز جدید '
+                    type="text"
+                    minLength="8"
+                    placeholder="تکرار رمز جدید "
                   />
                   {/* </form> */}
-                  <div className='changePass_error'>{passwordMsg}</div>
+                  <div className="changePass_error">{passwordMsg}</div>
                 </Modal.Body>
                 <Modal.Footer>
                   <Button
-                    className='modalCloseBtn'
+                    className="modalCloseBtn"
                     onClick={() => setPasswordModal(false)}
                   >
                     بستن
                   </Button>
                   <Button
-                    className='modalSaveBtn'
-                    type='submit'
+                    className="modalSaveBtn"
+                    type="submit"
                     onClick={async () => {
                       if (changePassword1 !== changePassword2) {
-                        changePasswordMsg('رمز اول با رمز دوم تطابق ندارد');
+                        changePasswordMsg("رمز اول با رمز دوم تطابق ندارد");
                       } else {
                         const status = await changeCurrentPassword(
                           currentPassword,
                           changePassword1
                         );
                         if (status === 200) {
-                          changePasswordMsg('!با موفقیت رمز تغییر یافت');
+                          changePasswordMsg("!با موفقیت رمز تغییر یافت");
                         } else {
-                          changePasswordMsg('!خطا');
+                          changePasswordMsg("!خطا");
                         }
                       }
                     }}
@@ -175,72 +185,88 @@ const MyProfile = () => {
               </Modal>
             </div>
           </div>
-          <div className='myprofile__bottom d-flex'>
-            <div className='myListsBtn'>
+          <div className="myprofile__bottom d-flex">
+            <div className="myListsBtn">
               {/* <div className='myListsOption'>
             <span> لیست های ساختگی من</span>
           </div> */}
-              <div className='myListsOption'>
+              <div className="myListsOption">
                 <span>آهنگ های لایک شده</span>
               </div>
-              <div className='myListsOption'>
+              <div className="myListsOption">
                 <span> اخیرا شنیده شده</span>
               </div>
-              <div className='myListsOption'>
+              <div
+                className="myListsOption"
+                onClick={async () =>
+                  setListShow(await getOnePlayList(mainPlaylistId)) &
+                  setDeleteBtn(false)
+                }
+              >
                 <span> آهنگ های منتخب سایت</span>
               </div>
             </div>
-            <div className='listShow d-flex'>
-              <div className='myMadeListsShow'>
-                <div className='myMadeListShow__title'>
-                  <span className='align-self-center myMadeListShow__title__span'>
+            <div className="listShow d-flex">
+              <div className="myMadeListsShow">
+                <div className="myMadeListShow__title">
+                  <span className="align-self-center myMadeListShow__title__span">
                     نام لیست : {listname}
                   </span>
                   {/* <span className='showListBtn'>نمایش لیست</span> */}
-                  <span className='playListBtn'>پخش</span>
+                  <span className="playListBtn">پخش</span>
                 </div>
-                <div className='myMadeListsShow__lists py-3'>
-                  {userPlaylists?.map((item, i) => (
-                    <div
-                      className='list__name'
-                      key={i}
-                      onClick={async () =>
-                        setListShow(await getOnePlayList(item.id)) &
-                        setListName(item.name)
-                      }
-                    >
-                      {item.name}
-                    </div>
-                  ))}
+                <div className="myMadeListsShow__lists py-3">
+                  {userPlaylists?.map(
+                    (item, i) =>
+                      mainPlaylistId !== item.id && (
+                        <div
+                          className="list__name"
+                          key={i}
+                          onClick={async () =>
+                            setListShow(await getOnePlayList(item.id)) &
+                            setListName(item.name) &
+                            setDeleteBtn(true)
+                          }
+                        >
+                          {item.name}
+                        </div>
+                      )
+                  )}
                 </div>
               </div>
-              <div className='listItemsShow'>
-                {listShow === null || listShow.length === 0 ? (
-                  <div className='none text-light'>لیست خالی است</div>
+              <div
+                className={`listItemsShow ${
+                  loadingOnUserPlaylist ? "listItemsShow__loading" : ""
+                }`}
+              >
+                {loadingOnUserPlaylist ? (
+                  <SpinnerOnUserPlaylist />
+                ) : listShow === null || listShow.length === 0 ? (
+                  <div className="none  text-light">لیست خالی است</div>
                 ) : (
                   listShow.map((item) => (
-                    <div className='song d-flex' key={item.id}>
-                      <div className='songImg'>
-                        <img src={logo} alt='songlogo' />
+                    <div className="song d-flex" key={item.id}>
+                      <div className="songImg">
+                        <img src={logo} alt="songlogo" />
                       </div>
-                      <div className='songInfo'>
-                        <span className='songName'>
+                      <div className="songInfo">
+                        <span className="songName">
                           {truncate(item?.fileItem.name, 4)}
                         </span>
-                        <span className='songSinger'>
-                          {item.fileItem?.person?.name}{' '}
+                        <span className="songSinger">
+                          {item.fileItem?.person?.name}
                         </span>
                       </div>
-                      <div className='songTime'>
+                      <div className="songTime">
                         <span>
                           {Math.floor(item?.fileItem.duration / 60) +
-                            ':' +
+                            ":" +
                             zeroPad(
                               Math.floor(item?.fileItem.duration % 60),
                               2
                             )}
                         </span>
-                        <DeleteRounded />
+                        {deleteBtn && <DeleteRounded />}
                       </div>
                     </div>
                   ))

@@ -45,7 +45,7 @@
 .tileBanner__show {
   position: absolute;
   display: inline-block;
-  padding: 10px;
+  padding: 4px;
   color: rgb(255, 255, 255);
   text-decoration: none;
   overflow: hidden;
@@ -57,7 +57,7 @@
   /* background-color: rgb(0, 0, 0); */
   border-radius: 12px;
   text-align: center;
-  font-size: 20px;
+  /* font-size: 20px; */
 }
 
 .tileBanner__show:hover {
@@ -68,7 +68,7 @@
   transition-delay: 1s;
   /* border: none; */
   cursor: pointer;
-  font-weight: 700;
+  /* font-weight: 700; */
 }
 .tileBanner__show span {
   position: absolute;

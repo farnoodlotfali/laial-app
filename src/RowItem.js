@@ -1,16 +1,16 @@
-import { Pause, PlayArrowRounded } from '@material-ui/icons';
-import { useContext } from 'react';
-import { Badge } from 'react-bootstrap';
-import AppContext from './contexts/appContext';
-import defualtPhoto from './assets/defualtPhoto.jpeg';
-import './RowItem.css';
-import { Link } from 'react-router-dom';
-import playerContext from './player/playerContext';
-import axios from './axios/axios';
-import Axios from 'axios';
-
-import SpinnerLoading from './spinner/SpinnerLoading';
-import authContext from './auth/authContext';
+import { Pause, PlayArrowRounded } from "@material-ui/icons";
+import { useContext } from "react";
+import { Badge } from "react-bootstrap";
+import AppContext from "./contexts/appContext";
+import defualtPhoto from "./assets/defualtPhoto.jpeg";
+import "./RowItem.css";
+import { Link } from "react-router-dom";
+import playerContext from "./player/playerContext";
+import axios from "./axios/axios";
+import Axios from "axios";
+import logo from "./assets/0.jpg";
+import SpinnerLoading from "./spinner/SpinnerLoading";
+import authContext from "./auth/authContext";
 const CancelToken = Axios.CancelToken;
 
 let cancel;
@@ -58,6 +58,7 @@ const RowItem = ({ media, person, slug, context }) => {
             cancel = c;
           }),
         });
+        // console.log();
         setUrl(res.data.download_link, context);
         // if (!showMusic) {
         //   ChangeShowMusic();
@@ -70,11 +71,11 @@ const RowItem = ({ media, person, slug, context }) => {
   };
 
   const truncate = (str, no_words) => {
-    return str?.split(' ').splice(0, no_words).join(' ');
+    return str?.split(" ").splice(0, no_words).join(" ");
   };
   // console.log(media);
   return (
-    <div className='carousel-cellRowItem rowItem '>
+    <div className="carousel-cellRowItem rowItem ">
       {/* {media?.id === songId && (
         <>
           <span></span>
@@ -84,50 +85,42 @@ const RowItem = ({ media, person, slug, context }) => {
         </>
       )} */}
 
-      <div className='rowItem__image'>
-        <img
-          src={
-            media?.image !== null
-              ? media?.image
-              : person?.[0]?.image.full_image_url !== null
-              ? person?.[0]?.image.full_image_url
-              : defualtPhoto
-          }
-          alt='logo'
-        />
+      <div className="rowItem__image">
+        <img src={logo} alt="logo" />
 
         {/* mobile ratio  */}
         {loading && media?.id === songId ? (
-          <div className='rowItem__playing'>
+          <div className="rowItem__playing">
             <SpinnerLoading />
           </div>
         ) : playing && media?.id === songId ? (
-          <div className=' moblie_play' onClick={() => playAndPauseMusic()}>
-            <Pause style={{ fontSize: '100px' }} />
+          <div className=" moblie_play" onClick={() => playAndPauseMusic()}>
+            <Pause style={{ fontSize: "100px" }} />
             {/* <img src={logo} alt='' /> */}
           </div>
         ) : (
-          <div className=' moblie_play' onClick={playMusicAndShowMusicBar}>
-            <PlayArrowRounded style={{ fontSize: '100px' }} />
+          <div className=" moblie_play" onClick={playMusicAndShowMusicBar}>
+            <PlayArrowRounded style={{ fontSize: "100px" }} />
             {/* <img src={logo} alt='' /> */}
           </div>
         )}
 
         {/* web ratio  */}
         {loading && media?.id === songId ? (
-          <div className=''>
+          <div className="play__music___spinner">
             <SpinnerLoading />
           </div>
         ) : playing && media?.id === songId ? (
-          <div className=' play__music' onClick={() => playAndPauseMusic()}>
+          <div className=" play__music" onClick={() => playAndPauseMusic()}>
             <Pause />
           </div>
         ) : (
-          <div className=' play__music' onClick={playMusicAndShowMusicBar}>
+          <div className=" play__music" onClick={playMusicAndShowMusicBar}>
             <PlayArrowRounded />
+            {/* <SpinnerLoading /> */}
           </div>
         )}
-        <Badge className='badge bg-light'>{/* شور */}</Badge>
+        <Badge className="badge bg-light">{/* شور */}</Badge>
         {/* </Link> */}
       </div>
       {/* <div className='rowItem__onHover'>
@@ -140,23 +133,23 @@ const RowItem = ({ media, person, slug, context }) => {
           </div>
         </div>
       </div>{' '} */}
-      <div className='rowItem__info '>
+      <div className="rowItem__info ">
         <Link
           to={`/song/${slug}`}
-          className='visit '
+          className="visit "
           onClick={() => testAuth()}
         >
-          <h4 className='rowItem__title text-center'>
+          <h4 className="rowItem__title text-center">
             {truncate(media?.name, 4)}
             {/* {media?.name} */}
           </h4>
         </Link>
         <Link
           to={`/person/${person?.[0]?.slug}`}
-          className='visit '
+          className="visit "
           onClick={() => testAuth()}
         >
-          <h4 className='rowItem__person text-center'>
+          <h4 className="rowItem__person text-center">
             {/* حاج محمد شریفی */}
             {person?.[0]?.name}
           </h4>

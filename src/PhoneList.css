@@ -1,3 +1,7 @@
+.phoneList {
+  /* display: block; */
+  height: 100%;
+}
 .MuiDrawer-paperAnchorRight {
   background-image: linear-gradient(
     to bottom right,

@@ -33,6 +33,7 @@ body {
   cursor: pointer;
   color: rgb(103, 94, 165) !important;
 }
+
 .rowList .carousel {
   outline-width: 0px;
   height: 400px;
@@ -229,12 +230,16 @@ https://flickity.metafizzy.co
 .rowList__row::-webkit-scrollbar {
   display: none;
 } */
+.rowList__showMore {
+  align-self: center;
+}
+
 @media (max-width: 768px) {
   .rowList {
     position: sticky;
     border-top-left-radius: 40px !important;
     border-top-right-radius: 40px !important;
-    z-index: 10;
+    /* z-index: 10; */
     right: 0;
     left: 0;
     margin-top: -30px !important;
@@ -266,15 +271,7 @@ https://flickity.metafizzy.co
   .rowList__title .moreSong {
     font-size: 13px;
   }
-
-  /* .top__radius {
-    position: absolute;
-    justify-content: space-between;
-    border-top-left-radius: 25px !important;
-    border-top-right-radius: 25px !important;
-    z-index: 1000;
-    left: 0;
-    right: 0;
-    top: 40%;
-  } */
+  .rowList__showMore__icon {
+    font-size: 15px !important;
+  }
 }
