@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/static/css/main.d3d91f5c.chunk.css",
+    "main.js": "/static/js/main.f3d5f355.chunk.js",
+    "main.js.map": "/static/js/main.f3d5f355.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.9f874615.js",
+    "runtime-main.js.map": "/static/js/runtime-main.9f874615.js.map",
+    "static/css/2.42acbcae.chunk.css": "/static/css/2.42acbcae.chunk.css",
+    "static/js/2.20c0f41c.chunk.js": "/static/js/2.20c0f41c.chunk.js",
+    "static/js/2.20c0f41c.chunk.js.map": "/static/js/2.20c0f41c.chunk.js.map",
+    "static/js/3.39dea94c.chunk.js": "/static/js/3.39dea94c.chunk.js",
+    "static/js/3.39dea94c.chunk.js.map": "/static/js/3.39dea94c.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.42acbcae.chunk.css.map": "/static/css/2.42acbcae.chunk.css.map",
+    "static/css/main.d3d91f5c.chunk.css.map": "/static/css/main.d3d91f5c.chunk.css.map",
+    "static/js/2.20c0f41c.chunk.js.LICENSE.txt": "/static/js/2.20c0f41c.chunk.js.LICENSE.txt",
+    "static/media/Spinner2.e123ab33.gif": "/static/media/Spinner2.e123ab33.gif",
+    "static/media/SpinnerLoad.d8aa6cd0.gif": "/static/media/SpinnerLoad.d8aa6cd0.gif",
+    "static/media/App.css": "/static/media/Vazir-Medium-FD-WOL.0c98c659.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9f874615.js",
+    "static/css/2.42acbcae.chunk.css",
+    "static/js/2.20c0f41c.chunk.js",
+    "static/css/main.d3d91f5c.chunk.css",
+    "static/js/main.f3d5f355.chunk.js"
+  ]
+}
