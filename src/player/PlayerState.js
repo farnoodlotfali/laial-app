@@ -6,7 +6,6 @@ import React, {
   useState,
   Fragment,
 } from "react";
-// import "../MusicBar.css";
 import "./Player.css";
 import PlayerContext from "./playerContext";
 import defualtPhoto from ".././assets/defualtPhoto.jpeg";
@@ -38,19 +37,14 @@ import {
   CHANGE_VOLUME,
   CHANGE_DURATION,
   SET_PALYLIST,
-  NEXT_MUSIC,
-  PREVIOUS_MUSIC,
   SET_CURRENT_URL,
   SET_IDS,
-  SET_LOADING,
   SET_PROGRESS,
   CHANGE_SHOW_MUSICBAR_ON_MOBILE_RATIO,
   CHANGE_SHUFFLE,
-  CHANGE_LOOP,
   CHANGE_LOOP_STATE,
 } from "./types";
 import { useLocation } from "react-router";
-import PhoneMusicBar from "../PhoneMusicBar";
 import axios from "../axios/axios";
 import authContext from "../auth/authContext";
 import SpinnerLoading from "../spinner/SpinnerLoading";
@@ -170,6 +164,7 @@ const Playerstate = (props) => {
         clearInterval(timer);
       };
     }
+    // eslint-disable-next-line
   }, [state.playing, state.loading, state.seek]);
 
   const setShowMusicBarOnMoblieRatio = () => {
@@ -180,7 +175,7 @@ const Playerstate = (props) => {
     progress = parseFloat(progress);
     dispatch({
       type: SET_PROGRESS,
-      payload: progress === NaN ? 0 : progress,
+      payload: isNaN(progress) ? 0 : progress,
     });
   };
   const setIds = (tId, id, duration, name, singer, photo) => {
@@ -332,7 +327,7 @@ const Playerstate = (props) => {
   };
 
   const setUrl = (url, playlist) => {
-    console.log(url);
+    // console.log(url);
 
     if (playlist !== state.playList) {
       setPlayList(playlist);
@@ -350,7 +345,7 @@ const Playerstate = (props) => {
     audioElement.pause();
 
     putToMusicChangeList(audioElement.currentTime, "next");
-    let last = null;
+    // let last = null;
     // console.log(playList);
     if (playList !== undefined) {
       for (let i = 0; i < playList.length; i++) {
@@ -393,7 +388,7 @@ const Playerstate = (props) => {
     audioElement.pause();
 
     putToMusicChangeList(audioElement.currentTime, "previous");
-    let last = null;
+    // let last = null;
     if (playList !== undefined) {
       for (let i = 0; i < playList.length; i++) {
         if (state.songId === playList[i].media[0].id) {

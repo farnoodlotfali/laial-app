@@ -2,7 +2,7 @@ import { Pause, PlayArrowRounded } from "@material-ui/icons";
 import { useContext } from "react";
 import { Badge } from "react-bootstrap";
 import AppContext from "./contexts/appContext";
-import defualtPhoto from "./assets/defualtPhoto.jpeg";
+// import defualtPhoto from "./assets/defualtPhoto.jpeg";
 import "./RowItem.css";
 import { Link } from "react-router-dom";
 import playerContext from "./player/playerContext";

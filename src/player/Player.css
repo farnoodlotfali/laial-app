@@ -132,6 +132,7 @@
 .playlist_sound .sound {
   display: flex !important;
 }
+
 @media (max-width: 768px) {
   .musicBar__right {
     display: flex;
@@ -175,5 +176,103 @@
   .musicBar .hidePlayer,
   .hidePlayer {
     display: block;
+  }
+}
+
+/* for phone ratio */
+
+.phoneMusicBar {
+  direction: rtl;
+  position: fixed;
+  z-index: 12200;
+  height: 61px;
+  bottom: 49px;
+  right: 0;
+  left: 0;
+  display: none !important;
+  transition: top 0.3s;
+}
+.phoneMusicBar__slide {
+  z-index: 12200;
+  display: none !important;
+}
+.phoneMusicBar__left {
+  flex: 0.6;
+}
+.phoneMusicBar__right {
+  flex: 0.4;
+}
+.phoneMusicBar__right .spinner {
+  width: 30px !important;
+  height: 30px !important;
+  position: inherit !important;
+  transform: none !important;
+}
+
+.phoneMusicBar__right .spinner img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+.phoneMusicBar__img {
+  width: 40px;
+  height: 40px;
+}
+.phoneMusicBar__title {
+  overflow: hidden;
+  width: 140px;
+  height: 100%;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.scroll {
+  animation: animate 6s linear infinite;
+}
+@keyframes animate {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.phoneMusicBar__title div {
+  white-space: nowrap;
+}
+.phoneMusicBar__singer {
+  font-size: 12px;
+  font-weight: 500;
+}
+.phoneMusicBar__slide .MuiDrawer-paperAnchorBottom,
+.phoneMusicBar__slide .MuiPaper-root {
+  background-color: rgb(78, 83, 88) !important;
+  bottom: 109px;
+  /* max-width: 360px; */
+  overflow: hidden;
+  /* top: 10%; */
+  /* position: relative; */
+  z-index: 999;
+}
+
+.mobileSound {
+  width: 125px;
+}
+
+.mobileSound .MuiSlider-root {
+  padding: 0 !important;
+  color: white;
+  display: flex;
+  align-self: center;
+}
+.mobileSound .MuiSlider-track {
+  height: 4px;
+}
+@media (max-width: 768px) {
+  .phoneMusicBar {
+    display: flex !important;
+  }
+  .phoneMusicBar__slide {
+    display: block !important;
   }
 }

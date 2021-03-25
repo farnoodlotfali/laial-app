@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import appContext from "./contexts/appContext";
 import "./PasswordReset.css";
 import PasswordStrengthBar from "react-password-strength-bar";
-import { AspectRatio } from "@material-ui/icons";
 import authContext from "./auth/authContext";
 const PasswordReset = () => {
   const history = useHistory();

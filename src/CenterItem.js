@@ -7,7 +7,6 @@ const CenterItem = ({ name, id, items }) => {
     isAddingSong,
     addMusicToPlaylist,
     updatePlaylistName,
-    mainPlaylistId,
     removePlaylist,
   } = useContext(appContext);
   const [edit, setEdit] = useState(false);

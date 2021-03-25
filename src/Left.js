@@ -32,7 +32,7 @@ const Left = () => {
     changeShuffle,
     shuffle,
     changeLoop,
-    loop,
+    // loop,
     songSinger,
     songName,
     songPhoto,

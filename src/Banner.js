@@ -1,4 +1,4 @@
-import Flickity from "react-flickity-component";
+// import Flickity from "react-flickity-component";
 import "./Banner.css";
 
 // require("flickity-fade");
@@ -8,16 +8,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, EffectFade } from "swiper";
 import { useState } from "react";
 const Banner = ({ imgs }) => {
-  const flickityOptions = {
-    contain: true,
-    prevNextButtons: false,
-    pageDots: false,
-    // rightToLeft: true,
-    autoPlay: 3000,
-    pauseAutoPlayOnHover: false,
-    fade: true,
-    wrapAround: true,
-  };
+  // const flickityOptions = {
+  //   contain: true,
+  //   prevNextButtons: false,
+  //   pageDots: false,
+  //   // rightToLeft: true,
+  //   autoPlay: 3000,
+  //   pauseAutoPlayOnHover: false,
+  //   fade: true,
+  //   wrapAround: true,
+  // };
   SwiperCore.use([Autoplay, EffectFade]);
   // console.log(imgs);
   const [state, setstate] = useState(null);

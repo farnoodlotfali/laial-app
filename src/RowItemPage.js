@@ -51,7 +51,6 @@ const RowItemPage = () => {
     recommender,
     likeSong,
     setWhichSongToSaveInPlaylist,
-    dataSongPageMeta,
   } = useContext(AppContext);
   const { setUrl, playMusic, setIds } = useContext(playerContext);
   const { error, login, loadUser, user, isAuth } = useContext(authContext);

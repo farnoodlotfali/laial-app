@@ -720,7 +720,7 @@ const AppState = (props) => {
         showRight: state.showRight,
         blockSlug: state.blockSlug,
         // dataSongPage: state.dataSongPage,
-        dataSongPageMeta: state.dataSongPageMeta,
+        // dataSongPageMeta: state.dataSongPageMeta,
         loadingOnUserPlaylist: state.loadingOnUserPlaylist,
         BlockListName: state.BlockListName,
         personList: state.personList,

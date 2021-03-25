@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { Fragment } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { Fragment } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 ReactDOM.render(
   // <React.StrictMode><App/></React.StrictMode>
   <Fragment>
@@ -14,7 +14,7 @@ ReactDOM.render(
       <App />
     </Router>
   </Fragment>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

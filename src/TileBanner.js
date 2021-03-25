@@ -1,4 +1,3 @@
-import { ChevronLeft } from "@material-ui/icons";
 import Flickity from "react-flickity-component";
 import "./TileBanner.css";
 const TileBanner = ({ imgs }) => {
