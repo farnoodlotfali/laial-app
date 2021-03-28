@@ -24,6 +24,7 @@ instanceApi.interceptors.response.use(
     if (error.config && error.response && error.response.status === 404) {
       window.location = "/aboutus";
       return Promise.reject(error);
+      // console.log(111);
     }
 
     if (error.config && error.response && error.response.status === 401) {

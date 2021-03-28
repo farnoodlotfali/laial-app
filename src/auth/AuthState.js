@@ -1,8 +1,8 @@
-import React, { useContext, useReducer } from 'react';
-import axios from '../axios/axios';
-import appContext from '../contexts/appContext';
-import AuthContext from './authContext';
-import authReducer from './authReducer';
+import React, { useContext, useReducer } from "react";
+import axios from "../axios/axios";
+import appContext from "../contexts/appContext";
+import AuthContext from "./authContext";
+import authReducer from "./authReducer";
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -10,15 +10,23 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   USER_LOADED,
-} from './types';
+  GET_TAGS,
+  SAVE_TAGS_SUCCESS,
+} from "./types";
 const AuthState = (props) => {
   const initialState = {
     // tokenAccess: localStorage.getItem('tokenAccess'),
     // tokenRefresh: localStorage.getItem('tokenRefresh'),
     isAuth: false,
+    isUserChooseTags: true,
     loading: true,
     error: null,
-    user: JSON.parse(localStorage.getItem('user')),
+    user: JSON.parse(localStorage.getItem("user")),
+    tags: null,
+    tagsUrls: {
+      next: null,
+      previous: null,
+    },
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
   const { getAllPlaylists } = useContext(appContext);
@@ -39,7 +47,7 @@ const AuthState = (props) => {
   const register = async (form) => {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     };
     const formData = new FormData();
@@ -49,7 +57,7 @@ const AuthState = (props) => {
 
     try {
       const res = await axios.instanceApi.post(
-        '/account/register/',
+        "/account/register/",
         formData,
         config
       );
@@ -72,7 +80,7 @@ const AuthState = (props) => {
   const login = async (form) => {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     };
 
@@ -81,7 +89,7 @@ const AuthState = (props) => {
       formData.append(key, form[key]);
     });
     try {
-      const res = await axios.instanceApi.post('/account/login/', form, config);
+      const res = await axios.instanceApi.post("/account/login/", form, config);
       // console.log(res);
       dispatch({
         type: LOGIN_SUCCESS,
@@ -108,13 +116,50 @@ const AuthState = (props) => {
   const testAuth = async () => {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('tokenAccess'),
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("tokenAccess"),
       },
     };
     try {
-      await axios.instanceApi.get('/test-auth/', config);
+      await axios.instanceApi.get("/test-auth/", config);
       // console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getTags = async () => {
+    try {
+      const res = await axios.simpleApi.get("/tags");
+      // console.log(res.data);
+      dispatch({
+        type: GET_TAGS,
+        payload: res.data,
+      });
+    } catch (error) {}
+  };
+  const saveChosenTags = async (formData) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("tokenAccess"),
+      },
+    };
+    // const formData = {
+    //   email: email,
+    // };
+
+    try {
+      const res = await axios.instanceApi.post(
+        `/account/tags/`,
+        formData,
+        config
+      );
+      console.log(res.status);
+      dispatch({
+        type: SAVE_TAGS_SUCCESS,
+      });
+      // return res.status;
     } catch (error) {
       console.log(error);
     }
@@ -128,9 +173,14 @@ const AuthState = (props) => {
         logout,
         login,
         testAuth,
+        getTags,
+        saveChosenTags,
         isAuth: state.isAuth,
         user: state.user,
         error: state.error,
+        isUserChooseTags: state.isUserChooseTags,
+        tags: state.tags,
+        tagsUrls: state.tagsUrls,
         // tokenAccess: state.tokenAccess,
         // tokenRefresh: state.tokenRefresh,
       }}

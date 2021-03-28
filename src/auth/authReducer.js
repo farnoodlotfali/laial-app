@@ -5,19 +5,33 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   USER_LOADED,
-} from './types';
+  GET_TAGS,
+  SAVE_TAGS_SUCCESS,
+} from "./types";
 // eslint-disable-next-line
 export default (state, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
-    case REGISTER_SUCCESS:
-      localStorage.setItem('tokenAccess', action.payload.token.access);
-      localStorage.setItem('tokenRefresh', action.payload.token.refresh);
-      localStorage.setItem('user', JSON.stringify(action.payload.user));
+      localStorage.setItem("tokenAccess", action.payload.token.access);
+      localStorage.setItem("tokenRefresh", action.payload.token.refresh);
+      localStorage.setItem("user", JSON.stringify(action.payload.user));
       return {
         ...state,
-        // ...action.payload,
         isAuth: true,
+        loading: false,
+        isUserChooseTags: true,
+        user: action.payload.user,
+        tokenAccess: action.payload.token.access,
+        tokenRefresh: action.payload.token.refresh,
+      };
+    case REGISTER_SUCCESS:
+      localStorage.setItem("tokenAccess", action.payload.token.access);
+      localStorage.setItem("tokenRefresh", action.payload.token.refresh);
+      localStorage.setItem("user", JSON.stringify(action.payload.user));
+      return {
+        ...state,
+        isAuth: true,
+        isUserChooseTags: false,
         loading: false,
         user: action.payload.user,
         tokenAccess: action.payload.token.access,
@@ -27,9 +41,9 @@ export default (state, action) => {
     case REGISTER_FAIL:
     case LOGIN_FAIL:
     case LOGOUT:
-      localStorage.removeItem('tokenAccess');
-      localStorage.removeItem('tokenRefresh');
-      localStorage.removeItem('user');
+      localStorage.removeItem("tokenAccess");
+      localStorage.removeItem("tokenRefresh");
+      localStorage.removeItem("user");
       return {
         ...state,
         tokenRefresh: null,
@@ -46,7 +60,20 @@ export default (state, action) => {
         isAuth: true,
         loading: false,
       };
-
+    case GET_TAGS:
+      return {
+        ...state,
+        tags: action.payload.results,
+        tagsUrls: {
+          next: action.payload.next,
+          previous: action.payload.previous,
+        },
+      };
+    case SAVE_TAGS_SUCCESS:
+      return {
+        ...state,
+        isUserChooseTags: true,
+      };
     default:
       return {
         ...state,

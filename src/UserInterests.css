@@ -1,0 +1,116 @@
+.userInterests {
+  min-height: 100vh;
+  color: white;
+  padding-top: 50px;
+}
+.userInterests__info {
+  display: grid;
+}
+.userInterests__info__title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.userInterests__info__desc {
+  font-size: 15px;
+}
+.userInterests__bottom {
+  margin-top: 50px;
+  display: grid;
+  justify-content: center;
+}
+.userInterests__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 960px;
+}
+
+.userInterests__option {
+  border: 1px solid white;
+  position: relative;
+  width: 180px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  margin: 5px;
+  cursor: pointer;
+  background: linear-gradient(
+    220deg,
+    rgba(68, 66, 73, 0.486) 10%,
+    rgba(11, 9, 19, 0.582) 100%
+  );
+  transition: 0.5s;
+}
+.userInterests__option__selected {
+  background: linear-gradient(
+    220deg,
+    rgb(65, 69, 99) 10%,
+    rgb(94, 93, 93) 100%
+  );
+  border: 1px solid white;
+  position: relative;
+  width: 180px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  margin: 5px;
+  transition: 0.5s;
+  cursor: pointer;
+}
+.userInterests__option:hover {
+  box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
+  border: 1px solid rgba(255, 255, 255, 0.582);
+
+  background: linear-gradient(220deg, rgb(81, 81, 83) 10%, rgb(11, 9, 19) 100%);
+  /* background: linear-gradient(
+    220deg,
+    rgb(99, 99, 99) 10%,
+    rgb(66, 59, 95) 100%
+  ); */
+}
+.userInterests .infinite-scroll-component {
+  display: flex;
+  flex-wrap: wrap;
+  /* min-height: 100vh; */
+  padding-bottom: 20px;
+  justify-content: center;
+}
+.userInterests__saveChosenTags {
+  padding: 10px 30px;
+}
+.saveChosenTags__btn {
+  padding: 10px 30px;
+
+  border: 1px solid white;
+  border-radius: 10px;
+  cursor: pointer;
+  background: linear-gradient(
+    220deg,
+    rgba(12, 12, 37, 0.5) 10%,
+    rgba(32, 32, 49, 0.5) 100%
+  );
+  transition: 1s;
+}
+.saveChosenTags__btn:hover {
+  background: linear-gradient(
+    220deg,
+    rgb(12, 12, 37) 10%,
+    rgb(32, 32, 49) 100%
+  );
+}
+.userInterests__errorMsg {
+  margin: 10px 0px;
+  color: darkred;
+  font-size: 18px;
+}
+@media (max-width: 575px) {
+  .userInterests__option {
+    width: 45%;
+    margin: 5px 7px;
+  }
+}

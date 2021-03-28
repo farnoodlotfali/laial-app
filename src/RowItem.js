@@ -2,13 +2,13 @@ import { Pause, PlayArrowRounded } from "@material-ui/icons";
 import { useContext } from "react";
 import { Badge } from "react-bootstrap";
 import AppContext from "./contexts/appContext";
-// import defualtPhoto from "./assets/defualtPhoto.jpeg";
+import defualtPhoto from "./assets/defualtPhoto.jpeg";
 import "./RowItem.css";
 import { Link } from "react-router-dom";
 import playerContext from "./player/playerContext";
 import axios from "./axios/axios";
 import Axios from "axios";
-import logo from "./assets/0.jpg";
+// import logo from "./assets/0.jpg";
 import SpinnerLoading from "./spinner/SpinnerLoading";
 import authContext from "./auth/authContext";
 const CancelToken = Axios.CancelToken;
@@ -73,7 +73,6 @@ const RowItem = ({ media, person, slug, context }) => {
   const truncate = (str, no_words) => {
     return str?.split(" ").splice(0, no_words).join(" ");
   };
-  // console.log(media);
   return (
     <div className="carousel-cellRowItem rowItem ">
       {/* {media?.id === songId && (
@@ -86,7 +85,17 @@ const RowItem = ({ media, person, slug, context }) => {
       )} */}
 
       <div className="rowItem__image">
-        <img src={logo} alt="logo" />
+        <img
+          src={
+            media?.[0]?.image !== null && media?.[0]?.image !== undefined
+              ? media?.[0]?.image
+              : person?.[0]?.image.full_image_url !== null
+              ? person?.[0]?.image.full_image_url
+              : defualtPhoto
+          }
+          alt="logo"
+        />
+        {/* <img src={logo} alt="logo" /> */}
 
         {/* mobile ratio  */}
         {loading && media?.id === songId ? (
@@ -96,12 +105,10 @@ const RowItem = ({ media, person, slug, context }) => {
         ) : playing && media?.id === songId ? (
           <div className=" moblie_play" onClick={() => playAndPauseMusic()}>
             <Pause style={{ fontSize: "100px" }} />
-            {/* <img src={logo} alt='' /> */}
           </div>
         ) : (
           <div className=" moblie_play" onClick={playMusicAndShowMusicBar}>
             <PlayArrowRounded style={{ fontSize: "100px" }} />
-            {/* <img src={logo} alt='' /> */}
           </div>
         )}
 

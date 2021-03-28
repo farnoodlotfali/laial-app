@@ -98,10 +98,15 @@ const RowItemPage = () => {
       [e.target.name]: e.target.value,
     });
   };
+  // console.log(dataSongPage);
   return (
     <Fragment>
       <Helmet>
-        <title>{dataSongPage?.meta_title}</title>
+        <title>
+          {dataSongPage?.meta_title !== null
+            ? dataSongPage?.meta_title
+            : dataSongPage?.media?.[0]?.name}
+        </title>
         <meta name="title" content={dataSongPage?.meta_title} />
         <meta name="description" content={dataSongPage?.meta_description} />
         <meta property="og:type" content="website" />
@@ -132,7 +137,8 @@ const RowItemPage = () => {
               <img
                 className="musicInfo__image"
                 src={
-                  dataSongPage?.media?.[0]?.image !== null
+                  dataSongPage?.media?.[0]?.image !== null &&
+                  dataSongPage?.media?.[0]?.image !== undefined
                     ? dataSongPage?.media?.[0]?.image
                     : dataSongPage?.person?.[0]?.image.full_image_url !== null
                     ? dataSongPage?.person?.[0]?.image.full_image_url

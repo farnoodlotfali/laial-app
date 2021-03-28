@@ -29,6 +29,7 @@ import PhoneList from "./PhoneList";
 import AllPerson from "./AllPerson";
 import MyProfile from "./MyProfile";
 import PasswordReset from "./PasswordReset";
+import UserInterests from "./UserInterests";
 
 const App = () => {
   return (
@@ -61,6 +62,7 @@ const App = () => {
                   component={MoreSong}
                 />
                 <Route exact path="/aboutus" component={AboutUs} />
+                <Route exact path="/user-interests" component={UserInterests} />
                 <Route
                   sensitive
                   exact
