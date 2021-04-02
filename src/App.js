@@ -6,7 +6,7 @@ import {
   Switch,
 } from "react-router-dom";
 import "swiper/swiper-bundle.css";
-import "swiper/swiper-bundle";
+import "swiper/swiper-bundle.min.css";
 import Header from "./Header";
 import AppState from "./contexts/AppState";
 // eslint-disable-next-line
@@ -30,7 +30,7 @@ import AllPerson from "./AllPerson";
 import MyProfile from "./MyProfile";
 import PasswordReset from "./PasswordReset";
 import UserInterests from "./UserInterests";
-
+// import "react-lazy-load-image-component/src/effects/blur.css";
 const App = () => {
   return (
     <div className="app ">
@@ -39,45 +39,45 @@ const App = () => {
           <Playerstate>
             <SearchState>
               <ScrollToTop />
-              <PhoneList />
-              <Center />
-              <Left />
-              <Header />
+              {/* <PhoneList /> */}
+              {/* <Center /> */}
+              {/* <Left />
+              <Header /> */}
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route exact path="/register" component={Register} />
-                <Route exact path="/login" component={Login} />
-                <Route
+                {/* <Route exact path="/register" component={Register} /> */}
+                {/* <Route exact path="/login" component={Login} /> */}
+                {/* <Route
                   sensitive
                   exact
                   path={`/song/:slug`}
                   component={RowItemPage}
-                />
+                /> */}
                 <Route exact path="/search" component={Search} />
-                <Route exact path="/myprofile" component={MyProfile} />
-                <Route
+                {/* <Route exact path="/myprofile" component={MyProfile} /> */}
+                {/* <Route
                   sensitive
                   exact
                   path="/list/:slug"
                   component={MoreSong}
-                />
-                <Route exact path="/aboutus" component={AboutUs} />
-                <Route exact path="/user-interests" component={UserInterests} />
-                <Route
+                /> */}
+                {/* <Route exact path="/aboutus" component={AboutUs} /> */}
+                {/* <Route exact path="/user-interests" component={UserInterests} /> */}
+                {/* <Route
                   sensitive
                   exact
                   path="/person/:slug"
                   component={Person}
-                />
-                <Route
+                /> */}
+                {/* <Route
                   sensitive
                   exact
                   path="/allpersons"
                   component={AllPerson}
-                />
-                <Route exact path="/password_reset" component={PasswordReset} />
+                /> */}
+                {/* <Route exact path="/password_reset" component={PasswordReset} />
                 <Route exact path="/:slug" component={Home} />
-                <Route exact path="/**" component={AboutUs} />
+                <Route exact path="/**" component={AboutUs} /> */}
               </Switch>
 
               <PhoneMenu />

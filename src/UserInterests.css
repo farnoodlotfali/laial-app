@@ -47,7 +47,7 @@
 .userInterests__option__selected {
   background: linear-gradient(
     220deg,
-    rgb(65, 69, 99) 10%,
+    rgb(190, 190, 196) 10%,
     rgb(94, 93, 93) 100%
   );
   border: 1px solid white;
@@ -109,7 +109,8 @@
   font-size: 18px;
 }
 @media (max-width: 575px) {
-  .userInterests__option {
+  .userInterests__option,
+  .userInterests__option__selected {
     width: 45%;
     margin: 5px 7px;
   }

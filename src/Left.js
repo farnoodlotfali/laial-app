@@ -145,6 +145,7 @@ const Left = () => {
         )}
       </div>
     </Slide>
+
     /* </div> */
   );
 };

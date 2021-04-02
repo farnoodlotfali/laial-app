@@ -15,6 +15,7 @@ const PhoneMenu = () => {
     ChangeshowCenter,
     ChangeShowMusic,
     ChangeShowRight,
+    showRight,
     showMusic,
   } = useContext(appContext);
   const {
@@ -35,7 +36,7 @@ const PhoneMenu = () => {
       <div className="phoneMenu__items d-flex justify-content-around py-2 ">
         <div
           className={`phoneMenu__item`}
-          onClick={() => ChangeShowRight(true)}
+          onClick={() => ChangeShowRight(showRight ? false : true)}
         >
           <MenuRounded fontSize="large" />
           {/* <span> منو </span> */}

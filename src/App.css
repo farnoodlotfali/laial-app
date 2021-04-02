@@ -8,7 +8,8 @@
   background-color: rgb(18, 18, 18);
   font-family: vazir;
   text-align: center;
-  height: 100%;
+  /* min-height: 100vh; */
+  /* position: relative; */
 }
 
 /*! Flickity v2.1.2

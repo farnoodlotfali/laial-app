@@ -5,7 +5,7 @@ import "./Banner.css";
 import styles from "./styles/Banner.module.css";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Autoplay, EffectFade } from "swiper";
+import SwiperCore, { Autoplay, EffectFade, Lazy } from "swiper";
 import { useState } from "react";
 const Banner = ({ imgs }) => {
   // const flickityOptions = {
@@ -18,7 +18,7 @@ const Banner = ({ imgs }) => {
   //   fade: true,
   //   wrapAround: true,
   // };
-  SwiperCore.use([Autoplay, EffectFade]);
+  SwiperCore.use([Autoplay, EffectFade, Lazy]);
   // console.log(imgs);
   const [state, setstate] = useState(null);
   return (
@@ -26,24 +26,26 @@ const Banner = ({ imgs }) => {
       className={styles.bannerslider}
       fadeEffect={{ crossFade: true }}
       loop={true}
+      speed={2000}
       onSwiper={(swiper) => setstate(swiper)}
       autoplay={{
         delay: 3000,
         disableOnInteraction: true,
       }}
-      effect="fade"
-      //   onSlideChange={() => console.log('slide change')}
-      //   onSwiper={(swiper) => console.log(swiper)}
+      lazy={true}
+      effect={"fade"}
     >
       {imgs.map((img, i) => (
         <SwiperSlide
           key={i}
+          className="swiper-slide"
           onMouseEnter={() => state.autoplay.stop()}
           onMouseLeave={() => state.autoplay.start()}
         >
           <img
+            className="swiper-lazy"
             style={{ width: "100%", height: "100%" }}
-            src={img.src}
+            data-src={img.src}
             alt="bannerImage"
           />
         </SwiperSlide>

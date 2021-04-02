@@ -1,12 +1,13 @@
 .home {
-  height: 100%;
+  position: relative;
+  /* min-height: 100vh; */
 }
 @media (max-width: 768px) {
   .home {
-    padding-bottom: 25px;
+    padding-bottom: 40px;
   }
 
-  .home .rowlists {
+  /* .home .rowlists {
     background-color: rgb(18, 18, 18);
     border-top-left-radius: 40px !important;
     border-top-right-radius: 40px !important;
@@ -15,5 +16,5 @@
     left: 0 !important;
     right: 0 !important;
     margin-top: -30px !important;
-  }
+  } */
 }

@@ -14,12 +14,13 @@ export default (state, action) => {
     case LOGIN_SUCCESS:
       localStorage.setItem("tokenAccess", action.payload.token.access);
       localStorage.setItem("tokenRefresh", action.payload.token.refresh);
+      localStorage.setItem("favorite_items", action.payload.favorite_items);
       localStorage.setItem("user", JSON.stringify(action.payload.user));
       return {
         ...state,
         isAuth: true,
         loading: false,
-        isUserChooseTags: true,
+        isUserChooseTags: action.payload.favorite_items,
         user: action.payload.user,
         tokenAccess: action.payload.token.access,
         tokenRefresh: action.payload.token.refresh,
@@ -41,9 +42,10 @@ export default (state, action) => {
     case REGISTER_FAIL:
     case LOGIN_FAIL:
     case LOGOUT:
-      localStorage.removeItem("tokenAccess");
-      localStorage.removeItem("tokenRefresh");
-      localStorage.removeItem("user");
+      // localStorage.removeItem("tokenAccess");
+      // localStorage.removeItem("tokenRefresh");
+      // localStorage.removeItem("user");
+      localStorage.clear();
       return {
         ...state,
         tokenRefresh: null,

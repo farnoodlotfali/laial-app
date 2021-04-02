@@ -8,6 +8,9 @@ import { ChevronLeftRounded } from "@material-ui/icons";
 const RowList = ({ id, title, slug = "", data }) => {
   const flickityOptions = {
     // initialIndex: 2,
+    fullscreen: true,
+    lazyLoad: 5,
+
     contain: true,
     prevNextButtons: false,
     pageDots: false,
@@ -16,8 +19,13 @@ const RowList = ({ id, title, slug = "", data }) => {
   const { context, pageinate } = data;
   // console.log(context);
   return (
-    <div className={`rowList pb-3 mt-5 `}>
-      <div className={`rowList__title d-flex ${id === 1 ? "top__radius" : ""}`}>
+    // <div className={`rowList pb-3 mt-5 ${id === 1 ? "top__radius" : ""}`}>
+    <div className={`rowList  ${id === 1 ? "top__radius" : ""}`}>
+      <div
+        className={`rowList__title d-flex  ${
+          id === 1 ? "top__radius__rowList__title" : ""
+        } `}
+      >
         <Link
           to={`/list/${slug}`}
           className=" text-light moreSong  d-flex   ml-3"
@@ -45,6 +53,7 @@ const RowList = ({ id, title, slug = "", data }) => {
           return (
             <RowItem
               key={item.id}
+              isRow={true}
               logo={item.image}
               media={item.media[0]}
               person={item.person}

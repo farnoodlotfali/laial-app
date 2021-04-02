@@ -1,4 +1,5 @@
 import React, { useContext, useReducer } from "react";
+import { useHistory } from "react-router";
 import axios from "../axios/axios";
 import appContext from "../contexts/appContext";
 import AuthContext from "./authContext";
@@ -14,11 +15,12 @@ import {
   SAVE_TAGS_SUCCESS,
 } from "./types";
 const AuthState = (props) => {
+  const history = useHistory();
   const initialState = {
     // tokenAccess: localStorage.getItem('tokenAccess'),
     // tokenRefresh: localStorage.getItem('tokenRefresh'),
     isAuth: false,
-    isUserChooseTags: true,
+    isUserChooseTags: JSON.parse(localStorage.getItem("favorite_items")),
     loading: true,
     error: null,
     user: JSON.parse(localStorage.getItem("user")),
@@ -28,6 +30,7 @@ const AuthState = (props) => {
       previous: null,
     },
   };
+
   const [state, dispatch] = useReducer(authReducer, initialState);
   const { getAllPlaylists } = useContext(appContext);
   //load user
@@ -40,6 +43,9 @@ const AuthState = (props) => {
       dispatch({
         type: USER_LOADED,
       });
+    }
+    if (!state.isUserChooseTags && state.user !== null) {
+      history.push("/user-interests");
     }
   };
 
@@ -90,7 +96,7 @@ const AuthState = (props) => {
     });
     try {
       const res = await axios.instanceApi.post("/account/login/", form, config);
-      // console.log(res);
+      console.log(res.data);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,

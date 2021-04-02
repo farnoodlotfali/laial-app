@@ -1,8 +1,8 @@
-import { useContext, useEffect } from 'react';
-import authContext from './auth/authContext';
+import { useContext, useEffect } from "react";
+import authContext from "./auth/authContext";
 // eslint-disable-next-line
 // import Navigation from './Navigation';
-import NotFound from './NotFound';
+import NotFound from "./NotFound";
 
 const AboutUs = () => {
   const { user, loadUser } = useContext(authContext);
@@ -15,6 +15,7 @@ const AboutUs = () => {
     <div>
       {/* <Navigation /> */}
       <NotFound />
+      {/* <div className="" style={{ height: "500px" }}></div> */}
     </div>
   );
 };

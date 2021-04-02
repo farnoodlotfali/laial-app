@@ -156,7 +156,7 @@ const Playerstate = (props) => {
         dispatch({
           type: CHANGE_DURATION,
           payload: {
-            currentTime: audioRef.current.currentTime,
+            currentTime: audioRef.current?.currentTime,
           },
         });
       }, 1000);
@@ -179,7 +179,7 @@ const Playerstate = (props) => {
     });
   };
   const setIds = (tId, id, duration, name, singer, photo) => {
-    if (audioRef.current.played) {
+    if (audioRef.current?.played) {
       audioRef.current.pause();
     }
     dispatch({
@@ -510,7 +510,6 @@ const Playerstate = (props) => {
       }}
     >
       {props.children}
-
       <Fragment>
         <div id="audio">
           <audio

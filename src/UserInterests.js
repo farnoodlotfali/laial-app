@@ -12,6 +12,7 @@ const UserInterests = () => {
     tagsUrls,
     saveChosenTags,
     isUserChooseTags,
+    user,
   } = useContext(authContext);
   const [chosenTagsList, setChosenTagsList] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
@@ -23,7 +24,7 @@ const UserInterests = () => {
     page: 2,
   });
   useEffect(() => {
-    if (isUserChooseTags) {
+    if (isUserChooseTags || user === null) {
       history.push("/");
     }
     if (tags === null) {
@@ -36,7 +37,7 @@ const UserInterests = () => {
       hasMore: tagsUrls.next ? true : false,
     });
     // eslint-disable-next-line
-  }, [tags, isUserChooseTags]);
+  }, [tags, isUserChooseTags, user]);
   const infiniteList = async () => {
     try {
       const res = await axios.simpleApi.get(`/tags/?page=${next.page}`);
@@ -88,7 +89,8 @@ const UserInterests = () => {
         <div className="userInterests__info">
           <span>سلام محمد حسین</span>
           <span className="userInterests__info__title">
-            چند موضوع که به آن‌ها علاقه دارید را انتخاب کنید
+            .لطفا یک یا چند موضوع که به آن‌ها علاقه دارید را انتخاب کنید تا وارد
+            سایت شوید
           </span>
           <span className="userInterests__info__desc">
             به کمک این اطلاعات، پست‌هایی که بیشتر دوست دارید به شما پیشنهاد داده
