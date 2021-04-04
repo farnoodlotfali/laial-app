@@ -60,6 +60,9 @@ const Left = () => {
               <div className="info__title mb-2">{songName}</div>
               <div className="info__person mb-4"> {songSinger}</div>
             </div>
+            {/* <div className="playerInfo__close">
+              <CloseRounded />
+            </div> */}
           </div>
           <div className="icons d-flex justify-content-around mt-3 mb-4">
             <div

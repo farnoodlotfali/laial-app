@@ -27,7 +27,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>{homeMeta?.meta_title}</title>
+        <title>{homeMeta?.meta_title} </title>
         <meta name="title" content={homeMeta?.meta_title} />
         <meta name="description" content={homeMeta?.meta_description} />
         <meta property="og:type" content="website" />

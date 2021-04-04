@@ -132,7 +132,7 @@
 
 @media (max-width: 768px) {
   .playlist {
-    min-width: 350px;
+    min-width: 300px;
   }
   .playlist .list input {
     font-size: 12px !important;

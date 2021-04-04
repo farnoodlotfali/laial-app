@@ -7,6 +7,7 @@
   justify-content: center;
 }
 .myprofile__top {
+  display: flex;
   direction: rtl;
   border: 1px solid whitesmoke;
   justify-content: space-between;
@@ -126,6 +127,7 @@
 }
 
 .myprofile__bottom {
+  display: flex;
   direction: rtl;
   margin-top: 30px;
   border: 1px solid whitesmoke;
@@ -320,8 +322,129 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.myprofile__mobile__show,
+.myprofile__mobile__songs {
+  display: none;
+}
 
-@media (max-width: 992px) {
+@media (max-width: 768px) {
+  .myprofile {
+    padding-bottom: 75px;
+    padding-top: 15px;
+  }
+  .userImg,
+  .changeCurrentPass,
+  .userinfo,
+  .myListsBtn,
+  .listShow,
+  .myMadeListsShow {
+    display: none !important;
+  }
+  .myprofile__mobile__songs {
+    display: block;
+  }
+  .myprofile__top {
+    height: 141px;
+  }
+  .myprofile__mobile__show {
+    display: flex;
+    width: 100%;
+    /* justify-content: space-evenly; */
+  }
+  .myprofile__mobile__show__userImg {
+    border-radius: 10px;
+  }
+  .myprofile__mobile__show__userImg img {
+    width: 80px;
+    border-radius: 10px;
+    height: 80px;
+  }
+  .myprofile__mobile__show__changeCurrentPass {
+    margin-top: 10px;
+  }
+  .myprofile__mobile__show__changeCurrentPass button {
+    font-size: 14px;
+  }
+  .myprofile__mobile__show__userinfo {
+    margin-right: 10px;
+  }
+  .myprofile__mobile__show__userinfo__inputbox {
+    display: flex;
+    color: white;
+  }
+  .myprofile__mobile__show__userinfo__inputbox span {
+    margin-right: 3px;
+  }
+  .myprofile__mobile__songs {
+    width: 100%;
+  }
+  .myprofile__mobile__songs__myListsOption {
+    width: 100%;
+    padding: 3px;
+    color: white;
+    border: 1px solid gray;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background: linear-gradient(to right, transparent, gray);
+  }
+  .myprofile__mobile__songs__myListsOption .dropdown {
+    border: none;
+  }
+  .myprofile__mobile__songs__myListsOptionBtn {
+    border: none;
+    background: none;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .myprofile__mobile__songs__myListsOptionBtn:hover,
+  .myprofile__mobile__songs__myListsOptionBtn:focus {
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+  }
+  .myprofile__mobile__songs__myListsOptionBtn::after {
+    display: none;
+  }
+  .myprofile__mobile__songs__mySongs {
+    width: 100%;
+    transform: translate3d(0px, 38px, 0px) !important;
+    background: linear-gradient(to bottom, rgb(34, 35, 39), black);
+    border: 1px solid whitesmoke;
+    height: 117px;
+    overflow-y: scroll;
+  }
+  .myprofile__mobile__songs__mySongs::-webkit-scrollbar {
+    width: 7px;
+  }
+  .myprofile__mobile__songs__mySongs::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+  .myprofile__mobile__songs__mySongs::-webkit-scrollbar-thumb {
+    background: rgba(185, 185, 185, 0.685);
+    border-radius: 10px;
+  }
+  .myprofile__mobile__songs__mySongs::-webkit-scrollbar-thumb:hover {
+    background: rgb(63, 63, 63);
+  }
+  .myprofile__mobile__songs__mySongs a {
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.205);
+  }
+  .songImg {
+    width: 45px;
+    height: 45px;
+  }
+  .songName {
+    font-size: 12px;
+  }
+  .songSinger {
+    font-size: 9px;
+    color: gray;
+  }
+  .songTime {
+    color: gray;
+  }
 }
 /* .myProfile {
   min-height: 100vh;

@@ -8,7 +8,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   /* min-height: 100vh; */
   overflow: visible !important;
-  /* background-color: rgb(18, 18, 18) !important; */
+  background-color: rgb(18, 18, 18) !important;
 }
 body::-webkit-scrollbar {
   display: none;

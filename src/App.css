@@ -6,10 +6,12 @@
 .app {
   /* margin-top: 100px; */
   background-color: rgb(18, 18, 18);
-  font-family: vazir;
   text-align: center;
   /* min-height: 100vh; */
   /* position: relative; */
+}
+* {
+  font-family: vazir;
 }
 
 /*! Flickity v2.1.2

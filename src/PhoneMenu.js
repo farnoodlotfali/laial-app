@@ -21,6 +21,7 @@ const PhoneMenu = () => {
   const {
     showMusicBarOnMoblieRatio,
     setShowMusicBarOnMoblieRatio,
+    currentUrl,
   } = useContext(playerContext);
   const showMusicBar = () => {
     if (showMusicBarOnMoblieRatio) {
@@ -57,7 +58,10 @@ const PhoneMenu = () => {
           <Headset fontSize="large" />
           {/* <span>لیست من</span> */}
         </div>{" "}
-        <div className="phoneMenu__item" onClick={() => showMusicBar()}>
+        <div
+          className="phoneMenu__item"
+          onClick={() => currentUrl !== null && showMusicBar()}
+        >
           <MusicNote fontSize="large" />
           {/* <span>آهنگ</span> */}
         </div>

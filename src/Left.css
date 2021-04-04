@@ -271,7 +271,7 @@
     margin-bottom: 0 !important;
   }
   .closeBtn {
-    display: none !important;
+    /* display: none !important; */
     margin-left: 87%;
   }
   .info__title {

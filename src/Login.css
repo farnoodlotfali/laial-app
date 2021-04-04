@@ -257,6 +257,11 @@
   font-family: vazir;
   color: rgb(177, 196, 14);
 }
+.forgetPass__content__close {
+  color: white;
+  text-align: right;
+  margin-top: -75px;
+}
 @media (max-width: 768px) {
   .login {
     min-height: 92vh;
@@ -278,5 +283,8 @@
   .login .color:nth-child(3) {
     width: 200px;
     height: 200px;
+  }
+  .forgetPass__content {
+    width: 300px;
   }
 }

@@ -7,6 +7,7 @@ import "./Center.css";
 // import md5 from 'md5';
 import AppContext from "./contexts/appContext";
 import CenterItem from "./CenterItem";
+import authContext from "./auth/authContext";
 const Center = () => {
   const {
     showCenter,
@@ -17,6 +18,7 @@ const Center = () => {
     isAddingSong,
     mainPlaylistId,
   } = useContext(AppContext);
+  const { user, isAuth } = useContext(authContext);
 
   useEffect(() => {
     // console.log(1112);
@@ -31,11 +33,14 @@ const Center = () => {
     let key ='list-'+d.getFullYear()+'-' +d.getMonth()+'-' +d.getDay()+'-'+d.getHours()+'-'+d.getMinutes()+'-'+d.getSeconds()+'-'+md5(Date.now());*/
     let i = 0;
     let name = "";
-    do {
-      i++;
-      name = "myList " + i;
-      // eslint-disable-next-line
-    } while (userPlaylists.findIndex((list) => list.name === name) !== -1);
+    if (userPlaylists !== null) {
+      do {
+        i++;
+        name = "myList " + i;
+        // eslint-disable-next-line
+      } while (userPlaylists.findIndex((list) => list.name === name) !== -1);
+    } else name = "myList 0";
+
     // console.log(name);
     let form = [
       {
@@ -84,7 +89,12 @@ const Center = () => {
             </div>
             <div className="my-2 ml-4 playlist__line" />
             <div className="playlist__lists">
-              {userPlaylists !== null &&
+              {user === null && !isAuth ? (
+                <div className="show__login text-center">
+                  برای ساخت لیست، لطفا ثبت نام کنید
+                </div>
+              ) : (
+                userPlaylists !== null &&
                 userPlaylists.map(
                   (list) =>
                     mainPlaylistId !== list.id && (
@@ -95,16 +105,19 @@ const Center = () => {
                         items={list.items}
                       />
                     )
-                )}
+                )
+              )}
             </div>
-            <div className="addBtn d-flex" onClick={addList}>
-              <h5 className=" align-self-center m-0"> ساخت لیست جدید </h5>
-              {/* <Tooltip placement='left' title='لیست جدید'> */}
-              <IconButton aria-label="add">
-                <PostAddRounded fontSize="large" />
-              </IconButton>
-              {/* </Tooltip> */}
-            </div>
+            {user !== null && isAuth && (
+              <div className="addBtn d-flex" onClick={addList}>
+                <h5 className=" align-self-center m-0"> ساخت لیست جدید </h5>
+                {/* <Tooltip placement='left' title='لیست جدید'> */}
+                <IconButton aria-label="add">
+                  <PostAddRounded fontSize="large" />
+                </IconButton>
+                {/* </Tooltip> */}
+              </div>
+            )}
           </div>
         </Slide>
       </Modal>

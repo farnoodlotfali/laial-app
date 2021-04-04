@@ -6,6 +6,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import "./Login.css";
 import appContext from "./contexts/appContext";
+import { CloseRounded } from "@material-ui/icons";
 
 const Login = (props) => {
   let history = useHistory();
@@ -123,6 +124,12 @@ const Login = (props) => {
                   >
                     <Fade in={open}>
                       <div className="forgetPass__content">
+                        <div
+                          className="forgetPass__content__close "
+                          onClick={handleClose}
+                        >
+                          <CloseRounded />
+                        </div>
                         <h2>فراموشی رمز</h2>
                         <p>ایمیل خود را جهت بازیابی رمز وارد کنید</p>
                         <div className="forgetPass__form">
@@ -132,6 +139,7 @@ const Login = (props) => {
                             value={emailForRest}
                             type="email"
                           />
+
                           <button
                             onClick={async () => {
                               const status = await forgetPassword(emailForRest);

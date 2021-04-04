@@ -2,11 +2,12 @@ import "./MyProfile.css";
 import logo from "./assets/defualtPhoto.jpeg";
 import { useContext, useEffect, useState } from "react";
 import authContext from "./auth/authContext";
-import { DeleteRounded } from "@material-ui/icons";
+import { DeleteRounded, ExpandMoreRounded } from "@material-ui/icons";
 import appContext from "./contexts/appContext";
 import { useHistory } from "react-router";
 import { Button, Modal } from "react-bootstrap";
 import SpinnerOnUserPlaylist from "./spinner/SpinnerOnUserPlaylist";
+import { Dropdown } from "react-bootstrap";
 
 const MyProfile = () => {
   const { user, loadUser } = useContext(authContext);
@@ -65,7 +66,42 @@ const MyProfile = () => {
     <div className="myprofile">
       {user && (
         <div>
-          <div className="myprofile__top d-flex">
+          <div className="myprofile__top ">
+            <div className="myprofile__mobile__show">
+              <div className="myprofile__mobile__show__right">
+                <div className="myprofile__mobile__show__userImg ">
+                  <img src={logo} alt="userImg" />
+                </div>
+                <div className="myprofile__mobile__show__changeCurrentPass">
+                  <Button
+                    variant="primary"
+                    onClick={() => setPasswordModal(true)}
+                  >
+                    تغییر رمز
+                  </Button>
+                </div>
+              </div>
+              <div className="myprofile__mobile__show__left">
+                <div className="myprofile__mobile__show__userinfo">
+                  <div className="myprofile__mobile__show__userinfo__inputbox">
+                    <label> نام : </label>
+                    <span> {user.first_name} </span>
+                  </div>
+                  <div className="myprofile__mobile__show__userinfo__inputbox">
+                    <label> نام خانوادگی :</label>
+                    <span>{user.last_name}</span>
+                  </div>
+                  <div className="myprofile__mobile__show__userinfo__inputbox">
+                    <label> ایمیل :</label>
+                    <span>{user.email} </span>
+                  </div>
+                  <div className="myprofile__mobile__show__userinfo__inputbox">
+                    <label> نام کاربری :</label>
+                    <span>{user.username} </span>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className="userImg ">
               <img src={logo} alt="userImg" />
             </div>
@@ -95,9 +131,17 @@ const MyProfile = () => {
               </div>
             </div>
             <div className="changeCurrentPass">
-              <Button variant="primary" onClick={() => setPasswordModal(true)}>
-                تغییر رمز
-              </Button>
+              {/* `<div className="userImg ">
+                <img src={logo} alt="userImg" />
+              </div>` */}
+              <div className="changeCurrentPassBtn">
+                <Button
+                  variant="primary"
+                  onClick={() => setPasswordModal(true)}
+                >
+                  تغییر رمز
+                </Button>
+              </div>
 
               <Modal
                 show={passwordModal}
@@ -185,7 +229,92 @@ const MyProfile = () => {
               </Modal>
             </div>
           </div>
-          <div className="myprofile__bottom d-flex">
+          <div className="myprofile__bottom ">
+            <div className="myprofile__mobile__songs">
+              <div className="myprofile__mobile__songs__options">
+                <div className="myprofile__mobile__songs__myListsOption">
+                  <span>آهنگ های لایک شده</span>
+                </div>
+                <div className="myprofile__mobile__songs__myListsOption">
+                  <span> اخیرا شنیده شده</span>
+                </div>
+                <div
+                  className="myprofile__mobile__songs__myListsOption"
+                  onClick={async () =>
+                    setListShow(await getOnePlayList(mainPlaylistId)) &
+                    setDeleteBtn(false)
+                  }
+                >
+                  <span> آهنگ های منتخب سایت</span>
+                </div>
+                <div className="myprofile__mobile__songs__myListsOption">
+                  <Dropdown>
+                    <Dropdown.Toggle className="myprofile__mobile__songs__myListsOptionBtn">
+                      <div className="myMadeListShow__title__span">
+                        نام لیست : {listname}
+                      </div>
+                      <ExpandMoreRounded />
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu className="myprofile__mobile__songs__mySongs">
+                      {userPlaylists?.map(
+                        (item, i) =>
+                          mainPlaylistId !== item.id && (
+                            <Dropdown.Item
+                              key={i}
+                              onClick={async () =>
+                                setListShow(await getOnePlayList(item.id)) &
+                                setListName(item.name) &
+                                setDeleteBtn(true)
+                              }
+                            >
+                              {item.name}
+                            </Dropdown.Item>
+                          )
+                      )}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+              </div>
+              <div
+                className={`listItemsShow ${
+                  loadingOnUserPlaylist ? "listItemsShow__loading" : ""
+                }`}
+              >
+                {loadingOnUserPlaylist ? (
+                  <SpinnerOnUserPlaylist />
+                ) : listShow === null || listShow.length === 0 ? (
+                  <div className="none  text-light">لیست خالی است</div>
+                ) : (
+                  listShow.map((item) => (
+                    <div className="song d-flex" key={item.id}>
+                      <div className="songImg">
+                        <img src={logo} alt="songlogo" />
+                      </div>
+                      <div className="songInfo">
+                        <span className="songName">
+                          {truncate(item?.fileItem.name, 4)}
+                        </span>
+                        <span className="songSinger">
+                          {item.fileItem?.person?.name}
+                        </span>
+                      </div>
+                      <div className="songTime">
+                        <span>
+                          {Math.floor(item?.fileItem.duration / 60) +
+                            ":" +
+                            zeroPad(
+                              Math.floor(item?.fileItem.duration % 60),
+                              2
+                            )}
+                        </span>
+                        {deleteBtn && <DeleteRounded />}
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
             <div className="myListsBtn">
               {/* <div className='myListsOption'>
             <span> لیست های ساختگی من</span>

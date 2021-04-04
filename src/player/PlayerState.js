@@ -130,6 +130,12 @@ const Playerstate = (props) => {
   const { playList } = state;
 
   const [musicChangeList, setMusicChangeList] = useState([]);
+  useEffect(() => {
+    // جهت آپدیت عکس ایکون
+    const MusicPhotoIcon = document.getElementById("musicPhoto");
+    state.songPhoto !== null && (MusicPhotoIcon.href = state.songPhoto);
+    // console.log(MusicPhotoIcon);
+  }, [state.songPhoto]);
 
   useEffect(() => {
     //   حرکت خواهد کردprogress اگر در حال پخش بود
@@ -141,13 +147,14 @@ const Playerstate = (props) => {
           if (state.repeatOne) {
             repeatSongAgain();
           } else nextMusic();
-        } else if (
-          audioRef?.current?.paused &&
-          state.currentUrl !== null &&
-          !state.loading
-        ) {
-          audioRef?.current?.play();
         }
+        // else if (
+        //   audioRef?.current?.paused &&
+        //   state.currentUrl !== null &&
+        //   !state.loading
+        // ) {
+        //   audioRef?.current?.play();
+        // }
 
         let progress = parseFloat(
           (audioRef?.current?.currentTime * 100) / audioRef?.current?.duration
@@ -164,8 +171,15 @@ const Playerstate = (props) => {
         clearInterval(timer);
       };
     }
+
     // eslint-disable-next-line
-  }, [state.playing, state.loading, state.seek]);
+  }, [
+    state.playing,
+    state.loading,
+    state.seek,
+    state.seek,
+    audioRef?.current?.ended,
+  ]);
 
   const setShowMusicBarOnMoblieRatio = () => {
     dispatch({ type: CHANGE_SHOW_MUSICBAR_ON_MOBILE_RATIO });
@@ -291,7 +305,7 @@ const Playerstate = (props) => {
       audioElement.pause();
       audioElement.load();
 
-      // audioElement.play();
+      audioElement.play();
     }
     dispatch({
       type: PLAY_MUSIC,
@@ -357,26 +371,36 @@ const Playerstate = (props) => {
             which = i + 1;
           }
           let chosen =
-            playList[which] !== undefined ? playList[which] : playList[0];
-          setIds(
-            chosen.media[0]?.telegram_id,
-            chosen.media[0]?.id,
-            chosen.media[0]?.duration,
-            chosen.media[0]?.name,
-            chosen.person?.[0]?.name,
-            chosen?.media?.[0]?.image !== null
-              ? chosen?.media?.[0]?.image
-              : chosen?.person?.[0]?.image.full_image_url
-          );
-          try {
-            const res = await axios.downloader.get(
-              `/${chosen.media[0]?.telegram_id}`
+            playList[which] !== undefined
+              ? playList[which]
+              : state.loop
+              ? playList[0]
+              : -1;
+          if (chosen !== -1) {
+            setIds(
+              chosen.media[0]?.telegram_id,
+              chosen.media[0]?.id,
+              chosen.media[0]?.duration,
+              chosen.media[0]?.name,
+              chosen.person?.[0]?.name,
+              chosen?.media?.[0]?.image !== null
+                ? chosen?.media?.[0]?.image
+                : chosen?.person?.[0]?.image.full_image_url
             );
-            setUrl(res.data.download_link, playList);
+            try {
+              const res = await axios.downloader.get(
+                `/${chosen.media[0]?.telegram_id}`
+              );
+              setUrl(res.data.download_link, playList);
 
-            playMusic();
-          } catch (error) {
-            console.log(error);
+              playMusic();
+            } catch (error) {
+              console.log(error);
+            }
+          } else {
+            dispatch({
+              type: PAUSE_MUSIC,
+            });
           }
         }
       }
@@ -472,7 +496,24 @@ const Playerstate = (props) => {
   const changeNoneOrLoopOrRepeat = () => {
     dispatch({ type: CHANGE_LOOP_STATE });
   };
-
+  const PauseMusicKey = () => {
+    if (audioRef.current.paused) {
+      if (!audioRef.current.ended) {
+        dispatch({
+          type: PAUSE_MUSIC,
+        });
+      }
+    }
+  };
+  const playMusicKey = (audioElement = audioRef.current) => {
+    if (audioElement !== undefined) {
+      if (!state.playing) {
+        dispatch({
+          type: PLAY_MUSIC,
+        });
+      }
+    }
+  };
   return (
     <PlayerContext.Provider
       value={{
@@ -513,9 +554,11 @@ const Playerstate = (props) => {
       <Fragment>
         <div id="audio">
           <audio
+            onPause={PauseMusicKey}
+            onPlay={playMusicKey}
             ref={audioRef}
             className="player"
-            autoPlay={state.playing}
+            // autoPlay={state.playing}
             src={state.currentUrl}
             // src={
             //   'https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3'
