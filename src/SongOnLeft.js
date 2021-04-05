@@ -3,7 +3,7 @@ import { IconButton, Tooltip } from "@material-ui/core";
 import { Delete } from "@material-ui/icons";
 import playerContext from "./player/playerContext";
 import defualtPhoto from "./assets/defualtPhoto.jpeg";
-import s from "./assets/z.gif";
+import barOnPlayingMusic from "./assets/barOnPlayingMusic.gif";
 import axios from "./axios/axios";
 import appContext from "./contexts/appContext";
 // eslint-disable-next-line
@@ -56,7 +56,7 @@ const SongOnLeft = ({ item, playlist, number, zeroPad }) => {
             />
             {item.media[0]?.id === songId ? (
               <img
-                src={s}
+                src={barOnPlayingMusic}
                 alt=""
                 style={{ position: "absolute", left: "0", opacity: "0.4" }}
               />
