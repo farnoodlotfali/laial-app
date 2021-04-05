@@ -27,23 +27,6 @@
   /* max-height: 100%; */
 }
 
-/* .tileBanner__show {
-  border: 1px solid rgba(255, 255, 255, 0.315);
-  min-width: 80px;
-  border-radius: 10px;
-  position: absolute;
-  cursor: pointer;
-  bottom: 10%;
-  left: 10%;
-  color: whitesmoke;
-  background-color: rgba(255, 255, 255, 0.219);
-}
-
-.tileBanner__show:hover {
-  background-color: rgba(0, 0, 0, 0.219);
-  box-shadow: 0 5px 15px rgba(229, 233, 14, 0.205);
-} */
-
 .tileBanner__show {
   position: absolute;
   display: inline-block;

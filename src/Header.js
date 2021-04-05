@@ -14,40 +14,11 @@ const Header = () => {
   const { ChangeshowCenter, ChangeShowLeft, ChangeShowRight } = useContext(
     appContext
   );
-  const {
-    isAuth,
-
-    user,
-    logout,
-  } = useContext(authContext);
-
-  // const [anchorEl, setAnchorEl] = useState(null);
-
-  // const handleClick = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
+  const { isAuth, user, logout } = useContext(authContext);
 
   return (
     <Headroom>
       <nav className="header navbar navbar-expand-sm  py-4 ">
-        {/* <button
-        className='navbar-toggler text-white'
-        type='button'
-        data-toggle='collapse'
-        data-target='#header__nav'
-        aria-controls='header__nav'
-        aria-expanded='false'
-        aria-label='Toggle navigation'
-      >
-        <span className='navbar-toggler-icon'>
-          <MenuIcon />
-        </span>
-      </button> */}
-
         <div
           className="collapse navs__items navbar-collapse  "
           id="header__nav"
@@ -90,7 +61,6 @@ const Header = () => {
               </NavLink> */}
             </div>
             <div className="register__login__btn mr-auto ml-3">
-              {" "}
               {user !== null ? (
                 <Fragment>
                   <div className="dropdown">
@@ -123,14 +93,6 @@ const Header = () => {
                   </div>
                 </Fragment>
               ) : (
-                // <div className='text-light d-flex'>
-                //   {user.first_name}{' '}
-                //   <span className='d-flex  justify-content-center align-self-center'>
-                //     <AccountCircleRounded />
-                //   </span>
-                // </div>
-                // </NavLink>
-                // <span>{user.first_name}</span>
                 <NavLink exact to="/login" className="d-flex text-light">
                   ورود/ثبت نام
                   <span className="d-flex  justify-content-center align-self-center">

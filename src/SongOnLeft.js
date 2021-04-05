@@ -1,21 +1,16 @@
 import { useContext } from "react";
 import { IconButton, Tooltip } from "@material-ui/core";
-import { Delete } from "@material-ui/icons";
+import { Delete, Opacity } from "@material-ui/icons";
 import playerContext from "./player/playerContext";
 import defualtPhoto from "./assets/defualtPhoto.jpeg";
-
+import s from "./assets/z.gif";
 import axios from "./axios/axios";
 import appContext from "./contexts/appContext";
 // eslint-disable-next-line
 const SongOnLeft = ({ item, playlist, number, zeroPad }) => {
-  const {
-    // playing,
-    setUrl,
-    playList,
-    playMusic,
-    setIds,
-    songId,
-  } = useContext(playerContext);
+  const { setUrl, playList, playMusic, setIds, songId } = useContext(
+    playerContext
+  );
   const { ChangeShowMusic, showMusic } = useContext(appContext);
   const paly = async () => {
     setIds(
@@ -60,52 +55,37 @@ const SongOnLeft = ({ item, playlist, number, zeroPad }) => {
               alt=""
             />
             {item.media[0]?.id === songId ? (
-              <div className="overlay">
-                <div className="now playing" id="music">
-                  <span className="bar n1">A</span>
-                  <span className="bar n2">B</span>
-                  <span className="bar n3">G</span>
-                  <span className="bar n4">H</span>
-                </div>
-              </div>
+              <img
+                src={s}
+                alt=""
+                style={{ position: "absolute", left: "0", opacity: "0.4" }}
+              />
             ) : (
+              // <div className="overlay">
+              //   <div className="now playing" id="music">
+              //     <span className="bar n1">A</span>
+              //     <span className="bar n2">B</span>
+              //     <span className="bar n3">G</span>
+              //     <span className="bar n4">H</span>
+              //   </div>
+              // </div>
               ""
             )}
           </div>
           <div className="song__info mr-3 align-self-center ">
             <div className="song__title">{item.media[0].name}</div>
             <div className="song__person ">{item.person[0].name}</div>
-          </div>{" "}
+          </div>
           <div className="song__center d-flex align-self-center"></div>
         </div>
 
         <div className="song__left d-flex">
-          {/* {playing && item.media[0]?.id === songId ? (
-            <div className='playing-container'>
-              <div className='now playing' id='music'>
-                <span className='bar n1'>A</span>
-                <span className='bar n2'>B</span>
-                <span className='bar n3'>G</span>
-                <span className='bar n4'>H</span>
-              </div>
-            </div>
-          ) : (
-            ''
-          )} */}
-
           <div className="song__time align-self-center text-muted">
-            {/* size will be here */}
             {Math.floor(item.media[0].duration / 60) +
               ":" +
               zeroPad(Math.floor(item.media[0].duration % 60), 2)}
           </div>
           <div className="deleteSongBtn d-flex align-self-center ">
-            {/* <Tooltip placement='left' title='Favorite'>
-              <IconButton aria-label='Favorite'>
-                <Favorite className='Favorite' fontSize='inherit' />
-              </IconButton>
-            </Tooltip> */}
-
             <Tooltip placement="right" title="Delete ">
               <IconButton aria-label="delete" color="inherit">
                 <Delete fontSize="inherit" />

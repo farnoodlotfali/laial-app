@@ -9,13 +9,10 @@ import {
   NEXT_MUSIC,
   PREVIOUS_MUSIC,
   SET_CURRENT_URL,
-  SET_LOADING,
   SET_IDS,
   SET_PROGRESS,
-  SEEKING,
   CHANGE_SHOW_MUSICBAR_ON_MOBILE_RATIO,
   CHANGE_SHUFFLE,
-  // CHANGE_LOOP,
   CHANGE_LOOP_STATE,
 } from "./types";
 // eslint-disable-next-line
@@ -51,7 +48,6 @@ export default (state, action) => {
       return {
         ...state,
         duration: action.payload.currentTime,
-        // currentProgress: action.payload.currentProgress,
       };
     case SET_PALYLIST:
       return {
@@ -63,11 +59,7 @@ export default (state, action) => {
         ...state,
         shuffle: !state.shuffle,
       };
-    // case CHANGE_LOOP:
-    //   return {
-    //     ...state,
-    //     loop: !state.loop,
-    //   };
+
     case NEXT_MUSIC:
       return {
         ...state,
@@ -78,30 +70,18 @@ export default (state, action) => {
         ...state,
         currentUrl: action.payload,
       };
-    case SET_LOADING:
-      return {
-        ...state,
-        loading: true,
-        playing: false,
-      };
+
     case SET_CURRENT_URL:
-      // console.log(action.payload);
       return {
         ...state,
         currentUrl: action.payload,
-        // loading: false,
       };
     case SET_PROGRESS:
       return {
         ...state,
         currentProgress: action.payload,
-        // seek: false,
       };
-    case SEEKING:
-      return {
-        ...state,
-        seeking: action.payload,
-      };
+
     case CHANGE_LOOP_STATE:
       switch (state.noneOrLoopOrRepeat) {
         case 0:

@@ -139,37 +139,26 @@ const Playerstate = (props) => {
 
   useEffect(() => {
     //   حرکت خواهد کردprogress اگر در حال پخش بود
-
     if (state.playing && !state.loading) {
       //progress سرعت جلو رفتن
-      const timer = setInterval(() => {
-        if (audioRef?.current && audioRef?.current?.ended && !state.seek) {
-          if (state.repeatOne) {
-            repeatSongAgain();
-          } else nextMusic();
-        }
-        // else if (
-        //   audioRef?.current?.paused &&
-        //   state.currentUrl !== null &&
-        //   !state.loading
-        // ) {
-        //   audioRef?.current?.play();
-        // }
+      // const timer = setInterval(() => {
+      if (audioRef?.current && audioRef?.current?.ended && !state.seek) {
+        if (state.repeatOne) {
+          repeatSongAgain();
+        } else nextMusic();
+      }
+      // else if (
+      //   audioRef?.current?.paused &&
+      //   state.currentUrl !== null &&
+      //   !state.loading
+      // ) {
+      //   audioRef?.current?.play();
+      // }
 
-        let progress = parseFloat(
-          (audioRef?.current?.currentTime * 100) / audioRef?.current?.duration
-        ).toFixed(2);
-        setNewProgress(progress);
-        dispatch({
-          type: CHANGE_DURATION,
-          payload: {
-            currentTime: audioRef.current?.currentTime,
-          },
-        });
-      }, 1000);
-      return () => {
-        clearInterval(timer);
-      };
+      // }, 1000);
+      // return () => {
+      //   clearInterval(timer);
+      // };
     }
 
     // eslint-disable-next-line
@@ -179,6 +168,7 @@ const Playerstate = (props) => {
     state.seek,
     state.seek,
     audioRef?.current?.ended,
+    audioRef.current?.currentTime,
   ]);
 
   const setShowMusicBarOnMoblieRatio = () => {
@@ -483,7 +473,6 @@ const Playerstate = (props) => {
 
   const changeShuffle = () => {
     dispatch({ type: CHANGE_SHUFFLE });
-    // setShuffle(!shuffle);
   };
 
   const repeatSongAgain = (audioElement = audioRef.current) => {
@@ -558,6 +547,20 @@ const Playerstate = (props) => {
             onPlay={playMusicKey}
             ref={audioRef}
             className="player"
+            // playing,
+            onTimeUpdate={() => {
+              let progress = parseFloat(
+                (audioRef?.current?.currentTime * 100) /
+                  audioRef?.current?.duration
+              ).toFixed(2);
+              setNewProgress(progress);
+              dispatch({
+                type: CHANGE_DURATION,
+                payload: {
+                  currentTime: audioRef.current?.currentTime,
+                },
+              });
+            }}
             // autoPlay={state.playing}
             src={state.currentUrl}
             // src={

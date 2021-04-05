@@ -11,14 +11,6 @@
   display: none !important  ;
 }
 
-/* position: fixed; */
-/* z-index: 20000; */
-/* padding-bottom: 8px; */
-/* background: black; */
-/* bottom: 0%; */
-/* left: 0; */
-/* right: 0;*/
-
 .phoneMenu .active a {
   color: rgb(80, 89, 139);
 }
@@ -65,14 +57,7 @@
   text-decoration: none;
   color: rgb(179, 181, 187);
 }
-/* .phoneMenu .phoneMenu__items {
-  background-color: rgb(34, 35, 39) !important;
-} */
-/* .phoneMenu__items .MuiSvgIcon-root,
-.phoneMenu__items span,
-.phoneMenu__items .phoneMenu__item {
-  background-color: rgb(34, 35, 39) !important;
-} */
+
 @media (max-width: 768px) {
   .phoneMenu {
     display: block !important;

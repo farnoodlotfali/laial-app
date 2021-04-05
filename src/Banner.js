@@ -2,7 +2,6 @@
 import "./Banner.css";
 
 // require("flickity-fade");
-import styles from "./styles/Banner.module.css";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, EffectFade, Lazy } from "swiper";
@@ -23,7 +22,7 @@ const Banner = ({ imgs }) => {
   const [state, setstate] = useState(null);
   return (
     <Swiper
-      className={styles.bannerslider}
+      className="bannerslider"
       fadeEffect={{ crossFade: true }}
       loop={true}
       speed={2000}

@@ -78,9 +78,8 @@ const AppState = (props) => {
     getAllPersons();
   }, []);
   const [state, dispatch] = useReducer(appReducer, initialState);
-  // const [showMusic, setShowMusic] = useState(false);
+
   const [showLeft, setShowLeft] = useState(false);
-  // const [showCenter, setShowCenter] = useState(false);
 
   const ChangeShowMusic = () => {
     // setShowMusic(!showMusic);

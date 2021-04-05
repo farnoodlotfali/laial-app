@@ -2,7 +2,6 @@
   padding: 0 !important;
   z-index: 1;
   direction: rtl;
-  /* background-color: #fafafa; */
   background-color: rgb(34, 35, 39);
   box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
 }
@@ -62,7 +61,6 @@
 .user-menu .MuiMenuItem-root {
   direction: rtl;
   font-family: vazir;
-  /* font-weight: 700; */
 }
 .user-menu .MuiMenuItem-root:hover {
   background: rgb(49, 50, 54);
@@ -90,7 +88,6 @@
 .register__login__btn .dropdown-item {
   display: flex;
   font-size: 16px;
-  /* color: red !important; */
   justify-content: space-between;
   padding: 5px 10px 2px 5px;
   color: white;
@@ -106,13 +103,9 @@
   color: white;
   cursor: pointer;
 }
-/* .navbar a:focus {
-  color: rgb(233, 47, 47);
-} */
 @media (max-width: 776px) {
   .header {
     display: none !important;
-    /* margin-top: 280px; */
   }
   .navbar-expand-sm .navbar-nav {
     flex-direction: column;

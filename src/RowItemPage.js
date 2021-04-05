@@ -64,9 +64,7 @@ const RowItemPage = () => {
     loadUser();
     // eslint-disable-next-line
   }, [params.slug, user]);
-  // console.log(dataSongPage);
 
-  // console.log(dataSongPage);
   // نشان دادن موزیک و پخش موزیک
   const playMusicAndShowMusicBar = async () => {
     setIds(
@@ -245,15 +243,6 @@ const RowItemPage = () => {
                         </div>
                       </form>
                     </Modal.Body>
-                    {/* <Modal.Footer>
-                  <div className='inputBox'>
-                    <input type='submit' value='ورود' />
-                  </div>
-
-                  <Button variant='secondary' onClick={() => setShow(false)}>
-                    بستن
-                  </Button>
-                </Modal.Footer> */}
                   </Modal>
                 </div>
 

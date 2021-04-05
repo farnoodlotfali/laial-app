@@ -22,10 +22,7 @@ const PersonItem = ({ id, image, name, slug }) => {
         className="personItem__visit "
         onClick={() => testAuth()}
       >
-        <h4 className="personItem__person text-center my-3">
-          {/* حاج محمد شریفی */}
-          {name}
-        </h4>
+        <h4 className="personItem__person text-center my-3">{name}</h4>
       </Link>
     </div>
   );

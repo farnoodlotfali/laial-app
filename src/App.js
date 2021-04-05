@@ -1,15 +1,10 @@
 import React from "react";
 import "./App.css";
-import {
-  // BrowserRouter as Router,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import "swiper/swiper-bundle.css";
 import "swiper/swiper-bundle.min.css";
 import Header from "./Header";
 import AppState from "./contexts/AppState";
-// eslint-disable-next-line
 import Left from "./Left";
 import Center from "./Center";
 import Home from "./Home";
@@ -30,7 +25,6 @@ import AllPerson from "./AllPerson";
 import MyProfile from "./MyProfile";
 import PasswordReset from "./PasswordReset";
 import UserInterests from "./UserInterests";
-// import "react-lazy-load-image-component/src/effects/blur.css";
 const App = () => {
   return (
     <div className="app ">

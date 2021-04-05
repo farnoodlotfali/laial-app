@@ -11,10 +11,6 @@ import { Helmet } from "react-helmet";
 const Home = () => {
   const { loading, getHome, home, homeMeta } = useContext(appContext);
   const { user, loadUser } = useContext(authContext);
-
-  // let params = useParams();
-  // let his = useHistory();
-  // console.log(params.slug);
   useEffect(() => {
     if (home === null) {
       getHome();
@@ -27,7 +23,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>{homeMeta?.meta_title} </title>
+        <title>{homeMeta?.meta_title}</title>
         <meta name="title" content={homeMeta?.meta_title} />
         <meta name="description" content={homeMeta?.meta_description} />
         <meta property="og:type" content="website" />

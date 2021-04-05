@@ -17,14 +17,10 @@ const CenterItem = ({ name, id, items }) => {
   }, [edit, isAddingSong]);
   const editName = () => {
     setEdit(true);
-    // console.log(22);
-    // console.log(inputRef.current.value);
   };
   const saveEditedName = () => {
     setEdit(false);
     updatePlaylistName(id, inputRef.current.value);
-    // console.log(inputRef.current.value, id);
-    // console.log(inputRef.current.value);
   };
 
   const removeList = () => {
@@ -46,7 +42,6 @@ const CenterItem = ({ name, id, items }) => {
       <div
         className="list d-flex justify-content-between"
         onClick={() => handleClick()}
-        // onClick={() => !isAddingSong && console.log(1)}
       >
         <input
           className={` ${edit ? "list__name_edit" : "list__name_save"}`}
@@ -57,36 +52,21 @@ const CenterItem = ({ name, id, items }) => {
           ref={inputRef}
           maxLength={18}
         />
-        {/* {mainPlaylistId !== id ? ( */}
+
         <div className="list__icons d-flex">
-          {/* <IconButton aria-label='see'>
-            <Visibility className='see' />
-            <Audiotrack className='note' />
-          </IconButton> */}
           {edit ? (
-            // <Tooltip placement='right' title={'ذخیره'}>
             <IconButton aria-label="save" onClick={saveEditedName}>
               <CheckRounded />
             </IconButton>
           ) : (
-            // </Tooltip>
-            // <Tooltip placement='right' title={'تغییر ا سم'}>
             <IconButton aria-label="edit" onClick={editName}>
               <Edit />
             </IconButton>
-            // </Tooltip>
           )}
-          {/* <Tooltip placement='right' title='حذف لیست'> */}
           <IconButton aria-label="remove" onClick={removeList}>
             <Close />
           </IconButton>{" "}
-          {/* </Tooltip> */}
         </div>
-        {/* ) : (
-          <span className="align-self-center ml-2 centerItem__info">
-            لیست ثابت سایت
-          </span>
-        )} */}
       </div>
       <Divider />
     </Fragment>

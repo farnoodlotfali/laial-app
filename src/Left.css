@@ -11,7 +11,6 @@
   box-shadow: 5px 18px 18px 0 rgba(168, 179, 211, 0.38);
   transition: left 500ms ease-in-out;
   direction: ltr;
-  /* left: -100%; */
 }
 
 .bg__gray {
@@ -19,7 +18,6 @@
 }
 
 .playerInfo {
-  /* justify-content: flex-end; */
   direction: rtl;
 }
 
@@ -139,33 +137,25 @@
   direction: rtl;
   overflow-y: scroll;
 }
-.overlay {
-  /* display: none; */
-}
+
 .overlay {
   display: block;
 
   transform: translate(-50%, -50%);
   left: 50%;
   position: absolute;
-  /* top: 0; */
   color: red;
   font-weight: 900;
   top: 50%;
   background: linear-gradient(130deg, #4db94d8e 10%, #1414f341 100%);
   height: 100%;
   width: 100%;
-  /* opacity: 0.4; */
   border-radius: 10px;
 }
 .playing {
   position: relative;
   top: 30%;
   display: block;
-  /* margin-left: 10px; */
-  /*    left: 50%;*/
-  /*    width: auto;*/
-  /*    transform:translateY(-50%);*/
 }
 .now.playing .bar {
   display: inline-block;
@@ -180,6 +170,7 @@
   animation-name: pulse;
   animation-duration: 1s;
   opacity: 0.8;
+  -webkit-animation: pulse linear 0.7 infinite;
   animation-iteration-count: infinite;
 }
 
@@ -188,9 +179,6 @@
   display: grid;
 }
 
-.playing-container {
-  /* margin-left: 10px; */
-}
 .paused.playing .bar {
   animation-iteration-count: 1;
 }
@@ -236,19 +224,15 @@
   width: 10px;
 }
 
-/* Track */
 .songs::-webkit-scrollbar-track {
-  /* box-shadow: inset 0 0 5px rgba(83, 83, 83, 0.021); */
   border-radius: 10px;
 }
 
-/* Handle */
 .songs::-webkit-scrollbar-thumb {
   background: rgba(105, 104, 109, 0.685);
   border-radius: 10px;
 }
 
-/* Handle on hover */
 .songs::-webkit-scrollbar-thumb:hover {
   background: rgb(63, 63, 63);
 }
@@ -264,14 +248,11 @@
   .playerInfo {
     margin-top: 10px;
   }
-  /* .last-time {
-    margin-right: -20px;
-  } */
+
   .info__person {
     margin-bottom: 0 !important;
   }
   .closeBtn {
-    /* display: none !important; */
     margin-left: 87%;
   }
   .info__title {
@@ -290,22 +271,19 @@
     width: 70px;
   }
 
-  .overlay {
+  /* .overlay {
     display: block;
-
     transform: translate(-50%, -50%);
     left: 50%;
     position: absolute;
-    /* top: 0; */
     color: red;
     font-weight: 900;
     top: 50%;
     background: linear-gradient(130deg, #4db94d8e 10%, #1414f341 100%);
     height: 70px;
     width: 70px;
-    /* opacity: 0.4; */
     border-radius: 10px;
-  }
+  } */
 
   .icons {
     margin-bottom: 0 !important;
@@ -319,7 +297,6 @@
   }
 
   .songs::-webkit-scrollbar-track {
-    /* box-shadow: inset 0 0 5px rgba(83, 83, 83, 0.021); */
     border-radius: 5px;
   }
 }
