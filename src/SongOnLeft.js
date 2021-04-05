@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { IconButton, Tooltip } from "@material-ui/core";
-import { Delete, Opacity } from "@material-ui/icons";
+import { Delete } from "@material-ui/icons";
 import playerContext from "./player/playerContext";
 import defualtPhoto from "./assets/defualtPhoto.jpeg";
 import s from "./assets/z.gif";
