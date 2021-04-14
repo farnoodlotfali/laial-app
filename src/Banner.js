@@ -6,6 +6,7 @@ import "./Banner.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, EffectFade, Lazy } from "swiper";
 import { useState } from "react";
+import { Fragment } from "react";
 const Banner = ({ imgs }) => {
   // const flickityOptions = {
   //   contain: true,
@@ -21,35 +22,38 @@ const Banner = ({ imgs }) => {
   // console.log(imgs);
   const [state, setstate] = useState(null);
   return (
-    <Swiper
-      className="bannerslider"
-      fadeEffect={{ crossFade: true }}
-      loop={true}
-      speed={2000}
-      onSwiper={(swiper) => setstate(swiper)}
-      autoplay={{
-        delay: 3000,
-        disableOnInteraction: true,
-      }}
-      lazy={true}
-      effect={"fade"}
-    >
-      {imgs.map((img, i) => (
-        <SwiperSlide
-          key={i}
-          className="swiper-slide"
-          onMouseEnter={() => state.autoplay.stop()}
-          onMouseLeave={() => state.autoplay.start()}
-        >
-          <img
-            className="swiper-lazy"
-            style={{ width: "100%", height: "100%" }}
-            data-src={img.src}
-            alt="bannerImage"
-          />
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <Fragment>
+      <Swiper
+        className="bannerslider"
+        fadeEffect={{ crossFade: true }}
+        loop={true}
+        speed={2000}
+        onSwiper={(swiper) => setstate(swiper)}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: true,
+        }}
+        lazy={true}
+        effect={"fade"}
+      >
+        {imgs.map((img, i) => (
+          <SwiperSlide
+            key={i}
+            className="swiper-slide"
+            onMouseEnter={() => state.autoplay.stop()}
+            onMouseLeave={() => state.autoplay.start()}
+          >
+            <img
+              className="swiper-lazy"
+              style={{ width: "100%", height: "100%" }}
+              data-src={img.src}
+              alt="bannerImage"
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <div className="banner__fadeBottom"></div>
+    </Fragment>
   );
   // console.log(type === 'big');
   // return (

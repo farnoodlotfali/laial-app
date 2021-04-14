@@ -119,12 +119,14 @@ const Playerstate = (props) => {
     audioElement: null,
     volume: 1,
     telegramId: null,
+    postId: null,
     songId: null,
     songPhoto: null,
     songName: "",
     songSinger: "",
     currentProgress: 0,
     showMusicBarOnMoblieRatio: false,
+    canDeleteSong: false,
   };
   const [state, dispatch] = useReducer(playerReducer, initialState);
   const { playList } = state;
@@ -134,7 +136,6 @@ const Playerstate = (props) => {
     // جهت آپدیت عکس ایکون
     const MusicPhotoIcon = document.getElementById("musicPhoto");
     state.songPhoto !== null && (MusicPhotoIcon.href = state.songPhoto);
-    // console.log(MusicPhotoIcon);
   }, [state.songPhoto]);
 
   useEffect(() => {
@@ -146,6 +147,8 @@ const Playerstate = (props) => {
         if (state.repeatOne) {
           repeatSongAgain();
         } else nextMusic();
+      } else if (audioRef?.current?.ended) {
+        dispatch({ type: PAUSE_MUSIC });
       }
       // else if (
       //   audioRef?.current?.paused &&
@@ -182,7 +185,7 @@ const Playerstate = (props) => {
       payload: isNaN(progress) ? 0 : progress,
     });
   };
-  const setIds = (tId, id, duration, name, singer, photo) => {
+  const setIds = (tId, id, duration, name, singer, photo, postId) => {
     if (audioRef.current?.played) {
       audioRef.current.pause();
     }
@@ -195,6 +198,7 @@ const Playerstate = (props) => {
         songName: name,
         songSinger: singer,
         songPhoto: photo,
+        postId: postId,
       },
     });
 
@@ -202,28 +206,28 @@ const Playerstate = (props) => {
     if (isAuth) {
       if (JSON.parse(localStorage.getItem("mainPlaylist")) === null) {
         let mainPlaylist = [];
-        const item = { songId: id, count: 1 };
+        const item = { postId: postId, count: 1 };
         mainPlaylist.push(item);
 
         localStorage.setItem("mainPlaylist", JSON.stringify(mainPlaylist));
       } else {
         let mainPlaylist = JSON.parse(localStorage.getItem("mainPlaylist"));
-        let item = mainPlaylist.find((x) => x.songId === id);
+        let item = mainPlaylist.find((x) => x.postId === postId);
 
         if (item === undefined) {
-          const newItem = { songId: id, count: 1 };
+          const newItem = { postId: postId, count: 1 };
           mainPlaylist.push(newItem);
           localStorage.setItem("mainPlaylist", JSON.stringify(mainPlaylist));
         } else {
           let newMainPlaylist = mainPlaylist.filter((file) => {
-            return file.songId !== id;
+            return file.postId !== postId;
           });
-          let newItem = { songId: id, count: item.count + 1 };
+          let newItem = { postId: postId, count: item.count + 1 };
           newMainPlaylist.push(newItem);
           // console.log(newMainPlaylist);
 
           localStorage.setItem("mainPlaylist", JSON.stringify(newMainPlaylist));
-          addMusicToMAINPlaylist(id);
+          addMusicToMAINPlaylist(postId);
         }
 
         // console.log(item);
@@ -261,11 +265,16 @@ const Playerstate = (props) => {
     setNewProgress(0);
   };
 
-  const setPlayList = (playlist) => {
+  const setPlayList = (playlist, canDeleteSong = false) => {
+    // console.log(playlist[0].post ? "true" : "false");
+
     if (playlist !== state.playList) {
       dispatch({
         type: SET_PALYLIST,
-        payload: playlist,
+        payload: {
+          playList: playlist,
+          canDeleteSong: canDeleteSong,
+        },
       });
     }
   };
@@ -375,7 +384,8 @@ const Playerstate = (props) => {
               chosen.person?.[0]?.name,
               chosen?.media?.[0]?.image !== null
                 ? chosen?.media?.[0]?.image
-                : chosen?.person?.[0]?.image.full_image_url
+                : chosen?.person?.[0]?.image.full_image_url,
+              chosen.id
             );
             try {
               const res = await axios.downloader.get(
@@ -425,7 +435,8 @@ const Playerstate = (props) => {
             chosen.person?.[0]?.name,
             chosen?.media?.[0]?.image !== null
               ? chosen?.media?.[0]?.image
-              : chosen?.person?.[0]?.image.full_image_url
+              : chosen?.person?.[0]?.image.full_image_url,
+            chosen.id
           );
           try {
             const res = await axios.downloader.get(
@@ -526,6 +537,8 @@ const Playerstate = (props) => {
         songPhoto: state.songPhoto,
         loading: state.loading,
         showMusicBarOnMoblieRatio: state.showMusicBarOnMoblieRatio,
+        canDeleteSong: state.canDeleteSong,
+        postId: state.postId,
         setShowMusicBarOnMoblieRatio,
         changeNoneOrLoopOrRepeat,
         changeVolume,
@@ -620,7 +633,7 @@ const Playerstate = (props) => {
                       <PlaylistAddRounded
                         style={{ fontSize: 22 }}
                         onClick={() =>
-                          setWhichSongToSaveInPlaylist(state.songId)
+                          setWhichSongToSaveInPlaylist(state.postId)
                         }
                       />
                     )}
@@ -878,7 +891,7 @@ const Playerstate = (props) => {
                         <PlaylistAddRounded
                           fontSize="large"
                           onClick={() =>
-                            setWhichSongToSaveInPlaylist(state.songId)
+                            setWhichSongToSaveInPlaylist(state.postId)
                           }
                         />
                       )}

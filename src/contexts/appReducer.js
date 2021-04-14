@@ -21,6 +21,7 @@ import {
   SET_LOADING_ON_USER_PLAYLIST,
   REMOVE_LOADING_ON_USER_PLAYLIST,
   CHANGE_SHOW_RIGHT,
+  CHANGE_SHOW_LEFT,
 } from "./types";
 // eslint-disable-next-line
 export default (state, action) => {
@@ -141,6 +142,11 @@ export default (state, action) => {
       return {
         ...state,
         showRight: action.payload,
+      };
+    case CHANGE_SHOW_LEFT:
+      return {
+        ...state,
+        showLeft: action.payload,
       };
     case SET_SONG_ID:
       return {

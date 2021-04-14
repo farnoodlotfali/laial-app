@@ -5,9 +5,9 @@ import authContext from "./auth/authContext";
 import NotFound from "./NotFound";
 
 const AboutUs = () => {
-  const { user, loadUser } = useContext(authContext);
+  const { user } = useContext(authContext);
   useEffect(() => {
-    loadUser();
+    // loadUser();
     // eslint-disable-next-line
   }, [user]);
   // console.log(slug);

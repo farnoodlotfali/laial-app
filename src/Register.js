@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import authContext from "./auth/authContext";
 import "./Register.css";
 const Register = (props) => {
-  const { loadUser, user, register, error } = useContext(authContext);
+  const { user, register, error } = useContext(authContext);
   const [userInfo, setUserInfo] = useState({
     username: "",
     email: "",
@@ -12,7 +12,7 @@ const Register = (props) => {
     last_name: "",
   });
   useEffect(() => {
-    loadUser();
+    // loadUser();
 
     if (user !== null) {
       props.history.push("/user-interests");

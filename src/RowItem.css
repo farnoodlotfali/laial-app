@@ -246,6 +246,7 @@
     width: 31.5%;
     min-width: 106px;
   }
+  .play__music___spinner,
   .play__music {
     display: none !important;
   }
@@ -287,5 +288,9 @@
 
   .rowItem__playing {
     display: block;
+    position: relative;
+    bottom: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }

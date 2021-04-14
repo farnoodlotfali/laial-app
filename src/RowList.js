@@ -28,7 +28,7 @@ const RowList = ({ id, title, slug = "", data }) => {
       >
         <Link
           to={`/list/${slug}`}
-          className=" text-light moreSong  d-flex   ml-3"
+          className=" text-light rowList__moreSong  d-flex   ml-3"
         >
           <div className=" text-light title mr-3">{title}</div>
         </Link>
@@ -36,7 +36,7 @@ const RowList = ({ id, title, slug = "", data }) => {
           {pageinate === true ? (
             <Link
               to={`/list/${slug}`}
-              className=" text-light moreSong mr-5 d-flex   ml-3"
+              className=" text-light rowList__moreSong mr-5 d-flex   ml-3"
             >
               <span className="rowList__showMore">نمایش همه </span>
               <ChevronLeftRounded className="align-self-center rowList__showMore__icon" />
@@ -48,11 +48,12 @@ const RowList = ({ id, title, slug = "", data }) => {
       </div>
 
       <Flickity className="carousel col px-2 py-0" options={flickityOptions}>
-        {context.map((item, i) => {
+        {context.map((item) => {
           // console.log(item);
           return (
             <RowItem
               key={item.id}
+              postId={item.id}
               isRow={true}
               logo={item.image}
               media={item.media[0]}

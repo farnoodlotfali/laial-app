@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from "react";
+import React, { useContext, useEffect, useReducer } from "react";
 import { useHistory } from "react-router";
 import axios from "../axios/axios";
 import appContext from "../contexts/appContext";
@@ -33,11 +33,13 @@ const AuthState = (props) => {
 
   const [state, dispatch] = useReducer(authReducer, initialState);
   const { getAllPlaylists } = useContext(appContext);
+  useEffect(() => {
+    loadUser();
+    // eslint-disable-next-line
+  }, [state.user]);
   //load user
   const loadUser = async () => {
-    // console.log(localStorage.tokenAccess);
     if (localStorage.tokenAccess) {
-      // axios.instance.defaults.headers.common['auth-token'] = state.tokenAccess;
       getAllPlaylists();
 
       dispatch({
@@ -161,7 +163,7 @@ const AuthState = (props) => {
         formData,
         config
       );
-      console.log(res.status);
+      // console.log(res.status);
       dispatch({
         type: SAVE_TAGS_SUCCESS,
       });

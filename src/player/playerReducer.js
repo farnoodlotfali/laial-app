@@ -52,7 +52,8 @@ export default (state, action) => {
     case SET_PALYLIST:
       return {
         ...state,
-        playList: action.payload,
+        playList: action.payload.playList,
+        canDeleteSong: action.payload.canDeleteSong,
       };
     case CHANGE_SHUFFLE:
       return {
@@ -123,6 +124,7 @@ export default (state, action) => {
         songSinger: action.payload.songSinger,
         songName: action.payload.songName,
         songPhoto: action.payload.songPhoto,
+        postId: action.payload.postId,
       };
 
     default:

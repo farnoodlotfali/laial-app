@@ -14,3 +14,9 @@
   min-height: 100vh;
   justify-content: center;
 }
+
+@media (max-width: 768px) {
+  .moreSong {
+    padding-bottom: 110px;
+  }
+}

@@ -1,5 +1,5 @@
 import "./MyProfile.css";
-import logo from "./assets/defualtPhoto.jpeg";
+import defualtPhoto from "./assets/defualtPhoto.jpeg";
 import { useContext, useEffect, useState } from "react";
 import authContext from "./auth/authContext";
 import { DeleteRounded, ExpandMoreRounded } from "@material-ui/icons";
@@ -10,15 +10,16 @@ import SpinnerOnUserPlaylist from "./spinner/SpinnerOnUserPlaylist";
 import { Dropdown } from "react-bootstrap";
 
 const MyProfile = () => {
-  const { user, loadUser } = useContext(authContext);
+  const { user } = useContext(authContext);
   const [listShow, setListShow] = useState(null);
   const [deleteBtn, setDeleteBtn] = useState(false);
   const hisotry = useHistory();
   useEffect(() => {
-    loadUser();
+    // loadUser();
     if (user === null) {
       hisotry.push("/");
     }
+    // console.log(listShow);
     // eslint-disable-next-line
   }, [user, listShow]);
   const {
@@ -28,6 +29,7 @@ const MyProfile = () => {
     getOnePlayList,
     changeCurrentPassword,
     loadingOnUserPlaylist,
+    removeSongFromPlaylist,
   } = useContext(appContext);
   const [passwordMsg, setPasswordMsg] = useState("");
 
@@ -67,10 +69,11 @@ const MyProfile = () => {
       {user && (
         <div>
           <div className="myprofile__top ">
+            {/* mobile ratio */}
             <div className="myprofile__mobile__show">
               <div className="myprofile__mobile__show__right">
                 <div className="myprofile__mobile__show__userImg ">
-                  <img src={logo} alt="userImg" />
+                  <img src={defualtPhoto} alt="userImg" />
                 </div>
                 <div className="myprofile__mobile__show__changeCurrentPass">
                   <Button
@@ -102,38 +105,29 @@ const MyProfile = () => {
                 </div>
               </div>
             </div>
+            {/* web ratio */}
             <div className="userImg ">
-              <img src={logo} alt="userImg" />
+              <img src={defualtPhoto} alt="userImg" />
             </div>
             <div className="userinfo d-flex">
               <div className="userinfo__inputbox">
                 <label> نام </label>
-                {/* <input value={user.first_name} type='text' disabled /> */}
                 <span>{user.first_name} </span>
               </div>
               <div className="userinfo__inputbox">
                 <label> نام خانوادگی</label>
                 <span>{user.last_name}</span>
-
-                {/* <input value={user.last_name} type="text" disabled /> */}
               </div>
               <div className="userinfo__inputbox">
                 <label> ایمیل</label>
                 <span>{user.email} </span>
-
-                {/* <input value={user.email} type="email" disabled /> */}
               </div>
               <div className="userinfo__inputbox">
                 <label> نام کاربری</label>
                 <span>{user.username} </span>
-
-                {/* <input value={user.username} type="text" disabled /> */}
               </div>
             </div>
             <div className="changeCurrentPass">
-              {/* `<div className="userImg ">
-                <img src={logo} alt="userImg" />
-              </div>` */}
               <div className="changeCurrentPassBtn">
                 <Button
                   variant="primary"
@@ -161,16 +155,6 @@ const MyProfile = () => {
                   </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modalBodyPass">
-                  {/* <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      if (changePassword1 !== changePassword2) {
-                        passNotSame();
-                      } else {
-                        changeCurrentPassword(currentPassword, changePassword1);
-                      }
-                    }}
-                  > */}
                   <input
                     onChange={onchange}
                     name="currentPassword"
@@ -230,6 +214,7 @@ const MyProfile = () => {
             </div>
           </div>
           <div className="myprofile__bottom ">
+            {/* mobile ratio */}
             <div className="myprofile__mobile__songs">
               <div className="myprofile__mobile__songs__options">
                 <div className="myprofile__mobile__songs__myListsOption">
@@ -265,6 +250,7 @@ const MyProfile = () => {
                               onClick={async () =>
                                 setListShow(await getOnePlayList(item.id)) &
                                 setListName(item.name) &
+                                // console.log(listShow) &
                                 setDeleteBtn(true)
                               }
                             >
@@ -286,35 +272,62 @@ const MyProfile = () => {
                 ) : listShow === null || listShow.length === 0 ? (
                   <div className="none  text-light">لیست خالی است</div>
                 ) : (
-                  listShow.map((item) => (
-                    <div className="song d-flex" key={item.id}>
-                      <div className="songImg">
-                        <img src={logo} alt="songlogo" />
-                      </div>
-                      <div className="songInfo">
-                        <span className="songName">
-                          {truncate(item?.fileItem.name, 4)}
-                        </span>
-                        <span className="songSinger">
-                          {item.fileItem?.person?.name}
-                        </span>
-                      </div>
-                      <div className="songTime">
-                        <span>
-                          {Math.floor(item?.fileItem.duration / 60) +
-                            ":" +
-                            zeroPad(
-                              Math.floor(item?.fileItem.duration % 60),
-                              2
-                            )}
-                        </span>
-                        {deleteBtn && <DeleteRounded />}
-                      </div>
-                    </div>
-                  ))
+                  listShow.map(
+                    (item) => console.log(item?.post)
+                    // <div className="song d-flex" key={item?.id}>
+                    //   <div className="songImg">
+                    //     <img
+                    //       src={
+                    //         item?.post?.media?.[0]?.image !== null &&
+                    //         item?.post?.media?.[0]?.image !== undefined
+                    //           ? item?.post?.media?.[0]?.image
+                    //           : item?.post?.person?.[0]?.image
+                    //               .full_image_url !== null
+                    //           ? item?.post?.person?.[0]?.image.full_image_url
+                    //           : defualtPhoto
+                    //       }
+                    //       alt="songlogo"
+                    //     />
+                    //   </div>
+                    //   <div className="songInfo">
+                    //     <span className="songName">
+                    //       {truncate(item?.post?.media?.[0]?.name, 4)}
+                    //     </span>
+                    //     <span className="songSinger">
+                    //       {item?.post?.person?.[0]?.name}
+                    //     </span>
+                    //   </div>
+                    //   <div className="songTime">
+                    //     <span>
+                    //       {item?.post?.media?.[0]?.duration &&
+                    //         Math.floor(item?.post?.media?.[0]?.duration / 60) +
+                    //           ":" +
+                    //           zeroPad(
+                    //             Math.floor(
+                    //               item?.post?.media?.[0]?.duration % 60
+                    //             ),
+                    //             2
+                    //           )}
+                    //     </span>
+                    //     {deleteBtn && (
+                    //       <div
+                    //         className="listItemsShow__delete"
+                    //         onClick={() =>
+                    //           removeSongFromPlaylist(
+                    //             item?.post?.PostIdForDeleteFromUserPlaylist
+                    //           )
+                    //         }
+                    //       >
+                    //         <DeleteRounded />
+                    //       </div>
+                    //     )}
+                    //   </div>
+                    // </div>
+                  )
                 )}
               </div>
             </div>
+            {/* web ratio */}
             <div className="myListsBtn">
               {/* <div className='myListsOption'>
             <span> لیست های ساختگی من</span>
@@ -341,7 +354,6 @@ const MyProfile = () => {
                   <span className="align-self-center myMadeListShow__title__span">
                     نام لیست : {listname}
                   </span>
-                  {/* <span className='showListBtn'>نمایش لیست</span> */}
                   <span className="playListBtn">پخش</span>
                 </div>
                 <div className="myMadeListsShow__lists py-3">
@@ -374,28 +386,53 @@ const MyProfile = () => {
                   <div className="none  text-light">لیست خالی است</div>
                 ) : (
                   listShow.map((item) => (
-                    <div className="song d-flex" key={item.id}>
+                    <div className="song d-flex" key={item?.id}>
                       <div className="songImg">
-                        <img src={logo} alt="songlogo" />
+                        <img
+                          src={
+                            item?.post?.media?.[0]?.image !== null &&
+                            item?.post?.media?.[0]?.image !== undefined
+                              ? item?.post?.media?.[0]?.image
+                              : item?.post?.person?.[0]?.image
+                                  .full_image_url !== null
+                              ? item?.post?.person?.[0]?.image.full_image_url
+                              : defualtPhoto
+                          }
+                          alt="songlogo"
+                        />
                       </div>
                       <div className="songInfo">
                         <span className="songName">
-                          {truncate(item?.fileItem.name, 4)}
+                          {truncate(item?.post?.media?.[0]?.name, 4)}
                         </span>
                         <span className="songSinger">
-                          {item.fileItem?.person?.name}
+                          {item?.post?.person?.[0]?.name}
                         </span>
                       </div>
                       <div className="songTime">
                         <span>
-                          {Math.floor(item?.fileItem.duration / 60) +
-                            ":" +
-                            zeroPad(
-                              Math.floor(item?.fileItem.duration % 60),
-                              2
-                            )}
+                          {item?.post?.media?.[0]?.duration &&
+                            Math.floor(item?.post?.media?.[0]?.duration / 60) +
+                              ":" +
+                              zeroPad(
+                                Math.floor(
+                                  item?.post?.media?.[0]?.duration % 60
+                                ),
+                                2
+                              )}
                         </span>
-                        {deleteBtn && <DeleteRounded />}
+                        {deleteBtn && (
+                          <div
+                            className="listItemsShow__delete"
+                            onClick={() =>
+                              removeSongFromPlaylist(
+                                item?.post?.PostIdForDeleteFromUserPlaylist
+                              )
+                            }
+                          >
+                            <DeleteRounded />
+                          </div>
+                        )}
                       </div>
                     </div>
                   ))

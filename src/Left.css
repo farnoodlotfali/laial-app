@@ -18,6 +18,7 @@
 }
 
 .playerInfo {
+  margin-top: 20px;
   direction: rtl;
 }
 
@@ -70,17 +71,19 @@
 }
 
 .closeBtn {
-  margin-left: 90%;
+  /* margin-left: 90%;
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 20px; */
 }
 .closeBtn:hover {
   color: #6c7480;
   cursor: pointer;
 }
 
-.song {
+.songOnLeft__song {
   direction: rtl;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.089);
+  padding-bottom: 5px;
 }
 
 .song__image {
@@ -236,10 +239,26 @@
 .songs::-webkit-scrollbar-thumb:hover {
   background: rgb(63, 63, 63);
 }
+.songOnLeft {
+  padding: 7px 0px;
+}
+.playList__songs__empty {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
 
 @media (max-width: 768px) {
   .playList {
     width: 100%;
+  }
+  .padding__showMusic__110 {
+    padding-bottom: 110px;
+  }
+  .padding__showMusic__50 {
+    padding-bottom: 50px;
   }
   .playlist__musicBar {
     font-size: 10px;
@@ -253,7 +272,7 @@
     margin-bottom: 0 !important;
   }
   .closeBtn {
-    margin-left: 87%;
+    /* margin-left: 87%; */
   }
   .info__title {
     font-size: 17px;

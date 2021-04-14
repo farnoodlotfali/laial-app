@@ -2,13 +2,19 @@ import { Fragment, useContext, useEffect, useRef, useState } from "react";
 import { Divider, IconButton } from "@material-ui/core";
 import { CheckRounded, Close, Edit } from "@material-ui/icons";
 import appContext from "./contexts/appContext";
+import playerContext from "./player/playerContext";
 const CenterItem = ({ name, id, items }) => {
   const {
     isAddingSong,
     addMusicToPlaylist,
     updatePlaylistName,
     removePlaylist,
+    getOnePlayList,
+    ChangeShowLeft,
+    ChangeshowCenter,
+    showCenter,
   } = useContext(appContext);
+  const { setPlayList } = useContext(playerContext);
   const [edit, setEdit] = useState(false);
   const [listName, setListName] = useState(name);
   const inputRef = useRef();
@@ -32,10 +38,15 @@ const CenterItem = ({ name, id, items }) => {
   const onChange = (e) => {
     setListName(inputRef.current.value);
   };
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     if (isAddingSong) {
       addMusicToPlaylist(id);
-    } else console.log(items);
+    } else {
+      // console.log(await getOnePlayList(items));
+      setPlayList(await getOnePlayList(id), true);
+      ChangeshowCenter(showCenter ? false : true);
+      ChangeShowLeft(true);
+    }
   };
   return (
     <Fragment>

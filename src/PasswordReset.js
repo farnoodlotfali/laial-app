@@ -15,7 +15,7 @@ const PasswordReset = () => {
   const { validateTokenForgetPassword, confrimRestPassword } = useContext(
     appContext
   );
-  const { user, loadUser } = useContext(authContext);
+  const { user } = useContext(authContext);
   const [errorMsg, setErrorMsg] = useState("");
   const [password, setPassword] = useState({
     password1: "",
@@ -36,7 +36,7 @@ const PasswordReset = () => {
     }, 5000);
   };
   useEffect(() => {
-    loadUser();
+    // loadUser();
     if (user !== null) {
       // props.history.back();
       history.push("/");

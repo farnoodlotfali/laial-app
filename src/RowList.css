@@ -16,7 +16,7 @@
   padding-bottom: 10px;
 }
 
-.rowList__title .moreSong {
+.rowList__title .rowList__moreSong {
   font-size: 18px;
   text-decoration: none;
   cursor: pointer;
@@ -95,7 +95,7 @@
     height: 190.8px !important;
   }
 
-  .rowList__title .moreSong {
+  .rowList__title .rowList__moreSong {
     font-size: 13px;
   }
   .rowList__showMore__icon {

@@ -13,3 +13,8 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+@media (max-width: 768px) {
+  .allPerson {
+    padding-bottom: 110px;
+  }
+}

@@ -72,6 +72,7 @@ export default (state, action) => {
         },
       };
     case SAVE_TAGS_SUCCESS:
+      localStorage.setItem("favorite_items", true);
       return {
         ...state,
         isUserChooseTags: true,

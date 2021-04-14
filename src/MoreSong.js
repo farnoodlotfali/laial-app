@@ -58,7 +58,7 @@ const MoreSong = () => {
     });
     setTimeout(async () => {
       try {
-        const res = await axios.instanceApi.get(
+        const res = await axios.simpleApi.get(
           `/block/${params.slug}/?page=${next.page}`
         );
         // console.log(res.data.results);
@@ -80,7 +80,7 @@ const MoreSong = () => {
   return loading ? (
     <Spinner />
   ) : (
-    <div className="moreSong pb-3 pt-5">
+    <div className="moreSong pt-5">
       <div className="moreSong__title text-light">
         <h3> {BlockListName}</h3>
       </div>
@@ -116,7 +116,7 @@ const MoreSong = () => {
           // ref={loadingRef}
           style={{
             opacity: next.loading ? "1" : "0",
-            transform: next.loading && "translate(-50%, 0px)",
+            transform: next.loading && "translate(-50%, -150%)",
           }}
         >
           <LoadingIcon color="#fff" />

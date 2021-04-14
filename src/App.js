@@ -25,6 +25,7 @@ import AllPerson from "./AllPerson";
 import MyProfile from "./MyProfile";
 import PasswordReset from "./PasswordReset";
 import UserInterests from "./UserInterests";
+import NotFound from "./NotFound";
 const App = () => {
   return (
     <div className="app ">
@@ -70,8 +71,9 @@ const App = () => {
                   component={AllPerson}
                 />
                 <Route exact path="/password_reset" component={PasswordReset} />
+                <Route exact path="/not_found" component={NotFound} />
                 <Route exact path="/:slug" component={Home} />
-                <Route exact path="/**" component={AboutUs} />
+                <Route exact path="/**" component={NotFound} />
               </Switch>
 
               <PhoneMenu />

@@ -1,13 +1,13 @@
-import { useState, useContext } from 'react';
-import './Search.css';
-import searchContext from './searchContext';
-import { useEffect } from 'react';
-import authContext from '../auth/authContext';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import axios from '../axios/axios';
-import RowItem from '../RowItem';
-import PersonItem from '../PersonItem';
-import LoadingIcon from '../spinner/LoadingIcon';
+import { useState, useContext } from "react";
+import "./Search.css";
+import searchContext from "./searchContext";
+import { useEffect } from "react";
+import authContext from "../auth/authContext";
+import InfiniteScroll from "react-infinite-scroll-component";
+import axios from "../axios/axios";
+import RowItem from "../RowItem";
+import PersonItem from "../PersonItem";
+import LoadingIcon from "../spinner/LoadingIcon";
 
 const Search = () => {
   const {
@@ -18,21 +18,19 @@ const Search = () => {
     nextSearchPageUrl,
     searchValueInput,
   } = useContext(searchContext);
-  const { user, loadUser } = useContext(authContext);
+  const { user } = useContext(authContext);
   const [next, setNext] = useState({
-    next: '',
+    next: "",
     listResults: null,
     listPersons: null,
     hasMore: false,
     page: 2,
-    loaderMsg: '',
+    loaderMsg: "",
     loading: false,
   });
   // eslint-disable-next-line
   const [searchValue, setSearchValue] = useState(searchValueInput);
   useEffect(() => {
-    loadUser();
-
     if (
       personsSearch !== next.listPersons &&
       resultsSearch !== next.listResults
@@ -47,9 +45,9 @@ const Search = () => {
         loaderMsg:
           nextSearchPageUrl === null
             ? next.listResults === null
-              ? ''
-              : 'Finish :)'
-            : 'Loading...',
+              ? ""
+              : "Finish :)"
+            : "Loading...",
       });
     }
     // eslint-disable-next-line
@@ -72,13 +70,13 @@ const Search = () => {
   const onSubmitHandle = (e) => {
     setNext({
       ...next,
-      next: '',
+      next: "",
       listResults: null,
       listPersons: null,
       hasMore: false,
       loading: true,
       page: 2,
-      loaderMsg: '',
+      loaderMsg: "",
     });
     e.preventDefault();
     search(searchValue);
@@ -92,7 +90,7 @@ const Search = () => {
     });
     setTimeout(async () => {
       try {
-        const res = await axios.instanceApi.get(
+        const res = await axios.simpleApi.get(
           `/search/?page=${next.page}&q=${searchValue}`
         );
         // console.log(res.data);
@@ -103,7 +101,7 @@ const Search = () => {
           listResults: next.listResults.concat(res.data.results),
           listPersons: next.listPersons,
           page: ++next.page,
-          loaderMsg: res.data.next ? 'Loading...' : 'Finish :)',
+          loaderMsg: res.data.next ? "Loading..." : "Finish :)",
           loading: false,
         });
         // console.log(next.page);
@@ -115,41 +113,41 @@ const Search = () => {
 
   return (
     <div
-      className='search '
+      className="search "
       style={{
         height:
           next.listResults === null || next.listResults.length === 0
-            ? '100vh'
-            : '',
+            ? "100vh"
+            : "",
       }}
     >
       {/* <Navigation /> */}
-      <div className='search__title mr-5 pt-2'>
+      <div className="search__title mr-5 pt-2">
         <h1>جستجو</h1>
       </div>
 
-      <div className=' searchFields__option my-3 py-3 '>
+      <div className=" searchFields__option my-3 py-3 ">
         <form onSubmit={(e) => onSubmitHandle(e)}>
           <input
-            className='ml-2'
+            className="ml-2"
             onChange={onchange}
-            name='searchValue'
-            type='text'
+            name="searchValue"
+            type="text"
             value={searchValue}
-            placeholder='متن جستجو ....'
+            placeholder="متن جستجو ...."
             required
           />
 
           <input
-            type='submit'
-            value='جستجو'
+            type="submit"
+            value="جستجو"
             // value='Register'
           />
         </form>
       </div>
-      <div className='listPersons'>
+      <div className="listPersons">
         {next?.listPersons && (
-          <h2 className='text-white my-5'>نتایج براساس افراد</h2>
+          <h2 className="text-white my-5">نتایج براساس افراد</h2>
         )}
         {next?.listPersons && (
           <InfiniteScroll
@@ -172,9 +170,9 @@ const Search = () => {
           </InfiniteScroll>
         )}
       </div>
-      <div className='listResults'>
+      <div className="listResults">
         {next?.listResults && (
-          <h2 className='text-white my-5'>نتایج براساس آهنگ</h2>
+          <h2 className="text-white my-5">نتایج براساس آهنگ</h2>
         )}
         {next?.listResults && (
           <InfiniteScroll
@@ -199,14 +197,14 @@ const Search = () => {
       </div>
 
       <div
-        className='loading-message'
+        className="loading-message"
         // ref={loadingRef}
         style={{
-          opacity: next.loading ? '1' : '0',
-          transform: next.loading && 'translate(-50%, 0px)',
+          opacity: next.loading ? "1" : "0",
+          transform: next.loading && "translate(-50%, -150%)",
         }}
       >
-        <LoadingIcon color='#fff' />
+        <LoadingIcon color="#fff" />
         <span>در حال دریافت</span>
       </div>
       {/* <h4 className='text-white mb-5 mt-3'>{next.loaderMsg}</h4> */}

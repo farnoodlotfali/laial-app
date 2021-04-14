@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer } from "react";
 import axios from "../axios/axios";
 import AppContext from "./appContext";
 import appReducer from "./appReducer";
@@ -25,6 +25,7 @@ import {
   SET_LOADING_ON_USER_PLAYLIST,
   REMOVE_LOADING_ON_USER_PLAYLIST,
   CHANGE_SHOW_RIGHT,
+  CHANGE_SHOW_LEFT,
 } from "./types";
 const AppState = (props) => {
   const initialState = {
@@ -41,6 +42,7 @@ const AppState = (props) => {
     showCenter: true,
     showMusic: false,
     showRight: false,
+    showLeft: false,
     isAddingSong: false,
     loadingOnUserPlaylist: false,
     whichSongToSaveInPlaylist: null,
@@ -79,8 +81,6 @@ const AppState = (props) => {
   }, []);
   const [state, dispatch] = useReducer(appReducer, initialState);
 
-  const [showLeft, setShowLeft] = useState(false);
-
   const ChangeShowMusic = () => {
     // setShowMusic(!showMusic);
 
@@ -98,10 +98,14 @@ const AppState = (props) => {
   };
 
   const ChangeShowLeft = (newShowleft) => {
-    setShowLeft(newShowleft);
+    dispatch({
+      type: CHANGE_SHOW_LEFT,
+      payload: newShowleft,
+    });
+    // setShowLeft(newShowleft);
   };
   const ChangeshowCenter = () => {
-    if (showLeft) {
+    if (state.showLeft) {
       ChangeShowLeft();
     }
     dispatch({
@@ -315,7 +319,7 @@ const AppState = (props) => {
 
     try {
       const res = await axios.instanceApi.get("/account/playlist/", config);
-      // console.log(res.data);
+      console.log(res);
       findMainPlaylist(res.data);
       dispatch({
         type: GET_PLAYLISTS,
@@ -423,12 +427,13 @@ const AppState = (props) => {
         Authorization: "Bearer " + localStorage.getItem("tokenAccess"),
       },
     };
+    console.log(form);
     const formdate = {
       id: form,
       status: "delete",
     };
     try {
-      const res = await axios.instanceApi.patch(
+      const res = await axios.simpleApi.patch(
         "/account/playlist/item/",
         formdate,
         config
@@ -452,9 +457,10 @@ const AppState = (props) => {
     };
     const formData = {
       playlist: form,
-      fileItem: state.whichSongToSaveInPlaylist,
+      post: state.whichSongToSaveInPlaylist,
     };
-    console.log(formData);
+    // console.log(state.whichSongToSaveInPlaylist);
+    // console.log(formData);
 
     try {
       const res = await axios.instanceApi.post(
@@ -491,7 +497,7 @@ const AppState = (props) => {
     });
   };
 
-  const addMusicToMAINPlaylist = async (songId) => {
+  const addMusicToMAINPlaylist = async (postId) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -501,7 +507,7 @@ const AppState = (props) => {
 
     const formData = {
       playlist: state.mainPlaylistId,
-      fileItem: songId,
+      post: postId,
     };
 
     // console.log(formData);
@@ -513,7 +519,7 @@ const AppState = (props) => {
         formData,
         config
       );
-      // console.log(res.data);
+      console.log(res.data);
       getAllPlaylists();
 
       // ChangeshowCenter();
@@ -561,9 +567,12 @@ const AppState = (props) => {
         `/account/playlist/?playlist=${id}`,
         config
       );
-      // console.log(res.data?.[0]?.items);
       dispatch({
         type: REMOVE_LOADING_ON_USER_PLAYLIST,
+      });
+      res.data?.[0]?.items.map((item) => {
+        // for put PostIdForDeleteFromUserPlaylist for deleteing
+        item.post.PostIdForDeleteFromUserPlaylist = item.id;
       });
       return res.data?.[0]?.items;
     } catch (error) {
@@ -676,7 +685,6 @@ const AppState = (props) => {
       value={{
         ChangeShowMusic,
         ChangeShowLeft,
-        showLeft,
         ChangeshowCenter,
         ChangeShowRight,
         getHome,
@@ -710,6 +718,7 @@ const AppState = (props) => {
         showCenter: state.showCenter,
         showMusic: state.showMusic,
         showRight: state.showRight,
+        showLeft: state.showLeft,
         blockSlug: state.blockSlug,
         dataSongPage: state.dataSongPage,
         tagsUrls: state.tagsUrls,

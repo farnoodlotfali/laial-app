@@ -9,7 +9,7 @@ import {
   SkipNextRounded,
   SkipPreviousRounded,
 } from "@material-ui/icons";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import AppContext from "./contexts/appContext";
 import defualtPhoto from "./assets/defualtPhoto.jpeg";
 import "./Left.css";
@@ -17,10 +17,9 @@ import playerContext from "./player/playerContext";
 import SongOnLeft from "./SongOnLeft";
 
 const Left = () => {
-  const { showLeft, ChangeShowLeft } = useContext(AppContext);
+  const { showLeft, ChangeShowLeft, showMusic } = useContext(AppContext);
   const {
     playList,
-    // progress,
     currentProgress,
     handleChange,
     previousMusic,
@@ -32,7 +31,6 @@ const Left = () => {
     changeShuffle,
     shuffle,
     changeLoop,
-    // loop,
     songSinger,
     songName,
     songPhoto,
@@ -40,29 +38,37 @@ const Left = () => {
     changeNoneOrLoopOrRepeat,
   } = useContext(playerContext);
 
-  // console.log(totalDuration);
+  // console.log(playList);
   const removeLeft = () => {
     ChangeShowLeft(false);
   };
-
+  useEffect(() => {}, [currentProgress]);
   const zeroPad = (num, places) => String(num).padStart(places, "0");
   return (
     // <div className='left text-light'>
     <Slide direction="right" timeout={500} in={showLeft}>
-      <div className=" p-0 playList text-light">
+      <div
+        className={`playList text-light ${
+          showMusic ? "padding__showMusic__110" : "padding__showMusic__50"
+        } `}
+      >
         <div className="bg__gray">
-          <Close className="closeBtn" onClick={removeLeft} fontSize="large" />
           <div className="playerInfo d-flex ">
-            <div className="info__image mr-3">
-              <img src={songPhoto !== null ? songPhoto : defualtPhoto} alt="" />
-            </div>
-            <div className="info mr-3">
-              <div className="info__title mb-2">{songName}</div>
-              <div className="info__person mb-4"> {songSinger}</div>
-            </div>
-            {/* <div className="playerInfo__close">
-              <CloseRounded />
-            </div> */}
+            <Close className="closeBtn" onClick={removeLeft} fontSize="large" />
+            {songName !== "" && (
+              <>
+                <div className="info__image mr-3">
+                  <img
+                    src={songPhoto !== null ? songPhoto : defualtPhoto}
+                    alt=""
+                  />
+                </div>
+                <div className="info mr-3">
+                  <div className="info__title mb-2">{songName}</div>
+                  <div className="info__person mb-4"> {songSinger}</div>
+                </div>
+              </>
+            )}
           </div>
           <div className="icons d-flex justify-content-around mt-3 mb-4">
             <div
@@ -133,18 +139,21 @@ const Left = () => {
             </div>
           </div>
         </div>
-        {playList && (
+        {playList.length !== 0 ? (
           <div className="songs ">
             {playList.map((item, i) => (
               <SongOnLeft
-                key={i}
-                item={item}
+                key={item.id}
+                item={item.post ? item.post : item}
                 playlist={playList}
                 zeroPad={zeroPad}
                 number={i + 1}
+                // isFileItem={item.fileItem ? true : false}
               />
             ))}
           </div>
+        ) : (
+          <div className="playList__songs__empty">لیست خالی است</div>
         )}
       </div>
     </Slide>

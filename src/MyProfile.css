@@ -313,6 +313,9 @@
   font-weight: 700;
   font-family: vazir;
 }
+.listItemsShow__delete {
+  cursor: pointer;
+}
 .myMadeListShow__title__span {
   overflow: hidden;
   max-width: 200px;

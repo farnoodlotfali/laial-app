@@ -10,13 +10,12 @@ import { Helmet } from "react-helmet";
 
 const Home = () => {
   const { loading, getHome, home, homeMeta } = useContext(appContext);
-  const { user, loadUser } = useContext(authContext);
+  const { user } = useContext(authContext);
   useEffect(() => {
     if (home === null) {
       getHome();
     }
     // console.log(homeMeta);
-    loadUser();
     // eslint-disable-next-line
   }, [home, user, homeMeta]);
 

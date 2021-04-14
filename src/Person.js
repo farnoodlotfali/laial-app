@@ -19,7 +19,7 @@ const Person = () => {
   } = useContext(appContext);
   let params = useParams();
 
-  const { user, loadUser } = useContext(authContext);
+  const { user } = useContext(authContext);
   const [next, setNext] = useState({
     next: "",
     list: null,
@@ -44,7 +44,7 @@ const Person = () => {
     }
     // console.log(next.page);
 
-    loadUser();
+    // loadUser();
 
     // eslint-disable-next-line
   }, [params.slug, user, personUrls, loading, personList]);
@@ -56,7 +56,7 @@ const Person = () => {
     });
     setTimeout(async () => {
       try {
-        const res = await axios.instanceApi.get(
+        const res = await axios.simpleApi.get(
           `/persons/${params.slug}/?page=${next.page}`
         );
         // console.log(res.data);
@@ -165,7 +165,7 @@ const Person = () => {
         // ref={loadingRef}
         style={{
           opacity: next.loading ? "1" : "0",
-          transform: next.loading && "translate(-50%, 0px)",
+          transform: next.loading && "translate(-50%, -150%)",
         }}
       >
         <LoadingIcon color="#fff" />

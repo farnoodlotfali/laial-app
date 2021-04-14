@@ -75,7 +75,8 @@ const RowItemPage = () => {
       dataSongPage?.person?.[0]?.name,
       dataSongPage?.media?.[0]?.image !== null
         ? dataSongPage?.media?.[0]?.image
-        : dataSongPage?.person?.[0]?.image.full_image_url
+        : dataSongPage?.person?.[0]?.image.full_image_url,
+      dataSongPage?.id
     );
     try {
       const res = await axios.downloader.get(
@@ -96,7 +97,7 @@ const RowItemPage = () => {
       [e.target.name]: e.target.value,
     });
   };
-  // console.log(dataSongPage);
+  // console.log(dataSongPage.id);
   return (
     <Fragment>
       <Helmet>
@@ -257,9 +258,7 @@ const RowItemPage = () => {
                 </div>
 
                 <div
-                  onClick={() =>
-                    setWhichSongToSaveInPlaylist(dataSongPage?.media?.[0]?.id)
-                  }
+                  onClick={() => setWhichSongToSaveInPlaylist(dataSongPage?.id)}
                 >
                   <Tooltip placement="bottom" title="اضافه به لیست">
                     <IconButton aria-label="Add">

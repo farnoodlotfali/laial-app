@@ -1,22 +1,22 @@
-import { useContext, useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import './AllPerson.css';
-import authContext from './auth/authContext';
-import axios from './axios/axios';
-import appContext from './contexts/appContext';
-import PersonItem from './PersonItem';
-import LoadingIcon from './spinner/LoadingIcon';
+import { useContext, useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import "./AllPerson.css";
+import authContext from "./auth/authContext";
+import axios from "./axios/axios";
+import appContext from "./contexts/appContext";
+import PersonItem from "./PersonItem";
+import LoadingIcon from "./spinner/LoadingIcon";
 
 const AllPerson = () => {
   const { allPersons, AllpersonsUrls } = useContext(appContext);
   const { user, loadUser } = useContext(authContext);
 
   const [next, setNext] = useState({
-    next: '',
+    next: "",
     list: null,
     hasMore: false,
     page: 2,
-    loaderMsg: '',
+    loaderMsg: "",
     loading: false,
   });
   // console.log(next);
@@ -29,7 +29,7 @@ const AllPerson = () => {
         list: allPersons,
         hasMore: AllpersonsUrls.next ? true : false,
         loading: false,
-        loaderMsg: 'Loading...',
+        loaderMsg: "Loading...",
       });
     }
     loadUser();
@@ -50,7 +50,7 @@ const AllPerson = () => {
       loading: true,
     });
     setTimeout(() => {
-      axios.instanceApi
+      axios.simpleApi
         .get(`/persons/?page=${next.page}`)
         .then((res) =>
           setNext({
@@ -60,7 +60,7 @@ const AllPerson = () => {
             list: next.list.concat(res.data.results),
             loading: false,
             page: ++next.page,
-            loaderMsg: res.data.next ? 'Loading...' : 'Finish :)',
+            loaderMsg: res.data.next ? "Loading..." : "Finish :)",
           })
         )
         .catch((err) => console.log(err));
@@ -73,9 +73,9 @@ const AllPerson = () => {
 
   return (
     <div
-      className='allPerson'
+      className="allPerson"
       style={{
-        height: next.list === null || next.list.length === 0 ? '100vh' : '',
+        height: next.list === null || next.list.length === 0 ? "100vh" : "",
       }}
     >
       {next?.list && (
@@ -87,7 +87,7 @@ const AllPerson = () => {
           {next.list &&
             next.list?.map((item, i) => {
               return (
-                <div key={item.id} className='allPerson__item'>
+                <div key={item.id} className="allPerson__item">
                   <PersonItem
                     id={item.id}
                     name={item.name}
@@ -100,14 +100,14 @@ const AllPerson = () => {
         </InfiniteScroll>
       )}
       <div
-        className='loading-message'
+        className="loading-message"
         // ref={loadingRef}
         style={{
-          opacity: next.loading ? '1' : '0',
-          transform: next.loading && 'translate(-50%, 0px)',
+          opacity: next.loading ? "1" : "0",
+          transform: next.loading && "translate(-50%, -150%)",
         }}
       >
-        <LoadingIcon color='#fff' />
+        <LoadingIcon color="#fff" />
         <span>در حال دریافت</span>
       </div>
       {/* <h4 className='text-white mb-5 mt-3'>{next.loaderMsg}</h4> */}

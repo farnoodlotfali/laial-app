@@ -1,5 +1,6 @@
 import axios from "axios";
 let tryCount = 0;
+let downloaderTryCount = 0;
 
 const instanceApi = axios.create({
   baseURL: "http://laial.7negare.ir/api",
@@ -22,7 +23,7 @@ instanceApi.interceptors.response.use(
     //   error.config
     // );
     if (error.config && error.response && error.response.status === 404) {
-      window.location = "/aboutus";
+      window.location = "/not_found";
       return Promise.reject(error);
       // console.log(111);
     }
@@ -72,6 +73,30 @@ instanceApi.interceptors.response.use(
 const downloader = axios.create({
   baseURL: "http://downloader.7negare.ir/download",
 });
+
+downloader.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+
+  async (error) => {
+    console.log(error.config);
+
+    if (error.config && error.response && error.response.status === 503) {
+      if (downloaderTryCount === 3) {
+        return Promise.reject(error);
+      }
+
+      downloaderTryCount++;
+
+      return setTimeout(() => {
+        instanceApi.request(error.config);
+      }, 3000);
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 const simpleApi = axios.create({
   baseURL: "http://laial.7negare.ir/api",

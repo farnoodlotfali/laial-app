@@ -10,7 +10,7 @@ import { CloseRounded } from "@material-ui/icons";
 
 const Login = (props) => {
   let history = useHistory();
-  const { error, login, loadUser, user } = useContext(authContext);
+  const { error, login, user } = useContext(authContext);
   const { forgetPassword } = useContext(appContext);
   const [userInfo, setUserInfo] = useState({
     username: "",
@@ -26,7 +26,7 @@ const Login = (props) => {
       // props.history.back();
       history.goBack();
     }
-    loadUser();
+    // loadUser();
 
     // eslint-disable-next-line
   }, [user, history, error]);
