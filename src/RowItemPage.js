@@ -51,6 +51,8 @@ const RowItemPage = () => {
     recommender,
     likeSong,
     setWhichSongToSaveInPlaylist,
+    addToLikedSongPlaylist,
+    getLikedSongsPlaylist,
   } = useContext(AppContext);
   const { setUrl, playMusic, setIds } = useContext(playerContext);
   const { error, login, loadUser, user, isAuth } = useContext(authContext);
@@ -64,7 +66,7 @@ const RowItemPage = () => {
     loadUser();
     // eslint-disable-next-line
   }, [params.slug, user]);
-
+  // console.log(dataSongPage.id);
   // نشان دادن موزیک و پخش موزیک
   const playMusicAndShowMusicBar = async () => {
     setIds(
@@ -174,7 +176,11 @@ const RowItemPage = () => {
                   <IconButton
                     aria-label="Favorite"
                     onClick={() =>
-                      isAuth ? likeSong(params.slug) : setShow(true)
+                      isAuth
+                        ? likeSong(params.slug) &
+                          addToLikedSongPlaylist(dataSongPage.id) &
+                          getLikedSongsPlaylist()
+                        : setShow(true)
                     }
                   >
                     <Favorite className="Favorite" fontSize="large" />

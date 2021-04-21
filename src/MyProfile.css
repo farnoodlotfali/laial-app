@@ -245,7 +245,7 @@
   padding: 15px;
   box-shadow: 0 5px 15px rgb(106, 105, 117);
   flex: 0.6;
-  overflow-y: scroll;
+  overflow-y: hidden;
   height: 272px;
 }
 .listItemsShow__loading {

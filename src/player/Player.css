@@ -1,9 +1,10 @@
 .musicBar {
   direction: rtl;
-  position: sticky;
+  /* position: sticky; */
   background-color: rgb(0, 0, 0);
   bottom: 0;
-
+  position: fixed;
+  width: 100%;
   display: block;
 }
 

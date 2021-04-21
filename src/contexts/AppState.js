@@ -319,7 +319,7 @@ const AppState = (props) => {
 
     try {
       const res = await axios.instanceApi.get("/account/playlist/", config);
-      console.log(res);
+      // console.log(res);
       findMainPlaylist(res.data);
       dispatch({
         type: GET_PLAYLISTS,
@@ -441,6 +441,104 @@ const AppState = (props) => {
       console.log(res.data);
       getAllPlaylists();
     } catch (error) {
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+
+  const addToLikedSongPlaylist = async (postId) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("tokenAccess"),
+      },
+    };
+    const form = {
+      post: 4,
+    };
+    try {
+      const res = await axios.instanceApi.post("/account/like/", form, config);
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+  const getLikedSongsPlaylist = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "app;ication/json",
+        Authorization: "Bearer " + localStorage.getItem("tokenAccess"),
+      },
+    };
+
+    try {
+      const res = await axios.instanceApi.get("/account/like/", config);
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+  const addMusicToRecentlyViewed = async (duration, postId) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("tokenAccess"),
+      },
+    };
+    const form = {
+      duration: duration,
+      post: postId,
+    };
+    console.log(form);
+
+    try {
+      const res = await axios.instanceApi.post(
+        "/account/recently-view/",
+        form,
+        config
+      );
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+
+  const getRecentlyViewedSongsPlaylist = async () => {
+    dispatch({
+      type: SET_LOADING_ON_USER_PLAYLIST,
+    });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("tokenAccess"),
+      },
+    };
+
+    try {
+      const res = await axios.instanceApi.get(
+        "/account/recently-view/",
+        config
+      );
+      console.log(res.data);
+      dispatch({
+        type: REMOVE_LOADING_ON_USER_PLAYLIST,
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
       dispatch({
         type: ERROR,
         payload: error,
@@ -574,6 +672,7 @@ const AppState = (props) => {
         // for put PostIdForDeleteFromUserPlaylist for deleteing
         item.post.PostIdForDeleteFromUserPlaylist = item.id;
       });
+      console.log(res.data);
       return res.data?.[0]?.items;
     } catch (error) {
       dispatch({
@@ -700,6 +799,10 @@ const AppState = (props) => {
         removePlaylist,
         updatePlaylistName,
         removeSongFromPlaylist,
+        addToLikedSongPlaylist,
+        getLikedSongsPlaylist,
+        addMusicToRecentlyViewed,
+        getRecentlyViewedSongsPlaylist,
         getRecommender,
         changeCurrentPassword,
         confrimRestPassword,

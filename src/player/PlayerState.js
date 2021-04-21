@@ -102,6 +102,7 @@ const Playerstate = (props) => {
     showLeft,
     addMusicToMAINPlaylist,
     setWhichSongToSaveInPlaylist,
+    addMusicToRecentlyViewed,
   } = useContext(AppContext);
   const initialState = {
     playList: [],
@@ -127,6 +128,7 @@ const Playerstate = (props) => {
     currentProgress: 0,
     showMusicBarOnMoblieRatio: false,
     canDeleteSong: false,
+    isThisSongAddedToRecentlyViewdPlaylist: false,
   };
   const [state, dispatch] = useReducer(playerReducer, initialState);
   const { playList } = state;
@@ -560,12 +562,21 @@ const Playerstate = (props) => {
             onPlay={playMusicKey}
             ref={audioRef}
             className="player"
-            // playing,
             onTimeUpdate={() => {
+              // console.log(Math.floor(audioRef?.current?.currentTime));
               let progress = parseFloat(
                 (audioRef?.current?.currentTime * 100) /
                   audioRef?.current?.duration
               ).toFixed(2);
+              if (!state.isThisSongAddedToRecentlyViewdPlaylist) {
+                if (Math.floor(progress) === 33) {
+                  state.isThisSongAddedToRecentlyViewdPlaylist = true;
+                  addMusicToRecentlyViewed(
+                    Math.floor(audioRef?.current?.currentTime),
+                    state.postId
+                  );
+                }
+              }
               setNewProgress(progress);
               dispatch({
                 type: CHANGE_DURATION,

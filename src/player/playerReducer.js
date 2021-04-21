@@ -117,6 +117,7 @@ export default (state, action) => {
       return {
         ...state,
         playing: false,
+        isThisSongAddedToRecentlyViewdPlaylist: false,
         loading: true,
         totalDuration: action.payload.totalDuration,
         telegramId: action.payload.telegramId,

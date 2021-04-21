@@ -101,8 +101,8 @@ const RowItem = ({ media, person, slug, context, isRow, postId }) => {
             data-flickity-lazyload={
               media?.[0]?.image !== null && media?.[0]?.image !== undefined
                 ? media?.[0]?.image
-                : person?.[0]?.image.full_image_url !== null
-                ? person?.[0]?.image.full_image_url
+                : person?.[0]?.image?.full_image_url !== null
+                ? person?.[0]?.image?.full_image_url
                 : defualtPhoto
             }
             alt="logo"
@@ -112,8 +112,8 @@ const RowItem = ({ media, person, slug, context, isRow, postId }) => {
             src={
               media?.[0]?.image !== null && media?.[0]?.image !== undefined
                 ? media?.[0]?.image
-                : person?.[0]?.image.full_image_url !== null
-                ? person?.[0]?.image.full_image_url
+                : person?.[0]?.image?.full_image_url !== null
+                ? person?.[0]?.image?.full_image_url
                 : defualtPhoto
             }
             alt="logo"

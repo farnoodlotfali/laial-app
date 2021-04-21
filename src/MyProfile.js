@@ -2,17 +2,41 @@ import "./MyProfile.css";
 import defualtPhoto from "./assets/defualtPhoto.jpeg";
 import { useContext, useEffect, useState } from "react";
 import authContext from "./auth/authContext";
-import { DeleteRounded, ExpandMoreRounded } from "@material-ui/icons";
+import {
+  ArrowDownwardRounded,
+  ArrowUpwardRounded,
+  DeleteRounded,
+  ExpandMoreRounded,
+  HeightRounded,
+} from "@material-ui/icons";
 import appContext from "./contexts/appContext";
 import { useHistory } from "react-router";
 import { Button, Modal } from "react-bootstrap";
 import SpinnerOnUserPlaylist from "./spinner/SpinnerOnUserPlaylist";
 import { Dropdown } from "react-bootstrap";
+import InfiniteScroll from "react-infinite-scroll-component";
+import axios from "./axios/axios";
+import LoadIcon from "./spinner/LoadIcon";
+const style = {
+  height: 30,
+  border: "1px solid green",
+  margin: 6,
+  padding: 8,
+};
 
 const MyProfile = () => {
   const { user } = useContext(authContext);
   const [listShow, setListShow] = useState(null);
   const [deleteBtn, setDeleteBtn] = useState(false);
+  const [passwordModal, setPasswordModal] = useState(false);
+  const [listname, setListName] = useState("");
+  const [next, setNext] = useState({
+    next: "",
+    list: [],
+    hasMore: false,
+    page: 2,
+    loading: false,
+  });
   const hisotry = useHistory();
   useEffect(() => {
     // loadUser();
@@ -30,6 +54,7 @@ const MyProfile = () => {
     changeCurrentPassword,
     loadingOnUserPlaylist,
     removeSongFromPlaylist,
+    getRecentlyViewedSongsPlaylist,
   } = useContext(appContext);
   const [passwordMsg, setPasswordMsg] = useState("");
 
@@ -57,13 +82,54 @@ const MyProfile = () => {
       [e.target.name]: e.target.value,
     });
   };
-  const [passwordModal, setPasswordModal] = useState(false);
-  const [listname, setListName] = useState("");
 
   const truncate = (str, no_words) => {
     return str?.split(" ").splice(0, no_words).join(" ");
   };
   const zeroPad = (num, places) => String(num).padStart(places, "0");
+
+  const infiniteList = async () => {
+    setTimeout(async () => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("tokenAccess"),
+        },
+      };
+      try {
+        const res = await axios.simpleApi.get(
+          `/account/recently-view/?page=${next.page}`,
+          config
+        );
+        // console.log(res.data);
+        setNext({
+          next: res.data.next,
+          hasMore: res.data.next ? true : false,
+          list: next.list.concat(res.data.results),
+          loading: false,
+          page: ++next.page,
+        });
+        setListShow(listShow.concat(res.data.results));
+        //  next.list.concat(res.data.results);
+      } catch (error) {
+        console.log(error);
+      }
+    }, 1200);
+  };
+
+  const recentlyViewedc = async () => {
+    const newList = await getRecentlyViewedSongsPlaylist();
+    // console.log(q.results);
+    setNext({
+      ...next,
+      list: newList.results,
+      next: newList.next,
+      hasMore: newList.next ? true : false,
+    });
+    setListShow(newList.results);
+    setDeleteBtn(false);
+  };
+
   return (
     <div className="myprofile">
       {user && (
@@ -216,52 +282,57 @@ const MyProfile = () => {
           <div className="myprofile__bottom ">
             {/* mobile ratio */}
             <div className="myprofile__mobile__songs">
-              <div className="myprofile__mobile__songs__options">
-                <div className="myprofile__mobile__songs__myListsOption">
-                  <span>آهنگ های لایک شده</span>
-                </div>
-                <div className="myprofile__mobile__songs__myListsOption">
-                  <span> اخیرا شنیده شده</span>
-                </div>
-                <div
-                  className="myprofile__mobile__songs__myListsOption"
-                  onClick={async () =>
-                    setListShow(await getOnePlayList(mainPlaylistId)) &
-                    setDeleteBtn(false)
-                  }
-                >
-                  <span> آهنگ های منتخب سایت</span>
-                </div>
-                <div className="myprofile__mobile__songs__myListsOption">
-                  <Dropdown>
-                    <Dropdown.Toggle className="myprofile__mobile__songs__myListsOptionBtn">
-                      <div className="myMadeListShow__title__span">
-                        نام لیست : {listname}
-                      </div>
-                      <ExpandMoreRounded />
-                    </Dropdown.Toggle>
+              {userPlaylists && (
+                <div className="myprofile__mobile__songs__options">
+                  <div className="myprofile__mobile__songs__myListsOption">
+                    <span>آهنگ های لایک شده</span>
+                  </div>
+                  <div
+                    className="myprofile__mobile__songs__myListsOption"
+                    onClick={() => recentlyViewedc()}
+                  >
+                    <span> اخیرا شنیده شده</span>
+                  </div>
+                  <div
+                    className="myprofile__mobile__songs__myListsOption"
+                    onClick={async () =>
+                      setListShow(await getOnePlayList(mainPlaylistId)) &
+                      setDeleteBtn(false)
+                    }
+                  >
+                    <span> آهنگ های منتخب سایت</span>
+                  </div>
+                  <div className="myprofile__mobile__songs__myListsOption">
+                    <Dropdown>
+                      <Dropdown.Toggle className="myprofile__mobile__songs__myListsOptionBtn">
+                        <div className="myMadeListShow__title__span">
+                          نام لیست : {listname}
+                        </div>
+                        <ExpandMoreRounded />
+                      </Dropdown.Toggle>
 
-                    <Dropdown.Menu className="myprofile__mobile__songs__mySongs">
-                      {userPlaylists?.map(
-                        (item, i) =>
-                          mainPlaylistId !== item.id && (
-                            <Dropdown.Item
-                              key={i}
-                              onClick={async () =>
-                                setListShow(await getOnePlayList(item.id)) &
-                                setListName(item.name) &
-                                // console.log(listShow) &
-                                setDeleteBtn(true)
-                              }
-                            >
-                              {item.name}
-                            </Dropdown.Item>
-                          )
-                      )}
-                    </Dropdown.Menu>
-                  </Dropdown>
+                      <Dropdown.Menu className="myprofile__mobile__songs__mySongs">
+                        {userPlaylists?.map(
+                          (item, i) =>
+                            mainPlaylistId !== item.id && (
+                              <Dropdown.Item
+                                key={i}
+                                onClick={async () =>
+                                  setListShow(await getOnePlayList(item.id)) &
+                                  setListName(item.name) &
+                                  // console.log(listShow) &
+                                  setDeleteBtn(true)
+                                }
+                              >
+                                {item.name}
+                              </Dropdown.Item>
+                            )
+                        )}
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </div>
                 </div>
-              </div>
+              )}
               <div
                 className={`listItemsShow ${
                   loadingOnUserPlaylist ? "listItemsShow__loading" : ""
@@ -272,82 +343,109 @@ const MyProfile = () => {
                 ) : listShow === null || listShow.length === 0 ? (
                   <div className="none  text-light">لیست خالی است</div>
                 ) : (
-                  listShow.map(
-                    (item) => console.log(item?.post)
-                    // <div className="song d-flex" key={item?.id}>
-                    //   <div className="songImg">
-                    //     <img
-                    //       src={
-                    //         item?.post?.media?.[0]?.image !== null &&
-                    //         item?.post?.media?.[0]?.image !== undefined
-                    //           ? item?.post?.media?.[0]?.image
-                    //           : item?.post?.person?.[0]?.image
-                    //               .full_image_url !== null
-                    //           ? item?.post?.person?.[0]?.image.full_image_url
-                    //           : defualtPhoto
-                    //       }
-                    //       alt="songlogo"
-                    //     />
-                    //   </div>
-                    //   <div className="songInfo">
-                    //     <span className="songName">
-                    //       {truncate(item?.post?.media?.[0]?.name, 4)}
-                    //     </span>
-                    //     <span className="songSinger">
-                    //       {item?.post?.person?.[0]?.name}
-                    //     </span>
-                    //   </div>
-                    //   <div className="songTime">
-                    //     <span>
-                    //       {item?.post?.media?.[0]?.duration &&
-                    //         Math.floor(item?.post?.media?.[0]?.duration / 60) +
-                    //           ":" +
-                    //           zeroPad(
-                    //             Math.floor(
-                    //               item?.post?.media?.[0]?.duration % 60
-                    //             ),
-                    //             2
-                    //           )}
-                    //     </span>
-                    //     {deleteBtn && (
-                    //       <div
-                    //         className="listItemsShow__delete"
-                    //         onClick={() =>
-                    //           removeSongFromPlaylist(
-                    //             item?.post?.PostIdForDeleteFromUserPlaylist
-                    //           )
-                    //         }
-                    //       >
-                    //         <DeleteRounded />
-                    //       </div>
-                    //     )}
-                    //   </div>
-                    // </div>
-                  )
+                  <InfiniteScroll
+                    dataLength={listShow.length}
+                    next={() => infiniteList()}
+                    hasMore={next.hasMore}
+                    loader={<LoadIcon />}
+                    height={270}
+                    // endMessage={
+                    //   <p style={{ textAlign: 'center' }}>
+                    //     <b>Yay! You have seen it all</b>
+                    //   </p>
+                    // }
+                  >
+                    {listShow.map((item) => (
+                      //  console.log(item?.post)
+                      <div className="song d-flex" key={item?.id}>
+                        <div className="songImg">
+                          <img
+                            src={
+                              item?.post?.media?.[0]?.image !== null &&
+                              item?.post?.media?.[0]?.image !== undefined
+                                ? item?.post?.media?.[0]?.image
+                                : item?.post?.person?.[0]?.image
+                                    .full_image_url !== null
+                                ? item?.post?.person?.[0]?.image.full_image_url
+                                : defualtPhoto
+                            }
+                            alt="songlogo"
+                          />
+                        </div>
+                        <div className="songInfo">
+                          <span className="songName">
+                            {truncate(item?.post?.media?.[0]?.name, 4)}
+                          </span>
+                          <span className="songSinger">
+                            {item?.post?.person?.[0]?.name}
+                          </span>
+                        </div>
+                        <div className="songTime">
+                          <span>
+                            {item?.post?.media?.[0]?.duration &&
+                              Math.floor(
+                                item?.post?.media?.[0]?.duration / 60
+                              ) +
+                                ":" +
+                                zeroPad(
+                                  Math.floor(
+                                    item?.post?.media?.[0]?.duration % 60
+                                  ),
+                                  2
+                                )}
+                          </span>
+                          {deleteBtn && (
+                            <div
+                              className="listItemsShow__delete"
+                              onClick={() =>
+                                removeSongFromPlaylist(
+                                  item?.post?.PostIdForDeleteFromUserPlaylist
+                                )
+                              }
+                            >
+                              <DeleteRounded />
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </InfiniteScroll>
                 )}
               </div>
             </div>
             {/* web ratio */}
-            <div className="myListsBtn">
-              {/* <div className='myListsOption'>
+            {userPlaylists && (
+              <div className="myListsBtn">
+                {/* <div className='myListsOption'>
             <span> لیست های ساختگی من</span>
           </div> */}
-              <div className="myListsOption">
-                <span>آهنگ های لایک شده</span>
+                {/* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
+                <div className="myListsOption">
+                  <span>آهنگ های لایک شده</span>
+                </div>
+                <div
+                  className="myListsOption"
+                  onClick={() => recentlyViewedc()}
+                >
+                  <span> اخیرا شنیده شده</span>
+                </div>
+                <div
+                  className="myListsOption"
+                  onClick={async () =>
+                    setListShow(await getOnePlayList(mainPlaylistId)) &
+                    setDeleteBtn(false)
+                  }
+                >
+                  <span> آهنگ های منتخب سایت</span>
+                </div>
               </div>
-              <div className="myListsOption">
-                <span> اخیرا شنیده شده</span>
-              </div>
-              <div
-                className="myListsOption"
-                onClick={async () =>
-                  setListShow(await getOnePlayList(mainPlaylistId)) &
-                  setDeleteBtn(false)
-                }
-              >
-                <span> آهنگ های منتخب سایت</span>
-              </div>
-            </div>
+            )}{" "}
             <div className="listShow d-flex">
               <div className="myMadeListsShow">
                 <div className="myMadeListShow__title">
@@ -385,57 +483,89 @@ const MyProfile = () => {
                 ) : listShow === null || listShow.length === 0 ? (
                   <div className="none  text-light">لیست خالی است</div>
                 ) : (
-                  listShow.map((item) => (
-                    <div className="song d-flex" key={item?.id}>
-                      <div className="songImg">
-                        <img
-                          src={
-                            item?.post?.media?.[0]?.image !== null &&
-                            item?.post?.media?.[0]?.image !== undefined
-                              ? item?.post?.media?.[0]?.image
-                              : item?.post?.person?.[0]?.image
-                                  .full_image_url !== null
-                              ? item?.post?.person?.[0]?.image.full_image_url
-                              : defualtPhoto
-                          }
-                          alt="songlogo"
-                        />
-                      </div>
-                      <div className="songInfo">
-                        <span className="songName">
-                          {truncate(item?.post?.media?.[0]?.name, 4)}
-                        </span>
-                        <span className="songSinger">
-                          {item?.post?.person?.[0]?.name}
-                        </span>
-                      </div>
-                      <div className="songTime">
-                        <span>
-                          {item?.post?.media?.[0]?.duration &&
-                            Math.floor(item?.post?.media?.[0]?.duration / 60) +
-                              ":" +
-                              zeroPad(
-                                Math.floor(
-                                  item?.post?.media?.[0]?.duration % 60
-                                ),
-                                2
-                              )}
-                        </span>
-                        {deleteBtn && (
-                          <div
-                            className="listItemsShow__delete"
-                            onClick={() =>
-                              removeSongFromPlaylist(
-                                item?.post?.PostIdForDeleteFromUserPlaylist
-                              )
-                            }
-                          >
-                            <DeleteRounded />
+                  // <InfiniteScroll
+                  //   dataLength={state.items.length}
+                  //   next={fetchMoreData}
+                  //   hasMore={true}
+                  //   loader={<LoadIcon />}
+                  //   height={250}
+                  // >
+                  //   {state.items.map((i, index) => (
+                  //     <div style={style} key={index}>
+                  //       div - #{index}
+                  //     </div>
+                  //   ))}
+                  // </InfiniteScroll>
+
+                  <InfiniteScroll
+                    dataLength={listShow.length}
+                    next={() => infiniteList()}
+                    hasMore={next.hasMore}
+                    loader={<LoadIcon />}
+                    height={270}
+                    // endMessage={
+                    //   <p style={{ textAlign: 'center' }}>
+                    //     <b>Yay! You have seen it all</b>
+                    //   </p>
+                    // }
+                  >
+                    {listShow.map((item) => (
+                      <div className="" key={item?.id}>
+                        <div className="song d-flex" key={item?.id}>
+                          <div className="songImg">
+                            <img
+                              src={
+                                item?.post?.media?.[0]?.image !== null &&
+                                item?.post?.media?.[0]?.image !== undefined
+                                  ? item?.post?.media?.[0]?.image
+                                  : item?.post?.person?.[0]?.image
+                                      .full_image_url !== null
+                                  ? item?.post?.person?.[0]?.image
+                                      .full_image_url
+                                  : defualtPhoto
+                              }
+                              alt="songlogo"
+                            />
                           </div>
-                        )}
+                          <div className="songInfo">
+                            <span className="songName">
+                              {truncate(item?.post?.media?.[0]?.name, 4)}
+                            </span>
+                            <span className="songSinger">
+                              {item?.post?.person?.[0]?.name}
+                            </span>
+                          </div>
+                          <div className="songTime">
+                            <span>
+                              {item?.post?.media?.[0]?.duration &&
+                                Math.floor(
+                                  item?.post?.media?.[0]?.duration / 60
+                                ) +
+                                  ":" +
+                                  zeroPad(
+                                    Math.floor(
+                                      item?.post?.media?.[0]?.duration % 60
+                                    ),
+                                    2
+                                  )}
+                            </span>
+                            {deleteBtn && (
+                              <div
+                                className="listItemsShow__delete"
+                                onClick={() =>
+                                  removeSongFromPlaylist(
+                                    item?.post?.PostIdForDeleteFromUserPlaylist
+                                  )
+                                }
+                              >
+                                <DeleteRounded />
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  ))
+                    ))}
+                  </InfiniteScroll>
                 )}
               </div>
             </div>

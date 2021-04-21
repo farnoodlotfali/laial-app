@@ -26,9 +26,11 @@ import MyProfile from "./MyProfile";
 import PasswordReset from "./PasswordReset";
 import UserInterests from "./UserInterests";
 import NotFound from "./NotFound";
+import Test from "./Test";
 const App = () => {
   return (
     <div className="app ">
+      {/* <Test /> */}
       <AppState>
         <AuthState>
           <Playerstate>
