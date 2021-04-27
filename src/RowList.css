@@ -68,7 +68,7 @@
     position: sticky;
     border-top-left-radius: 25px !important;
     border-top-right-radius: 25px !important;
-    margin-top: -30px !important;
+    /* margin-top: -30px !important; */
   }
   .top__radius__rowList__title {
     justify-content: space-between;

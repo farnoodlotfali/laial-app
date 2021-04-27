@@ -171,7 +171,7 @@ const Playerstate = (props) => {
     state.playing,
     state.loading,
     state.seek,
-    state.seek,
+    state.currentUrl,
     audioRef?.current?.ended,
     audioRef.current?.currentTime,
   ]);
@@ -301,12 +301,11 @@ const Playerstate = (props) => {
     }
   };
 
-  const playMusic = (audioElement = audioRef.current) => {
+  const playMusic = async (audioElement = audioRef.current) => {
     if (audioElement) {
       audioElement.pause();
       audioElement.load();
-
-      audioElement.play();
+      await audioElement.play();
     }
     dispatch({
       type: PLAY_MUSIC,
@@ -341,8 +340,8 @@ const Playerstate = (props) => {
     }
   };
 
-  const setUrl = (url, playlist) => {
-    // console.log(url);
+  const setUrl = (url, playlist = []) => {
+    // console.log(playlist);
 
     if (playlist !== state.playList) {
       setPlayList(playlist);
@@ -358,7 +357,6 @@ const Playerstate = (props) => {
 
   const nextMusic = async (audioElement = audioRef.current) => {
     audioElement.pause();
-
     putToMusicChangeList(audioElement.currentTime, "next");
     // let last = null;
     // console.log(playList);
@@ -587,8 +585,9 @@ const Playerstate = (props) => {
             }}
             // autoPlay={state.playing}
             src={state.currentUrl}
+            // src={"http://dl.rovzenews.ir/telegram/1273/1273.mp3"}
             // src={
-            //   'https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3'
+            //   "https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3"
             // }
             type="audio/mpeg"
             preload="metadata"

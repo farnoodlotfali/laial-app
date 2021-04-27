@@ -36,6 +36,8 @@
   font-size: 22px;
   max-height: 47px;
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .info__person {

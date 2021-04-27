@@ -6,7 +6,10 @@ import { Link, NavLink } from "react-router-dom";
 import {
   AccountCircleRounded,
   ExitToAppRounded,
+  HomeRounded,
   PersonRounded,
+  QueueMusicRounded,
+  SearchRounded,
 } from "@material-ui/icons";
 import authContext from "./auth/authContext";
 import Headroom from "react-headroom";
@@ -28,26 +31,29 @@ const Header = () => {
               <li className="   mx-3" onClick={() => ChangeShowRight(true)}>
                 منو اصلی
               </li>
-              {/* <NavLink
-                activeClassName='selected'
+              <NavLink
+                activeClassName="selected"
                 exact
-                to='/'
-                className='   mx-3'
+                to="/"
+                className="   mx-3"
                 onClick={() => ChangeShowLeft(false)}
               >
+                <HomeRounded className="align-self-center" />
                 خانه
-              </NavLink> */}
+              </NavLink>
               <NavLink
                 activeClassName="selected"
                 to="/search"
                 className=" mx-3"
                 onClick={() => ChangeShowLeft(false)}
               >
+                <SearchRounded className="align-self-center" />
                 جستجو
               </NavLink>
 
               {isAuth && (
                 <li className=" mx-3 " onClick={ChangeshowCenter}>
+                  <QueueMusicRounded className="align-self-center" />
                   لیست من
                 </li>
               )}

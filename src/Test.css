@@ -1,13 +1,5 @@
-.test {
-  position: relative;
-  width: 100%;
-  height: 272px;
-  /* overflow-y: hidden; */
-
-  /* overflow-y: scroll; */
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-self: center;
+.pal {
+  border: 1px solid white;
+  display: grid;
+  /* justify-content: center; */
 }

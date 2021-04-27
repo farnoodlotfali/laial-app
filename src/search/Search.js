@@ -8,8 +8,10 @@ import axios from "../axios/axios";
 import RowItem from "../RowItem";
 import PersonItem from "../PersonItem";
 import LoadingIcon from "../spinner/LoadingIcon";
+import { useHistory } from "react-router";
 
 const Search = () => {
+  const history = useHistory();
   const {
     search,
     loading,
@@ -83,7 +85,6 @@ const Search = () => {
   };
 
   const infiniteList = async () => {
-    // console.log(2);
     setNext({
       ...next,
       loading: true,
@@ -93,8 +94,7 @@ const Search = () => {
         const res = await axios.simpleApi.get(
           `/search/?page=${next.page}&q=${searchValue}`
         );
-        // console.log(res.data);
-        // next.listResults.concat(res.data.results);
+
         setNext({
           next: res.data.next,
           hasMore: res.data.next ? true : false,
@@ -122,12 +122,15 @@ const Search = () => {
       }}
     >
       {/* <Navigation /> */}
-      <div className="search__title mr-5 pt-2">
+      <div className="search__title ">
         <h1>جستجو</h1>
       </div>
 
       <div className=" searchFields__option my-3 py-3 ">
-        <form onSubmit={(e) => onSubmitHandle(e)}>
+        <form
+          className="searchFields__option__form"
+          onSubmit={(e) => onSubmitHandle(e)}
+        >
           <input
             className="ml-2"
             onChange={onchange}
@@ -143,6 +146,13 @@ const Search = () => {
             value="جستجو"
             // value='Register'
           />
+          {/* <input className="mr-2 py-1 px-3" type="button" value="" /> */}
+          <div
+            className="searchFields__option__form__goBack"
+            onClick={() => history.goBack()}
+          >
+            <span>بستن</span>
+          </div>
         </form>
       </div>
       <div className="listPersons">

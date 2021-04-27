@@ -56,21 +56,29 @@ const RowItem = ({ media, person, slug, context, isRow, postId }) => {
       if (cancel !== undefined) {
         cancel();
       }
-      // console.log(media?.name, person?.[0]?.name);
-      try {
-        const res = await axios.downloader.get(`/${media?.telegram_id}`, {
-          cancelToken: new CancelToken(function executor(c) {
-            cancel = c;
-          }),
-        });
-        // console.log();
-        setUrl(res.data.download_link, context);
-        // if (!showMusic) {
-        //   ChangeShowMusic();
-        // }
+      console.log(media.path);
+
+      if (media.path) {
+        console.log(media.path);
+        setUrl(media.path, context);
         playMusic();
-      } catch (error) {
-        console.log(error);
+      } else {
+        // console.log(media?.name, person?.[0]?.name);
+        try {
+          const res = await axios.downloader.get(`/${media?.telegram_id}`, {
+            cancelToken: new CancelToken(function executor(c) {
+              cancel = c;
+            }),
+          });
+          // console.log();
+          setUrl(res.data.download_link, context);
+          // if (!showMusic) {
+          //   ChangeShowMusic();
+          // }
+          playMusic();
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   };
@@ -169,8 +177,11 @@ const RowItem = ({ media, person, slug, context, isRow, postId }) => {
           className="visit "
           onClick={() => testAuth()}
         >
+          {/* <h4 className="rowItem__title">{truncate(media?.name, 4)}</h4> */}
           <h4 className="rowItem__title text-center">
-            {truncate(media?.name, 4)}
+            <div className="scroll__rowItem__title">
+              {truncate(media?.name, 4)}
+            </div>
             {/* {media?.name} */}
           </h4>
         </Link>

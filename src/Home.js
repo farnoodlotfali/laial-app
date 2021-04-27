@@ -9,7 +9,9 @@ import authContext from "./auth/authContext";
 import { Helmet } from "react-helmet";
 
 const Home = () => {
-  const { loading, getHome, home, homeMeta } = useContext(appContext);
+  const { loading, getHome, home, homeMeta, showMusic } = useContext(
+    appContext
+  );
   const { user } = useContext(authContext);
   useEffect(() => {
     if (home === null) {
@@ -46,7 +48,7 @@ const Home = () => {
           <Spinner />
         ) : (
           home !== null && (
-            <div className="home">
+            <div className={`home ${showMusic && "AddPaddingHome"}`}>
               {home.map((data, i) =>
                 data.banner !== null ? (
                   data.banner.banner_type === "big" ? (

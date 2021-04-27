@@ -23,6 +23,7 @@
 }
 
 .rowItem__title {
+  width: 240px;
   cursor: pointer;
   font-size: 20px;
   font-weight: 900;
@@ -37,12 +38,23 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.rowItem__title:hover {
+/* .rowItem__title:hover {
   transform: scale(1.1);
-}
+} */
 
 .rowItem__info a:hover {
   text-decoration: none !important;
+}
+.carousel-cellRowItem:hover .scroll__rowItem__title {
+  animation: animate 6s linear infinite;
+}
+@keyframes animate {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 .rowItem__person {
@@ -268,6 +280,7 @@
   }
 
   .rowItem__title {
+    width: 100%;
     margin: 0;
     padding-bottom: 0;
     font-size: 12px;

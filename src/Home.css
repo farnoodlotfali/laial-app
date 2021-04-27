@@ -2,8 +2,11 @@
   position: relative;
   /* min-height: 100vh; */
 }
+.AddPaddingHome {
+  padding-bottom: 111px;
+}
 @media (max-width: 768px) {
-  .home {
+  /* .home {
     padding-bottom: 40px;
-  }
+  } */
 }

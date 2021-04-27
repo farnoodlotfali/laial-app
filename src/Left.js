@@ -139,9 +139,9 @@ const Left = () => {
             </div>
           </div>
         </div>
-        {playList.length !== 0 ? (
+        {playList && playList.length !== 0 ? (
           <div className="songs ">
-            {playList.map((item, i) => (
+            {playList?.map((item, i) => (
               <SongOnLeft
                 key={item.id}
                 item={item.post ? item.post : item}

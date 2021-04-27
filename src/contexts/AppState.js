@@ -255,7 +255,7 @@ const AppState = (props) => {
     });
     try {
       const res = await axios.instanceApi.get(`persons/${newSlug}`);
-      // console.log(res.data);
+      console.log(res.data);
       dispatch({
         type: GET_PERSON,
         payload: {

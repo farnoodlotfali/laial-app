@@ -30,7 +30,6 @@ import Test from "./Test";
 const App = () => {
   return (
     <div className="app ">
-      {/* <Test /> */}
       <AppState>
         <AuthState>
           <Playerstate>
@@ -69,11 +68,12 @@ const App = () => {
                 <Route
                   sensitive
                   exact
-                  path="/allpersons"
+                  path="/all-persons"
                   component={AllPerson}
                 />
                 <Route exact path="/password_reset" component={PasswordReset} />
                 <Route exact path="/not_found" component={NotFound} />
+                {/* <Route exact path="/test" component={Test} /> */}
                 <Route exact path="/:slug" component={Home} />
                 <Route exact path="/**" component={NotFound} />
               </Switch>

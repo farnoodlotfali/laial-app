@@ -30,13 +30,13 @@ const RowList = ({ id, title, slug = "", data }) => {
           to={`/list/${slug}`}
           className=" text-light rowList__moreSong  d-flex   ml-3"
         >
-          <div className=" text-light title mr-3">{title}</div>
+          <div className=" text-light title mr-3 text-nowrap">{title}</div>
         </Link>
-        <div className="d-flex  align-items-center ">
+        <div className="d-flex  align-items-center text-nowrap ">
           {pageinate === true ? (
             <Link
               to={`/list/${slug}`}
-              className=" text-light rowList__moreSong mr-5 d-flex   ml-3"
+              className=" text-light rowList__moreSong  d-flex   ml-3"
             >
               <span className="rowList__showMore">نمایش همه </span>
               <ChevronLeftRounded className="align-self-center rowList__showMore__icon" />

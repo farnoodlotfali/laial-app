@@ -5,8 +5,15 @@ let downloaderTryCount = 0;
 const instanceApi = axios.create({
   baseURL: "http://laial.7negare.ir/api",
 });
+// instanceApi.interceptors.request.use((request) => {
+//   console.log(request);
+
+//   return request;
+// });
 instanceApi.interceptors.response.use(
   (response) => {
+    // console.log(response);
+
     return response;
   },
 
@@ -73,9 +80,15 @@ instanceApi.interceptors.response.use(
 const downloader = axios.create({
   baseURL: "http://downloader.7negare.ir/download",
 });
+// downloader.interceptors.request.use((request) => {
+//   console.log(request);
+
+//   return request;
+// });
 
 downloader.interceptors.response.use(
   (response) => {
+    // console.log(response);
     return response;
   },
 

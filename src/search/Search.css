@@ -6,10 +6,19 @@
 .search__title {
   color: white;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  width: 100%;
+  margin-top: 30px;
+  text-shadow: 0 5px 15px rgba(120, 121, 167, 0.73);
 }
+
 .searchFields__option {
   direction: rtl;
+}
+.searchFields__option__form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .searchFields__option input[type="text"] {
   border-radius: 30px;
@@ -30,7 +39,7 @@
 
 .searchFields__option input[type="submit"] {
   border-radius: 7px;
-  padding: 7px;
+  padding: 10px 7px;
   width: 20%;
   outline-width: 0;
   box-shadow: 0 5px 15px rgb(173 173 173 / 73%);
@@ -39,10 +48,21 @@
   font-weight: bold;
   font-size: 15px;
 }
+
+.searchFields__option__form__goBack {
+  color: white;
+  margin-right: 14px;
+  background-color: rgb(231, 64, 64);
+  box-shadow: 0 5px 15px rgb(173 173 173 / 73%);
+  border: 1px solid gray;
+  border-radius: 7px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
 .search .infinite-scroll-component {
   display: flex;
   flex-wrap: wrap;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   height: 100%;
 
   justify-content: center;

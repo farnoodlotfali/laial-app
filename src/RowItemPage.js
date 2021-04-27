@@ -66,7 +66,7 @@ const RowItemPage = () => {
     loadUser();
     // eslint-disable-next-line
   }, [params.slug, user]);
-  // console.log(dataSongPage.id);
+  // console.log(dataSongPage?.media?.[0]?.telegram_id);
   // نشان دادن موزیک و پخش موزیک
   const playMusicAndShowMusicBar = async () => {
     setIds(
@@ -84,6 +84,7 @@ const RowItemPage = () => {
       const res = await axios.downloader.get(
         `/${dataSongPage?.media?.[0]?.telegram_id}`
       );
+      // console.log(res.data.download_link);
       setUrl(res.data.download_link);
       if (!showMusic) {
         ChangeShowMusic();
@@ -153,7 +154,7 @@ const RowItemPage = () => {
                 نام آهنگ : {dataSongPage?.media?.[0]?.name}
               </div>
               <div className="musicInfo__singer mb-3 d-flex">
-                خواننده : {dataSongPage?.person?.[0]?.name}
+                نام خواننده : {dataSongPage?.person?.[0]?.name}
               </div>
               <div className=" mb-3 d-flex">
                 توضیحات : {dataSongPage?.desciption}
