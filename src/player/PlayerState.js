@@ -303,9 +303,9 @@ const Playerstate = (props) => {
 
   const playMusic = async (audioElement = audioRef.current) => {
     if (audioElement) {
-      audioElement.pause();
+      // audioElement.pause();
       audioElement.load();
-      await audioElement.play();
+      // await audioElement.play();
     }
     dispatch({
       type: PLAY_MUSIC,
@@ -556,6 +556,7 @@ const Playerstate = (props) => {
       <Fragment>
         <div id="audio">
           <audio
+            onLoadedMetadata={() => audioRef.current.play() & console.log(11)}
             onPause={PauseMusicKey}
             onPlay={playMusicKey}
             ref={audioRef}
