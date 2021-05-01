@@ -248,7 +248,13 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
+.prepareSong {
+  position: relative;
+  bottom: -200px;
+  width: 100%;
+  font-size: 17px;
+  color: white;
+}
 @media (max-width: 768px) {
   .rowItem__onHover {
     display: none !important;
@@ -305,5 +311,10 @@
     bottom: 100%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+  .prepareSong {
+    bottom: -95px;
+
+    font-size: 7px;
   }
 }

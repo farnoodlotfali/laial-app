@@ -60,6 +60,10 @@ const RowList = ({ id, title, slug = "", data }) => {
               person={item.person}
               slug={item.slug}
               context={context}
+              meta_description={item.meta_description}
+              meta_title={item.meta_title}
+              description={item.description}
+              title={item.title}
             />
           );
         })}

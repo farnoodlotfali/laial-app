@@ -26,6 +26,7 @@ import {
   REMOVE_LOADING_ON_USER_PLAYLIST,
   CHANGE_SHOW_RIGHT,
   CHANGE_SHOW_LEFT,
+  CHANGE_HOME_META,
 } from "./types";
 const AppState = (props) => {
   const initialState = {
@@ -779,6 +780,16 @@ const AppState = (props) => {
       console.log(error);
     }
   };
+
+  const changeHomeMeta = (newTitle, newDesc) => {
+    dispatch({
+      type: CHANGE_HOME_META,
+      payload: {
+        newTitle: newTitle,
+        newDesc: newDesc,
+      },
+    });
+  };
   return (
     <AppContext.Provider
       value={{
@@ -811,6 +822,7 @@ const AppState = (props) => {
         addMusicToPlaylist,
         setWhichSongToSaveInPlaylist,
         addMusicToMAINPlaylist,
+        changeHomeMeta,
         home: state.home,
         homeMeta: state.homeMeta,
         menu: state.menu,

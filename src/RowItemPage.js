@@ -66,7 +66,7 @@ const RowItemPage = () => {
     loadUser();
     // eslint-disable-next-line
   }, [params.slug, user]);
-  // console.log(dataSongPage?.media?.[0]?.telegram_id);
+  // console.log(dataSongPage?.media?.[0]);
   // نشان دادن موزیک و پخش موزیک
   const playMusicAndShowMusicBar = async () => {
     setIds(
@@ -80,18 +80,26 @@ const RowItemPage = () => {
         : dataSongPage?.person?.[0]?.image.full_image_url,
       dataSongPage?.id
     );
-    try {
-      const res = await axios.downloader.get(
-        `/${dataSongPage?.media?.[0]?.telegram_id}`
-      );
-      // console.log(res.data.download_link);
-      setUrl(res.data.download_link);
+    if (dataSongPage?.media?.[0]?.path) {
+      setUrl(dataSongPage?.media?.[0]?.path);
       if (!showMusic) {
         ChangeShowMusic();
       }
       playMusic();
-    } catch (error) {
-      console.log(error);
+    } else {
+      try {
+        const res = await axios.downloader.get(
+          `/${dataSongPage?.media?.[0]?.telegram_id}`
+        );
+        // console.log(res.data.download_link);
+        setUrl(res.data.download_link);
+        if (!showMusic) {
+          ChangeShowMusic();
+        }
+        playMusic();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
   const onchange = (e) => {
@@ -109,18 +117,39 @@ const RowItemPage = () => {
             ? dataSongPage?.meta_title
             : dataSongPage?.media?.[0]?.name}
         </title>
-        <meta name="title" content={dataSongPage?.meta_title} />
+        <meta
+          name="title"
+          content={
+            dataSongPage?.meta_title !== null
+              ? dataSongPage?.meta_title
+              : dataSongPage?.media?.[0]?.name
+          }
+        />
         <meta name="description" content={dataSongPage?.meta_description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={dataSongPage?.slug} />
-        <meta property="og:title" content={dataSongPage?.meta_title} />
+        <meta
+          property="og:title"
+          content={
+            dataSongPage?.meta_title !== null
+              ? dataSongPage?.meta_title
+              : dataSongPage?.media?.[0]?.name
+          }
+        />
         <meta
           property="og:description"
           content={dataSongPage?.meta_description}
         />
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="http:app.7negare.ir/" />
-        <meta property="twitter:title" content={dataSongPage?.meta_title} />
+        <meta
+          property="twitter:title"
+          content={
+            dataSongPage?.meta_title !== null
+              ? dataSongPage?.meta_title
+              : dataSongPage?.media?.[0]?.name
+          }
+        />
         <meta
           property="twitter:description"
           content={dataSongPage?.meta_description}
@@ -151,7 +180,7 @@ const RowItemPage = () => {
             </div>
             <div className="musicInfo__left text-light   justify-content-start align-items-center">
               <div className="musicInfo__name mt-5 mb-3 d-flex">
-                نام آهنگ : {dataSongPage?.media?.[0]?.name}
+                نام اثر : {dataSongPage?.media?.[0]?.name}
               </div>
               <div className="musicInfo__singer mb-3 d-flex">
                 نام خواننده : {dataSongPage?.person?.[0]?.name}

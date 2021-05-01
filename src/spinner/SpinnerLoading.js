@@ -22,6 +22,7 @@ const SpinnerLoading = () => {
         alt="..loading"
         style={{ widows: "200px", display: "block" }}
       />
+      {/* <span>در حال آماده سازی</span> */}
     </div>
   );
 };

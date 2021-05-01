@@ -22,6 +22,7 @@ import {
   REMOVE_LOADING_ON_USER_PLAYLIST,
   CHANGE_SHOW_RIGHT,
   CHANGE_SHOW_LEFT,
+  CHANGE_HOME_META,
 } from "./types";
 // eslint-disable-next-line
 export default (state, action) => {
@@ -38,6 +39,16 @@ export default (state, action) => {
           id: action.payload.id,
         },
         loading: false,
+      };
+    case CHANGE_HOME_META:
+      return {
+        ...state,
+        homeMeta: {
+          ...state.homeMeta,
+          meta_description: action.payload.newDesc,
+          meta_title: action.payload.newTitle,
+          name: action.payload.newTitle,
+        },
       };
     case GET_MENU:
       return {

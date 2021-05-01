@@ -307,9 +307,9 @@ const Playerstate = (props) => {
       audioElement.load();
       // await audioElement.play();
     }
-    dispatch({
-      type: PLAY_MUSIC,
-    });
+    // dispatch({
+    //   type: PLAY_MUSIC,
+    // });
   };
 
   const muteAndUnmuteMusic = (audioElement) => {
@@ -556,7 +556,13 @@ const Playerstate = (props) => {
       <Fragment>
         <div id="audio">
           <audio
-            onLoadedMetadata={() => audioRef.current.play() & console.log(11)}
+            onLoadedMetadata={() =>
+              audioRef.current.play() &
+              console.log(11) &
+              dispatch({
+                type: PLAY_MUSIC,
+              })
+            }
             onPause={PauseMusicKey}
             onPlay={playMusicKey}
             ref={audioRef}
@@ -617,6 +623,7 @@ const Playerstate = (props) => {
 
                 <div className="player">
                   <Slider
+                    disabled={state.loading}
                     variant="determinate"
                     value={state.currentProgress}
                     onChange={(e, newDuration) => handleChange(newDuration)}
@@ -624,7 +631,6 @@ const Playerstate = (props) => {
                 </div>
 
                 <div className="last-time align-self-center ">
-                  {" "}
                   {Math.floor(state.totalDuration / 60) +
                     ":" +
                     zeroPad(Math.floor(state.totalDuration % 60), 2)}
@@ -818,7 +824,10 @@ const Playerstate = (props) => {
                     </div>
                     <div className="icon mr-4 align-self-center ">
                       {state.loading ? (
-                        <SpinnerLoading />
+                        <>
+                          <SpinnerLoading />
+                          {/* <div className="">در حال آماده سازی</div> */}
+                        </>
                       ) : state.playing ? (
                         <div
                           className=""
@@ -879,6 +888,7 @@ const Playerstate = (props) => {
                         onMouseUp={() => (state.seek = false)}
                       >
                         <Slider
+                          disabled={state.loading}
                           variant="determinate"
                           value={state.currentProgress}
                           onChange={(e, newDuration) =>

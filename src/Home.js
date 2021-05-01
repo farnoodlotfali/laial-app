@@ -7,7 +7,6 @@ import appContext from "./contexts/appContext";
 import Spinner from "./spinner/Spinner";
 import authContext from "./auth/authContext";
 import { Helmet } from "react-helmet";
-
 const Home = () => {
   const { loading, getHome, home, homeMeta, showMusic } = useContext(
     appContext
@@ -24,16 +23,27 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>{homeMeta?.meta_title}</title>
-        <meta name="title" content={homeMeta?.meta_title} />
+        <title>
+          {homeMeta?.meta_title ? homeMeta?.meta_title : homeMeta?.name}
+        </title>
+        <meta
+          name="title"
+          content={homeMeta?.meta_title ? homeMeta?.meta_title : homeMeta?.name}
+        />
         <meta name="description" content={homeMeta?.meta_description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={homeMeta?.slug} />
-        <meta property="og:title" content={homeMeta?.meta_title} />
+        <meta
+          property="og:title"
+          content={homeMeta?.meta_title ? homeMeta?.meta_title : homeMeta?.name}
+        />
         <meta property="og:description" content={homeMeta?.meta_description} />
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="http:app.7negare.ir/" />
-        <meta property="twitter:title" content={homeMeta?.meta_title} />
+        <meta
+          property="twitter:title"
+          content={homeMeta?.meta_title ? homeMeta?.meta_title : homeMeta?.name}
+        />
         <meta
           property="twitter:description"
           content={homeMeta?.meta_description}

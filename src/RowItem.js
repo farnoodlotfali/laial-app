@@ -14,14 +14,27 @@ import authContext from "./auth/authContext";
 import PlaySvg from "./svgs/PlaySvg";
 // import { LazyLoadImage } from "react-lazy-load-image-component";
 const CancelToken = Axios.CancelToken;
-
 let cancel;
-const RowItem = ({ media, person, slug, context, isRow, postId }) => {
+const RowItem = ({
+  media,
+  person,
+  slug,
+  context,
+  isRow,
+  postId,
+  meta_description,
+  meta_title,
+  description,
+  title,
+}) => {
   // let { slug } = useParams();
   // eslint-disable-next-line
-  const { ChangeShowMusic, ChangeshowCenter, showMusic } = useContext(
-    AppContext
-  ); // eslint-disable-next-line
+  const {
+    ChangeShowMusic,
+    ChangeshowCenter,
+    showMusic,
+    changeHomeMeta,
+  } = useContext(AppContext); // eslint-disable-next-line
   const {
     playMusic,
     playing,
@@ -33,9 +46,13 @@ const RowItem = ({ media, person, slug, context, isRow, postId }) => {
   } = useContext(playerContext);
 
   const { testAuth } = useContext(authContext);
-  // console.log(postId);
+  // console.log(media?.name);
   const playMusicAndShowMusicBar = async () => {
     // نشان دادن موزیک و پخش موزیک
+
+    // ارسال متا تایتل ها (توضیحات) آهنگ به صفحه اصلی
+    sendToHome();
+
     if (!showMusic) {
       ChangeShowMusic();
     }
@@ -56,10 +73,10 @@ const RowItem = ({ media, person, slug, context, isRow, postId }) => {
       if (cancel !== undefined) {
         cancel();
       }
-      console.log(media.path);
+      // console.log(media.path);
 
       if (media.path) {
-        console.log(media.path);
+        // console.log(media.path);
         setUrl(media.path, context);
         playMusic();
       } else {
@@ -85,6 +102,20 @@ const RowItem = ({ media, person, slug, context, isRow, postId }) => {
 
   const truncate = (str, no_words) => {
     return str?.split(" ").splice(0, no_words).join(" ");
+  };
+  const sendToHome = () => {
+    const sendTitle = meta_title
+      ? meta_title
+      : title !== null && title !== ""
+      ? title
+      : media?.name;
+    const sendDescription = meta_description
+      ? meta_description
+      : description !== null && description !== ""
+      ? description
+      : media?.name;
+
+    changeHomeMeta(sendTitle, sendDescription);
   };
   return (
     <div
@@ -132,6 +163,7 @@ const RowItem = ({ media, person, slug, context, isRow, postId }) => {
         {loading && media?.id === songId ? (
           <div className="rowItem__playing">
             <SpinnerLoading />
+            <div className="prepareSong">در حال آماده سازی</div>
           </div>
         ) : playing && media?.id === songId ? (
           <div className=" moblie_play" onClick={() => playAndPauseMusic()}>
@@ -147,6 +179,7 @@ const RowItem = ({ media, person, slug, context, isRow, postId }) => {
         {loading && media?.id === songId ? (
           <div className="play__music___spinner">
             <SpinnerLoading />
+            <div className="prepareSong">در حال آماده سازی</div>
           </div>
         ) : playing && media?.id === songId ? (
           <div className=" play__music" onClick={() => playAndPauseMusic()}>
