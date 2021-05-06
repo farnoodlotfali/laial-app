@@ -15,6 +15,8 @@ import defualtPhoto from "./assets/defualtPhoto.jpeg";
 import "./Left.css";
 import playerContext from "./player/playerContext";
 import SongOnLeft from "./SongOnLeft";
+import Bar from "./player/Bar";
+import Time from "./player/Time";
 
 const Left = () => {
   const { showLeft, ChangeShowLeft, showMusic } = useContext(AppContext);
@@ -36,6 +38,7 @@ const Left = () => {
     songPhoto,
     noneOrLoopOrRepeat,
     changeNoneOrLoopOrRepeat,
+    loading,
   } = useContext(playerContext);
 
   // console.log(playList);
@@ -119,16 +122,19 @@ const Left = () => {
           <div className="playlist__musicBar m d-flex mb-4 mt-2 justify-content-center">
             <div className="player__zone d-flex  col-10 p-0">
               <div className="current-time  d-flex align-items-center">
-                {Math.floor(duration / 60) +
-                  ":" +
-                  zeroPad(Math.floor(duration % 60), 2)}
+                <Time />
               </div>
               <div className="player d-flex align-items-center mx-2">
-                <Slider
+                <Bar
+                  loading={loading}
+                  currentProgress={currentProgress}
+                  handleChange={handleChange}
+                />
+                {/* <Slider
                   variant="determinate"
                   value={currentProgress}
                   onChange={(e, newDuration) => handleChange(newDuration)}
-                />
+                /> */}
               </div>
               <div className="last-time d-flex align-items-center">
                 {" "}

@@ -13,6 +13,8 @@ import {
   USER_LOADED,
   GET_TAGS,
   SAVE_TAGS_SUCCESS,
+  FORCE_LOGIN,
+  CHANGE_SHOW_LOGIN_MODAL,
 } from "./types";
 const AuthState = (props) => {
   const history = useHistory();
@@ -20,6 +22,7 @@ const AuthState = (props) => {
     // tokenAccess: localStorage.getItem('tokenAccess'),
     // tokenRefresh: localStorage.getItem('tokenRefresh'),
     isAuth: false,
+    showLoginModal: false,
     isUserChooseTags: JSON.parse(localStorage.getItem("favorite_items")),
     loading: true,
     error: null,
@@ -29,14 +32,20 @@ const AuthState = (props) => {
       next: null,
       previous: null,
     },
+    forceToLoginDueTo10SongListened:
+      JSON.parse(localStorage.getItem("limitListTo10"))?.length >= 10
+        ? true
+        : false,
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
   const { getAllPlaylists } = useContext(appContext);
+
   useEffect(() => {
     loadUser();
     // eslint-disable-next-line
   }, [state.user]);
+  // console.log(state.forceToLoginDueTo10SongListened);
   //load user
   const loadUser = async () => {
     if (localStorage.tokenAccess) {
@@ -172,7 +181,17 @@ const AuthState = (props) => {
       console.log(error);
     }
   };
-
+  const forceLogin = () => {
+    dispatch({
+      type: FORCE_LOGIN,
+    });
+  };
+  const changeShowLoginModal = (newValue) => {
+    dispatch({
+      payload: newValue,
+      type: CHANGE_SHOW_LOGIN_MODAL,
+    });
+  };
   return (
     <AuthContext.Provider
       value={{
@@ -183,12 +202,16 @@ const AuthState = (props) => {
         testAuth,
         getTags,
         saveChosenTags,
+        forceLogin,
+        changeShowLoginModal,
         isAuth: state.isAuth,
         user: state.user,
         error: state.error,
         isUserChooseTags: state.isUserChooseTags,
         tags: state.tags,
         tagsUrls: state.tagsUrls,
+        showLoginModal: state.showLoginModal,
+        forceToLoginDueTo10SongListened: state.forceToLoginDueTo10SongListened,
         // tokenAccess: state.tokenAccess,
         // tokenRefresh: state.tokenRefresh,
       }}

@@ -7,6 +7,8 @@ import {
   USER_LOADED,
   GET_TAGS,
   SAVE_TAGS_SUCCESS,
+  FORCE_LOGIN,
+  CHANGE_SHOW_LOGIN_MODAL,
 } from "./types";
 // eslint-disable-next-line
 export default (state, action) => {
@@ -20,6 +22,7 @@ export default (state, action) => {
         ...state,
         isAuth: true,
         loading: false,
+        forceToLoginDueTo10SongListened: false,
         isUserChooseTags: action.payload.favorite_items,
         user: action.payload.user,
         tokenAccess: action.payload.token.access,
@@ -33,6 +36,7 @@ export default (state, action) => {
         ...state,
         isAuth: true,
         isUserChooseTags: false,
+        forceToLoginDueTo10SongListened: false,
         loading: false,
         user: action.payload.user,
         tokenAccess: action.payload.token.access,
@@ -76,6 +80,16 @@ export default (state, action) => {
       return {
         ...state,
         isUserChooseTags: true,
+      };
+    case FORCE_LOGIN:
+      return {
+        ...state,
+        forceToLoginDueTo10SongListened: true,
+      };
+    case CHANGE_SHOW_LOGIN_MODAL:
+      return {
+        ...state,
+        showLoginModal: action.payload,
       };
     default:
       return {

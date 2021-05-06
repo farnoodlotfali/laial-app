@@ -17,6 +17,7 @@ const PhoneMenu = () => {
     ChangeShowRight,
     showRight,
     showMusic,
+    showCenter,
   } = useContext(appContext);
   const {
     showMusicBarOnMoblieRatio,
@@ -54,12 +55,15 @@ const PhoneMenu = () => {
             {/* <span>جستجو</span> */}
           </NavLink>
         </div>
-        <div className="phoneMenu__item" onClick={ChangeshowCenter}>
+        <div
+          className={`phoneMenu__item ${showCenter && "selected"} `}
+          onClick={ChangeshowCenter}
+        >
           <Headset fontSize="large" />
           {/* <span>لیست من</span> */}
         </div>{" "}
         <div
-          className="phoneMenu__item"
+          className={`phoneMenu__item ${showMusic && "selected"} `}
           onClick={() => currentUrl !== null && showMusicBar()}
         >
           <MusicNote fontSize="large" />

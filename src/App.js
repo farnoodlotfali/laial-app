@@ -27,6 +27,7 @@ import PasswordReset from "./PasswordReset";
 import UserInterests from "./UserInterests";
 import NotFound from "./NotFound";
 import Test from "./Test";
+import ForceLogin from "./ForceLogin";
 const App = () => {
   return (
     <div className="app ">
@@ -35,6 +36,7 @@ const App = () => {
           <Playerstate>
             <SearchState>
               <ScrollToTop />
+              <ForceLogin />
               <PhoneList />
               <Center />
               <Left />

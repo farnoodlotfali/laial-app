@@ -8,3 +8,5 @@ export const LOGOUT = "LOGOUT";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const GET_TAGS = "GET_TAGS";
 export const SAVE_TAGS_SUCCESS = "SAVE_TAGS_SUCCESS";
+export const FORCE_LOGIN = "FORCE_LOGIN";
+export const CHANGE_SHOW_LOGIN_MODAL = "CHANGE_SHOW_LOGIN_MODAL";

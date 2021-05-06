@@ -190,14 +190,14 @@ const Test = () => {
                     </div>
                   ) : audioOp.playing && song.media?.id === audioOp.songId ? (
                     <div
-                      className=" play__music"
+                      className=" play__musisc"
                       //  onClick={() => playAndPauseMusic()}
                     >
                       <Pause />
                     </div>
                   ) : (
                     <div
-                      className=" play__music"
+                      className=" play__musics"
                       onClick={() => stopSong() & getUrl(song)}
                     >
                       <PlayArrowRounded

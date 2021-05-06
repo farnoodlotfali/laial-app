@@ -1,0 +1,38 @@
+.forceLogin .modal-content {
+  background-color: rgb(34, 34, 34);
+  color: white;
+  box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
+}
+.forceLogin .modal-content .close {
+  color: white;
+}
+.forceLogin__title {
+  font-size: 22px;
+}
+
+.forceLogin__btn {
+  border: 1px solid whitesmoke;
+  border-radius: 5px;
+  padding: 5px 15px;
+  cursor: pointer;
+  background-color: gray;
+  width: 150px;
+  text-align: center;
+}
+.forceLogin__btn:hover {
+  background-color: rgb(17, 17, 17);
+}
+.forceLogin a {
+  color: white;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .forceLogin__title {
+    font-size: 14px;
+  }
+  .forceLogin__btn {
+    width: 90px;
+    font-size: 12px;
+  }
+}

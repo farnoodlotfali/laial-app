@@ -45,56 +45,64 @@ const RowItem = ({
     playAndPauseMusic,
   } = useContext(playerContext);
 
-  const { testAuth } = useContext(authContext);
+  const { forceToLoginDueTo10SongListened, changeShowLoginModal } = useContext(
+    authContext
+  );
   // console.log(media?.name);
   const playMusicAndShowMusicBar = async () => {
     // نشان دادن موزیک و پخش موزیک
 
     // ارسال متا تایتل ها (توضیحات) آهنگ به صفحه اصلی
-    sendToHome();
-
-    if (!showMusic) {
-      ChangeShowMusic();
-    }
-    if (media?.id === songId) {
-      playAndPauseMusic();
+    if (forceToLoginDueTo10SongListened) {
+      changeShowLoginModal(true);
     } else {
-      setIds(
-        media?.telegram_id,
-        media?.id,
-        media?.duration,
-        media?.name,
-        person?.[0]?.name,
-        media?.image !== null
-          ? media?.image
-          : person?.[0]?.image.full_image_url,
-        postId
-      );
-      if (cancel !== undefined) {
-        cancel();
-      }
-      // console.log(media.path);
+      sendToHome();
 
-      if (media.path) {
-        // console.log(media.path);
-        setUrl(media.path, context);
-        playMusic();
+      if (!showMusic) {
+        ChangeShowMusic();
+      }
+      if (media?.id === songId) {
+        playAndPauseMusic();
       } else {
-        // console.log(media?.name, person?.[0]?.name);
-        try {
-          const res = await axios.downloader.get(`/${media?.telegram_id}`, {
-            cancelToken: new CancelToken(function executor(c) {
-              cancel = c;
-            }),
-          });
-          // console.log();
-          setUrl(res.data.download_link, context);
-          // if (!showMusic) {
-          //   ChangeShowMusic();
-          // }
+        setIds(
+          media?.telegram_id,
+          media?.id,
+          media?.duration,
+          media?.name,
+          person?.[0]?.name,
+          media?.image !== null
+            ? media?.image
+            : person?.[0]?.image.full_image_url,
+          postId
+        );
+        if (cancel !== undefined) {
+          cancel();
+        }
+        // console.log(media.path);
+
+        if (media.path) {
+          // console.log("path");
+          setUrl(media.path, context);
           playMusic();
-        } catch (error) {
-          console.log(error);
+        } else {
+          // console.log("telegram_id");
+
+          // console.log(media?.name, person?.[0]?.name);
+          try {
+            const res = await axios.downloader.get(`/${media?.telegram_id}`, {
+              cancelToken: new CancelToken(function executor(c) {
+                cancel = c;
+              }),
+            });
+            // console.log();
+            setUrl(res.data.download_link, context);
+            // if (!showMusic) {
+            //   ChangeShowMusic();
+            // }
+            playMusic();
+          } catch (error) {
+            console.log(error);
+          }
         }
       }
     }
@@ -194,26 +202,22 @@ const RowItem = ({
         <Badge className="badge bg-light">{/* شور */}</Badge>
         {/* </Link> */}
       </div>
-      {/* <div className='rowItem__onHover'>
-        <div className='rowItem__icons'>
-          <div className='rowItem__icon' onClick={playMusicAndShowMusicBar}>
-            <PlayCircleFilled fontSize='large' />
-          </div>
-          <div className='rowItem__icon' onClick={ChangeshowCenter}>
-            <PlaylistAdd fontSize='large' />
-          </div>
-        </div>
-      </div>{' '} */}
+
       <div className="rowItem__info ">
         <Link
           to={`/song/${slug}`}
           className="visit "
-          onClick={() => testAuth()}
+          // onClick={() => testAuth()}
         >
           {/* <h4 className="rowItem__title">{truncate(media?.name, 4)}</h4> */}
           <h4 className="rowItem__title text-center">
             <div className="scroll__rowItem__title">
+              {/* {truncate(media?.name, 4)} */}
+              {media?.name}
+            </div>
+            <div className="steady__rowItem__title">
               {truncate(media?.name, 4)}
+              {/* {media?.name} */}
             </div>
             {/* {media?.name} */}
           </h4>
@@ -221,7 +225,7 @@ const RowItem = ({
         <Link
           to={`/person/${person?.[0]?.slug}`}
           className="visit "
-          onClick={() => testAuth()}
+          // onClick={() => testAuth()}
         >
           <h4 className="rowItem__person text-center">
             {/* حاج محمد شریفی */}

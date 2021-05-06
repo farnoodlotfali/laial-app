@@ -48,6 +48,8 @@ import { useLocation } from "react-router";
 import axios from "../axios/axios";
 import authContext from "../auth/authContext";
 import SpinnerLoading from "../spinner/SpinnerLoading";
+import Bar from "./Bar";
+import Time from "./Time";
 // eslint-disable-next-line
 
 const detectMob = () => {
@@ -91,9 +93,15 @@ const browser = () => {
 
   return browser.name;
 };
+const audio = document.createElement("audio");
 
 const Playerstate = (props) => {
-  const { isAuth } = useContext(authContext);
+  const {
+    isAuth,
+    forceLogin,
+    forceToLoginDueTo10SongListened,
+    changeShowLoginModal,
+  } = useContext(authContext);
   const location = useLocation();
   const audioRef = useRef();
   const {
@@ -103,6 +111,7 @@ const Playerstate = (props) => {
     addMusicToMAINPlaylist,
     setWhichSongToSaveInPlaylist,
     addMusicToRecentlyViewed,
+    changeHomeMeta,
   } = useContext(AppContext);
   const initialState = {
     playList: [],
@@ -142,30 +151,15 @@ const Playerstate = (props) => {
 
   useEffect(() => {
     //   حرکت خواهد کردprogress اگر در حال پخش بود
-    if (state.playing && !state.loading) {
-      //progress سرعت جلو رفتن
-      // const timer = setInterval(() => {
-      if (audioRef?.current && audioRef?.current?.ended && !state.seek) {
-        if (state.repeatOne) {
-          repeatSongAgain();
-        } else nextMusic();
-      } else if (audioRef?.current?.ended) {
-        dispatch({ type: PAUSE_MUSIC });
-      }
-      // else if (
-      //   audioRef?.current?.paused &&
-      //   state.currentUrl !== null &&
-      //   !state.loading
-      // ) {
-      //   audioRef?.current?.play();
-      // }
-
-      // }, 1000);
-      // return () => {
-      //   clearInterval(timer);
-      // };
-    }
-
+    // if (state.playing && !state.loading) {
+    //   if (audioRef?.current && audioRef?.current?.ended && !state.seek) {
+    //     if (state.repeatOne) {
+    //       repeatSongAgain();
+    //     } else nextMusic();
+    //   } else if (audioRef?.current?.ended) {
+    //     dispatch({ type: PAUSE_MUSIC });
+    //   }
+    // }
     // eslint-disable-next-line
   }, [
     state.playing,
@@ -203,7 +197,6 @@ const Playerstate = (props) => {
         postId: postId,
       },
     });
-
     // set if user listen this song twice or more if true add to mainplaylist,
     if (isAuth) {
       if (JSON.parse(localStorage.getItem("mainPlaylist")) === null) {
@@ -237,6 +230,30 @@ const Playerstate = (props) => {
         // const item = { songId: id, count: 1 };
         // mainPlaylist.push(item);
         // localStorage.setItem('mainPlaylist', JSON.stringify(mainPlaylist));
+      }
+    } else {
+      if (JSON.parse(localStorage.getItem("limitListTo10")) === null) {
+        const limitListTo10 = [];
+        const item = { postId: postId };
+        limitListTo10.push(item);
+        localStorage.setItem("limitListTo10", JSON.stringify(limitListTo10));
+      } else {
+        let limitListTo10 = JSON.parse(localStorage.getItem("limitListTo10"));
+
+        if (limitListTo10.length >= 10) {
+          forceLogin();
+        } else {
+          let hasThisItem = limitListTo10.some((x) => x.postId === postId);
+          // console.log(hasThisItem);
+          if (!hasThisItem) {
+            const item = { postId: postId };
+            limitListTo10.push(item);
+            localStorage.setItem(
+              "limitListTo10",
+              JSON.stringify(limitListTo10)
+            );
+          }
+        }
       }
     }
 
@@ -356,6 +373,7 @@ const Playerstate = (props) => {
   };
 
   const nextMusic = async (audioElement = audioRef.current) => {
+    // console.log(22);
     audioElement.pause();
     putToMusicChangeList(audioElement.currentTime, "next");
     // let last = null;
@@ -376,26 +394,48 @@ const Playerstate = (props) => {
               ? playList[0]
               : -1;
           if (chosen !== -1) {
-            setIds(
-              chosen.media[0]?.telegram_id,
-              chosen.media[0]?.id,
-              chosen.media[0]?.duration,
-              chosen.media[0]?.name,
-              chosen.person?.[0]?.name,
-              chosen?.media?.[0]?.image !== null
-                ? chosen?.media?.[0]?.image
-                : chosen?.person?.[0]?.image.full_image_url,
-              chosen.id
-            );
-            try {
-              const res = await axios.downloader.get(
-                `/${chosen.media[0]?.telegram_id}`
-              );
-              setUrl(res.data.download_link, playList);
+            if (forceToLoginDueTo10SongListened) {
+              changeShowLoginModal(true);
+            } else {
+              const sendTitle = chosen?.meta_title
+                ? chosen?.meta_title
+                : chosen?.title !== null && chosen?.title !== ""
+                ? chosen?.title
+                : chosen?.media?.name;
+              const sendDescription = chosen?.meta_description
+                ? chosen?.meta_description
+                : chosen?.description !== null && chosen?.description !== ""
+                ? chosen?.description
+                : chosen?.media?.name;
 
-              playMusic();
-            } catch (error) {
-              console.log(error);
+              changeHomeMeta(sendTitle, sendDescription);
+
+              setIds(
+                chosen.media[0]?.telegram_id,
+                chosen.media[0]?.id,
+                chosen.media[0]?.duration,
+                chosen.media[0]?.name,
+                chosen.person?.[0]?.name,
+                chosen?.media?.[0]?.image !== null
+                  ? chosen?.media?.[0]?.image
+                  : chosen?.person?.[0]?.image.full_image_url,
+                chosen.id
+              );
+              if (chosen.media[0]?.path) {
+                setUrl(chosen.media[0]?.path, playList);
+                playMusic();
+              } else {
+                try {
+                  const res = await axios.downloader.get(
+                    `/${chosen.media[0]?.telegram_id}`
+                  );
+                  setUrl(res.data.download_link, playList);
+
+                  playMusic();
+                } catch (error) {
+                  console.log(error);
+                }
+              }
             }
           } else {
             dispatch({
@@ -426,27 +466,49 @@ const Playerstate = (props) => {
             playList[which] !== undefined
               ? playList[which]
               : playList[playList.length - 1];
+          if (forceToLoginDueTo10SongListened) {
+            changeShowLoginModal(true);
+          } else {
+            const sendTitle = chosen?.meta_title
+              ? chosen?.meta_title
+              : chosen?.title !== null && chosen?.title !== ""
+              ? chosen?.title
+              : chosen?.media?.name;
+            const sendDescription = chosen?.meta_description
+              ? chosen?.meta_description
+              : chosen?.description !== null && chosen?.description !== ""
+              ? chosen?.description
+              : chosen?.media?.name;
 
-          setIds(
-            chosen.media[0]?.telegram_id,
-            chosen.media[0]?.id,
-            chosen.media[0]?.duration,
-            chosen.media[0]?.name,
-            chosen.person?.[0]?.name,
-            chosen?.media?.[0]?.image !== null
-              ? chosen?.media?.[0]?.image
-              : chosen?.person?.[0]?.image.full_image_url,
-            chosen.id
-          );
-          try {
-            const res = await axios.downloader.get(
-              `/${chosen.media[0]?.telegram_id}`
+            changeHomeMeta(sendTitle, sendDescription);
+
+            setIds(
+              chosen.media[0]?.telegram_id,
+              chosen.media[0]?.id,
+              chosen.media[0]?.duration,
+              chosen.media[0]?.name,
+              chosen.person?.[0]?.name,
+              chosen?.media?.[0]?.image !== null
+                ? chosen?.media?.[0]?.image
+                : chosen?.person?.[0]?.image.full_image_url,
+              chosen.id
             );
-            setUrl(res.data.download_link, playList);
 
-            playMusic();
-          } catch (error) {
-            console.log(error);
+            if (chosen.media[0]?.path) {
+              setUrl(chosen.media[0]?.path, playList);
+              playMusic();
+            } else {
+              try {
+                const res = await axios.downloader.get(
+                  `/${chosen.media[0]?.telegram_id}`
+                );
+                setUrl(res.data.download_link, playList);
+
+                playMusic();
+              } catch (error) {
+                console.log(error);
+              }
+            }
           }
         }
       }
@@ -514,13 +576,13 @@ const Playerstate = (props) => {
       }
     }
   };
+
   return (
     <PlayerContext.Provider
       value={{
         playAndPauseMusic,
         muteAndUnmuteMusic,
         setPlayList,
-        mute: state.mute,
         playing: state.playing,
         volume: state.volume,
         duration: state.duration,
@@ -556,43 +618,37 @@ const Playerstate = (props) => {
       <Fragment>
         <div id="audio">
           <audio
-            onLoadedMetadata={() =>
-              audioRef.current.play() &
-              console.log(11) &
-              dispatch({
-                type: PLAY_MUSIC,
-              })
-            }
+            onError={(e) => console.log("error on player", e.response)}
+            id="audio2"
+            onLoadedMetadata={() => {
+              if (forceToLoginDueTo10SongListened) {
+                changeShowLoginModal(true);
+              } else {
+                audioRef.current.play();
+                dispatch({
+                  type: PLAY_MUSIC,
+                });
+              }
+            }}
+            onEnded={() => {
+              if (
+                audioRef?.current &&
+                audioRef?.current?.ended &&
+                !state.seek
+              ) {
+                if (state.repeatOne) {
+                  repeatSongAgain();
+                } else nextMusic();
+              } else if (audioRef?.current?.ended) {
+                dispatch({ type: PAUSE_MUSIC });
+              }
+            }}
             onPause={PauseMusicKey}
             onPlay={playMusicKey}
             ref={audioRef}
             className="player"
-            onTimeUpdate={() => {
-              // console.log(Math.floor(audioRef?.current?.currentTime));
-              let progress = parseFloat(
-                (audioRef?.current?.currentTime * 100) /
-                  audioRef?.current?.duration
-              ).toFixed(2);
-              if (!state.isThisSongAddedToRecentlyViewdPlaylist) {
-                if (Math.floor(progress) === 33) {
-                  state.isThisSongAddedToRecentlyViewdPlaylist = true;
-                  addMusicToRecentlyViewed(
-                    Math.floor(audioRef?.current?.currentTime),
-                    state.postId
-                  );
-                }
-              }
-              setNewProgress(progress);
-              dispatch({
-                type: CHANGE_DURATION,
-                payload: {
-                  currentTime: audioRef.current?.currentTime,
-                },
-              });
-            }}
             // autoPlay={state.playing}
             src={state.currentUrl}
-            // src={"http://dl.rovzenews.ir/telegram/1273/1273.mp3"}
             // src={
             //   "https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3"
             // }
@@ -616,18 +672,24 @@ const Playerstate = (props) => {
             >
               <div className="player__zone d-flex text-light ">
                 <div className="current-time align-self-center ">
-                  {Math.floor(audioRef.current?.currentTime / 60) +
+                  <Time />
+                  {/* {Math.floor(audioRef.current?.currentTime / 60) +
                     ":" +
-                    zeroPad(Math.floor(audioRef.current?.currentTime % 60), 2)}
+                    zeroPad(Math.floor(audioRef.current?.currentTime % 60), 2)} */}
                 </div>
 
                 <div className="player">
-                  <Slider
+                  <Bar
+                    loading={state.loading}
+                    // currentProgress={state.currentProgress}
+                    handleChange={handleChange}
+                  />
+                  {/* <Slider
                     disabled={state.loading}
                     variant="determinate"
                     value={state.currentProgress}
                     onChange={(e, newDuration) => handleChange(newDuration)}
-                  />
+                  /> */}
                 </div>
 
                 <div className="last-time align-self-center ">
@@ -638,7 +700,7 @@ const Playerstate = (props) => {
               </div>
 
               <div className="d-flex text-light pb-2 px-2 justify-content-between">
-                <div className="player__actions d-flex justify-content-center ">
+                <div className="player__actions d-flex justify-content-around w-100">
                   <div
                     className="icon playlist_sound_playlist d-flex justify-content-between align-self-end mr-2 align-self-center"
                     onClick={showPlaylist}
@@ -687,7 +749,7 @@ const Playerstate = (props) => {
                     </div>
                   )}
                 </div>
-                <div className="d-flex mobileSound mr-2">
+                <div className="d-flex mobileSound mr-2 w-75">
                   <div
                     className="icon col-2 p-0 d-flex align-self-center mr-2"
                     onClick={() => muteAndUnmuteMusic(audioRef.current)}
@@ -872,12 +934,13 @@ const Playerstate = (props) => {
                   </div>
                   <div className="player__zone d-flex mt-2">
                     <div className="current-time align-self-center text-right">
-                      {Math.floor(audioRef.current?.currentTime / 60) +
+                      <Time />
+                      {/* {Math.floor(audioRef.current?.currentTime / 60) +
                         ":" +
                         zeroPad(
                           Math.floor(audioRef.current?.currentTime % 60),
                           2
-                        )}
+                        )} */}
                     </div>
                     {/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -887,14 +950,19 @@ const Playerstate = (props) => {
                         className="player mt-1 align-self-center mx-3 "
                         onMouseUp={() => (state.seek = false)}
                       >
-                        <Slider
+                        <Bar
+                          loading={state.loading}
+                          // currentProgress={state.currentProgress}
+                          handleChange={handleChange}
+                        />
+                        {/* <Slider
                           disabled={state.loading}
                           variant="determinate"
                           value={state.currentProgress}
                           onChange={(e, newDuration) =>
                             handleChange(newDuration)
                           }
-                        />
+                        /> */}
                       </div>
                     </ClickAwayListener>
 
@@ -948,9 +1016,6 @@ const Playerstate = (props) => {
           </Slide>
         </Fragment>
       </Fragment>
-      {/* ) : (
-        <></>
-      )} */}
     </PlayerContext.Provider>
   );
 };

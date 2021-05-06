@@ -38,22 +38,22 @@ const Header = () => {
                 className="   mx-3"
                 onClick={() => ChangeShowLeft(false)}
               >
-                <HomeRounded className="align-self-center" />
+                <HomeRounded className="align-self-center  ml-1" />
                 خانه
               </NavLink>
               <NavLink
                 activeClassName="selected"
                 to="/search"
-                className=" mx-3"
+                className=" mx-3 mr-2"
                 onClick={() => ChangeShowLeft(false)}
               >
-                <SearchRounded className="align-self-center" />
+                <SearchRounded className="align-self-center  ml-1" />
                 جستجو
               </NavLink>
 
               {isAuth && (
                 <li className=" mx-3 " onClick={ChangeshowCenter}>
-                  <QueueMusicRounded className="align-self-center" />
+                  <QueueMusicRounded className="align-self-center  ml-1" />
                   لیست من
                 </li>
               )}

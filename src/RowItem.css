@@ -23,7 +23,7 @@
 }
 
 .rowItem__title {
-  width: 240px;
+  /* width: 240px; */
   cursor: pointer;
   font-size: 20px;
   font-weight: 900;
@@ -41,12 +41,22 @@
 /* .rowItem__title:hover {
   transform: scale(1.1);
 } */
-
+.scroll__rowItem__title {
+  display: none;
+}
+.steady__rowItem__title {
+  display: block;
+}
 .rowItem__info a:hover {
   text-decoration: none !important;
 }
 .carousel-cellRowItem:hover .scroll__rowItem__title {
+  display: block;
+
   animation: animate 6s linear infinite;
+}
+.carousel-cellRowItem:hover .steady__rowItem__title {
+  display: none;
 }
 @keyframes animate {
   0% {

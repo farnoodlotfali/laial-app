@@ -31,17 +31,24 @@ const SongOnLeft = ({ item, playlist, number, zeroPad }) => {
         : item?.person?.[0]?.image.full_image_url,
       item.id
     );
-
-    try {
-      const res = await axios.downloader.get(`/${item.media[0]?.telegram_id}`);
-      setUrl(res.data.download_link, playList);
-
-      if (!showMusic) {
-        ChangeShowMusic();
-      }
+    if (item.media[0]?.path) {
+      // console.log("path");
+      setUrl(item.media[0]?.path, playList);
       playMusic();
-    } catch (error) {
-      console.log(error);
+    } else {
+      try {
+        const res = await axios.downloader.get(
+          `/${item.media[0]?.telegram_id}`
+        );
+        setUrl(res.data.download_link, playList);
+
+        if (!showMusic) {
+          ChangeShowMusic();
+        }
+        playMusic();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
