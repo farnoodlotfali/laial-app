@@ -55,7 +55,14 @@ const RowItemPage = () => {
     getLikedSongsPlaylist,
   } = useContext(AppContext);
   const { setUrl, playMusic, setIds } = useContext(playerContext);
-  const { error, login, loadUser, user, isAuth } = useContext(authContext);
+  const {
+    error,
+    login,
+    loadUser,
+    user,
+    isAuth,
+    forceToLoginDueTo10SongListened,
+  } = useContext(authContext);
 
   // console.log(item);
   let params = useParams();
@@ -282,16 +289,17 @@ const RowItemPage = () => {
                     </Modal.Body>
                   </Modal>
                 </div>
-
-                <div>
-                  <a href={downloadUrl} className="download">
-                    <Tooltip placement="bottom" title="دانلود">
-                      <IconButton aria-label="download">
-                        <GetAppRounded fontSize="large" />
-                      </IconButton>
-                    </Tooltip>
-                  </a>
-                </div>
+                {!forceToLoginDueTo10SongListened && (
+                  <div>
+                    <a href={downloadUrl} className="download">
+                      <Tooltip placement="bottom" title="دانلود">
+                        <IconButton aria-label="download">
+                          <GetAppRounded fontSize="large" />
+                        </IconButton>
+                      </Tooltip>
+                    </a>
+                  </div>
+                )}
 
                 <div
                   onClick={() => setWhichSongToSaveInPlaylist(dataSongPage?.id)}

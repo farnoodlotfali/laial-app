@@ -17,9 +17,11 @@ import playerContext from "./player/playerContext";
 import SongOnLeft from "./SongOnLeft";
 import Bar from "./player/Bar";
 import Time from "./player/Time";
+import authContext from "./auth/authContext";
 
 const Left = () => {
   const { showLeft, ChangeShowLeft, showMusic } = useContext(AppContext);
+  const { changeShowLoginModal } = useContext(authContext);
   const {
     playList,
     currentProgress,
@@ -39,6 +41,7 @@ const Left = () => {
     noneOrLoopOrRepeat,
     changeNoneOrLoopOrRepeat,
     loading,
+    forceStop,
   } = useContext(playerContext);
 
   // console.log(playList);
@@ -86,7 +89,12 @@ const Left = () => {
             <div className="icon  " onClick={() => previousMusic()}>
               <SkipPreviousRounded style={{ fontSize: 35 }} />
             </div>
-            <div className="icon  " onClick={() => playAndPauseMusic()}>
+            <div
+              className="icon  "
+              onClick={() =>
+                !forceStop ? playAndPauseMusic() : changeShowLoginModal(true)
+              }
+            >
               {playing ? (
                 <Pause style={{ fontSize: 35 }} />
               ) : (

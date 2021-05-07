@@ -192,6 +192,9 @@ const AuthState = (props) => {
       type: CHANGE_SHOW_LOGIN_MODAL,
     });
   };
+  const checkIfForce = () => {
+    return JSON.parse(localStorage.getItem("limitListTo10"))?.length >= 10;
+  };
   return (
     <AuthContext.Provider
       value={{
@@ -204,6 +207,7 @@ const AuthState = (props) => {
         saveChosenTags,
         forceLogin,
         changeShowLoginModal,
+        checkIfForce,
         isAuth: state.isAuth,
         user: state.user,
         error: state.error,

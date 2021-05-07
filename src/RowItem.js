@@ -45,15 +45,13 @@ const RowItem = ({
     playAndPauseMusic,
   } = useContext(playerContext);
 
-  const { forceToLoginDueTo10SongListened, changeShowLoginModal } = useContext(
-    authContext
-  );
+  const { changeShowLoginModal, checkIfForce } = useContext(authContext);
   // console.log(media?.name);
   const playMusicAndShowMusicBar = async () => {
     // نشان دادن موزیک و پخش موزیک
 
     // ارسال متا تایتل ها (توضیحات) آهنگ به صفحه اصلی
-    if (forceToLoginDueTo10SongListened) {
+    if (checkIfForce()) {
       changeShowLoginModal(true);
     } else {
       sendToHome();

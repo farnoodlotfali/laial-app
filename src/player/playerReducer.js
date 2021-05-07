@@ -14,6 +14,7 @@ import {
   CHANGE_SHOW_MUSICBAR_ON_MOBILE_RATIO,
   CHANGE_SHUFFLE,
   CHANGE_LOOP_STATE,
+  FORCE_STOP,
 } from "./types";
 // eslint-disable-next-line
 export default (state, action) => {
@@ -23,11 +24,19 @@ export default (state, action) => {
         ...state,
         playing: true,
         loading: false,
+        loading: false,
       };
     case PAUSE_MUSIC:
       return {
         ...state,
         playing: false,
+      };
+    case FORCE_STOP:
+      return {
+        ...state,
+        playing: false,
+        loading: false,
+        forceStop: true,
       };
     case MUTE_MUSIC:
       return {

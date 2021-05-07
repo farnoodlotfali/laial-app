@@ -37,6 +37,7 @@ import {
   CHANGE_VOLUME,
   CHANGE_DURATION,
   SET_PALYLIST,
+  FORCE_STOP,
   SET_CURRENT_URL,
   SET_IDS,
   SET_PROGRESS,
@@ -93,15 +94,11 @@ const browser = () => {
 
   return browser.name;
 };
-const audio = document.createElement("audio");
 
 const Playerstate = (props) => {
-  const {
-    isAuth,
-    forceLogin,
-    forceToLoginDueTo10SongListened,
-    changeShowLoginModal,
-  } = useContext(authContext);
+  const { isAuth, forceLogin, checkIfForce, changeShowLoginModal } = useContext(
+    authContext
+  );
   const location = useLocation();
   const audioRef = useRef();
   const {
@@ -118,6 +115,7 @@ const Playerstate = (props) => {
     playing: false,
     loading: false,
     mute: false,
+    forceStop: false,
     seek: false,
     shuffle: false,
     loop: false,
@@ -394,7 +392,7 @@ const Playerstate = (props) => {
               ? playList[0]
               : -1;
           if (chosen !== -1) {
-            if (forceToLoginDueTo10SongListened) {
+            if (checkIfForce()) {
               changeShowLoginModal(true);
             } else {
               const sendTitle = chosen?.meta_title
@@ -466,7 +464,7 @@ const Playerstate = (props) => {
             playList[which] !== undefined
               ? playList[which]
               : playList[playList.length - 1];
-          if (forceToLoginDueTo10SongListened) {
+          if (checkIfForce()) {
             changeShowLoginModal(true);
           } else {
             const sendTitle = chosen?.meta_title
@@ -601,6 +599,7 @@ const Playerstate = (props) => {
         showMusicBarOnMoblieRatio: state.showMusicBarOnMoblieRatio,
         canDeleteSong: state.canDeleteSong,
         postId: state.postId,
+        forceStop: state.forceStop,
         setShowMusicBarOnMoblieRatio,
         changeNoneOrLoopOrRepeat,
         changeVolume,
@@ -621,8 +620,12 @@ const Playerstate = (props) => {
             onError={(e) => console.log("error on player", e.response)}
             id="audio2"
             onLoadedMetadata={() => {
-              if (forceToLoginDueTo10SongListened) {
+              if (checkIfForce()) {
                 changeShowLoginModal(true);
+                dispatch({
+                  type: FORCE_STOP,
+                });
+                // console.log(12121);
               } else {
                 audioRef.current.play();
                 dispatch({
@@ -815,7 +818,11 @@ const Playerstate = (props) => {
                   ) : (
                     <div
                       className=""
-                      onClick={() => playAndPauseMusic(audioRef.current)}
+                      onClick={() =>
+                        !state.forceStop
+                          ? playAndPauseMusic(audioRef.current)
+                          : changeShowLoginModal(true)
+                      }
                     >
                       <PlayCircleFilledRounded style={{ fontSize: "25px" }} />
                     </div>
@@ -900,7 +907,11 @@ const Playerstate = (props) => {
                       ) : (
                         <div
                           className=""
-                          onClick={() => playAndPauseMusic(audioRef.current)}
+                          onClick={() =>
+                            !state.forceStop
+                              ? playAndPauseMusic(audioRef.current)
+                              : changeShowLoginModal(true)
+                          }
                         >
                           <PlayArrowRounded style={{ fontSize: 35 }} />
                         </div>
