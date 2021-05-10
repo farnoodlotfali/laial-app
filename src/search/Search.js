@@ -9,6 +9,7 @@ import RowItem from "../RowItem";
 import PersonItem from "../PersonItem";
 import LoadingIcon from "../spinner/LoadingIcon";
 import { useHistory } from "react-router";
+import { CloseRounded } from "@material-ui/icons";
 
 const Search = () => {
   const history = useHistory();
@@ -123,6 +124,13 @@ const Search = () => {
     >
       {/* <Navigation /> */}
       <div className="search__title ">
+        <div
+          className="searchFields__option__form__goBack"
+          onClick={() => history.goBack()}
+        >
+          <CloseRounded />
+          {/* <span>بستن</span> */}
+        </div>
         <h1>جستجو</h1>
       </div>
 
@@ -147,12 +155,6 @@ const Search = () => {
             // value='Register'
           />
           {/* <input className="mr-2 py-1 px-3" type="button" value="" /> */}
-          <div
-            className="searchFields__option__form__goBack"
-            onClick={() => history.goBack()}
-          >
-            <span>بستن</span>
-          </div>
         </form>
       </div>
       <div className="listPersons">

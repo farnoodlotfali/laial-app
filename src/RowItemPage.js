@@ -55,14 +55,9 @@ const RowItemPage = () => {
     getLikedSongsPlaylist,
   } = useContext(AppContext);
   const { setUrl, playMusic, setIds } = useContext(playerContext);
-  const {
-    error,
-    login,
-    loadUser,
-    user,
-    isAuth,
-    forceToLoginDueTo10SongListened,
-  } = useContext(authContext);
+  const { error, login, loadUser, user, isAuth, checkIfForce } = useContext(
+    authContext
+  );
 
   // console.log(item);
   let params = useParams();
@@ -82,7 +77,9 @@ const RowItemPage = () => {
       dataSongPage?.media?.[0]?.duration,
       dataSongPage?.media?.[0]?.name,
       dataSongPage?.person?.[0]?.name,
-      dataSongPage?.media?.[0]?.image !== null
+      dataSongPage?.image?.full_image_url
+        ? dataSongPage?.image?.full_image_url
+        : dataSongPage?.media?.[0]?.image !== null
         ? dataSongPage?.media?.[0]?.image
         : dataSongPage?.person?.[0]?.image.full_image_url,
       dataSongPage?.id
@@ -115,7 +112,7 @@ const RowItemPage = () => {
       [e.target.name]: e.target.value,
     });
   };
-  // console.log(dataSongPage.id);
+  // console.log(dataSongPage.image.full_image_url);
   return (
     <Fragment>
       <Helmet>
@@ -175,8 +172,10 @@ const RowItemPage = () => {
               <img
                 className="musicInfo__image"
                 src={
-                  dataSongPage?.media?.[0]?.image !== null &&
-                  dataSongPage?.media?.[0]?.image !== undefined
+                  dataSongPage?.image?.full_image_url
+                    ? dataSongPage?.image?.full_image_url
+                    : dataSongPage?.media?.[0]?.image !== null &&
+                      dataSongPage?.media?.[0]?.image !== undefined
                     ? dataSongPage?.media?.[0]?.image
                     : dataSongPage?.person?.[0]?.image.full_image_url !== null
                     ? dataSongPage?.person?.[0]?.image.full_image_url
@@ -289,7 +288,7 @@ const RowItemPage = () => {
                     </Modal.Body>
                   </Modal>
                 </div>
-                {!forceToLoginDueTo10SongListened && (
+                {!checkIfForce() && (
                   <div>
                     <a href={downloadUrl} className="download">
                       <Tooltip placement="bottom" title="دانلود">

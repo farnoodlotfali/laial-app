@@ -9,6 +9,7 @@ import authContext from "./auth/authContext";
 import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "./axios/axios";
 import LoadingIcon from "./spinner/LoadingIcon";
+import { Helmet } from "react-helmet";
 const Person = () => {
   const {
     personList,
@@ -75,11 +76,69 @@ const Person = () => {
       }
     }, 1200);
   };
+  console.log(next.next);
   return loading ? (
     <Spinner />
   ) : (
-    <div className="person">
-      {/* <div className='d-flex'>
+    <>
+      <Helmet>
+        <title>
+          {personList?.[0]?.person?.[0]?.meta_title
+            ? personList?.[0]?.person?.[0]?.meta_title
+            : personList?.[0]?.person?.[0]?.name}
+        </title>
+        <meta
+          name="title"
+          content={
+            personList?.[0]?.person?.[0]?.meta_title
+              ? personList?.[0]?.person?.[0]?.meta_title
+              : personList?.[0]?.person?.[0]?.name
+          }
+        />
+        <meta
+          name="description"
+          content={personList?.[0]?.person?.[0]?.meta_description}
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content={`      http:app.7negare.ir/${params.slug}`}
+        />
+        <meta
+          property="og:title"
+          content={
+            personList?.[0]?.person?.[0]?.meta_title
+              ? personList?.[0]?.person?.[0]?.meta_title
+              : personList?.[0]?.person?.[0]?.name
+          }
+        />
+        <meta
+          property="og:description"
+          content={personList?.[0]?.person?.[0]?.meta_description}
+        />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta
+          property="twitter:url"
+          content={`      http:app.7negare.ir/${params?.slug}`}
+        />
+        <meta
+          property="twitter:title"
+          content={
+            personList?.[0]?.person?.[0]?.meta_title
+              ? personList?.[0]?.person?.[0]?.meta_title
+              : personList?.[0]?.person?.[0]?.name
+          }
+        />
+        <meta
+          property="twitter:description"
+          content={personList?.[0]?.person?.[0]?.meta_description}
+        />
+        {/* {dataSongPage['image'] && (
+          <meta property='twitter:image' content={dataSongPage['image']} />
+        )} */}
+      </Helmet>
+      <div className="person">
+        {/* <div className='d-flex'>
         <div className='person__img '>
           <img
             src={
@@ -106,74 +165,71 @@ const Person = () => {
         </div>
       </div>
      */}
-      <div className="person__infoAndImg py-4 d-flex justify-content-center align-items-center">
-        <div className="card__person">
-          <div className="circle__person">
-            <div className="content__person">
-              <h2>Franood lotfali</h2>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Repellendus voluptatum dolorebus animi explicabo ullam est
-                expedita dolore? Praesentium excepturi delectus illo culpa.
-              </p>
+        <div className="person__infoAndImg py-4 d-flex justify-content-center align-items-center">
+          <div className="card__person">
+            <div className="circle__person">
+              <div className="content__person">
+                <h2>{personList?.[0]?.person?.[0]?.name}</h2>
+                <p>{personList?.[0]?.person?.[0]?.description}</p>
+              </div>
+              <img
+                src={
+                  personList?.[0]?.media[0]?.image !== null
+                    ? personList?.[0]?.media[0]?.image
+                    : personList?.[0]?.person[0]?.image.full_image_url !== null
+                    ? personList?.[0]?.person[0]?.image.full_image_url
+                    : defualtPhoto
+                }
+                alt=""
+              />
             </div>
-            <img
-              src={
-                personList?.[0]?.media[0]?.image !== null
-                  ? personList?.[0]?.media[0]?.image
-                  : personList?.[0]?.person[0]?.image.full_image_url !== null
-                  ? personList?.[0]?.person[0]?.image.full_image_url
-                  : defualtPhoto
-              }
-              alt=""
-            />
           </div>
         </div>
-      </div>
 
-      {next?.list && (
-        <InfiniteScroll
-          dataLength={next?.list?.length}
-          next={() => infiniteList()}
-          hasMore={next.hasMore}
-          // loader={<h4>Loading...</h4>}
-          // height={'100vh'}
-          // endMessage={
-          //   <p style={{ textAlign: 'center' }}>
-          //     <b>Yay! You have seen it all</b>
-          //   </p>
-          // }
+        {next?.list && (
+          <InfiniteScroll
+            dataLength={next?.list?.length}
+            next={() => infiniteList()}
+            hasMore={next.hasMore}
+            // loader={<h4>Loading...</h4>}
+            // height={'100vh'}
+            // endMessage={
+            //   <p style={{ textAlign: 'center' }}>
+            //     <b>Yay! You have seen it all</b>
+            //   </p>
+            // }
+          >
+            {next.list &&
+              next.list?.map((item, i) => {
+                return (
+                  <RowItem
+                    key={item.id}
+                    logo={item.image}
+                    media={item.media[0]}
+                    person={item.person}
+                    slug={item.slug}
+                    context={next?.list}
+                  />
+                );
+              })}
+          </InfiniteScroll>
+        )}
+
+        <div
+          className="loading-message"
+          // ref={loadingRef}
+          style={{
+            opacity: next.loading ? "1" : "0",
+            transform: next.loading && "translate(-50%, -150%)",
+          }}
         >
-          {next.list &&
-            next.list?.map((item, i) => {
-              return (
-                <RowItem
-                  key={item.id}
-                  logo={item.image}
-                  media={item.media[0]}
-                  person={item.person}
-                  slug={item.slug}
-                  context={next?.list}
-                />
-              );
-            })}
-        </InfiniteScroll>
-      )}
+          <LoadingIcon color="#fff" />
+          <span>در حال دریافت</span>
+        </div>
 
-      <div
-        className="loading-message"
-        // ref={loadingRef}
-        style={{
-          opacity: next.loading ? "1" : "0",
-          transform: next.loading && "translate(-50%, -150%)",
-        }}
-      >
-        <LoadingIcon color="#fff" />
-        <span>در حال دریافت</span>
+        {/* <h4 className='text-white mb-5 mt-3'>{next.loaderMsg}</h4> */}
       </div>
-
-      {/* <h4 className='text-white mb-5 mt-3'>{next.loaderMsg}</h4> */}
-    </div>
+    </>
   );
 };
 

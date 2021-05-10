@@ -88,7 +88,7 @@ const UserInterests = () => {
       <div className="userInterests__top">
         <div className="userInterests__info">
           <span className="userInterests__info__title">
-            .لطفا یک یا چند موضوع که به آن‌ها علاقه دارید را انتخاب کنید تا وارد
+            لطفا یک یا چند موضوع که به آن‌ها علاقه دارید را انتخاب کنید تا وارد
             سایت شوید
           </span>
           <span className="userInterests__info__desc">

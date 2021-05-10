@@ -11,6 +11,9 @@
   margin-top: 30px;
   text-shadow: 0 5px 15px rgba(120, 121, 167, 0.73);
 }
+.search__title h1 {
+  flex: 0.9;
+}
 
 .searchFields__option {
   direction: rtl;
@@ -51,13 +54,14 @@
 
 .searchFields__option__form__goBack {
   color: white;
-  margin-right: 14px;
+  /* margin-right: 14px; */
   background-color: rgb(231, 64, 64);
   box-shadow: 0 5px 15px rgb(173 173 173 / 73%);
   border: 1px solid gray;
   border-radius: 7px;
-  padding: 10px 16px;
+  padding: 10px;
   cursor: pointer;
+  align-self: center;
 }
 .search .infinite-scroll-component {
   display: flex;
@@ -79,5 +83,8 @@
     flex: 1 !important;
     margin-bottom: 5px;
     margin-top: 5px;
+  }
+  .searchFields__option__form__goBack {
+    padding: 5px;
   }
 }

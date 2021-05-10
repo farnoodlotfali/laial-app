@@ -345,6 +345,9 @@
   }
   .myprofile__mobile__show__left {
     width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .myprofile__mobile__songs {
     display: block;
@@ -380,9 +383,12 @@
     border-radius: 10px;
     padding: 0 5px;
     margin-bottom: 5px;
+    /* white-space: nowrap; */
   }
   .myprofile__mobile__show__userinfo__inputbox span {
     margin-right: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .myprofile__mobile__songs {
     width: 100%;

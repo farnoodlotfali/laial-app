@@ -58,7 +58,11 @@ const Home = () => {
           <Spinner />
         ) : (
           home !== null && (
-            <div className={`home ${showMusic && "AddPaddingHome"}`}>
+            <div
+              className={`home ${
+                showMusic ? "AddPaddingHome" : "normalPaddingHome"
+              }`}
+            >
               {home.map((data, i) =>
                 data.banner !== null ? (
                   data.banner.banner_type === "big" ? (

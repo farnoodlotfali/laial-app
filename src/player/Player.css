@@ -71,6 +71,9 @@
 .playlist_sound .MuiSlider-track {
   height: 4px;
 }
+.iconPhone {
+  cursor: pointer;
+}
 
 .icon:hover,
 .icon-press {

@@ -5,6 +5,9 @@
 .AddPaddingHome {
   padding-bottom: 111px;
 }
+.normalPaddingHome {
+  padding-bottom: 50px;
+}
 @media (max-width: 768px) {
   /* .home {
     padding-bottom: 40px;

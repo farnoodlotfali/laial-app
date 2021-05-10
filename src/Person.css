@@ -63,6 +63,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   height: 280px;
+  width: 280px;
   transition: 0.5s;
   pointer-events: none;
   box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
@@ -72,6 +73,7 @@
 .card__person:hover img {
   /* top: 72%; */
   height: 340px;
+  width: 340px;
   box-shadow: none;
   left: 72%;
 }
@@ -101,7 +103,27 @@
 }
 
 .card__person .content__person p {
-  color: white;
+  color: darkgray;
+  overflow-y: scroll;
+  height: 300px;
+  direction: rtl;
+  font-size: 15px;
+}
+.card__person .content__person p::-webkit-scrollbar {
+  width: 10px;
+}
+
+.card__person .content__person p::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+.card__person .content__person p::-webkit-scrollbar-thumb {
+  background: rgb(63, 63, 63);
+  border-radius: 10px;
+}
+
+.card__person .content__person p::-webkit-scrollbar-thumb:hover {
+  background: rgb(63, 63, 63);
 }
 
 .card__person .content__person a {
@@ -136,9 +158,14 @@
     padding: 30px;
   }
   .card__person:hover img {
-    top: 70%;
+    top: 80%;
     left: 50%;
-    height: 300px;
+    width: 250px;
+    height: 210px;
+    font-size: 13px;
+  }
+  .card__person .content__person p {
+    font-size: 13px;
   }
 }
 

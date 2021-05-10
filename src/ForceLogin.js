@@ -18,10 +18,10 @@ const ForceLogin = () => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="d-flex justify-content-around">
+        <div className="d-flex ">
           <Link to="/register">
             <span
-              className="forceLogin__btn"
+              className="forceLogin__btn mr-2"
               onClick={() => changeShowLoginModal(false)}
             >
               ثبت نام

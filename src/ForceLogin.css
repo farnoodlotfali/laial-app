@@ -30,6 +30,8 @@
 @media (max-width: 768px) {
   .forceLogin__title {
     font-size: 14px;
+    width: 100%;
+    text-align: center;
   }
   .forceLogin__btn {
     width: 90px;

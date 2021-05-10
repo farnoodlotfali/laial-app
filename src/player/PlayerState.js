@@ -801,11 +801,10 @@ const Playerstate = (props) => {
                 className="phoneMusicBar__right d-flex align-self-center 
           justify-content-around"
               >
-                <div className="icon " onClick={handleNext}>
+                <div className="iconPhone " onClick={handleNext}>
                   <SkipNextRounded style={{ fontSize: "25px" }} />
                 </div>
-                <div className="icon ">
-                  {/* SpinnerLoading */}
+                <div className="iconPhone ">
                   {state.loading ? (
                     <SpinnerLoading />
                   ) : state.playing ? (
@@ -828,7 +827,7 @@ const Playerstate = (props) => {
                     </div>
                   )}
                 </div>
-                <div className="icon" onClick={handlePrevious}>
+                <div className="iconPhone" onClick={handlePrevious}>
                   <SkipPreviousRounded style={{ fontSize: "25px" }} />
                 </div>
                 <div

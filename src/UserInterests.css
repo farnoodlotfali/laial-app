@@ -13,17 +13,19 @@
 }
 .userInterests__info__desc {
   font-size: 15px;
+  color: darkgray;
 }
 .userInterests__bottom {
   margin-top: 50px;
-  display: grid;
+  /* display: grid; */
   justify-content: center;
 }
 .userInterests__list {
-  display: flex;
+  /* display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 960px;
+  max-width: 960px; */
+  width: 100%;
 }
 
 .userInterests__option {
@@ -113,5 +115,15 @@
   .userInterests__option__selected {
     width: 45%;
     margin: 5px 7px;
+    height: 60px;
+  }
+  .userInterests__info__title {
+    font-size: 15px;
+    margin: 2px 15px;
+  }
+  .userInterests__info__desc {
+    font-size: 13px;
+    margin: 2px 15px;
+    color: darkgray;
   }
 }

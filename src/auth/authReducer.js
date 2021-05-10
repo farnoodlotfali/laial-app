@@ -33,6 +33,7 @@ export default (state, action) => {
       localStorage.setItem("tokenAccess", action.payload.token.access);
       localStorage.setItem("tokenRefresh", action.payload.token.refresh);
       localStorage.setItem("user", JSON.stringify(action.payload.user));
+      localStorage.removeItem("limitListTo10");
       return {
         ...state,
         isAuth: true,
