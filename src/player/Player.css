@@ -46,6 +46,11 @@
   max-height: 47px;
   overflow: hidden;
 }
+.infoDesc__title a {
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
 
 .infoDesc__person {
   font-weight: 600;
@@ -229,6 +234,10 @@
   font-size: 15px;
   font-weight: 700;
 }
+.phoneMusicBar__title a {
+  color: white;
+  text-decoration: none;
+}
 
 .scroll {
   animation: animate 6s linear infinite;
@@ -256,7 +265,7 @@
   overflow: hidden;
   /* top: 10%; */
   /* position: relative; */
-  z-index: 999;
+  z-index: 1302;
 }
 
 .mobileSound {

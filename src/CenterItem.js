@@ -50,12 +50,10 @@ const CenterItem = ({ name, id, items }) => {
   };
   return (
     <Fragment>
-      <div
-        className="list d-flex justify-content-between"
-        onClick={() => handleClick()}
-      >
+      <div className="list d-flex justify-content-between">
         <input
-          className={` ${edit ? "list__name_edit" : "list__name_save"}`}
+          onClick={() => handleClick()}
+          className={`  ${edit ? "list__name_edit" : "list__name_save"}`}
           type="text"
           value={listName}
           onChange={onChange}

@@ -1,15 +1,15 @@
 .playList {
-  width: 50%;
-  position: fixed;
+  width: 100%;
+  /* position: fixed; */
   top: 0;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  z-index: 999;
+  /* z-index: 998; */
   background-color: rgb(18, 18, 18);
   box-shadow: 5px 18px 18px 0 rgba(168, 179, 211, 0.38);
-  transition: left 500ms ease-in-out;
+  /* transition: left 500ms ease-in-out; */
   direction: ltr;
 }
 

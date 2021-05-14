@@ -1,4 +1,9 @@
-import { Slide, Slider } from "@material-ui/core";
+import {
+  ClickAwayListener,
+  Slide,
+  Slider,
+  SwipeableDrawer,
+} from "@material-ui/core";
 import {
   Close,
   Pause,
@@ -51,8 +56,13 @@ const Left = () => {
   useEffect(() => {}, [currentProgress]);
   const zeroPad = (num, places) => String(num).padStart(places, "0");
   return (
-    // <div className='left text-light'>
-    <Slide direction="right" timeout={500} in={showLeft}>
+    <SwipeableDrawer
+      // direction="right" timeout={500} in={showLeft}
+      anchor={"left"}
+      open={showLeft}
+      onClose={() => ChangeShowLeft(false)}
+      onOpen={() => ChangeShowLeft(true)}
+    >
       <div
         className={`playList text-light ${
           showMusic ? "padding__showMusic__110" : "padding__showMusic__50"
@@ -145,7 +155,6 @@ const Left = () => {
                 /> */}
               </div>
               <div className="last-time d-flex align-items-center">
-                {" "}
                 {Math.floor(totalDuration / 60) +
                   ":" +
                   zeroPad(Math.floor(totalDuration % 60), 2)}
@@ -170,9 +179,7 @@ const Left = () => {
           <div className="playList__songs__empty">لیست خالی است</div>
         )}
       </div>
-    </Slide>
-
-    /* </div> */
+    </SwipeableDrawer>
   );
 };
 

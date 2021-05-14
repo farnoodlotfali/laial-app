@@ -127,6 +127,7 @@
 }
 
 .myprofile__bottom {
+  height: 530px;
   display: flex;
   direction: rtl;
   margin-top: 30px;
@@ -208,7 +209,7 @@
   color: white;
 }
 .myMadeListsShow__lists {
-  height: 200px;
+  height: 400px;
   overflow-y: scroll;
 }
 
@@ -228,8 +229,9 @@
 
 .list__name {
   cursor: pointer;
-  border-radius: 10px;
-  border: 1px solid white;
+  /* border-radius: 10px; */
+  /* border: 1px solid white; */
+  border-bottom: 1px solid lightgrey;
   margin-bottom: 10px;
   background: linear-gradient(135deg, #17192073 10%, #47474769 100%);
   color: rgb(255, 255, 255);
@@ -246,7 +248,7 @@
   box-shadow: 0 5px 15px rgb(106, 105, 117);
   flex: 0.6;
   overflow-y: hidden;
-  height: 272px;
+  height: 468px;
 }
 .listItemsShow__loading {
   display: flex;
@@ -332,6 +334,9 @@
     padding-bottom: 75px;
     padding-top: 15px;
   }
+  .myprofile__bottom {
+    height: auto;
+  }
   .userImg,
   .changeCurrentPass,
   .userinfo,
@@ -401,8 +406,12 @@
     border-radius: 10px;
     margin-bottom: 10px;
     background: linear-gradient(to right, transparent, gray);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   .myprofile__mobile__songs__myListsOption .dropdown {
+    width: 100%;
     border: none;
   }
   .myprofile__mobile__songs__myListsOptionBtn {
@@ -459,5 +468,9 @@
   }
   .songTime {
     color: gray;
+  }
+  .myprofile__mobile__songs__myListsOption__addNewList {
+    border-right: 1px solid;
+    padding: 0px 5px 0 15px;
   }
 }

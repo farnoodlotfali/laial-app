@@ -9,7 +9,7 @@ import RowItem from "../RowItem";
 import PersonItem from "../PersonItem";
 import LoadingIcon from "../spinner/LoadingIcon";
 import { useHistory } from "react-router";
-import { CloseRounded } from "@material-ui/icons";
+import { CloseRounded, SearchRounded } from "@material-ui/icons";
 
 const Search = () => {
   const history = useHistory();
@@ -55,18 +55,7 @@ const Search = () => {
     }
     // eslint-disable-next-line
   }, [user, loading, nextSearchPageUrl, personsSearch, resultsSearch]);
-  // const changePersons = (newPersons) => {
-  //   setLoading(true);
-  //   state.filtered = state.allSongs.filter((song) => {
 
-  //     return newPersons.some((person) => {
-  //       return person === song.persons;
-  //     });
-  //   });
-  //   console.log(state.filtered);
-
-  //   setLoading(false);
-  // };
   const onchange = (e) => {
     setSearchValue(([e.target.name] = e.target.value));
   };
@@ -81,7 +70,7 @@ const Search = () => {
       page: 2,
       loaderMsg: "",
     });
-    e.preventDefault();
+    e?.preventDefault();
     search(searchValue);
   };
 
@@ -139,22 +128,26 @@ const Search = () => {
           className="searchFields__option__form"
           onSubmit={(e) => onSubmitHandle(e)}
         >
-          <input
-            className="ml-2"
-            onChange={onchange}
-            name="searchValue"
-            type="text"
-            value={searchValue}
-            placeholder="متن جستجو ...."
-            required
-          />
+          <div className="searchFields__option__searching">
+            <input
+              className="ml-2"
+              onChange={onchange}
+              name="searchValue"
+              type="text"
+              value={searchValue}
+              placeholder="متن جستجو ...."
+              required
+            />
+            <div
+              className="searchFields__option__searching__icon"
+              onClick={() => onSubmitHandle()}
+            >
+              <input type="submit" />
+              <SearchRounded />
+            </div>
+          </div>
 
-          <input
-            type="submit"
-            value="جستجو"
-            // value='Register'
-          />
-          {/* <input className="mr-2 py-1 px-3" type="button" value="" /> */}
+          {/* <input type="submit" value="جستجو" /> */}
         </form>
       </div>
       <div className="listPersons">

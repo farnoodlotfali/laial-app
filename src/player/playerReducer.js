@@ -135,6 +135,7 @@ export default (state, action) => {
         songName: action.payload.songName,
         songPhoto: action.payload.songPhoto,
         postId: action.payload.postId,
+        songSlug: action.payload.songSlug,
       };
 
     default:

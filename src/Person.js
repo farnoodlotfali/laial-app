@@ -11,13 +11,8 @@ import axios from "./axios/axios";
 import LoadingIcon from "./spinner/LoadingIcon";
 import { Helmet } from "react-helmet";
 const Person = () => {
-  const {
-    personList,
-    getPerson,
-    personkSlug,
-    loading,
-    personUrls,
-  } = useContext(appContext);
+  const { personList, getPerson, personkSlug, loading, personUrls } =
+    useContext(appContext);
   let params = useParams();
 
   const { user } = useContext(authContext);
@@ -76,7 +71,7 @@ const Person = () => {
       }
     }, 1200);
   };
-  console.log(next.next);
+  // console.log(next.next);
   return loading ? (
     <Spinner />
   ) : (

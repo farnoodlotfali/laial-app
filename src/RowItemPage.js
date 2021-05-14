@@ -55,11 +55,10 @@ const RowItemPage = () => {
     getLikedSongsPlaylist,
   } = useContext(AppContext);
   const { setUrl, playMusic, setIds } = useContext(playerContext);
-  const { error, login, loadUser, user, isAuth, checkIfForce } = useContext(
-    authContext
-  );
+  const { error, login, loadUser, user, isAuth, checkIfForce } =
+    useContext(authContext);
 
-  // console.log(item);
+  // console.log(recommender);
   let params = useParams();
   useEffect(() => {
     getSongPage(params.slug);
@@ -85,7 +84,7 @@ const RowItemPage = () => {
       dataSongPage?.id
     );
     if (dataSongPage?.media?.[0]?.path) {
-      setUrl(dataSongPage?.media?.[0]?.path);
+      setUrl(dataSongPage?.media?.[0]?.path, recommender);
       if (!showMusic) {
         ChangeShowMusic();
       }
@@ -95,8 +94,8 @@ const RowItemPage = () => {
         const res = await axios.downloader.get(
           `/${dataSongPage?.media?.[0]?.telegram_id}`
         );
-        // console.log(res.data.download_link);
-        setUrl(res.data.download_link);
+        // console.log(res.data.download_link);recommender
+        setUrl(res.data.download_link, recommender);
         if (!showMusic) {
           ChangeShowMusic();
         }

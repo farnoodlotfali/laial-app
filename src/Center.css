@@ -63,6 +63,8 @@
   background-color: rgba(0, 0, 0, 0.658);
 }
 .list input {
+  width: 100%;
+  height: 100%;
   background: rgb(18, 18, 18);
   height: 30px;
   align-self: center;
@@ -119,7 +121,13 @@
 .addBtn:hover svg {
   color: black;
 }
-
+.make__new__list {
+  font-size: 18px;
+  width: 100%;
+  text-align: center;
+}
+.list__name__showList {
+}
 @media (max-width: 768px) {
   .playlist {
     min-width: 300px;
@@ -139,5 +147,9 @@
   }
   .list .centerItem__info {
     font-size: 9px;
+  }
+
+  .make__new__list {
+    font-size: 15px;
   }
 }

@@ -30,12 +30,8 @@ const RowItem = ({
 }) => {
   // let { slug } = useParams();
   // eslint-disable-next-line
-  const {
-    ChangeShowMusic,
-    ChangeshowCenter,
-    showMusic,
-    changeHomeMeta,
-  } = useContext(AppContext); // eslint-disable-next-line
+  const { ChangeShowMusic, ChangeshowCenter, showMusic, changeHomeMeta } =
+    useContext(AppContext); // eslint-disable-next-line
   const {
     playMusic,
     playing,
@@ -69,10 +65,13 @@ const RowItem = ({
           media?.duration,
           media?.name,
           person?.[0]?.name,
-          media?.image !== null
+          logo?.full_image_url
+            ? logo?.full_image_url
+            : media?.image !== null
             ? media?.image
             : person?.[0]?.image.full_image_url,
-          postId
+          postId,
+          slug
         );
         if (cancel !== undefined) {
           cancel();

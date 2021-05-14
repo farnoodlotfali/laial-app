@@ -109,8 +109,10 @@ const Center = () => {
               )}
             </div>
             {user !== null && isAuth && (
-              <div className="addBtn d-flex" onClick={addList}>
-                <h5 className=" align-self-center m-0"> ساخت لیست جدید </h5>
+              <div className="addBtn  d-flex" onClick={addList}>
+                <span className=" align-self-center m-0 make__new__list">
+                  ساخت لیست جدید
+                </span>
                 {/* <Tooltip placement='left' title='لیست جدید'> */}
                 <IconButton aria-label="add">
                   <PostAddRounded fontSize="large" />

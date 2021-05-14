@@ -1,6 +1,11 @@
 import { Slider } from "@material-ui/core";
 import { useEffect, useState } from "react";
-const Bar = ({ loading, currentProgress, handleChange, className = "" }) => {
+const Bar = ({
+  loading,
+  // currentProgress,
+  handleChange,
+  className = "",
+}) => {
   //   console.log(audio);
   const [progress, setprogress] = useState(0);
 

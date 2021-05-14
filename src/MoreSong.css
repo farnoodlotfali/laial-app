@@ -14,6 +14,9 @@
   min-height: 100vh;
   justify-content: center;
 }
+.moreSong__title {
+  white-space: pre-wrap;
+}
 
 @media (max-width: 768px) {
   .moreSong {

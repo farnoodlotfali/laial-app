@@ -51,6 +51,7 @@ import authContext from "../auth/authContext";
 import SpinnerLoading from "../spinner/SpinnerLoading";
 import Bar from "./Bar";
 import Time from "./Time";
+import { Link } from "react-router-dom";
 // eslint-disable-next-line
 
 const detectMob = () => {
@@ -96,9 +97,8 @@ const browser = () => {
 };
 
 const Playerstate = (props) => {
-  const { isAuth, forceLogin, checkIfForce, changeShowLoginModal } = useContext(
-    authContext
-  );
+  const { isAuth, forceLogin, checkIfForce, changeShowLoginModal } =
+    useContext(authContext);
   const location = useLocation();
   const audioRef = useRef();
   const {
@@ -129,6 +129,7 @@ const Playerstate = (props) => {
     telegramId: null,
     postId: null,
     songId: null,
+    songSlug: null,
     songPhoto: null,
     songName: "",
     songSinger: "",
@@ -179,7 +180,7 @@ const Playerstate = (props) => {
       payload: isNaN(progress) ? 0 : progress,
     });
   };
-  const setIds = (tId, id, duration, name, singer, photo, postId) => {
+  const setIds = (tId, id, duration, name, singer, photo, postId, songSlug) => {
     if (audioRef.current?.played) {
       audioRef.current.pause();
     }
@@ -193,6 +194,7 @@ const Playerstate = (props) => {
         songSinger: singer,
         songPhoto: photo,
         postId: postId,
+        songSlug: songSlug,
       },
     });
     // set if user listen this song twice or more if true add to mainplaylist,
@@ -236,6 +238,8 @@ const Playerstate = (props) => {
         limitListTo10.push(item);
         localStorage.setItem("limitListTo10", JSON.stringify(limitListTo10));
       } else {
+        // if there is no user in the site, and if he had listen 10 music, force him to login or sign up
+
         let limitListTo10 = JSON.parse(localStorage.getItem("limitListTo10"));
 
         if (limitListTo10.length >= 10) {
@@ -362,20 +366,21 @@ const Playerstate = (props) => {
       setPlayList(playlist);
     }
     // console.log(url);
+    setNewProgress(0);
+
     dispatch({
       type: SET_CURRENT_URL,
       payload: url,
     });
     // setProgress(0);
-    setNewProgress(0);
   };
 
   const nextMusic = async (audioElement = audioRef.current) => {
     // console.log(22);
     audioElement.pause();
     putToMusicChangeList(audioElement.currentTime, "next");
-    // let last = null;
-    // console.log(playList);
+    setNewProgress(0);
+
     if (playList !== undefined) {
       for (let i = 0; i < playList.length; i++) {
         if (state.songId === playList[i].media[0].id) {
@@ -443,13 +448,13 @@ const Playerstate = (props) => {
         }
       }
     }
-
-    setNewProgress(0);
   };
   const previousMusic = async (audioElement = audioRef.current) => {
     audioElement.pause();
 
     putToMusicChangeList(audioElement.currentTime, "previous");
+    setNewProgress(0);
+
     // let last = null;
     if (playList !== undefined) {
       for (let i = 0; i < playList.length; i++) {
@@ -511,7 +516,6 @@ const Playerstate = (props) => {
         }
       }
     }
-    setNewProgress(0);
   };
 
   const changeDuration = (audioElement, newDuration) => {
@@ -600,6 +604,7 @@ const Playerstate = (props) => {
         canDeleteSong: state.canDeleteSong,
         postId: state.postId,
         forceStop: state.forceStop,
+        songSlug: state.songSlug,
         setShowMusicBarOnMoblieRatio,
         changeNoneOrLoopOrRepeat,
         changeVolume,
@@ -779,17 +784,22 @@ const Playerstate = (props) => {
                 className="phoneMusicBar__left d-flex align-self-center 
           justify-content-start"
               >
-                <img
-                  className="phoneMusicBar__img m-2"
-                  src={
-                    state.songPhoto !== null ? state.songPhoto : defualtPhoto
-                  }
-                  alt=""
-                />
+                <Link to={`/song/${state.songSlug}`}>
+                  <img
+                    className="phoneMusicBar__img m-2"
+                    src={
+                      state.songPhoto !== null ? state.songPhoto : defualtPhoto
+                    }
+                    alt=""
+                  />
+                </Link>
+
                 <div className="phoneMusicBar__info align-self-center mr-2">
                   <div className="phoneMusicBar__title">
                     <div className="scroll">
-                      <span>{state.songName}</span>
+                      <Link to={`/song/${state.songSlug}`}>
+                        <span>{state.songName}</span>
+                      </Link>
                     </div>
                   </div>
                   <div className="phoneMusicBar__singer">
@@ -858,19 +868,23 @@ const Playerstate = (props) => {
                 <div className="musicBar__right">
                   <div className="musicBar__info">
                     <div className="musicBar__infoImage">
-                      <img
-                        src={
-                          state.songPhoto !== null
-                            ? state.songPhoto
-                            : defualtPhoto
-                        }
-                        alt="logo"
-                      />
+                      <Link to={`/song/${state.songSlug}`}>
+                        <img
+                          src={
+                            state.songPhoto !== null
+                              ? state.songPhoto
+                              : defualtPhoto
+                          }
+                          alt="logo"
+                        />
+                      </Link>
                     </div>
                     <div className="musicBar__infoDesc">
                       <div className="infoDesc__title">
                         <div className="scroll">
-                          <span>{state.songName}</span>
+                          <Link to={`/song/${state.songSlug}`}>
+                            <span>{state.songName}</span>
+                          </Link>
                         </div>
                       </div>
                       <div className="infoDesc__person">{state.songSinger}</div>

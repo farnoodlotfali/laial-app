@@ -3,11 +3,9 @@ import defualtPhoto from "./assets/defualtPhoto.jpeg";
 import { useContext, useEffect, useState } from "react";
 import authContext from "./auth/authContext";
 import {
-  ArrowDownwardRounded,
-  ArrowUpwardRounded,
+  AddRounded,
   DeleteRounded,
   ExpandMoreRounded,
-  HeightRounded,
 } from "@material-ui/icons";
 import appContext from "./contexts/appContext";
 import { useHistory } from "react-router";
@@ -17,6 +15,7 @@ import { Dropdown } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "./axios/axios";
 import LoadIcon from "./spinner/LoadIcon";
+import { Tooltip } from "@material-ui/core";
 const style = {
   height: 30,
   border: "1px solid green",
@@ -48,13 +47,14 @@ const MyProfile = () => {
   }, [user, listShow]);
   const {
     userPlaylists,
-    // eslint-disable-next-line
+    getLikedSongsPlaylist,
     mainPlaylistId,
     getOnePlayList,
     changeCurrentPassword,
     loadingOnUserPlaylist,
     removeSongFromPlaylist,
     getRecentlyViewedSongsPlaylist,
+    ChangeshowCenter,
   } = useContext(appContext);
   const [passwordMsg, setPasswordMsg] = useState("");
 
@@ -101,7 +101,7 @@ const MyProfile = () => {
           `/account/recently-view/?page=${next.page}`,
           config
         );
-        // console.log(res.data);
+        console.log(res.data);
         setNext({
           next: res.data.next,
           hasMore: res.data.next ? true : false,
@@ -119,6 +119,18 @@ const MyProfile = () => {
 
   const recentlyViewedc = async () => {
     const newList = await getRecentlyViewedSongsPlaylist();
+    // console.log(q.results);
+    setNext({
+      ...next,
+      list: newList.results,
+      next: newList.next,
+      hasMore: newList.next ? true : false,
+    });
+    setListShow(newList.results);
+    setDeleteBtn(false);
+  };
+  const likedSongsHandle = async () => {
+    const newList = await getLikedSongsPlaylist();
     // console.log(q.results);
     setNext({
       ...next,
@@ -284,7 +296,10 @@ const MyProfile = () => {
             <div className="myprofile__mobile__songs">
               {userPlaylists && (
                 <div className="myprofile__mobile__songs__options">
-                  <div className="myprofile__mobile__songs__myListsOption">
+                  <div
+                    className="myprofile__mobile__songs__myListsOption"
+                    onClick={() => likedSongsHandle()}
+                  >
                     <span>آهنگ های لایک شده</span>
                   </div>
                   <div
@@ -310,7 +325,6 @@ const MyProfile = () => {
                         </div>
                         <ExpandMoreRounded />
                       </Dropdown.Toggle>
-
                       <Dropdown.Menu className="myprofile__mobile__songs__mySongs">
                         {userPlaylists?.map(
                           (item, i) =>
@@ -330,6 +344,12 @@ const MyProfile = () => {
                         )}
                       </Dropdown.Menu>
                     </Dropdown>
+                    <div
+                      className="myprofile__mobile__songs__myListsOption__addNewList"
+                      onClick={ChangeshowCenter}
+                    >
+                      <AddRounded />
+                    </div>
                   </div>
                 </div>
               )}
@@ -426,7 +446,10 @@ const MyProfile = () => {
           //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
-                <div className="myListsOption">
+                <div
+                  className="myListsOption"
+                  onClick={() => likedSongsHandle()}
+                >
                   <span>آهنگ های لایک شده</span>
                 </div>
                 <div
@@ -445,7 +468,7 @@ const MyProfile = () => {
                   <span> آهنگ های منتخب سایت</span>
                 </div>
               </div>
-            )}{" "}
+            )}
             <div className="listShow d-flex">
               <div className="myMadeListsShow">
                 <div className="myMadeListShow__title">
@@ -453,6 +476,11 @@ const MyProfile = () => {
                     نام لیست : {listname}
                   </span>
                   <span className="playListBtn">پخش</span>
+                  <span className="playListBtn mr-3" onClick={ChangeshowCenter}>
+                    <Tooltip placement="top" title="لیست جدید">
+                      <AddRounded />
+                    </Tooltip>
+                  </span>
                 </div>
                 <div className="myMadeListsShow__lists py-3">
                   {userPlaylists?.map(
@@ -502,7 +530,7 @@ const MyProfile = () => {
                     next={() => infiniteList()}
                     hasMore={next.hasMore}
                     loader={<LoadIcon />}
-                    height={270}
+                    height={435}
                     // endMessage={
                     //   <p style={{ textAlign: 'center' }}>
                     //     <b>Yay! You have seen it all</b>

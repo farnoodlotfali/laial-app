@@ -46,6 +46,9 @@
 }
 .steady__rowItem__title {
   display: block;
+  padding: 0 5px;
+  overflow: hidden;
+  direction: rtl;
 }
 .rowItem__info a:hover {
   text-decoration: none !important;
@@ -53,12 +56,12 @@
 .carousel-cellRowItem:hover .scroll__rowItem__title {
   display: block;
 
-  animation: animate 6s linear infinite;
+  animation: animate__rowItem__title 6s linear infinite;
 }
 .carousel-cellRowItem:hover .steady__rowItem__title {
   display: none;
 }
-@keyframes animate {
+@keyframes animate__rowItem__title {
   0% {
     transform: translateX(100%);
   }
@@ -271,7 +274,7 @@
   }
   .carousel-cellRowItem {
     height: 180px;
-    width: 31.5%;
+    width: 29%;
     min-width: 106px;
   }
   .play__music___spinner,

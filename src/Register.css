@@ -181,6 +181,15 @@
   color: darkred;
 }
 
+.register__snackbar .MuiSnackbarContent-root {
+  background-color: darkred;
+  border: 1px solid white;
+  text-align: center;
+}
+.register__snackbar .MuiSnackbarContent-message {
+  width: 100%;
+}
+
 @media (max-width: 768px) {
   .register {
     min-height: 92vh;

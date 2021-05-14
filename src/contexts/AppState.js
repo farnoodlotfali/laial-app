@@ -256,7 +256,7 @@ const AppState = (props) => {
     });
     try {
       const res = await axios.instanceApi.get(`persons/${newSlug}`);
-      console.log(res.data);
+      // console.log(res.data);
       dispatch({
         type: GET_PERSON,
         payload: {
@@ -268,7 +268,6 @@ const AppState = (props) => {
           personkSlug: newSlug,
         },
       });
-      // console.log(res.data.results);
     } catch (error) {
       // console.log(error);
       dispatch({
@@ -343,6 +342,7 @@ const AppState = (props) => {
     });
   };
   const makeNewPlaylist = async (form) => {
+    console.log(form);
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -471,6 +471,9 @@ const AppState = (props) => {
     }
   };
   const getLikedSongsPlaylist = async () => {
+    dispatch({
+      type: SET_LOADING_ON_USER_PLAYLIST,
+    });
     const config = {
       headers: {
         "Content-Type": "app;ication/json",
@@ -481,6 +484,10 @@ const AppState = (props) => {
     try {
       const res = await axios.instanceApi.get("/account/like/", config);
       console.log(res.data);
+      dispatch({
+        type: REMOVE_LOADING_ON_USER_PLAYLIST,
+      });
+      return res.data;
     } catch (error) {
       console.log(error);
       dispatch({
