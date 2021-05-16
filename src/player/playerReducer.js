@@ -24,7 +24,6 @@ export default (state, action) => {
         ...state,
         playing: true,
         loading: false,
-        loading: false,
       };
     case PAUSE_MUSIC:
       return {

@@ -36,10 +36,15 @@
   color: whitesmoke;
 }
 .phoneList__user {
-  direction: rtl;
+  /* direction: rtl; */
   border: 1px solid white;
   padding: 5px 15px;
   border-radius: 14px;
+  overflow: hidden;
+  width: 185px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  direction: ltr;
 }
 .phoneList__title {
   direction: rtl;

@@ -1,16 +1,16 @@
-import { makeStyles, Snackbar } from "@material-ui/core";
+import { Snackbar } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import authContext from "./auth/authContext";
 import "./Register.css";
 
-const useStyles = makeStyles({
-  paper: {
-    background: "red",
-  },
-});
+// const useStyles = makeStyles({
+//   paper: {
+//     background: "red",
+//   },
+// });
 const Register = (props) => {
-  const classes = useStyles();
-  const { user, register, error } = useContext(authContext);
+  // const classes = useStyles();
+  const { user, register } = useContext(authContext);
   const [showError, setShowError] = useState({
     showError: false,
     msg: " ",
@@ -46,13 +46,13 @@ const Register = (props) => {
   //     setErrorMsg("");
   //   }, 5000);
   // };
-
-  useEffect(() => {
+  const registerError = () => {
     setShowError({
       showError: true,
       msg: "  نام کاربری ویا ایمیل در سیستم موجود است",
     });
-  }, [error]);
+  };
+
   return (
     <>
       <Snackbar
@@ -83,23 +83,26 @@ const Register = (props) => {
               {/* <h2>Register</h2> */}
 
               <form
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                   e.preventDefault();
                   if (password !== password2) {
                     // passNotSame();
-                    console.log(1);
+                    // console.log(1);
                     setShowError({
                       showError: true,
                       msg: "رمز اول با رمز دوم تطابق ندارد",
                     });
                   } else {
-                    register({
+                    const success = await register({
                       username,
                       email,
                       password,
                       first_name,
                       last_name,
                     });
+                    if (!success) {
+                      registerError();
+                    }
                   }
                 }}
               >

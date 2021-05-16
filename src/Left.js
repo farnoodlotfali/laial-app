@@ -1,9 +1,4 @@
-import {
-  ClickAwayListener,
-  Slide,
-  Slider,
-  SwipeableDrawer,
-} from "@material-ui/core";
+import { SwipeableDrawer } from "@material-ui/core";
 import {
   Close,
   Pause,
@@ -35,6 +30,7 @@ const Left = () => {
     nextMusic,
     playAndPauseMusic,
     playing,
+    // eslint-disable-next-line
     duration,
     totalDuration,
     changeShuffle,

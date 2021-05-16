@@ -35,8 +35,9 @@ const PhoneList = () => {
             </div>
             {user ? (
               <div className="phoneList__user">
-                <span className="ml-2">{user.first_name}</span>
                 <AccountCircleRounded />
+
+                <span className="ml-2">{user.first_name}</span>
               </div>
             ) : (
               <Link

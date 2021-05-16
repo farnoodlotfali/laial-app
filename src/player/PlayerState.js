@@ -35,7 +35,7 @@ import {
   PAUSE_MUSIC,
   UNMUTE_MUSIC,
   CHANGE_VOLUME,
-  CHANGE_DURATION,
+  // CHANGE_DURATION,
   SET_PALYLIST,
   FORCE_STOP,
   SET_CURRENT_URL,
@@ -107,7 +107,7 @@ const Playerstate = (props) => {
     showLeft,
     addMusicToMAINPlaylist,
     setWhichSongToSaveInPlaylist,
-    addMusicToRecentlyViewed,
+    removeThisSongHasBeenbAdd,
     changeHomeMeta,
   } = useContext(AppContext);
   const initialState = {
@@ -367,7 +367,7 @@ const Playerstate = (props) => {
     }
     // console.log(url);
     setNewProgress(0);
-
+    removeThisSongHasBeenbAdd();
     dispatch({
       type: SET_CURRENT_URL,
       payload: url,

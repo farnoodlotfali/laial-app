@@ -8,7 +8,6 @@ const Bar = ({
 }) => {
   //   console.log(audio);
   const [progress, setprogress] = useState(0);
-
   useEffect(() => {
     const audio = document.getElementById("audio2");
 
@@ -24,7 +23,7 @@ const Bar = ({
       audio?.removeEventListener("timeupdate", setAudioTime);
     };
   }, []);
-
+  // console.log(parseFloat(progress.toFixed(0)) === 33);
   return (
     <Slider
       disabled={loading}

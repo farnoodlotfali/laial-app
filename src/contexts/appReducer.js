@@ -23,6 +23,8 @@ import {
   CHANGE_SHOW_RIGHT,
   CHANGE_SHOW_LEFT,
   CHANGE_HOME_META,
+  THIS_SONG_HAS_BEEN_ADD,
+  REMOVE_THIS_SONG_HAS_BEEN_ADD,
 } from "./types";
 // eslint-disable-next-line
 export default (state, action) => {
@@ -184,6 +186,16 @@ export default (state, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    case THIS_SONG_HAS_BEEN_ADD:
+      return {
+        ...state,
+        thisSongHasBeenAddedToRecentlyViwed: true,
+      };
+    case REMOVE_THIS_SONG_HAS_BEEN_ADD:
+      return {
+        ...state,
+        thisSongHasBeenAddedToRecentlyViwed: false,
       };
 
     default:

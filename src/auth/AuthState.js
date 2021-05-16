@@ -84,6 +84,8 @@ const AuthState = (props) => {
         payload: res.data,
       });
       loadUser();
+
+      return true;
     } catch (error) {
       console.log(error.response.data);
       dispatch({
@@ -91,6 +93,7 @@ const AuthState = (props) => {
         payload: error,
       });
     }
+    return false;
   };
 
   //login
@@ -167,6 +170,7 @@ const AuthState = (props) => {
     // };
 
     try {
+      // eslint-disable-next-line
       const res = await axios.instanceApi.post(
         `/account/tags/`,
         formData,

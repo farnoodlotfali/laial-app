@@ -15,9 +15,9 @@
     "flickity": "^2.2.1",
     "flickity-fade": "^1.0.0",
     "node-sass": "^5.0.0",
-    "react": "^17.0.1",
+    "react": "^17.0.2",
     "react-bootstrap": "^1.4.0",
-    "react-dom": "^17.0.1",
+    "react-dom": "^17.0.2",
     "react-flickity": "^1.0.8",
     "react-flickity-component": "^3.6.1",
     "react-headroom": "^3.1.0",
@@ -27,7 +27,7 @@
     "react-password-strength-bar": "^0.3.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.1",
+    "react-scripts": "^4.0.3",
     "scss": "^0.2.4",
     "swiper": "^6.5.0",
     "web-vitals": "^0.2.4"
@@ -36,7 +36,8 @@
     "start": "set PORT=8000 && react-scripts start ",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postbuild": "react-snap"
   },
   "eslintConfig": {
     "extends": [
@@ -57,6 +58,15 @@
     ]
   },
   "devDependencies": {
-    "react-draggable-slider": "^0.1.6"
+    "react-draggable-slider": "^0.1.6",
+    "react-snap": "^1.23.0"
+  },
+  "reactSnap": {
+    "inlineCss": true,
+    "source": "dist",
+    "minifyHtml": {
+      "collapseWhitespace": false,
+      "removeComments": false
+    }
   }
 }

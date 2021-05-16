@@ -16,12 +16,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "./axios/axios";
 import LoadIcon from "./spinner/LoadIcon";
 import { Tooltip } from "@material-ui/core";
-const style = {
-  height: 30,
-  border: "1px solid green",
-  margin: 6,
-  padding: 8,
-};
 
 const MyProfile = () => {
   const { user } = useContext(authContext);

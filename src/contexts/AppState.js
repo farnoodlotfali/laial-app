@@ -27,6 +27,8 @@ import {
   CHANGE_SHOW_RIGHT,
   CHANGE_SHOW_LEFT,
   CHANGE_HOME_META,
+  THIS_SONG_HAS_BEEN_ADD,
+  REMOVE_THIS_SONG_HAS_BEEN_ADD,
 } from "./types";
 const AppState = (props) => {
   const initialState = {
@@ -74,7 +76,7 @@ const AppState = (props) => {
     like: 0,
     recommender: null,
     userPlaylists: null,
-    // x: false,
+    thisSongHasBeenAddedToRecentlyViwed: false,
   };
   useEffect(() => {
     getMenu();
@@ -497,6 +499,9 @@ const AppState = (props) => {
     }
   };
   const addMusicToRecentlyViewed = async (duration, postId) => {
+    dispatch({
+      type: THIS_SONG_HAS_BEEN_ADD,
+    });
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -507,14 +512,17 @@ const AppState = (props) => {
       duration: duration,
       post: postId,
     };
-    console.log(form);
+    // console.log(form);
 
     try {
+      // eslint-disable-next-line
       const res = await axios.instanceApi.post(
         "/account/recently-view/",
         form,
         config
       );
+
+      console.log(res.data);
     } catch (error) {
       console.log(error);
       dispatch({
@@ -678,7 +686,7 @@ const AppState = (props) => {
       });
       res.data?.[0]?.items.map((item) => {
         // for put PostIdForDeleteFromUserPlaylist for deleteing
-        item.post.PostIdForDeleteFromUserPlaylist = item.id;
+        return (item.post.PostIdForDeleteFromUserPlaylist = item.id);
       });
       console.log(res.data);
       return res.data?.[0]?.items;
@@ -797,6 +805,11 @@ const AppState = (props) => {
       },
     });
   };
+  const removeThisSongHasBeenbAdd = () => {
+    dispatch({
+      type: REMOVE_THIS_SONG_HAS_BEEN_ADD,
+    });
+  };
   return (
     <AppContext.Provider
       value={{
@@ -830,6 +843,7 @@ const AppState = (props) => {
         setWhichSongToSaveInPlaylist,
         addMusicToMAINPlaylist,
         changeHomeMeta,
+        removeThisSongHasBeenbAdd,
         home: state.home,
         homeMeta: state.homeMeta,
         menu: state.menu,
@@ -847,6 +861,8 @@ const AppState = (props) => {
         tags: state.tags,
         // dataSongPageMeta: state.dataSongPageMeta,
         loadingOnUserPlaylist: state.loadingOnUserPlaylist,
+        thisSongHasBeenAddedToRecentlyViwed:
+          state.thisSongHasBeenAddedToRecentlyViwed,
         BlockListName: state.BlockListName,
         personList: state.personList,
         personUrls: state.personUrls,
