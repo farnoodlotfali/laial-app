@@ -18,6 +18,7 @@ export default (state, action) => {
       localStorage.setItem("tokenRefresh", action.payload.token.refresh);
       localStorage.setItem("favorite_items", action.payload.favorite_items);
       localStorage.setItem("user", JSON.stringify(action.payload.user));
+      localStorage.removeItem("logForRefreshTokenExpired");
       localStorage.removeItem("limitListTo10");
       return {
         ...state,
@@ -34,6 +35,7 @@ export default (state, action) => {
       localStorage.setItem("tokenRefresh", action.payload.token.refresh);
       localStorage.setItem("user", JSON.stringify(action.payload.user));
       localStorage.removeItem("limitListTo10");
+      localStorage.removeItem("logForRefreshTokenExpired");
       return {
         ...state,
         isAuth: true,

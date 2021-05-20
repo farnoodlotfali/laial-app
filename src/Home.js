@@ -8,9 +8,8 @@ import Spinner from "./spinner/Spinner";
 import authContext from "./auth/authContext";
 import { Helmet } from "react-helmet";
 const Home = () => {
-  const { loading, getHome, home, homeMeta, showMusic } = useContext(
-    appContext
-  );
+  const { loading, getHome, home, homeMeta, showMusic } =
+    useContext(appContext);
   const { user } = useContext(authContext);
   useEffect(() => {
     if (home === null) {

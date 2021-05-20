@@ -40,6 +40,7 @@ instanceApi.interceptors.response.use(
         // console.log(66);
         localStorage.clear();
         window.location = "/login";
+        localStorage.setItem("logForRefreshTokenExpired", true);
         return Promise.reject(error);
       }
       // console.log(tryCount);

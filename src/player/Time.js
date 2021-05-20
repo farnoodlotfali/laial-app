@@ -8,7 +8,6 @@ const Time = () => {
   const { postId } = useContext(playerContext);
   const zeroPad = (num, places) => String(num).padStart(places, "0");
   const [time, settime] = useState(0);
-  const [x, setx] = useState(false);
 
   useEffect(() => {
     const audio = document.getElementById("audio2");
@@ -28,8 +27,6 @@ const Time = () => {
         parseFloat((audio?.duration / 3).toFixed(1)) ===
           parseFloat((audio?.currentTime).toFixed(1))
       ) {
-        // console.log(111);
-        // setx(true);
         addMusicToRecentlyViewed(1, postId);
       }
     };
@@ -38,7 +35,7 @@ const Time = () => {
     return () => {
       audio?.removeEventListener("timeupdate", setAudioTime);
     };
-  }, [postId, thisSongHasBeenAddedToRecentlyViwed]);
+  }, [postId, thisSongHasBeenAddedToRecentlyViwed, addMusicToRecentlyViewed]);
 
   // console.log(addToRecentlyViewed);
   return <>{time}</>;

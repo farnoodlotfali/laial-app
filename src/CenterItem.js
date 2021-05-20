@@ -74,7 +74,7 @@ const CenterItem = ({ name, id, items }) => {
           )}
           <IconButton aria-label="remove" onClick={removeList}>
             <Close />
-          </IconButton>{" "}
+          </IconButton>
         </div>
       </div>
       <Divider />

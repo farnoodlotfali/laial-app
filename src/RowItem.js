@@ -76,23 +76,18 @@ const RowItem = ({
         if (cancel !== undefined) {
           cancel();
         }
-        // console.log(media.path);
 
         if (media.path) {
-          // console.log("path");
           setUrl(media.path, context);
           playMusic();
         } else {
-          // console.log("telegram_id");
-
-          // console.log(media?.name, person?.[0]?.name);
           try {
             const res = await axios.downloader.get(`/${media?.telegram_id}`, {
               cancelToken: new CancelToken(function executor(c) {
                 cancel = c;
               }),
             });
-            // console.log();
+
             setUrl(res.data.download_link, context);
             // if (!showMusic) {
             //   ChangeShowMusic();
@@ -102,6 +97,14 @@ const RowItem = ({
             console.log(error);
           }
         }
+        // const songPhotoUrl = logo?.full_image_url
+        //   ? logo?.full_image_url
+        //   : media?.image !== null
+        //   ? media?.image
+        //   : person?.[0]?.image.full_image_url;
+        // const MusicPhotoIcon = document.getElementById("musicPhoto");
+        // songPhotoUrl !== null && (MusicPhotoIcon.href = songPhotoUrl);
+        // console.log(MusicPhotoIcon.href);
       }
     }
   };

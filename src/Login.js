@@ -7,6 +7,7 @@ import Fade from "@material-ui/core/Fade";
 import "./Login.css";
 import appContext from "./contexts/appContext";
 import { CloseRounded } from "@material-ui/icons";
+import { Snackbar } from "@material-ui/core";
 
 const Login = (props) => {
   let history = useHistory();
@@ -26,6 +27,12 @@ const Login = (props) => {
       // props.history.back();
       history.goBack();
     }
+    if (JSON.parse(localStorage.getItem("logForRefreshTokenExpired"))) {
+      setShowError({
+        showError: true,
+        msg: "توکن شما انقضا شده است. لطفا دوباره لاکین کنید",
+      });
+    }
     // loadUser();
 
     // eslint-disable-next-line
@@ -41,6 +48,10 @@ const Login = (props) => {
   const [emailForRest, setEmailForRest] = useState("");
   const [forgetPasswordMsg, setForgetPasswordMsg] = useState("");
   const [open, setOpen] = useState(false);
+  const [showError, setShowError] = useState({
+    showError: false,
+    msg: " ",
+  });
 
   const handleOpen = () => {
     setOpen(true);
@@ -49,132 +60,153 @@ const Login = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
+  const loginError = () => {
+    setShowError({
+      showError: true,
+      msg: "! کاربری با این مشخصات یافت نشد",
+    });
+  };
 
   return (
-    <div className="login">
-      <div className="color"></div>
-      <div className="color"></div>
-      <div className="color"></div>
-      <div className="box">
-        <div className="square" style={{ i: "0" }}></div>
-        <div className="square" style={{ i: "1" }}></div>
-        <div className="square" style={{ i: "2" }}></div>
-        <div className="square" style={{ i: "3" }}></div>
-        <div className="square" style={{ i: "4" }}></div>
-        <div className="login__container">
-          <div className="form">
-            <h2>ورود</h2>
-            {/* <h2>Register</h2> */}
+    <>
+      <Snackbar
+        className="register__snackbar"
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={showError.showError}
+        onClose={() => setShowError({ ...showError, showError: false })}
+        message={showError.msg}
+      />
+      <div className="login">
+        <div className="color"></div>
+        <div className="color"></div>
+        <div className="color"></div>
+        <div className="box">
+          <div className="square" style={{ i: "0" }}></div>
+          <div className="square" style={{ i: "1" }}></div>
+          <div className="square" style={{ i: "2" }}></div>
+          <div className="square" style={{ i: "3" }}></div>
+          <div className="square" style={{ i: "4" }}></div>
+          <div className="login__container">
+            <div className="form">
+              <h2>ورود</h2>
+              {/* <h2>Register</h2> */}
 
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                login({
-                  email,
-                  password,
-                });
-              }}
-            >
-              <div className="inputBox">
-                <input
-                  onChange={onchange}
-                  name="email"
-                  type="email"
-                  value={email}
-                  placeholder="ایمیل"
-                  required
-                />
-              </div>{" "}
-              <div className="inputBox">
-                <input
-                  required
-                  onChange={onchange}
-                  name="password"
-                  value={password}
-                  type="password"
-                  placeholder="رمز ورود"
-                  minLength="8"
-                />
-              </div>
-              <div className="error__msg__login pt-2 ">
-                {error && "! کاربری با این مشخصات یافت نشد"}
-              </div>
-              <div className="notRegister pt-2">
-                <span>ثبت نام نکرده اید؟</span>
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  const success = await login({
+                    email,
+                    password,
+                  });
+                  if (!success) {
+                    loginError();
+                  }
+                }}
+              >
+                <div className="inputBox">
+                  <input
+                    onChange={onchange}
+                    name="email"
+                    type="email"
+                    value={email}
+                    placeholder="ایمیل"
+                    required
+                  />
+                </div>
+                <div className="inputBox">
+                  <input
+                    required
+                    onChange={onchange}
+                    name="password"
+                    value={password}
+                    type="password"
+                    placeholder="رمز ورود"
+                    minLength="8"
+                  />
+                </div>
+                <div className="error__msg__login pt-2 ">
+                  {/* {error && "! کاربری با این مشخصات یافت نشد"} */}
+                </div>
+                <div className="notRegister pt-2">
+                  <span>ثبت نام نکرده اید؟</span>
 
-                <Link to="/register">
-                  <span> ثبت نام</span>
-                </Link>
-              </div>{" "}
-              <div className="forgetPass pt-2">
-                <div>
-                  <span className="forgetPassBtn" onClick={handleOpen}>
-                    فراموشی رمز؟
-                  </span>
-                  <Modal
-                    className="forgetPassModal"
-                    // className={classes.modal}
-                    open={open}
-                    onClose={handleClose}
-                    closeAfterTransition
-                    BackdropComponent={Backdrop}
-                    BackdropProps={{
-                      timeout: 500,
-                    }}
-                  >
-                    <Fade in={open}>
-                      <div className="forgetPass__content">
-                        <div
-                          className="forgetPass__content__close "
-                          onClick={handleClose}
-                        >
-                          <CloseRounded />
-                        </div>
-                        <h2>فراموشی رمز</h2>
-                        <p>ایمیل خود را جهت بازیابی رمز وارد کنید</p>
-                        <div className="forgetPass__form">
-                          <input
-                            onChange={(e) => setEmailForRest(e.target.value)}
-                            name="emailForRest"
-                            value={emailForRest}
-                            type="email"
-                          />
-
-                          <button
-                            onClick={async () => {
-                              const status = await forgetPassword(emailForRest);
-                              if (status === 200) {
-                                setForgetPasswordMsg(
-                                  "درخواست شما ثبت شد،لطفا صندوق ایمیل خود را چک کنید"
-                                );
-                              } else {
-                                setForgetPasswordMsg("!خطا");
-                              }
-                              setTimeout(() => {
-                                setOpen(false);
-                              }, 6000);
-                            }}
+                  <Link to="/register">
+                    <span> ثبت نام</span>
+                  </Link>
+                </div>
+                <div className="forgetPass pt-2">
+                  <div>
+                    <span className="forgetPassBtn" onClick={handleOpen}>
+                      فراموشی رمز؟
+                    </span>
+                    <Modal
+                      className="forgetPassModal"
+                      // className={classes.modal}
+                      open={open}
+                      onClose={handleClose}
+                      closeAfterTransition
+                      BackdropComponent={Backdrop}
+                      BackdropProps={{
+                        timeout: 500,
+                      }}
+                    >
+                      <Fade in={open}>
+                        <div className="forgetPass__content">
+                          <div
+                            className="forgetPass__content__close "
+                            onClick={handleClose}
                           >
-                            بازیابی
-                          </button>
-                          <div className="forgetPasswordMsg">
-                            {forgetPasswordMsg}
+                            <CloseRounded />
+                          </div>
+                          <h2>فراموشی رمز</h2>
+                          <p>ایمیل خود را جهت بازیابی رمز وارد کنید</p>
+                          <div className="forgetPass__form">
+                            <input
+                              onChange={(e) => setEmailForRest(e.target.value)}
+                              name="emailForRest"
+                              value={emailForRest}
+                              type="email"
+                            />
+
+                            <button
+                              onClick={async () => {
+                                const status = await forgetPassword(
+                                  emailForRest
+                                );
+                                if (status === 200) {
+                                  setForgetPasswordMsg(
+                                    "درخواست شما ثبت شد،لطفا صندوق ایمیل خود را چک کنید"
+                                  );
+                                } else {
+                                  setForgetPasswordMsg("!خطا");
+                                }
+                                setTimeout(() => {
+                                  setOpen(false);
+                                }, 6000);
+                              }}
+                            >
+                              بازیابی
+                            </button>
+                            <div className="forgetPasswordMsg">
+                              {forgetPasswordMsg}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </Fade>
-                  </Modal>
+                      </Fade>
+                    </Modal>
+                  </div>
                 </div>
-              </div>
-              {/* <div className='formMsg pt-2'>{errorMsg}</div> */}
-              <div className="inputBox">
-                <input type="submit" value="ورود" />
-              </div>
-            </form>
+                {/* <div className='formMsg pt-2'>{errorMsg}</div> */}
+                <div className="inputBox">
+                  <input type="submit" value="ورود" />
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

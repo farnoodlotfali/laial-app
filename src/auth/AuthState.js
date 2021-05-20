@@ -110,7 +110,7 @@ const AuthState = (props) => {
     });
     try {
       const res = await axios.instanceApi.post("/account/login/", form, config);
-      console.log(res.data);
+      // console.log(res.data);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
@@ -118,6 +118,8 @@ const AuthState = (props) => {
 
       loadUser();
       getAllPlaylists();
+
+      return true;
     } catch (error) {
       console.log(error.response.data);
       dispatch({
@@ -125,6 +127,7 @@ const AuthState = (props) => {
         payload: error?.response?.data,
       });
     }
+    return false;
   };
 
   //logout

@@ -3,7 +3,7 @@ import {
   SEARCH_SUCCESS,
   SEARCH_FAIL,
   EMPTY_SEARCH,
-} from './types';
+} from "./types";
 
 // searchValue: '',
 
