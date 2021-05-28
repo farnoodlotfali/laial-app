@@ -784,7 +784,19 @@ const Playerstate = (props) => {
                 className="phoneMusicBar__left d-flex align-self-center 
           justify-content-start"
               >
-                <Link to={`/song/${state.songSlug}`}>
+                {state.songSlug ? (
+                  <Link to={`/song/${state.songSlug}`}>
+                    <img
+                      className="phoneMusicBar__img m-2"
+                      src={
+                        state.songPhoto !== null
+                          ? state.songPhoto
+                          : defualtPhoto
+                      }
+                      alt=""
+                    />
+                  </Link>
+                ) : (
                   <img
                     className="phoneMusicBar__img m-2"
                     src={
@@ -792,14 +804,18 @@ const Playerstate = (props) => {
                     }
                     alt=""
                   />
-                </Link>
+                )}
 
                 <div className="phoneMusicBar__info align-self-center mr-2">
                   <div className="phoneMusicBar__title">
                     <div className="scroll">
-                      <Link to={`/song/${state.songSlug}`}>
+                      {state.songSlug ? (
+                        <Link to={`/song/${state.songSlug}`}>
+                          <span>{state.songName}</span>
+                        </Link>
+                      ) : (
                         <span>{state.songName}</span>
-                      </Link>
+                      )}
                     </div>
                   </div>
                   <div className="phoneMusicBar__singer">
@@ -868,7 +884,18 @@ const Playerstate = (props) => {
                 <div className="musicBar__right">
                   <div className="musicBar__info">
                     <div className="musicBar__infoImage">
-                      <Link to={`/song/${state.songSlug}`}>
+                      {state.songSlug ? (
+                        <Link to={`/song/${state.songSlug}`}>
+                          <img
+                            src={
+                              state.songPhoto !== null
+                                ? state.songPhoto
+                                : defualtPhoto
+                            }
+                            alt="logo"
+                          />
+                        </Link>
+                      ) : (
                         <img
                           src={
                             state.songPhoto !== null
@@ -877,14 +904,18 @@ const Playerstate = (props) => {
                           }
                           alt="logo"
                         />
-                      </Link>
+                      )}
                     </div>
                     <div className="musicBar__infoDesc">
                       <div className="infoDesc__title">
                         <div className="scroll">
-                          <Link to={`/song/${state.songSlug}`}>
+                          {state.songSlug ? (
+                            <Link to={`/song/${state.songSlug}`}>
+                              <span>{state.songName}</span>
+                            </Link>
+                          ) : (
                             <span>{state.songName}</span>
-                          </Link>
+                          )}
                         </div>
                       </div>
                       <div className="infoDesc__person">{state.songSinger}</div>

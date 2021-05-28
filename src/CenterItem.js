@@ -1,6 +1,6 @@
 import { Fragment, useContext, useEffect, useRef, useState } from "react";
 import { Divider, IconButton } from "@material-ui/core";
-import { CheckRounded, Close, Edit } from "@material-ui/icons";
+import { Add, CheckRounded, Close, Edit } from "@material-ui/icons";
 import appContext from "./contexts/appContext";
 import playerContext from "./player/playerContext";
 const CenterItem = ({ name, id, items }) => {
@@ -51,31 +51,40 @@ const CenterItem = ({ name, id, items }) => {
   return (
     <Fragment>
       <div className="list d-flex justify-content-between">
-        <input
+        <div
           onClick={() => handleClick()}
-          className={`  ${edit ? "list__name_edit" : "list__name_save"}`}
-          type="text"
-          value={listName}
-          onChange={onChange}
-          disabled={!edit}
-          ref={inputRef}
-          maxLength={18}
-        />
-
-        <div className="list__icons d-flex">
-          {edit ? (
-            <IconButton aria-label="save" onClick={saveEditedName}>
-              <CheckRounded />
-            </IconButton>
-          ) : (
-            <IconButton aria-label="edit" onClick={editName}>
-              <Edit />
-            </IconButton>
-          )}
-          <IconButton aria-label="remove" onClick={removeList}>
-            <Close />
-          </IconButton>
+          className="w-100 d-flex align-items-center"
+        >
+          <input
+            className={`  ${edit ? "list__name_edit" : "list__name_save"}`}
+            type="text"
+            value={listName}
+            onChange={onChange}
+            disabled={!edit}
+            ref={inputRef}
+            maxLength={18}
+          />
         </div>
+        {!isAddingSong ? (
+          <div className="list__icons d-flex">
+            {edit ? (
+              <IconButton aria-label="save" onClick={saveEditedName}>
+                <CheckRounded />
+              </IconButton>
+            ) : (
+              <IconButton aria-label="edit" onClick={editName}>
+                <Edit />
+              </IconButton>
+            )}
+            <IconButton aria-label="remove" onClick={removeList}>
+              <Close />
+            </IconButton>
+          </div>
+        ) : (
+          <IconButton aria-label="edit" onClick={editName}>
+            <Add fontSize="default" />
+          </IconButton>
+        )}
       </div>
       <Divider />
     </Fragment>

@@ -30,7 +30,7 @@ const Login = (props) => {
     if (JSON.parse(localStorage.getItem("logForRefreshTokenExpired"))) {
       setShowError({
         showError: true,
-        msg: "توکن شما انقضا شده است. لطفا دوباره لاکین کنید",
+        msg: " لطفا دوباره لاکین کنید",
       });
     }
     // loadUser();

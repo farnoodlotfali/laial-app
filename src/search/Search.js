@@ -177,7 +177,7 @@ const Search = () => {
       </div>
       <div className="listResults">
         {next?.listResults && (
-          <h2 className="text-white my-5">نتایج براساس آهنگ</h2>
+          <h2 className="text-white my-5">نتایج براساس مرثیه</h2>
         )}
         {next?.listResults && (
           <InfiniteScroll

@@ -72,7 +72,7 @@ const Center = () => {
             <div className="playlist__title justify-content-center pl-3 d-flex ">
               <div className="title ml-4">
                 {isAddingSong ? (
-                  <span>آهنگ به کدام لیست اضافه شود؟</span>
+                  <span>مرثیه به کدام لیست اضافه شود؟</span>
                 ) : (
                   <span>لیست های من</span>
                 )}

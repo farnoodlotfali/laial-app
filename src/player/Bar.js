@@ -10,7 +10,6 @@ const Bar = ({
   const [progress, setprogress] = useState(0);
   useEffect(() => {
     const audio = document.getElementById("audio2");
-
     const setAudioTime = () => {
       setprogress(
         parseFloat(((audio?.currentTime * 100) / audio?.duration).toFixed(2))

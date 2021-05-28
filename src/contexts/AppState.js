@@ -459,7 +459,7 @@ const AppState = (props) => {
       },
     };
     const form = {
-      post: 4,
+      post: postId,
     };
     try {
       const res = await axios.instanceApi.post("/account/like/", form, config);
@@ -485,7 +485,7 @@ const AppState = (props) => {
 
     try {
       const res = await axios.instanceApi.get("/account/like/", config);
-      console.log(res.data);
+      // console.log(res.data);
       dispatch({
         type: REMOVE_LOADING_ON_USER_PLAYLIST,
       });

@@ -30,8 +30,13 @@ const RowItem = ({
 }) => {
   // let { slug } = useParams();
   // eslint-disable-next-line
-  const { ChangeShowMusic, ChangeshowCenter, showMusic, changeHomeMeta } =
-    useContext(AppContext); // eslint-disable-next-line
+  const {
+    ChangeShowMusic,
+    ChangeshowCenter,
+    showMusic,
+    changeHomeMeta,
+    addMusicToRecentlyViewed,
+  } = useContext(AppContext); // eslint-disable-next-line
   const {
     playMusic,
     playing,
@@ -52,7 +57,7 @@ const RowItem = ({
       changeShowLoginModal(true);
     } else {
       sendToHome();
-
+      addMusicToRecentlyViewed(1, postId);
       if (!showMusic) {
         ChangeShowMusic();
       }

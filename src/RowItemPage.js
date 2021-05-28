@@ -53,6 +53,7 @@ const RowItemPage = () => {
     setWhichSongToSaveInPlaylist,
     addToLikedSongPlaylist,
     getLikedSongsPlaylist,
+    addMusicToRecentlyViewed,
   } = useContext(AppContext);
   const { setUrl, playMusic, setIds } = useContext(playerContext);
   const { error, login, loadUser, user, isAuth, checkIfForce } =
@@ -104,6 +105,7 @@ const RowItemPage = () => {
         console.log(error);
       }
     }
+    addMusicToRecentlyViewed(1, dataSongPage?.id);
   };
   const onchange = (e) => {
     setUserInfo({
@@ -197,7 +199,7 @@ const RowItemPage = () => {
               <hr />
               <div className="actions d-flex justify-content-around">
                 <div onClick={playMusicAndShowMusicBar}>
-                  <Tooltip placement="bottom" title="پخش آهنگ">
+                  <Tooltip placement="bottom" title="پخش مرثیه">
                     <IconButton aria-label="play">
                       <PlayArrowRounded
                         style={{ fontSize: "40px" }}
@@ -213,9 +215,9 @@ const RowItemPage = () => {
                     onClick={() =>
                       isAuth
                         ? likeSong(params.slug) &
-                          addToLikedSongPlaylist(dataSongPage.id) &
-                          getLikedSongsPlaylist()
-                        : setShow(true)
+                          addToLikedSongPlaylist(dataSongPage.id)
+                        : //  & getLikedSongsPlaylist()
+                          setShow(true)
                     }
                   >
                     <Favorite className="Favorite" fontSize="large" />

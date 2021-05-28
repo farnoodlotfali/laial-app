@@ -4,8 +4,13 @@ import { useContext, useEffect, useState } from "react";
 import authContext from "./auth/authContext";
 import {
   AddRounded,
+  CheckRounded,
+  Close,
   DeleteRounded,
   ExpandMoreRounded,
+  PlayArrow,
+  PlayArrowRounded,
+  PlayCircleFilledRounded,
 } from "@material-ui/icons";
 import appContext from "./contexts/appContext";
 import { useHistory } from "react-router";
@@ -15,7 +20,8 @@ import { Dropdown } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "./axios/axios";
 import LoadIcon from "./spinner/LoadIcon";
-import { Tooltip } from "@material-ui/core";
+import { IconButton, Tooltip } from "@material-ui/core";
+import MyProfilemySonglist from "./MyProfilemySonglist";
 
 const MyProfile = () => {
   const { user } = useContext(authContext);
@@ -294,7 +300,7 @@ const MyProfile = () => {
                     className="myprofile__mobile__songs__myListsOption"
                     onClick={() => likedSongsHandle()}
                   >
-                    <span>آهنگ های لایک شده</span>
+                    <span>مرثیه های لایک شده</span>
                   </div>
                   <div
                     className="myprofile__mobile__songs__myListsOption"
@@ -309,7 +315,7 @@ const MyProfile = () => {
                       setDeleteBtn(false)
                     }
                   >
-                    <span> آهنگ های منتخب سایت</span>
+                    <span> نوا های منتخب سایت</span>
                   </div>
                   <div className="myprofile__mobile__songs__myListsOption">
                     <Dropdown>
@@ -362,16 +368,16 @@ const MyProfile = () => {
                     next={() => infiniteList()}
                     hasMore={next.hasMore}
                     loader={<LoadIcon />}
-                    height={270}
+                    height={445}
                     // endMessage={
                     //   <p style={{ textAlign: 'center' }}>
                     //     <b>Yay! You have seen it all</b>
                     //   </p>
                     // }
                   >
-                    {listShow.map((item) => (
+                    {listShow.map((item, i) => (
                       //  console.log(item?.post)
-                      <div className="song d-flex" key={item?.id}>
+                      <div className="song d-flex" key={i}>
                         <div className="songImg">
                           <img
                             src={
@@ -444,7 +450,7 @@ const MyProfile = () => {
                   className="myListsOption"
                   onClick={() => likedSongsHandle()}
                 >
-                  <span>آهنگ های لایک شده</span>
+                  <span>مرثیه های لایک شده</span>
                 </div>
                 <div
                   className="myListsOption"
@@ -459,42 +465,11 @@ const MyProfile = () => {
                     setDeleteBtn(false)
                   }
                 >
-                  <span> آهنگ های منتخب سایت</span>
+                  <span> نوا های منتخب سایت</span>
                 </div>
               </div>
             )}
             <div className="listShow d-flex">
-              <div className="myMadeListsShow">
-                <div className="myMadeListShow__title">
-                  <span className="align-self-center myMadeListShow__title__span">
-                    نام لیست : {listname}
-                  </span>
-                  <span className="playListBtn">پخش</span>
-                  <span className="playListBtn mr-3" onClick={ChangeshowCenter}>
-                    <Tooltip placement="top" title="لیست جدید">
-                      <AddRounded />
-                    </Tooltip>
-                  </span>
-                </div>
-                <div className="myMadeListsShow__lists py-3">
-                  {userPlaylists?.map(
-                    (item, i) =>
-                      mainPlaylistId !== item.id && (
-                        <div
-                          className="list__name"
-                          key={i}
-                          onClick={async () =>
-                            setListShow(await getOnePlayList(item.id)) &
-                            setListName(item.name) &
-                            setDeleteBtn(true)
-                          }
-                        >
-                          {item.name}
-                        </div>
-                      )
-                  )}
-                </div>
-              </div>
               <div
                 className={`listItemsShow ${
                   loadingOnUserPlaylist ? "listItemsShow__loading" : ""
@@ -531,9 +506,9 @@ const MyProfile = () => {
                     //   </p>
                     // }
                   >
-                    {listShow.map((item) => (
-                      <div className="" key={item?.id}>
-                        <div className="song d-flex" key={item?.id}>
+                    {listShow.map((item, i) => (
+                      <div className="" key={i}>
+                        <div className="song d-flex">
                           <div className="songImg">
                             <img
                               src={
@@ -589,6 +564,62 @@ const MyProfile = () => {
                     ))}
                   </InfiniteScroll>
                 )}
+              </div>
+
+              <div className="myMadeListsShow">
+                <div className="myMadeListShow__title">
+                  <span className="align-self-center myMadeListShow__title__span">
+                    نام لیست : {listname}
+                  </span>
+                  <div className="d-flex">
+                    <span className="playListBtn">
+                      <Tooltip placement="top" title="پخش">
+                        <PlayArrow />
+                      </Tooltip>
+                    </span>
+                    <span
+                      className="playListBtn mr-1"
+                      onClick={ChangeshowCenter}
+                    >
+                      <Tooltip placement="top" title="لیست جدید">
+                        <AddRounded />
+                      </Tooltip>
+                    </span>
+                  </div>
+                </div>
+                <div className="myMadeListsShow__lists py-3">
+                  {userPlaylists?.map(
+                    (item, i) =>
+                      mainPlaylistId !== item.id && (
+                        <MyProfilemySonglist
+                          key={item.id}
+                          id={item.id}
+                          name={item.name}
+                          setListName={setListName}
+                          setDeleteBtn={setDeleteBtn}
+                          setListShow={setListShow}
+                        />
+                        // <div className="list__name" key={i}>
+                        //   <ins
+                        //     className="list__name__innerText"
+                        //     onClick={async () =>
+                        //       setListShow(await getOnePlayList(item.id)) &
+                        //       setListName(item.name) &
+                        //       setDeleteBtn(true)
+                        //     }
+                        //   >
+                        //     {item.name}
+                        //   </ins>
+                        //   <IconButton
+                        //     aria-label="remove"
+                        //     // onClick={removeList}
+                        //   >
+                        //     <Close className="list__name__btn" />
+                        //   </IconButton>
+                        // </div>
+                      )
+                  )}
+                </div>
               </div>
             </div>
           </div>

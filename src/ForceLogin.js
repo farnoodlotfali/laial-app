@@ -14,7 +14,7 @@ const ForceLogin = () => {
     >
       <Modal.Header closeButton>
         <Modal.Title className="forceLogin__title">
-          برای شنیدن آهنگ ها باید وارد حساب کاربری شوید
+          برای شنیدن مرثیه ها باید وارد حساب کاربری شوید
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>

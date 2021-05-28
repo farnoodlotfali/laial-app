@@ -37,6 +37,7 @@
 }
 .phoneList__user {
   /* direction: rtl; */
+  text-align: center;
   border: 1px solid white;
   padding: 5px 15px;
   border-radius: 14px;
