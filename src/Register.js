@@ -2,6 +2,7 @@ import { Snackbar } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import authContext from "./auth/authContext";
 import "./Register.css";
+import SnackBarComponent from "./snackBarComponent/SnackBarComponent";
 
 // const useStyles = makeStyles({
 //   paper: {
@@ -11,8 +12,8 @@ import "./Register.css";
 const Register = (props) => {
   // const classes = useStyles();
   const { user, register } = useContext(authContext);
-  const [showError, setShowError] = useState({
-    showError: false,
+  const [showMsg, setShowMsg] = useState({
+    showMsg: false,
     msg: " ",
   });
   const [userInfo, setUserInfo] = useState({
@@ -47,26 +48,21 @@ const Register = (props) => {
   //   }, 5000);
   // };
   const registerError = () => {
-    setShowError({
-      showError: true,
+    setShowMsg({
+      showMsg: true,
       msg: "  نام کاربری ویا ایمیل در سیستم موجود است",
     });
   };
 
   return (
     <>
-      <Snackbar
-        className="register__snackbar"
-        // classes={{
-        //   paper: classes.paper,
-        // }}
-        autoHideDuration={2000}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={showError.showError}
-        onClose={() => setShowError({ ...showError, showError: false })}
-        message={showError.msg}
-        // key={"Center"}
+      <SnackBarComponent
+        showMsg={showMsg.showMsg}
+        setShowMsg={setShowMsg}
+        isSuccess={false}
+        msg={showMsg.msg}
       />
+
       <div className="register bg-light">
         <div className="color"></div>
         <div className="color"></div>
@@ -88,8 +84,8 @@ const Register = (props) => {
                   if (password !== password2) {
                     // passNotSame();
                     // console.log(1);
-                    setShowError({
-                      showError: true,
+                    setShowMsg({
+                      showMsg: true,
                       msg: "رمز اول با رمز دوم تطابق ندارد",
                     });
                   } else {

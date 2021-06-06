@@ -1,0 +1,17 @@
+.snackbar_error .MuiSnackbarContent-root {
+  background-color: darkred;
+  border: 1px solid white;
+  text-align: center;
+}
+.snackbar_error .MuiSnackbarContent-message {
+  width: 100%;
+}
+.snackbar_success .MuiSnackbarContent-root {
+  background-color: rgb(116, 190, 5);
+  border: 1px solid white;
+  text-align: center;
+  color: black;
+}
+.snackbar_success .MuiSnackbarContent-message {
+  width: 100%;
+}

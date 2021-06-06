@@ -22,6 +22,8 @@ import axios from "./axios/axios";
 import LoadIcon from "./spinner/LoadIcon";
 import { IconButton, Tooltip } from "@material-ui/core";
 import MyProfilemySonglist from "./MyProfilemySonglist";
+import playerContext from "./player/playerContext";
+import MyProfileSong from "./MyProfileSong";
 
 const MyProfile = () => {
   const { user } = useContext(authContext);
@@ -55,8 +57,12 @@ const MyProfile = () => {
     removeSongFromPlaylist,
     getRecentlyViewedSongsPlaylist,
     ChangeshowCenter,
+    changeMyProfilemySonglistId,
+    myProfilemySonglistId,
+    ChangeShowLeft,
   } = useContext(appContext);
   const [passwordMsg, setPasswordMsg] = useState("");
+  const { setPlayList } = useContext(playerContext);
 
   const [changePassword, setchangePassword] = useState({
     currentPassword: "",
@@ -331,11 +337,16 @@ const MyProfile = () => {
                             mainPlaylistId !== item.id && (
                               <Dropdown.Item
                                 key={i}
+                                className={`${
+                                  myProfilemySonglistId === item.id &&
+                                  "list__name_HasBeenChosen__mobile "
+                                }`}
                                 onClick={async () =>
                                   setListShow(await getOnePlayList(item.id)) &
                                   setListName(item.name) &
                                   // console.log(listShow) &
-                                  setDeleteBtn(true)
+                                  setDeleteBtn(true) &
+                                  changeMyProfilemySonglistId(item.id)
                                 }
                               >
                                 {item.name}
@@ -376,8 +387,13 @@ const MyProfile = () => {
                     // }
                   >
                     {listShow.map((item, i) => (
-                      //  console.log(item?.post)
-                      <div className="song d-flex" key={i}>
+                      <div
+                        className="song d-flex"
+                        key={i}
+                        onClick={() => {
+                          console.log(item);
+                        }}
+                      >
                         <div className="songImg">
                           <img
                             src={
@@ -507,60 +523,14 @@ const MyProfile = () => {
                     // }
                   >
                     {listShow.map((item, i) => (
-                      <div className="" key={i}>
-                        <div className="song d-flex">
-                          <div className="songImg">
-                            <img
-                              src={
-                                item?.post?.media?.[0]?.image !== null &&
-                                item?.post?.media?.[0]?.image !== undefined
-                                  ? item?.post?.media?.[0]?.image
-                                  : item?.post?.person?.[0]?.image
-                                      .full_image_url !== null
-                                  ? item?.post?.person?.[0]?.image
-                                      .full_image_url
-                                  : defualtPhoto
-                              }
-                              alt="songlogo"
-                            />
-                          </div>
-                          <div className="songInfo">
-                            <span className="songName">
-                              {truncate(item?.post?.media?.[0]?.name, 4)}
-                            </span>
-                            <span className="songSinger">
-                              {item?.post?.person?.[0]?.name}
-                            </span>
-                          </div>
-                          <div className="songTime">
-                            <span>
-                              {item?.post?.media?.[0]?.duration &&
-                                Math.floor(
-                                  item?.post?.media?.[0]?.duration / 60
-                                ) +
-                                  ":" +
-                                  zeroPad(
-                                    Math.floor(
-                                      item?.post?.media?.[0]?.duration % 60
-                                    ),
-                                    2
-                                  )}
-                            </span>
-                            {deleteBtn && (
-                              <div
-                                className="listItemsShow__delete"
-                                onClick={() =>
-                                  removeSongFromPlaylist(
-                                    item?.post?.PostIdForDeleteFromUserPlaylist
-                                  )
-                                }
-                              >
-                                <DeleteRounded />
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
+                      <MyProfileSong
+                        item={item}
+                        key={i}
+                        zeroPad={zeroPad}
+                        truncate={truncate}
+                        deleteBtn={deleteBtn}
+                        playlist={listShow}
+                      />
                     ))}
                   </InfiniteScroll>
                 )}
@@ -572,7 +542,13 @@ const MyProfile = () => {
                     نام لیست : {listname}
                   </span>
                   <div className="d-flex">
-                    <span className="playListBtn">
+                    <span
+                      className="playListBtn"
+                      onClick={async () => {
+                        setPlayList(listShow, true);
+                        ChangeShowLeft(true);
+                      }}
+                    >
                       <Tooltip placement="top" title="پخش">
                         <PlayArrow />
                       </Tooltip>

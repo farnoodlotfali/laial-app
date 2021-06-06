@@ -1,14 +1,45 @@
-import { Backdrop, IconButton, Modal, Slide } from "@material-ui/core";
+import {
+  Backdrop,
+  CircularProgress,
+  IconButton,
+  makeStyles,
+  Modal,
+  Slide,
+} from "@material-ui/core";
 // eslint-disable-next-line
 import { PostAddRounded } from "@material-ui/icons";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "./Center.css";
-// eslint-disable-next-line
-// import md5 from 'md5';
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import SnackBarComponent from "./snackBarComponent/SnackBarComponent";
 import AppContext from "./contexts/appContext";
 import CenterItem from "./CenterItem";
 import authContext from "./auth/authContext";
+
+const useStyles = makeStyles({
+  paper: {
+    background: "linear-gradient( 135deg, #303030 10%, #05060b 100%)",
+    border: "1px solid white",
+    cursor: "default",
+  },
+  content: {
+    borderBottom: "2px solid black",
+  },
+  title: {
+    color: "white",
+    fontFamily: "vazir",
+    direction: "rtl",
+    display: "flex",
+    borderBottom: "1px solid black",
+    paddingBottom: 5,
+  },
+});
+
 const Center = () => {
+  const classes = useStyles();
   const {
     showCenter,
     ChangeshowCenter,
@@ -19,6 +50,15 @@ const Center = () => {
     mainPlaylistId,
   } = useContext(AppContext);
   const { user, isAuth } = useContext(authContext);
+  const [open, setOpen] = useState(false);
+  const [SongListName, setSongListName] = useState();
+  const [showUserlist, setShowUserlist] = useState(true);
+  const [showMsg, setShowMsg] = useState({
+    showMsg: false,
+    msg: " ",
+    success: null,
+  });
+  const inputRef = useRef();
 
   useEffect(() => {
     // console.log(1112);
@@ -29,8 +69,6 @@ const Center = () => {
   }, [userPlaylists, loading, showCenter]);
 
   const addList = () => {
-    /*let d = new Date();
-    let key ='list-'+d.getFullYear()+'-' +d.getMonth()+'-' +d.getDay()+'-'+d.getHours()+'-'+d.getMinutes()+'-'+d.getSeconds()+'-'+md5(Date.now());*/
     let i = 0;
     let name = "";
     if (userPlaylists !== null) {
@@ -40,19 +78,106 @@ const Center = () => {
         // eslint-disable-next-line
       } while (userPlaylists.findIndex((list) => list.name === name) !== -1);
     } else name = "myList 0";
+    // let form = [
+    //   {
+    //     name: name,
+    //     status: "publish",
+    //   },
+    // ];
 
-    // console.log(name);
+    setSongListName(name);
+
+    setOpen(true);
+    // makeNewPlaylist(form);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const createList = async () => {
+    setOpen(false);
+
+    setShowUserlist(false);
     let form = [
       {
-        name: name,
+        name: SongListName,
         status: "publish",
       },
     ];
-    makeNewPlaylist(form);
+    // makeNewPlaylist(form)
+
+    const success = await makeNewPlaylist(form);
+
+    if (success) {
+      setShowMsg({
+        showMsg: true,
+        msg: "لیست با موفقیت ایجاد گردید",
+        success: true,
+      });
+    } else {
+      setShowMsg({
+        showMsg: true,
+        msg: "ساخت لیست با خطا مواجه شد",
+        success: false,
+      });
+    }
+    setTimeout(() => {
+      setShowUserlist(true);
+    }, 5000);
   };
+  // <CircularProgress color="secondary" />
 
   return (
     <div>
+      <SnackBarComponent
+        showMsg={showMsg.showMsg}
+        setShowMsg={setShowMsg}
+        msg={showMsg.msg}
+        isSuccess={showMsg.success}
+      />
+
+      <div className="center__input_dialog">
+        <Dialog
+          open={open}
+          onEnter={() => inputRef.current.focus()}
+          onClose={handleClose}
+          classes={{ paper: classes.paper }}
+        >
+          <DialogTitle classes={{ root: classes.title }}>
+            {"نام لیست خود را وارد کنید"}
+          </DialogTitle>
+          <DialogContent classes={{ root: classes.content }}>
+            <div className="center__input_dialog__div">
+              <input
+                ref={inputRef}
+                className="center__input_dialog__input"
+                value={SongListName}
+                onChange={(e) => setSongListName(e.target.value)}
+                maxLength={18}
+              />
+              <span className="center__input_dialog__div__warn">
+                حداکثر 18 حرف*
+              </span>
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <span
+              className="center__input_dialog__btn"
+              onClick={() => handleClose()}
+            >
+              بستن
+            </span>
+            <span
+              className="center__input_dialog__btn"
+              onClick={() => createList()}
+            >
+              ساخت لیست
+            </span>
+          </DialogActions>
+        </Dialog>
+      </div>
+
       <Modal
         className="modal"
         open={showCenter}
@@ -77,21 +202,16 @@ const Center = () => {
                   <span>لیست های من</span>
                 )}
               </div>
-              {/* <div className='addBtn'>
-                <Tooltip placement='left' title='لیست جدید'>
-                  <IconButton aria-label='add' onClick={addList}>
-                    <PostAddRounded fontSize='large' />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            
-             */}
             </div>
             <div className="my-2 ml-4 playlist__line" />
             <div className="playlist__lists">
               {user === null && !isAuth ? (
                 <div className="show__login text-center">
                   برای ساخت لیست، لطفا ثبت نام کنید
+                </div>
+              ) : !showUserlist || userPlaylists === null ? (
+                <div className="h-100 d-flex align-items-center justify-content-center">
+                  <CircularProgress color="inherit" />
                 </div>
               ) : (
                 userPlaylists !== null &&
@@ -109,9 +229,12 @@ const Center = () => {
               )}
             </div>
             {user !== null && isAuth && (
-              <div className="addBtn  d-flex" onClick={addList}>
+              <div
+                className="addBtn  d-flex"
+                onClick={() => userPlaylists !== null && addList()}
+              >
                 <span className=" align-self-center m-0 make__new__list">
-                  ساخت لیست جدید
+                  {userPlaylists !== null ? "ساخت لیست جدید" : "صبر کنید"}
                 </span>
                 {/* <Tooltip placement='left' title='لیست جدید'> */}
                 <IconButton aria-label="add">

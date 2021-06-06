@@ -25,6 +25,7 @@ import {
   CHANGE_HOME_META,
   THIS_SONG_HAS_BEEN_ADD,
   REMOVE_THIS_SONG_HAS_BEEN_ADD,
+  CHANGE_MY_PROFILE_MY_SONGLIST_ID,
 } from "./types";
 // eslint-disable-next-line
 export default (state, action) => {
@@ -107,6 +108,11 @@ export default (state, action) => {
         ...state,
         downloadUrl: action.payload,
         loading: false,
+      };
+    case CHANGE_MY_PROFILE_MY_SONGLIST_ID:
+      return {
+        ...state,
+        myProfilemySonglistId: action.payload,
       };
     case VIEWS_PAGE:
       return {

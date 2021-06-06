@@ -8,17 +8,10 @@ import axios from "./axios/axios";
 import appContext from "./contexts/appContext";
 // eslint-disable-next-line
 const SongOnLeft = ({ item, playlist, number, zeroPad }) => {
-  const {
-    setUrl,
-    playList,
-    playMusic,
-    setIds,
-    songId,
-    canDeleteSong,
-  } = useContext(playerContext);
-  const { ChangeShowMusic, showMusic, removeSongFromPlaylist } = useContext(
-    appContext
-  );
+  const { setUrl, playList, playMusic, setIds, songId, canDeleteSong } =
+    useContext(playerContext);
+  const { ChangeShowMusic, showMusic, removeSongFromPlaylist } =
+    useContext(appContext);
   const paly = async () => {
     setIds(
       item.media[0]?.telegram_id,

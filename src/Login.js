@@ -7,7 +7,7 @@ import Fade from "@material-ui/core/Fade";
 import "./Login.css";
 import appContext from "./contexts/appContext";
 import { CloseRounded } from "@material-ui/icons";
-import { Snackbar } from "@material-ui/core";
+import SnackBarComponent from "./snackBarComponent/SnackBarComponent";
 
 const Login = (props) => {
   let history = useHistory();
@@ -28,8 +28,8 @@ const Login = (props) => {
       history.goBack();
     }
     if (JSON.parse(localStorage.getItem("logForRefreshTokenExpired"))) {
-      setShowError({
-        showError: true,
+      setShowMsg({
+        showMsg: true,
         msg: " لطفا دوباره لاکین کنید",
       });
     }
@@ -48,8 +48,8 @@ const Login = (props) => {
   const [emailForRest, setEmailForRest] = useState("");
   const [forgetPasswordMsg, setForgetPasswordMsg] = useState("");
   const [open, setOpen] = useState(false);
-  const [showError, setShowError] = useState({
-    showError: false,
+  const [showMsg, setShowMsg] = useState({
+    showMsg: false,
     msg: " ",
   });
 
@@ -61,22 +61,21 @@ const Login = (props) => {
     setOpen(false);
   };
   const loginError = () => {
-    setShowError({
-      showError: true,
+    setShowMsg({
+      showMsg: true,
       msg: "! کاربری با این مشخصات یافت نشد",
     });
   };
 
   return (
     <>
-      <Snackbar
-        className="register__snackbar"
-        autoHideDuration={6000}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={showError.showError}
-        onClose={() => setShowError({ ...showError, showError: false })}
-        message={showError.msg}
+      <SnackBarComponent
+        showMsg={showMsg.showMsg}
+        setShowMsg={setShowMsg}
+        msg={showMsg.msg}
+        isSuccess={false}
       />
+
       <div className="login">
         <div className="color"></div>
         <div className="color"></div>

@@ -3,6 +3,7 @@ import { Divider, IconButton } from "@material-ui/core";
 import { Add, CheckRounded, Close, Edit } from "@material-ui/icons";
 import appContext from "./contexts/appContext";
 import playerContext from "./player/playerContext";
+import SnackBarComponent from "./snackBarComponent/SnackBarComponent";
 const CenterItem = ({ name, id, items }) => {
   const {
     isAddingSong,
@@ -18,6 +19,11 @@ const CenterItem = ({ name, id, items }) => {
   const [edit, setEdit] = useState(false);
   const [listName, setListName] = useState(name);
   const inputRef = useRef();
+  const [showMsg, setShowMsg] = useState({
+    showMsg: false,
+    msg: " ",
+    success: null,
+  });
   useEffect(() => {
     inputRef.current.focus();
   }, [edit, isAddingSong]);
@@ -40,7 +46,20 @@ const CenterItem = ({ name, id, items }) => {
   };
   const handleClick = async (e) => {
     if (isAddingSong) {
-      addMusicToPlaylist(id);
+      const success = await addMusicToPlaylist(id);
+      if (success) {
+        setShowMsg({
+          showMsg: true,
+          msg: "مرثیه با موفقیت در لیست اضافه شد",
+          success: true,
+        });
+      } else {
+        setShowMsg({
+          showMsg: true,
+          msg: "این مرثیه در این لیست موجود است",
+          success: false,
+        });
+      }
     } else {
       // console.log(await getOnePlayList(items));
       setPlayList(await getOnePlayList(id), true);
@@ -50,6 +69,12 @@ const CenterItem = ({ name, id, items }) => {
   };
   return (
     <Fragment>
+      <SnackBarComponent
+        showMsg={showMsg.showMsg}
+        setShowMsg={setShowMsg}
+        msg={showMsg.msg}
+        isSuccess={showMsg.success}
+      />
       <div className="list d-flex justify-content-between">
         <div
           onClick={() => handleClick()}
@@ -81,7 +106,7 @@ const CenterItem = ({ name, id, items }) => {
             </IconButton>
           </div>
         ) : (
-          <IconButton aria-label="edit" onClick={editName}>
+          <IconButton aria-label="edit">
             <Add fontSize="default" />
           </IconButton>
         )}

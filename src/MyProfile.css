@@ -192,7 +192,7 @@
 }
 .myMadeListShow__title {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 .showListBtn,
 .playListBtn {
@@ -220,7 +220,7 @@
   border-radius: 10px;
 }
 .myMadeListsShow__lists::-webkit-scrollbar-thumb {
-  background: rgba(105, 104, 109, 0.685);
+  background: rgba(196, 196, 196, 0.685);
   border-radius: 10px;
 }
 .myMadeListsShow__lists::-webkit-scrollbar-thumb:hover {
@@ -254,6 +254,7 @@
   padding: 5px 0px;
   /* transition: 0.5s; */
   display: flex;
+  justify-content: space-between;
 }
 .list__name:hover {
   background: rgba(20, 20, 20, 0.486);
@@ -273,6 +274,17 @@
   flex: 0.6;
   overflow-y: hidden;
   height: 468px;
+}
+
+.list__name_HasBeenChosen {
+  background: rgba(20, 20, 20, 0.486);
+  box-shadow: 0 25px 45px rgba(57, 25, 218, 0.2);
+}
+.list__name_HasBeenChosen .list__name__innerText {
+  background: rgba(20, 20, 20, 0.486);
+}
+.list__name_HasBeenChosen__mobile {
+  background: rgba(156, 156, 156, 0.486);
 }
 .listItemsShow__loading {
   display: flex;

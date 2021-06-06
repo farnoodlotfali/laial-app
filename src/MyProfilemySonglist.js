@@ -2,6 +2,7 @@ import { IconButton } from "@material-ui/core";
 import { CheckRounded, Close, Edit } from "@material-ui/icons";
 import { useContext, useEffect, useRef, useState } from "react";
 import appContext from "./contexts/appContext";
+import playerContext from "./player/playerContext";
 
 const MyProfilemySonglist = ({
   name,
@@ -11,8 +12,15 @@ const MyProfilemySonglist = ({
   setDeleteBtn,
 }) => {
   const inputRef = useRef();
-  const { getOnePlayList, updatePlaylistName, removePlaylist } =
-    useContext(appContext);
+
+  const {
+    getOnePlayList,
+    updatePlaylistName,
+    removePlaylist,
+    changeMyProfilemySonglistId,
+    myProfilemySonglistId,
+  } = useContext(appContext);
+  // const { setPlayList } = useContext(playerContext);
 
   const [edit, setEdit] = useState(false);
   const [SongListName, setSongListName] = useState(name);
@@ -35,8 +43,19 @@ const MyProfilemySonglist = ({
   const onChange = (e) => {
     setSongListName(inputRef.current.value);
   };
+
+  const handleClick = async () => {
+    // console.log(await getOnePlayList(id));
+    changeMyProfilemySonglistId(id);
+    // setPlayList(await getOnePlayList(id), true);
+  };
   return (
-    <div className="myProfilemySonglist list__name">
+    <div
+      className={`myProfilemySonglist list__name ${
+        myProfilemySonglistId === id ? "list__name_HasBeenChosen" : ""
+      }`}
+      onClick={() => handleClick()}
+    >
       <div
         onClick={async () =>
           !edit &&

@@ -29,6 +29,7 @@ import {
   CHANGE_HOME_META,
   THIS_SONG_HAS_BEEN_ADD,
   REMOVE_THIS_SONG_HAS_BEEN_ADD,
+  CHANGE_MY_PROFILE_MY_SONGLIST_ID,
 } from "./types";
 const AppState = (props) => {
   const initialState = {
@@ -77,6 +78,7 @@ const AppState = (props) => {
     recommender: null,
     userPlaylists: null,
     thisSongHasBeenAddedToRecentlyViwed: false,
+    myProfilemySonglistId: null,
   };
   useEffect(() => {
     getMenu();
@@ -344,7 +346,7 @@ const AppState = (props) => {
     });
   };
   const makeNewPlaylist = async (form) => {
-    console.log(form);
+    // console.log(form);
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -358,14 +360,17 @@ const AppState = (props) => {
         form,
         config
       );
-      console.log(res.data);
+      // console.log(res.data);
       getAllPlaylists();
+      return true;
     } catch (error) {
       dispatch({
         type: ERROR,
         payload: error,
       });
     }
+
+    return false;
   };
 
   const removePlaylist = async (form) => {
@@ -582,21 +587,24 @@ const AppState = (props) => {
         formData,
         config
       );
-      console.log(res.data);
+      // console.log(res.data);
       getAllPlaylists();
+
       dispatch({
         type: ADD_SONG_SUCCESS,
       });
-      ChangeshowCenter();
+      // ChangeshowCenter();
       // setTimeout(() => {
       // setShowCenter(false);
       // }, 3000);
+      return true;
     } catch (error) {
       dispatch({
         type: ERROR,
         payload: error,
       });
     }
+    return false;
   };
 
   const setWhichSongToSaveInPlaylist = (songId) => {
@@ -810,6 +818,13 @@ const AppState = (props) => {
       type: REMOVE_THIS_SONG_HAS_BEEN_ADD,
     });
   };
+
+  const changeMyProfilemySonglistId = (id) => {
+    dispatch({
+      type: CHANGE_MY_PROFILE_MY_SONGLIST_ID,
+      payload: id,
+    });
+  };
   return (
     <AppContext.Provider
       value={{
@@ -844,6 +859,7 @@ const AppState = (props) => {
         addMusicToMAINPlaylist,
         changeHomeMeta,
         removeThisSongHasBeenbAdd,
+        changeMyProfilemySonglistId,
         home: state.home,
         homeMeta: state.homeMeta,
         menu: state.menu,
@@ -857,6 +873,7 @@ const AppState = (props) => {
         showLeft: state.showLeft,
         blockSlug: state.blockSlug,
         dataSongPage: state.dataSongPage,
+        myProfilemySonglistId: state.myProfilemySonglistId,
         tagsUrls: state.tagsUrls,
         tags: state.tags,
         // dataSongPageMeta: state.dataSongPageMeta,

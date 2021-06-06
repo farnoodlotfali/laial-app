@@ -380,22 +380,31 @@ const Playerstate = (props) => {
     audioElement.pause();
     putToMusicChangeList(audioElement.currentTime, "next");
     setNewProgress(0);
-
+    // console.log(playList[0]);
     if (playList !== undefined) {
       for (let i = 0; i < playList.length; i++) {
-        if (state.songId === playList[i].media[0].id) {
+        if (
+          playList[i]?.post
+            ? state.songId === playList[i].post.media[0].id
+            : state.songId === playList[i].media[0].id
+        ) {
           let which;
           if (state.shuffle) {
             which = Math.floor(Math.random() * Math.floor(playList?.length));
           } else {
             which = i + 1;
           }
-          let chosen =
-            playList[which] !== undefined
-              ? playList[which]
+          let chosen = playList[which]?.post
+            ? playList[which] !== undefined
+              ? playList[which].post
               : state.loop
-              ? playList[0]
-              : -1;
+              ? playList[0].post
+              : -1
+            : playList[which] !== undefined
+            ? playList[which]
+            : state.loop
+            ? playList[0]
+            : -1;
           if (chosen !== -1) {
             if (checkIfForce()) {
               changeShowLoginModal(true);
@@ -458,17 +467,24 @@ const Playerstate = (props) => {
     // let last = null;
     if (playList !== undefined) {
       for (let i = 0; i < playList.length; i++) {
-        if (state.songId === playList[i].media[0].id) {
+        if (
+          playList[i]?.post
+            ? state.songId === playList[i].post.media[0].id
+            : state.songId === playList[i].media[0].id
+        ) {
           let which;
           if (state.shuffle) {
             which = Math.floor(Math.random() * Math.floor(playList?.length));
           } else {
             which = i - 1;
           }
-          let chosen =
-            playList[which] !== undefined
-              ? playList[which]
-              : playList[playList.length - 1];
+          let chosen = playList[which]?.post
+            ? playList[which] !== undefined
+              ? playList[which].post
+              : playList[playList.length - 1].post
+            : playList[which] !== undefined
+            ? playList[which]
+            : playList[playList.length - 1];
           if (checkIfForce()) {
             changeShowLoginModal(true);
           } else {
