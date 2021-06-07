@@ -696,7 +696,7 @@ const AppState = (props) => {
         // for put PostIdForDeleteFromUserPlaylist for deleteing
         return (item.post.PostIdForDeleteFromUserPlaylist = item.id);
       });
-      console.log(res.data);
+      // console.log(res.data);
       return res.data?.[0]?.items;
     } catch (error) {
       dispatch({

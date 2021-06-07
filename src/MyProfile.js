@@ -20,7 +20,7 @@ import { Dropdown } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "./axios/axios";
 import LoadIcon from "./spinner/LoadIcon";
-import { IconButton, Tooltip } from "@material-ui/core";
+import { CircularProgress, IconButton, Tooltip } from "@material-ui/core";
 import MyProfilemySonglist from "./MyProfilemySonglist";
 import playerContext from "./player/playerContext";
 import MyProfileSong from "./MyProfileSong";
@@ -62,7 +62,7 @@ const MyProfile = () => {
     ChangeShowLeft,
   } = useContext(appContext);
   const [passwordMsg, setPasswordMsg] = useState("");
-  const { setPlayList } = useContext(playerContext);
+  const { setPlayList, playThisListFromMyProflie } = useContext(playerContext);
 
   const [changePassword, setchangePassword] = useState({
     currentPassword: "",
@@ -544,9 +544,12 @@ const MyProfile = () => {
                   <div className="d-flex">
                     <span
                       className="playListBtn"
-                      onClick={async () => {
-                        setPlayList(listShow, true);
-                        ChangeShowLeft(true);
+                      onClick={() => {
+                        if (listShow) {
+                          // setPlayList(listShow, true);
+                          ChangeShowLeft(true);
+                          playThisListFromMyProflie(listShow);
+                        }
                       }}
                     >
                       <Tooltip placement="top" title="پخش">
@@ -564,36 +567,42 @@ const MyProfile = () => {
                   </div>
                 </div>
                 <div className="myMadeListsShow__lists py-3">
-                  {userPlaylists?.map(
-                    (item, i) =>
-                      mainPlaylistId !== item.id && (
-                        <MyProfilemySonglist
-                          key={item.id}
-                          id={item.id}
-                          name={item.name}
-                          setListName={setListName}
-                          setDeleteBtn={setDeleteBtn}
-                          setListShow={setListShow}
-                        />
-                        // <div className="list__name" key={i}>
-                        //   <ins
-                        //     className="list__name__innerText"
-                        //     onClick={async () =>
-                        //       setListShow(await getOnePlayList(item.id)) &
-                        //       setListName(item.name) &
-                        //       setDeleteBtn(true)
-                        //     }
-                        //   >
-                        //     {item.name}
-                        //   </ins>
-                        //   <IconButton
-                        //     aria-label="remove"
-                        //     // onClick={removeList}
-                        //   >
-                        //     <Close className="list__name__btn" />
-                        //   </IconButton>
-                        // </div>
-                      )
+                  {userPlaylists ? (
+                    userPlaylists?.map(
+                      (item, i) =>
+                        mainPlaylistId !== item.id && (
+                          <MyProfilemySonglist
+                            key={item.id}
+                            id={item.id}
+                            name={item.name}
+                            setListName={setListName}
+                            setDeleteBtn={setDeleteBtn}
+                            setListShow={setListShow}
+                          />
+                          // <div className="list__name" key={i}>
+                          //   <ins
+                          //     className="list__name__innerText"
+                          //     onClick={async () =>
+                          //       setListShow(await getOnePlayList(item.id)) &
+                          //       setListName(item.name) &
+                          //       setDeleteBtn(true)
+                          //     }
+                          //   >
+                          //     {item.name}
+                          //   </ins>
+                          //   <IconButton
+                          //     aria-label="remove"
+                          //     // onClick={removeList}
+                          //   >
+                          //     <Close className="list__name__btn" />
+                          //   </IconButton>
+                          // </div>
+                        )
+                    )
+                  ) : (
+                    <div className="h-100 d-flex align-items-center justify-content-center">
+                      <CircularProgress color="inherit" />
+                    </div>
                   )}
                 </div>
               </div>

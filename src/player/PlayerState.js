@@ -44,6 +44,7 @@ import {
   CHANGE_SHOW_MUSICBAR_ON_MOBILE_RATIO,
   CHANGE_SHUFFLE,
   CHANGE_LOOP_STATE,
+  PLAY_THIS_LIST_FROM_MYPROFLIE,
 } from "./types";
 import { useLocation } from "react-router";
 import axios from "../axios/axios";
@@ -594,6 +595,48 @@ const Playerstate = (props) => {
       }
     }
   };
+  const playThisListFromMyProflie = async (listShow) => {
+    console.log(listShow?.[0]?.post.media[0]?.telegram_id);
+    // setPlayList(listShow, true);
+
+    setIds(
+      listShow?.[0]?.post.media[0]?.telegram_id,
+      listShow?.[0]?.post.media[0]?.id,
+      listShow?.[0]?.post.media[0]?.duration,
+      listShow?.[0]?.post.media[0]?.name,
+      listShow?.[0]?.post.person?.[0]?.name,
+      listShow?.[0]?.post?.media?.[0]?.image !== null
+        ? listShow?.[0]?.post?.media?.[0]?.image
+        : listShow?.[0]?.post?.person?.[0]?.image.full_image_url,
+      listShow?.[0]?.post.id
+    );
+    if (listShow?.[0]?.post.media[0]?.path) {
+      // console.log("path");
+      setUrl(listShow?.[0]?.post.media[0]?.path, listShow);
+      playMusic();
+    } else {
+      try {
+        const res = await axios.downloader.get(
+          `/${listShow?.[0]?.post.media[0]?.telegram_id}`
+        );
+        setUrl(res.data.download_link, listShow);
+
+        playMusic();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    // if (playList !== undefined && playList !== null && playList.length !== 0) {
+    //   // console.log(audioRef.current.paused);
+    //   console.log(11);
+    //   if (!state.playing) {
+    //     dispatch({
+    //       type: PLAY_THIS_LIST_FROM_MYPROFLIE,
+    //     });
+    //   }
+    // }
+  };
 
   return (
     <PlayerContext.Provider
@@ -632,6 +675,7 @@ const Playerstate = (props) => {
         handleChange,
         changeShuffle,
         setIds,
+        playThisListFromMyProflie,
       }}
     >
       {props.children}
