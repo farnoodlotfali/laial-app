@@ -52,7 +52,6 @@ const RowItemPage = () => {
     likeSong,
     setWhichSongToSaveInPlaylist,
     addToLikedSongPlaylist,
-    getLikedSongsPlaylist,
     addMusicToRecentlyViewed,
   } = useContext(AppContext);
   const { setUrl, playMusic, setIds } = useContext(playerContext);

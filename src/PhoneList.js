@@ -41,11 +41,11 @@ const PhoneList = () => {
               </div>
             ) : (
               <Link
-                className="phoneList__loginBTn"
+                className="phoneList__loginBTn btn btn-secondary"
                 to="/login"
                 onClick={() => ChangeShowRight(false)}
               >
-                ورود/ثبت نام
+                ورود به سایت
               </Link>
             )}
           </h4>

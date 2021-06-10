@@ -9,23 +9,23 @@ import Left from "./Left";
 import Center from "./Center";
 import Home from "./Home";
 import Search from "./search/Search";
-import AboutUs from "./AboutUs";
+import AboutUs from "./pages/aboutUs/AboutUs";
 import SearchState from "./search/SearchState";
 import Playerstate from "./player/PlayerState";
 import RowItemPage from "./RowItemPage";
 import PhoneMenu from "./PhoneMenu";
-import MoreSong from "./MoreSong";
+import MoreSong from "./pages/MoreSong/MoreSong";
 import Person from "./Person";
 import Register from "./Register";
 import Login from "./Login";
 import AuthState from "./auth/AuthState";
 import ScrollToTop from "./ScrollToTop";
 import PhoneList from "./PhoneList";
-import AllPerson from "./AllPerson";
+import AllPerson from "./pages/AllPerson/AllPerson";
 import MyProfile from "./MyProfile";
 import PasswordReset from "./PasswordReset";
 import UserInterests from "./UserInterests";
-import NotFound from "./NotFound";
+import NotFound from "./pages/notFound/NotFound";
 import ForceLogin from "./ForceLogin";
 const App = () => {
   return (

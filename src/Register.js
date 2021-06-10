@@ -1,4 +1,3 @@
-import { Snackbar } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import authContext from "./auth/authContext";
 import "./Register.css";

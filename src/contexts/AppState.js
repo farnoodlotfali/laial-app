@@ -30,6 +30,7 @@ import {
   THIS_SONG_HAS_BEEN_ADD,
   REMOVE_THIS_SONG_HAS_BEEN_ADD,
   CHANGE_MY_PROFILE_MY_SONGLIST_ID,
+  CHANGE_SHOW_CREATE_LIST,
 } from "./types";
 const AppState = (props) => {
   const initialState = {
@@ -47,6 +48,7 @@ const AppState = (props) => {
     showMusic: false,
     showRight: false,
     showLeft: false,
+    showCreateList: false,
     isAddingSong: false,
     loadingOnUserPlaylist: false,
     whichSongToSaveInPlaylist: null,
@@ -98,6 +100,14 @@ const AppState = (props) => {
 
     dispatch({
       type: CHANGE_SHOW_RIGHT,
+      payload: newValue,
+    });
+  };
+  const ChangeShowCreateList = (newValue) => {
+    // setShowMusic(!showMusic);
+
+    dispatch({
+      type: CHANGE_SHOW_CREATE_LIST,
       payload: newValue,
     });
   };
@@ -212,7 +222,7 @@ const AppState = (props) => {
     });
     try {
       const res = await axios.instanceApi.get(`block/${newSlug}`);
-      console.log(res.data);
+      // console.log(res.data);
       dispatch({
         type: GET_BLOCK,
         payload: {
@@ -355,11 +365,7 @@ const AppState = (props) => {
     };
 
     try {
-      const res = await axios.instanceApi.post(
-        "/account/playlist/",
-        form,
-        config
-      );
+      await axios.instanceApi.post("/account/playlist/", form, config);
       // console.log(res.data);
       getAllPlaylists();
       return true;
@@ -582,11 +588,7 @@ const AppState = (props) => {
     // console.log(formData);
 
     try {
-      const res = await axios.instanceApi.post(
-        "/account/playlist/item/",
-        formData,
-        config
-      );
+      await axios.instanceApi.post("/account/playlist/item/", formData, config);
       // console.log(res.data);
       getAllPlaylists();
 
@@ -832,6 +834,7 @@ const AppState = (props) => {
         ChangeShowLeft,
         ChangeshowCenter,
         ChangeShowRight,
+        ChangeShowCreateList,
         getHome,
         getMenu,
         getPerson,
@@ -871,6 +874,7 @@ const AppState = (props) => {
         showMusic: state.showMusic,
         showRight: state.showRight,
         showLeft: state.showLeft,
+        showCreateList: state.showCreateList,
         blockSlug: state.blockSlug,
         dataSongPage: state.dataSongPage,
         myProfilemySonglistId: state.myProfilemySonglistId,

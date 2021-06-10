@@ -30,7 +30,7 @@ const Login = (props) => {
     if (JSON.parse(localStorage.getItem("logForRefreshTokenExpired"))) {
       setShowMsg({
         showMsg: true,
-        msg: " لطفا دوباره لاکین کنید",
+        msg: " لطفا دوباره لاگین کنید",
       });
     }
     // loadUser();

@@ -2,7 +2,6 @@ import { IconButton } from "@material-ui/core";
 import { CheckRounded, Close, Edit } from "@material-ui/icons";
 import { useContext, useEffect, useRef, useState } from "react";
 import appContext from "./contexts/appContext";
-import playerContext from "./player/playerContext";
 
 const MyProfilemySonglist = ({
   name,

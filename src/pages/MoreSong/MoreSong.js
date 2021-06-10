@@ -1,25 +1,17 @@
 import { useEffect, useState } from "react";
 import "./MoreSong.css";
-import RowItem from "./RowItem";
-import appContext from "./contexts/appContext";
+import RowItem from "../../RowItem";
+import appContext from "../../contexts/appContext";
 import { useContext } from "react";
-import Spinner from "./spinner/Spinner";
+import Spinner from "../../spinner/Spinner";
 import { useParams } from "react-router";
-import authContext from "./auth/authContext";
 import InfiniteScroll from "react-infinite-scroll-component";
-import axios from "./axios/axios";
-import LoadingIcon from "./spinner/LoadingIcon";
+import axios from "../../axios/axios";
+import LoadingIcon from "../../spinner/LoadingIcon";
 
 const MoreSong = () => {
-  const {
-    BlockListName,
-    loading,
-    getBlock,
-    block,
-    blockSlug,
-    blockUrls,
-  } = useContext(appContext);
-  const { user, loadUser } = useContext(authContext);
+  const { BlockListName, loading, getBlock, block, blockSlug, blockUrls } =
+    useContext(appContext);
   const [next, setNext] = useState({
     next: "",
     list: [],
@@ -47,9 +39,9 @@ const MoreSong = () => {
       });
     }
 
-    loadUser();
+    // loadUser();
     // eslint-disable-next-line
-  }, [params.slug, user, blockUrls, loading, block]);
+  }, [params.slug, blockUrls, loading, block]);
 
   const infiniteList = async () => {
     setNext({

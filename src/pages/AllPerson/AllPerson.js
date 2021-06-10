@@ -1,15 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import "./AllPerson.css";
-import authContext from "./auth/authContext";
-import axios from "./axios/axios";
-import appContext from "./contexts/appContext";
-import PersonItem from "./PersonItem";
-import LoadingIcon from "./spinner/LoadingIcon";
+import authContext from "../../auth/authContext";
+import axios from "../../axios/axios";
+import appContext from "../../contexts/appContext";
+import PersonItem from "../../PersonItem";
+import LoadingIcon from "../../spinner/LoadingIcon";
 
 const AllPerson = () => {
   const { allPersons, AllpersonsUrls } = useContext(appContext);
-  const { user, loadUser } = useContext(authContext);
+  const { user } = useContext(authContext);
 
   const [next, setNext] = useState({
     next: "",
@@ -32,7 +32,7 @@ const AllPerson = () => {
         loaderMsg: "Loading...",
       });
     }
-    loadUser();
+    // loadUser();
 
     // if (next.loading === true) {
     //   console.log(4);

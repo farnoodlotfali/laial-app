@@ -18,6 +18,7 @@ import SnackBarComponent from "./snackBarComponent/SnackBarComponent";
 import AppContext from "./contexts/appContext";
 import CenterItem from "./CenterItem";
 import authContext from "./auth/authContext";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   paper: {
@@ -48,9 +49,11 @@ const Center = () => {
     loading,
     isAddingSong,
     mainPlaylistId,
+    ChangeShowCreateList,
+    showCreateList,
   } = useContext(AppContext);
   const { user, isAuth } = useContext(authContext);
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [SongListName, setSongListName] = useState();
   const [showUserlist, setShowUserlist] = useState(true);
   const [showMsg, setShowMsg] = useState({
@@ -87,16 +90,16 @@ const Center = () => {
 
     setSongListName(name);
 
-    setOpen(true);
+    ChangeShowCreateList(true);
     // makeNewPlaylist(form);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    ChangeShowCreateList(false);
   };
 
   const createList = async () => {
-    setOpen(false);
+    ChangeShowCreateList(false);
 
     setShowUserlist(false);
     let form = [
@@ -139,7 +142,7 @@ const Center = () => {
 
       <div className="center__input_dialog">
         <Dialog
-          open={open}
+          open={showCreateList}
           onEnter={() => inputRef.current.focus()}
           onClose={handleClose}
           classes={{ paper: classes.paper }}
@@ -206,8 +209,17 @@ const Center = () => {
             <div className="my-2 ml-4 playlist__line" />
             <div className="playlist__lists">
               {user === null && !isAuth ? (
-                <div className="show__login text-center">
-                  برای ساخت لیست، لطفا ثبت نام کنید
+                <div className="show__login ">
+                  <span className="show__login__msg">
+                    برای ساخت لیست، لطفا ثبت نام کنید
+                  </span>
+                  <Link
+                    className="btn btn-secondary ml-3"
+                    to="/login"
+                    // onClick={() => ChangeShowRight(false)}
+                  >
+                    ثبت نام
+                  </Link>
                 </div>
               ) : !showUserlist || userPlaylists === null ? (
                 <div className="h-100 d-flex align-items-center justify-content-center">

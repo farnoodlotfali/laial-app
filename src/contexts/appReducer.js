@@ -26,6 +26,7 @@ import {
   THIS_SONG_HAS_BEEN_ADD,
   REMOVE_THIS_SONG_HAS_BEEN_ADD,
   CHANGE_MY_PROFILE_MY_SONGLIST_ID,
+  CHANGE_SHOW_CREATE_LIST,
 } from "./types";
 // eslint-disable-next-line
 export default (state, action) => {
@@ -166,6 +167,11 @@ export default (state, action) => {
       return {
         ...state,
         showLeft: action.payload,
+      };
+    case CHANGE_SHOW_CREATE_LIST:
+      return {
+        ...state,
+        showCreateList: action.payload,
       };
     case SET_SONG_ID:
       return {

@@ -4,13 +4,9 @@ import { useContext, useEffect, useState } from "react";
 import authContext from "./auth/authContext";
 import {
   AddRounded,
-  CheckRounded,
-  Close,
   DeleteRounded,
   ExpandMoreRounded,
   PlayArrow,
-  PlayArrowRounded,
-  PlayCircleFilledRounded,
 } from "@material-ui/icons";
 import appContext from "./contexts/appContext";
 import { useHistory } from "react-router";
@@ -20,7 +16,7 @@ import { Dropdown } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "./axios/axios";
 import LoadIcon from "./spinner/LoadIcon";
-import { CircularProgress, IconButton, Tooltip } from "@material-ui/core";
+import { CircularProgress, Tooltip } from "@material-ui/core";
 import MyProfilemySonglist from "./MyProfilemySonglist";
 import playerContext from "./player/playerContext";
 import MyProfileSong from "./MyProfileSong";
@@ -44,6 +40,8 @@ const MyProfile = () => {
     if (user === null) {
       hisotry.push("/");
     }
+    changeMyProfilemySonglistId(null);
+
     // console.log(listShow);
     // eslint-disable-next-line
   }, [user, listShow]);
@@ -56,13 +54,13 @@ const MyProfile = () => {
     loadingOnUserPlaylist,
     removeSongFromPlaylist,
     getRecentlyViewedSongsPlaylist,
-    ChangeshowCenter,
     changeMyProfilemySonglistId,
     myProfilemySonglistId,
     ChangeShowLeft,
+    ChangeShowCreateList,
   } = useContext(appContext);
   const [passwordMsg, setPasswordMsg] = useState("");
-  const { setPlayList, playThisListFromMyProflie } = useContext(playerContext);
+  const { playThisListFromMyProflie } = useContext(playerContext);
 
   const [changePassword, setchangePassword] = useState({
     currentPassword: "",
@@ -306,7 +304,7 @@ const MyProfile = () => {
                     className="myprofile__mobile__songs__myListsOption"
                     onClick={() => likedSongsHandle()}
                   >
-                    <span>مرثیه های لایک شده</span>
+                    <span>مرثیه‌های لایک شده</span>
                   </div>
                   <div
                     className="myprofile__mobile__songs__myListsOption"
@@ -357,7 +355,7 @@ const MyProfile = () => {
                     </Dropdown>
                     <div
                       className="myprofile__mobile__songs__myListsOption__addNewList"
-                      onClick={ChangeshowCenter}
+                      onClick={() => ChangeShowCreateList(true)}
                     >
                       <AddRounded />
                     </div>
@@ -558,7 +556,7 @@ const MyProfile = () => {
                     </span>
                     <span
                       className="playListBtn mr-1"
-                      onClick={ChangeshowCenter}
+                      onClick={() => ChangeShowCreateList(true)}
                     >
                       <Tooltip placement="top" title="لیست جدید">
                         <AddRounded />

@@ -44,7 +44,6 @@ import {
   CHANGE_SHOW_MUSICBAR_ON_MOBILE_RATIO,
   CHANGE_SHUFFLE,
   CHANGE_LOOP_STATE,
-  PLAY_THIS_LIST_FROM_MYPROFLIE,
 } from "./types";
 import { useLocation } from "react-router";
 import axios from "../axios/axios";
@@ -626,16 +625,6 @@ const Playerstate = (props) => {
         console.log(error);
       }
     }
-
-    // if (playList !== undefined && playList !== null && playList.length !== 0) {
-    //   // console.log(audioRef.current.paused);
-    //   console.log(11);
-    //   if (!state.playing) {
-    //     dispatch({
-    //       type: PLAY_THIS_LIST_FROM_MYPROFLIE,
-    //     });
-    //   }
-    // }
   };
 
   return (

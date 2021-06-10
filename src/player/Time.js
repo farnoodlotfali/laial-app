@@ -1,6 +1,4 @@
-import { useEffect, useState, useContext } from "react";
-
-import playerContext from "./playerContext";
+import { useEffect, useState } from "react";
 
 const Time = () => {
   const zeroPad = (num, places) => String(num).padStart(places, "0");

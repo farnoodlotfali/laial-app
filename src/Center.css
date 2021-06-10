@@ -152,8 +152,19 @@
   border-radius: 10px;
   padding: 5px 15px;
 }
-.center__input_dialog__input:focus {
+/* .center__input_dialog__input:focus {
   box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
+} */
+
+.show__login {
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.show__login__msg {
+  font-size: 16px;
 }
 @media (max-width: 768px) {
   .playlist {
@@ -178,5 +189,9 @@
 
   .make__new__list {
     font-size: 15px;
+  }
+  .show__login__msg {
+    font-size: 12px;
+    margin-left: 20px;
   }
 }

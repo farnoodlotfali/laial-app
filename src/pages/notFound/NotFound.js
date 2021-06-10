@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import authContext from "./auth/authContext";
+import authContext from "../../auth/authContext";
 import "./NotFound.css";
 
 const NotFound = () => {

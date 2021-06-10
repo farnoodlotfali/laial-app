@@ -32,7 +32,6 @@ const RowItem = ({
   // eslint-disable-next-line
   const {
     ChangeShowMusic,
-    ChangeshowCenter,
     showMusic,
     changeHomeMeta,
     addMusicToRecentlyViewed,

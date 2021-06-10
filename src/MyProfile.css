@@ -325,9 +325,6 @@
   width: 100%;
 }
 
-.songName {
-  align-self: flex-end;
-}
 .songInfo {
   display: grid;
 }
@@ -339,8 +336,15 @@
   color: whitesmoke;
 }
 .songName {
+  align-self: flex-end;
+
   font-size: 14px;
+}
+.songName a {
   color: white;
+}
+.songName a:hover {
+  text-decoration: none;
 }
 .songSinger {
   font-size: 12px;
@@ -364,6 +368,14 @@
 .myprofile__mobile__show,
 .myprofile__mobile__songs {
   display: none;
+}
+
+.myProfileSong_playbtn svg {
+  position: relative;
+  bottom: 56px;
+  font-size: 55px;
+  color: white;
+  opacity: 0.7;
 }
 
 @media (max-width: 768px) {

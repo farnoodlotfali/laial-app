@@ -1,5 +1,6 @@
-import { DeleteRounded } from "@material-ui/icons";
+import { DeleteRounded, PlayArrowRounded } from "@material-ui/icons";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import defualtPhoto from "./assets/defualtPhoto.jpeg";
 import axios from "./axios/axios";
 import appContext from "./contexts/appContext";
@@ -44,14 +45,8 @@ const MyProfileSong = ({ item, zeroPad, truncate, deleteBtn, playlist }) => {
       }
     }
   };
-
   return (
-    <div
-      className=""
-      onClick={() => {
-        paly();
-      }}
-    >
+    <div className="myProfileSong">
       <div className="song d-flex">
         <div className="songImg">
           <img
@@ -65,10 +60,20 @@ const MyProfileSong = ({ item, zeroPad, truncate, deleteBtn, playlist }) => {
             }
             alt="songlogo"
           />
+          <div
+            className="myProfileSong_playbtn"
+            onClick={() => {
+              paly();
+            }}
+          >
+            <PlayArrowRounded />
+          </div>
         </div>
         <div className="songInfo">
           <span className="songName">
-            {truncate(item?.post?.media?.[0]?.name, 4)}
+            <Link to={`/song/:${item?.post?.slug}`}>
+              {truncate(item?.post?.media?.[0]?.name, 4)}
+            </Link>
           </span>
           <span className="songSinger">{item?.post?.person?.[0]?.name}</span>
         </div>
