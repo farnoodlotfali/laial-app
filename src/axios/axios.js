@@ -3,13 +3,16 @@ let tryCount = 0;
 let downloaderTryCount = 0;
 
 const instanceApi = axios.create({
-  baseURL: "http://laial.7negare.ir/api",
+  // baseURL: "http://laial.7negare.ir/api",
+  // http://nejat.safine.co/api/page/home/.
+  baseURL: "http://nejat.safine.co/api",
 });
 // instanceApi.interceptors.request.use((request) => {
 //   console.log(request);
 
 //   return request;
 // });
+
 instanceApi.interceptors.response.use(
   (response) => {
     // console.log(response);
@@ -39,7 +42,7 @@ instanceApi.interceptors.response.use(
       if (tryCount === 3) {
         // console.log(66);
         localStorage.clear();
-        window.location = "/login";
+        // window.location = "/login";
         localStorage.setItem("logForRefreshTokenExpired", true);
         return Promise.reject(error);
       }

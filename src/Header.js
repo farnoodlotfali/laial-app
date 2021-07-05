@@ -14,9 +14,8 @@ import {
 import authContext from "./auth/authContext";
 import Headroom from "react-headroom";
 const Header = () => {
-  const { ChangeshowCenter, ChangeShowLeft, ChangeShowRight } = useContext(
-    appContext
-  );
+  const { ChangeshowCenter, ChangeShowLeft, ChangeShowRight } =
+    useContext(appContext);
   const { isAuth, user, logout } = useContext(authContext);
 
   return (

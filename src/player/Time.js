@@ -14,7 +14,6 @@ const Time = () => {
           zeroPad(Math.floor(audio?.currentTime % 60), 2)
       );
     };
-    // addMusicToRecentlyViewed(1, postId);
 
     audio?.addEventListener("timeupdate", setAudioTime);
     return () => {

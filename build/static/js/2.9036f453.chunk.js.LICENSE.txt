@@ -5,20 +5,20 @@ object-assign
 */
 
 /*!
-  Copyright (c) 2017 Jed Watson.
+  Copyright (c) 2018 Jed Watson.
   Licensed under the MIT License (MIT), see
   http://jedwatson.github.io/classnames
 */
 
 /*!
- * Flickity v2.2.1
+ * Flickity v2.2.2
  * Touch, responsive, flickable carousels
  *
  * Licensed GPLv3 for open source use
  * or Flickity Commercial License for commercial use
  *
  * https://flickity.metafizzy.co
- * Copyright 2015-2019 Metafizzy
+ * Copyright 2015-2021 Metafizzy
  */
 
 /*!
@@ -53,7 +53,7 @@ object-assign
  * @license MIT
  */
 
-/** @license React v0.20.1
+/** @license React v0.20.2
  * scheduler.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -71,7 +71,7 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
-/** @license React v17.0.1
+/** @license React v17.0.2
  * react-dom.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -80,7 +80,7 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
-/** @license React v17.0.1
+/** @license React v17.0.2
  * react-jsx-runtime.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -89,7 +89,7 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
-/** @license React v17.0.1
+/** @license React v17.0.2
  * react.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.

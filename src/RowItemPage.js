@@ -104,7 +104,7 @@ const RowItemPage = () => {
         console.log(error);
       }
     }
-    addMusicToRecentlyViewed(1, dataSongPage?.id);
+    user !== null && addMusicToRecentlyViewed(1, dataSongPage?.id);
   };
   const onchange = (e) => {
     setUserInfo({

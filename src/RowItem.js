@@ -46,7 +46,7 @@ const RowItem = ({
     playAndPauseMusic,
   } = useContext(playerContext);
 
-  const { changeShowLoginModal, checkIfForce } = useContext(authContext);
+  const { changeShowLoginModal, checkIfForce, user } = useContext(authContext);
   // console.log(logo);
   const playMusicAndShowMusicBar = async () => {
     // نشان دادن موزیک و پخش موزیک
@@ -56,7 +56,7 @@ const RowItem = ({
       changeShowLoginModal(true);
     } else {
       sendToHome();
-      addMusicToRecentlyViewed(1, postId);
+      user !== null && addMusicToRecentlyViewed(1, postId);
       if (!showMusic) {
         ChangeShowMusic();
       }

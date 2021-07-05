@@ -16,8 +16,14 @@ const SnackBarComponent = ({
       autoHideDuration={6000}
       anchorOrigin={{ vertical: vertical, horizontal: horizontal }}
       open={showMsg}
-      onClose={() => setShowMsg({ ...showMsg, showMsg: false })}
+      onClose={(event, reason) => {
+        if (reason === "clickaway") {
+          return;
+        }
+        setShowMsg({ ...showMsg, showMsg: false });
+      }}
       message={msg}
+
       // message="! کاربری با این مشخصات یافت نشد"
     />
   );

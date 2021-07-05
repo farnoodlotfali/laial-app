@@ -1,29 +1,30 @@
 {
   "files": {
-    "main.css": "/static/css/main.cd1cd6e7.chunk.css",
-    "main.js": "/static/js/main.27d6d03d.chunk.js",
-    "main.js.map": "/static/js/main.27d6d03d.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.62821a2b.js",
-    "runtime-main.js.map": "/static/js/runtime-main.62821a2b.js.map",
-    "static/css/2.2e0b8be9.chunk.css": "/static/css/2.2e0b8be9.chunk.css",
-    "static/js/2.81fc1376.chunk.js": "/static/js/2.81fc1376.chunk.js",
-    "static/js/2.81fc1376.chunk.js.map": "/static/js/2.81fc1376.chunk.js.map",
-    "static/js/3.dc79b07e.chunk.js": "/static/js/3.dc79b07e.chunk.js",
-    "static/js/3.dc79b07e.chunk.js.map": "/static/js/3.dc79b07e.chunk.js.map",
+    "main.css": "/static/css/main.fa46dd04.chunk.css",
+    "main.js": "/static/js/main.e8ab4b3b.chunk.js",
+    "main.js.map": "/static/js/main.e8ab4b3b.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.761f02e7.js",
+    "runtime-main.js.map": "/static/js/runtime-main.761f02e7.js.map",
+    "static/css/2.9d5e5e09.chunk.css": "/static/css/2.9d5e5e09.chunk.css",
+    "static/js/2.9036f453.chunk.js": "/static/js/2.9036f453.chunk.js",
+    "static/js/2.9036f453.chunk.js.map": "/static/js/2.9036f453.chunk.js.map",
+    "static/js/3.52f9cb27.chunk.js": "/static/js/3.52f9cb27.chunk.js",
+    "static/js/3.52f9cb27.chunk.js.map": "/static/js/3.52f9cb27.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/2.2e0b8be9.chunk.css.map": "/static/css/2.2e0b8be9.chunk.css.map",
-    "static/css/main.cd1cd6e7.chunk.css.map": "/static/css/main.cd1cd6e7.chunk.css.map",
-    "static/js/2.81fc1376.chunk.js.LICENSE.txt": "/static/js/2.81fc1376.chunk.js.LICENSE.txt",
+    "static/css/2.9d5e5e09.chunk.css.map": "/static/css/2.9d5e5e09.chunk.css.map",
+    "static/css/main.fa46dd04.chunk.css.map": "/static/css/main.fa46dd04.chunk.css.map",
+    "static/js/2.9036f453.chunk.js.LICENSE.txt": "/static/js/2.9036f453.chunk.js.LICENSE.txt",
+    "static/media/LoadIcon.f99f48cd.gif": "/static/media/LoadIcon.f99f48cd.gif",
     "static/media/Spinner2.e123ab33.gif": "/static/media/Spinner2.e123ab33.gif",
     "static/media/SpinnerLoad.d8aa6cd0.gif": "/static/media/SpinnerLoad.d8aa6cd0.gif",
     "static/media/App.css": "/static/media/Vazir-Medium-FD-WOL.0c98c659.ttf",
     "static/media/barOnPlayingMusic.63309852.gif": "/static/media/barOnPlayingMusic.63309852.gif"
   },
   "entrypoints": [
-    "static/js/runtime-main.62821a2b.js",
-    "static/css/2.2e0b8be9.chunk.css",
-    "static/js/2.81fc1376.chunk.js",
-    "static/css/main.cd1cd6e7.chunk.css",
-    "static/js/main.27d6d03d.chunk.js"
+    "static/js/runtime-main.761f02e7.js",
+    "static/css/2.9d5e5e09.chunk.css",
+    "static/js/2.9036f453.chunk.js",
+    "static/css/main.fa46dd04.chunk.css",
+    "static/js/main.e8ab4b3b.chunk.js"
   ]
 }
