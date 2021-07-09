@@ -5,7 +5,7 @@ let downloaderTryCount = 0;
 const instanceApi = axios.create({
   // baseURL: "http://laial.7negare.ir/api",
   // http://nejat.safine.co/api/page/home/.
-  baseURL: "http://nejat.safine.co/api",
+  baseURL: "https://nejat.safine.co/api",
 });
 // instanceApi.interceptors.request.use((request) => {
 //   console.log(request);
@@ -41,9 +41,15 @@ instanceApi.interceptors.response.use(
     if (error.config && error.response && error.response.status === 401) {
       if (tryCount === 3) {
         // console.log(66);
-        localStorage.clear();
-        // window.location = "/login";
-        localStorage.setItem("logForRefreshTokenExpired", true);
+        const res = JSON.parse(
+          localStorage.getItem("logForRefreshTokenExpired")
+        );
+        if (!res) {
+          localStorage.clear();
+          window.location = "/login";
+          localStorage.setItem("logForRefreshTokenExpired", true);
+        }
+
         return Promise.reject(error);
       }
       // console.log(tryCount);

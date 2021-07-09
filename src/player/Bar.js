@@ -1,11 +1,14 @@
 import { Slider } from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import playerContext from "./playerContext";
 const Bar = ({
   loading,
   // currentProgress,
   handleChange,
   className = "",
 }) => {
+  const { progressToZero } = useContext(playerContext);
+
   //   console.log(audio);
   const [progress, setprogress] = useState(0);
   useEffect(() => {
@@ -14,6 +17,9 @@ const Bar = ({
       setprogress(
         parseFloat(((audio?.currentTime * 100) / audio?.duration).toFixed(2))
       );
+      if (progressToZero) {
+        setprogress(0);
+      }
     };
 
     audio?.addEventListener("timeupdate", setAudioTime);
@@ -21,7 +27,8 @@ const Bar = ({
       // audio.removeEventListener("loadeddata", setAudioData);
       audio?.removeEventListener("timeupdate", setAudioTime);
     };
-  }, []);
+  }, [progressToZero]);
+
   // console.log(parseFloat(progress.toFixed(0)) === 33);
   return (
     <Slider

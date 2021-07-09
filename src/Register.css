@@ -160,8 +160,9 @@
   box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
 }
 .register .form .inputBox input::placeholder {
-  color: rgba(255, 255, 255, 0.438);
+  /* color: rgba(255, 255, 255, 0.438); if background is black*/
   text-align: right;
+  color: black;
 }
 
 .register .form .inputBox input[type="submit"] {

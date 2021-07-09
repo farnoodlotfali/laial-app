@@ -8,6 +8,7 @@ import "./Login.css";
 import appContext from "./contexts/appContext";
 import { CloseRounded } from "@material-ui/icons";
 import SnackBarComponent from "./snackBarComponent/SnackBarComponent";
+import backImg from "./assets/w.jpg";
 
 const Login = (props) => {
   let history = useHistory();
@@ -76,7 +77,16 @@ const Login = (props) => {
         isSuccess={false}
       />
 
-      <div className="login">
+      <div
+        className="login"
+        style={{
+          backgroundImage: `url(${backImg})`,
+          backgroundPosition: " center",
+          backgroundSize: "cover",
+          objectFit: "contain",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <div className="color"></div>
         <div className="color"></div>
         <div className="color"></div>

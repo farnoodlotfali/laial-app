@@ -6,7 +6,6 @@ const Time = () => {
 
   useEffect(() => {
     const audio = document.getElementById("audio2");
-
     const setAudioTime = () => {
       settime(
         Math.floor(audio?.currentTime / 60) +

@@ -55,6 +55,17 @@
   cursor: pointer;
   /* font-weight: 700; */
 }
+.tileBanner__show:hover a {
+  transition-delay: 1s;
+  color: black;
+}
+.tileBanner__show a {
+  color: white;
+}
+.tileBanner__show a:hover {
+  text-decoration: none;
+}
+
 .tileBanner__show span {
   position: absolute;
   display: block;

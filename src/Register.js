@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import authContext from "./auth/authContext";
 import "./Register.css";
 import SnackBarComponent from "./snackBarComponent/SnackBarComponent";
+import backImg from "./assets/safine.jpeg";
 
 // const useStyles = makeStyles({
 //   paper: {
@@ -62,7 +63,16 @@ const Register = (props) => {
         msg={showMsg.msg}
       />
 
-      <div className="register bg-light">
+      <div
+        className="register bg-light"
+        style={{
+          backgroundImage: `url(${backImg})`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          objectFit: "contain",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <div className="color"></div>
         <div className="color"></div>
         <div className="color"></div>

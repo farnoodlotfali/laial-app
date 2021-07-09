@@ -20,7 +20,7 @@ const Header = () => {
 
   return (
     <Headroom>
-      <nav className="header navbar navbar-expand-sm  py-4 ">
+      <nav className="header  navbar-expand-sm ">
         <div
           className="collapse navs__items navbar-collapse  "
           id="header__nav"

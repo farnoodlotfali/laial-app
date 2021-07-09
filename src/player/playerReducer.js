@@ -84,6 +84,7 @@ export default (state, action) => {
       return {
         ...state,
         currentUrl: action.payload,
+        progressToZero: false,
       };
     case SET_PROGRESS:
       return {
@@ -135,6 +136,7 @@ export default (state, action) => {
         songPhoto: action.payload.songPhoto,
         postId: action.payload.postId,
         songSlug: action.payload.songSlug,
+        progressToZero: true,
       };
 
     default:

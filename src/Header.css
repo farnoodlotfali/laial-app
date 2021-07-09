@@ -1,9 +1,11 @@
-.navbar {
-  padding: 0 !important;
+.header {
+  /* padding: 0 !important; */
   z-index: 1;
   direction: rtl;
   background-color: rgb(34, 35, 39);
   box-shadow: 0 5px 15px rgba(173, 173, 173, 0.733);
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 .navbar-nav {
   display: contents !important;
@@ -107,7 +109,7 @@
   .header {
     display: none !important;
   }
-  .navbar-expand-sm .navbar-nav {
+  .header .navbar-nav {
     flex-direction: column;
     float: right;
   }

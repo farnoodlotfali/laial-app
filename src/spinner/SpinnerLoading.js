@@ -3,7 +3,7 @@ import SpinnerLoad from "./SpinnerLoad.gif";
 const SpinnerLoading = () => {
   return (
     <div
-      // className='mr-auto'
+      // className="mr-auto"
       className="spinner"
       style={{
         display: "flex",
@@ -17,7 +17,7 @@ const SpinnerLoading = () => {
       }}
     >
       <img
-        // className='mr-auto'
+        className="mr-auto"
         src={SpinnerLoad}
         alt="..loading"
         style={{ widows: "200px", display: "block" }}

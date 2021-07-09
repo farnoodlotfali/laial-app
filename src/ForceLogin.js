@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import authContext from "./auth/authContext";
@@ -6,13 +6,13 @@ import "./ForceLogin.css";
 
 const ForceLogin = () => {
   const { showLoginModal, changeShowLoginModal } = useContext(authContext);
-  useEffect(() => {
-    if (JSON.parse(localStorage.getItem("logForRefreshTokenExpired"))) {
-      changeShowLoginModal(true);
-    }
+  // useEffect(() => {
+  //   if (JSON.parse(localStorage.getItem("logForRefreshTokenExpired"))) {
+  //     changeShowLoginModal(true);
+  //   }
 
-    // eslint-disable-next-line
-  }, []);
+  //   // eslint-disable-next-line
+  // }, []);
   return (
     <Modal
       show={showLoginModal}
@@ -21,7 +21,8 @@ const ForceLogin = () => {
     >
       <Modal.Header closeButton>
         <Modal.Title className="forceLogin__title w-100 text-center">
-          لطفا ورود یا ثبت نام کنید
+          {/* لطفا ورود یا ثبت نام کنید */}
+          برای شنیدن نوحه لطفاً وارد سایت شوید
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
