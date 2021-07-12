@@ -65,9 +65,10 @@ const RowItemPage = () => {
     viewPage(params.slug);
     getRecommender();
     loadUser();
+    // گرفته میشود و در حال حاضر کامنت است  getSongPage  ادرس دانلود اهنگ در
     // eslint-disable-next-line
   }, [params.slug, user]);
-  // console.log(dataSongPage?.media?.[0]);
+
   // نشان دادن موزیک و پخش موزیک
   const playMusicAndShowMusicBar = async () => {
     setIds(

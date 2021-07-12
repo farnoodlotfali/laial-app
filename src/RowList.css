@@ -11,13 +11,13 @@
 .rowList__title .title {
   padding-top: 10px;
   padding-right: 5px;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 700;
   padding-bottom: 10px;
 }
 
 .rowList__title .rowList__moreSong {
-  font-size: 18px;
+  font-size: 15px;
   text-decoration: none;
   cursor: pointer;
   color: rgb(103, 94, 165) !important;
@@ -25,14 +25,14 @@
 
 .rowList .carousel {
   outline-width: 0px;
-  height: 400px;
+  height: 315px;
   padding-bottom: 20px;
   padding-top: 10px;
   background-color: rgb(18, 18, 18);
 }
 
 .rowList .flickity-viewport {
-  height: 399px !important;
+  height: 317px !important;
 }
 .rowList .carousel-cell {
   left: 0 !important;
@@ -79,7 +79,7 @@
     justify-content: space-between;
   }
   .rowList__title .title {
-    font-size: 19px;
+    font-size: 15px;
   }
   .rowList__title h3 {
     padding-top: 5px;

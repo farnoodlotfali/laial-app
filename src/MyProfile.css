@@ -449,15 +449,16 @@
   }
   .myprofile__mobile__songs__myListsOption {
     width: 100%;
-    padding: 3px;
+    /* padding: 3px; */
     color: white;
     border: 1px solid gray;
     border-radius: 10px;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
     background: linear-gradient(to right, transparent, gray);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-size: 12px;
   }
   .myprofile__mobile__songs__myListsOption .dropdown {
     width: 100%;

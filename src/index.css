@@ -10,9 +10,9 @@ body {
   overflow: visible !important;
   background-color: rgb(18, 18, 18) !important;
 }
-body::-webkit-scrollbar {
+/* body::-webkit-scrollbar {
   display: none;
-}
+} */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",

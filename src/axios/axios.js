@@ -88,7 +88,8 @@ instanceApi.interceptors.response.use(
 );
 
 const downloader = axios.create({
-  baseURL: "http://downloader.7negare.ir/download",
+  // baseURL: "http://downloader.7negare.ir/download",
+  baseURL: "https://downloader.safine.co/",
 });
 // downloader.interceptors.request.use((request) => {
 //   console.log(request);
@@ -121,13 +122,11 @@ downloader.interceptors.response.use(
   }
 );
 
+// for getting photos
 const simpleApi = axios.create({
-  baseURL: "http://laial.7negare.ir/api",
+  baseURL: "https://nejat.safine.co/api",
 });
 
-// const auth = axios.create({
-//   baseURL: 'http://laial.7negare.ir/api/account',
-// });
 // eslint-disable-next-line
 export default {
   instanceApi,

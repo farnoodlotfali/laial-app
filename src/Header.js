@@ -7,6 +7,7 @@ import {
   AccountCircleRounded,
   ExitToAppRounded,
   HomeRounded,
+  MenuRounded,
   PersonRounded,
   QueueMusicRounded,
   SearchRounded,
@@ -28,6 +29,7 @@ const Header = () => {
           <ul className="navbar-nav   mt-2 mt-lg-0">
             <div className="navs">
               <li className="   mx-3" onClick={() => ChangeShowRight(true)}>
+                <MenuRounded className="align-self-center  ml-1" />
                 منو اصلی
               </li>
               <NavLink

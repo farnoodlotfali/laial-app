@@ -3,9 +3,12 @@ import defualtPhoto from "./assets/defualtPhoto.jpeg";
 import { useContext, useEffect, useState } from "react";
 import authContext from "./auth/authContext";
 import {
+  AccessTime,
   AddRounded,
   DeleteRounded,
   ExpandMoreRounded,
+  ExposurePlus1Outlined,
+  Favorite,
   PlayArrow,
 } from "@material-ui/icons";
 import appContext from "./contexts/appContext";
@@ -300,28 +303,45 @@ const MyProfile = () => {
             <div className="myprofile__mobile__songs">
               {userPlaylists && (
                 <div className="myprofile__mobile__songs__options">
-                  <div
-                    className="myprofile__mobile__songs__myListsOption"
-                    onClick={() => likedSongsHandle()}
-                  >
-                    <span>مرثیه‌های لایک شده</span>
+                  <div className="d-flex mb-3">
+                    <div
+                      className="myprofile__mobile__songs__myListsOption ml-2 p-1"
+                      onClick={() => likedSongsHandle()}
+                    >
+                      <Favorite />
+
+                      {/* <span>مرثیه‌های لایک شده</span> */}
+                      <span className="d-flex justify-content-center w-100 align-items-center">
+                        لایک
+                      </span>
+                    </div>
+                    <div
+                      className="myprofile__mobile__songs__myListsOption ml-2 p-1"
+                      onClick={() => recentlyViewedc()}
+                    >
+                      <AccessTime />
+
+                      {/* <span> اخیرا شنیده شده</span> */}
+                      <span className="d-flex justify-content-center w-100 align-items-center">
+                        اخیرا
+                      </span>
+                    </div>
+                    <div
+                      className="myprofile__mobile__songs__myListsOption ml-2 p-1"
+                      onClick={async () =>
+                        setListShow(await getOnePlayList(mainPlaylistId)) &
+                        setDeleteBtn(false)
+                      }
+                    >
+                      <ExposurePlus1Outlined />
+
+                      <span className="d-flex justify-content-center w-100 align-items-center">
+                        منتخب
+                      </span>
+                      {/* <span> نوا های منتخب سایت</span> */}
+                    </div>
                   </div>
-                  <div
-                    className="myprofile__mobile__songs__myListsOption"
-                    onClick={() => recentlyViewedc()}
-                  >
-                    <span> اخیرا شنیده شده</span>
-                  </div>
-                  <div
-                    className="myprofile__mobile__songs__myListsOption"
-                    onClick={async () =>
-                      setListShow(await getOnePlayList(mainPlaylistId)) &
-                      setDeleteBtn(false)
-                    }
-                  >
-                    <span> نوا های منتخب سایت</span>
-                  </div>
-                  <div className="myprofile__mobile__songs__myListsOption">
+                  <div className="myprofile__mobile__songs__myListsOption mb-2">
                     <Dropdown>
                       <Dropdown.Toggle className="myprofile__mobile__songs__myListsOptionBtn">
                         <div className="myMadeListShow__title__span">
@@ -464,13 +484,15 @@ const MyProfile = () => {
                   className="myListsOption"
                   onClick={() => likedSongsHandle()}
                 >
-                  <span>مرثیه های لایک شده</span>
+                  <Favorite />
+                  <span className="mr-3">لایک</span>
                 </div>
                 <div
                   className="myListsOption"
                   onClick={() => recentlyViewedc()}
                 >
-                  <span> اخیرا شنیده شده</span>
+                  <AccessTime />
+                  <span className="mr-3"> اخیرا</span>
                 </div>
                 <div
                   className="myListsOption"
@@ -479,7 +501,8 @@ const MyProfile = () => {
                     setDeleteBtn(false)
                   }
                 >
-                  <span> نوا های منتخب سایت</span>
+                  <ExposurePlus1Outlined />
+                  <span> منتخب </span>
                 </div>
               </div>
             )}

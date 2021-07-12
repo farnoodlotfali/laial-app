@@ -932,9 +932,9 @@ const Playerstate = (props) => {
               style={{ display: showMusic ? "block" : "none" }}
             >
               <div className="position d-flex justify-content-around">
-                <div className="musicBar__right">
+                <div className="musicBar__right align-self-center">
                   <div className="musicBar__info">
-                    <div className="musicBar__infoImage">
+                    <div className="musicBar__infoImage ">
                       {state.songSlug ? (
                         <Link to={`/song/${state.songSlug}`}>
                           <img
@@ -969,11 +969,13 @@ const Playerstate = (props) => {
                           )}
                         </div>
                       </div>
-                      <div className="infoDesc__person">{state.songSinger}</div>
+                      <div className="infoDesc__person text-center">
+                        {state.songSinger}
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="player musicBar__center mt-3">
+                <div className="player musicBar__center ">
                   <div className="player__actions d-flex justify-content-center ">
                     <div
                       onClick={() => changeShuffle()}
@@ -1079,7 +1081,7 @@ const Playerstate = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className="playlist_sound   musicBar__left mt-3 mb-2">
+                <div className="playlist_sound   musicBar__left  mb-2">
                   <div className="d-flex justify-content-around  ">
                     <div className="icon">
                       {isAuth && (
@@ -1092,7 +1094,7 @@ const Playerstate = (props) => {
                       )}
                     </div>
                     <div
-                      className="icon playlist_sound_playlist d-flex justify-content-end align-self-end mb-2 "
+                      className="icon playlist_sound_playlist d-flex justify-content-end align-self-end "
                       onClick={showPlaylist}
                     >
                       <QueueMusic fontSize="large" />

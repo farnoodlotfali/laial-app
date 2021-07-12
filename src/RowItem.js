@@ -142,7 +142,7 @@ const RowItem = ({
       )}
 
       <div className="rowItem__image">
-        {isRow ? (
+        {/* {isRow ? (
           <img
             data-flickity-lazyload={
               logo?.full_image_url
@@ -155,20 +155,20 @@ const RowItem = ({
             }
             alt="logo"
           />
-        ) : (
-          <img
-            src={
-              logo?.full_image_url
-                ? logo?.full_image_url
-                : media?.[0]?.image !== null && media?.[0]?.image !== undefined
-                ? media?.[0]?.image
-                : person?.[0]?.image?.full_image_url !== null
-                ? person?.[0]?.image?.full_image_url
-                : defualtPhoto
-            }
-            alt="logo"
-          />
-        )}
+        ) : ( */}
+        <img
+          src={
+            logo?.full_image_url
+              ? logo?.full_image_url
+              : media?.[0]?.image !== null && media?.[0]?.image !== undefined
+              ? media?.[0]?.image
+              : person?.[0]?.image?.full_image_url !== null
+              ? person?.[0]?.image?.full_image_url
+              : defualtPhoto
+          }
+          alt="logo"
+        />
+        {/* )} */}
 
         {/* mobile ratio  */}
         {loading && media?.id === songId ? (

@@ -179,8 +179,8 @@ const AppState = (props) => {
     });
     try {
       const res = await axios.instanceApi.get(`post/${newSlug}`);
-      // console.log(res.data.data);
-      getSongPageUrl(res.data.data.media[0].telegram_id);
+
+      // getSongPageUrl(res.data.data.media[0].telegram_id);
 
       dispatch({
         type: GET_SONG_PAGE,

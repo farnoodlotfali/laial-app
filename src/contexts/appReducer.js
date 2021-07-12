@@ -94,6 +94,7 @@ export default (state, action) => {
         ...state,
         dataSongPage: action.payload,
         like: action.payload.likes,
+        loading: false,
 
         // dataSongPageMeta: {
         //   meta_description: action.payload.meta_description,

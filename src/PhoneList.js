@@ -50,6 +50,18 @@ const PhoneList = () => {
             )}
           </h4>
           <div className="phoneList__list text-light">
+            {user && (
+              <div className="phoneList__item">
+                <Link to="/myprofile" onClick={() => ChangeShowRight(false)}>
+                  <ListItem button key={"پروفایل"}>
+                    <PersonRounded className="" />
+
+                    <ListItemText primary={"پروفایل"} />
+                  </ListItem>
+                </Link>
+              </div>
+            )}
+
             {menu &&
               menu.map((item) =>
                 item.absolute === true ? (
@@ -78,17 +90,7 @@ const PhoneList = () => {
                   </Link>
                 )
               )}
-            {user && (
-              <div className="phoneList__item">
-                <Link to="/myprofile" onClick={() => ChangeShowRight(false)}>
-                  <ListItem button key={"پروفایل"}>
-                    <PersonRounded className="" />
 
-                    <ListItemText primary={"پروفایل"} />
-                  </ListItem>
-                </Link>
-              </div>
-            )}
             {user && (
               <div
                 className="phoneList__item"
