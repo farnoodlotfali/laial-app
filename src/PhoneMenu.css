@@ -47,6 +47,12 @@
   text-overflow: ellipsis;
   direction: ltr;
 }
+.phoneList__user a {
+  color: white;
+}
+.phoneList__user a:hover {
+  text-decoration: none;
+}
 .phoneList__title {
   direction: rtl;
 }

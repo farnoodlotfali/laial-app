@@ -34,10 +34,14 @@ const PhoneList = () => {
               <CloseRounded />
             </div>
             {user ? (
-              <div className="phoneList__user">
-                <AccountCircleRounded />
-
-                <span className="ml-2">{user.first_name}</span>
+              <div
+                className="phoneList__user"
+                onClick={() => ChangeShowRight(false)}
+              >
+                <Link to="/myprofile">
+                  <AccountCircleRounded />
+                  <span className="ml-2">{user.first_name}</span>
+                </Link>
               </div>
             ) : (
               <Link

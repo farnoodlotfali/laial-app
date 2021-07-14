@@ -2,7 +2,6 @@ import { IconButton, Tooltip } from "@material-ui/core";
 import {
   Favorite,
   GetAppRounded,
-  PlayArrowRounded,
   PlaylistAdd,
   Visibility,
 } from "@material-ui/icons";
@@ -21,6 +20,7 @@ import { useState } from "react";
 import defualtPhoto from "./assets/defualtPhoto.jpeg";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import PlaySvg from "./svgs/PlaySvg";
 
 const RowItemPage = () => {
   const [show, setShow] = useState(false);
@@ -113,7 +113,7 @@ const RowItemPage = () => {
       [e.target.name]: e.target.value,
     });
   };
-  // console.log(dataSongPage.image.full_image_url);
+  console.log(dataSongPage);
   return (
     <Fragment>
       <Helmet>
@@ -168,46 +168,41 @@ const RowItemPage = () => {
         <Spinner />
       ) : (
         <div className="rowItemPage py-4  ">
-          <div className="musicInfo d-flex px-2 justify-content-around">
+          <div className="musicInfo d-flex px-2 justify-content-around mt-4">
             <div className="musicInfo__right ">
-              <img
-                className="musicInfo__image"
-                src={
-                  dataSongPage?.image?.full_image_url
-                    ? dataSongPage?.image?.full_image_url
-                    : dataSongPage?.media?.[0]?.image !== null &&
-                      dataSongPage?.media?.[0]?.image !== undefined
-                    ? dataSongPage?.media?.[0]?.image
-                    : dataSongPage?.person?.[0]?.image.full_image_url !== null
-                    ? dataSongPage?.person?.[0]?.image.full_image_url
-                    : defualtPhoto
-                }
-                alt="logo"
-              />
-            </div>
-            <div className="musicInfo__left text-light   justify-content-start align-items-center">
-              <div className="musicInfo__name mt-5 mb-3 d-flex">
-                نام اثر : {dataSongPage?.media?.[0]?.name}
+              <div className="position-relative">
+                <img
+                  className="musicInfo__image position-relative"
+                  src={
+                    dataSongPage?.image?.full_image_url
+                      ? dataSongPage?.image?.full_image_url
+                      : dataSongPage?.media?.[0]?.image !== null &&
+                        dataSongPage?.media?.[0]?.image !== undefined
+                      ? dataSongPage?.media?.[0]?.image
+                      : dataSongPage?.person?.[0]?.image.full_image_url !== null
+                      ? dataSongPage?.person?.[0]?.image.full_image_url
+                      : defualtPhoto
+                  }
+                  alt="logo"
+                />
+                <div className=" rowItemPage_play__music">
+                  <PlaySvg
+                    playMusicAndShowMusicBar={playMusicAndShowMusicBar}
+                  />
+                </div>
               </div>
-              <div className="musicInfo__singer mb-3 d-flex">
-                نام خواننده : {dataSongPage?.person?.[0]?.name}
-              </div>
-              <div className=" mb-3 d-flex">
-                توضیحات : {dataSongPage?.desciption}
-              </div>
-              <div className="musicInfo__mode mb-3 d-flex">سبک : شور</div>
-              <hr />
-              <div className="actions d-flex justify-content-around">
-                <div onClick={playMusicAndShowMusicBar}>
+
+              <div className="actions d-flex justify-content-around mt-4">
+                {/* <div onClick={playMusicAndShowMusicBar}>
                   <Tooltip placement="bottom" title="پخش مرثیه">
                     <IconButton aria-label="play">
                       <PlayArrowRounded
-                        style={{ fontSize: "40px" }}
+                        style={{ fontSize: "30px" }}
                         className="icon"
                       />
                     </IconButton>
                   </Tooltip>
-                </div>
+                </div> */}
 
                 <div className="favorite">
                   <IconButton
@@ -220,7 +215,10 @@ const RowItemPage = () => {
                           setShow(true)
                     }
                   >
-                    <Favorite className="Favorite" fontSize="large" />
+                    <Favorite
+                      className="Favorite"
+                      style={{ fontSize: "30px" }}
+                    />
                   </IconButton>
                   {like}
 
@@ -294,7 +292,7 @@ const RowItemPage = () => {
                     <a href={downloadUrl} className="download">
                       <Tooltip placement="bottom" title="دانلود">
                         <IconButton aria-label="download">
-                          <GetAppRounded fontSize="large" />
+                          <GetAppRounded style={{ fontSize: "30px" }} />
                         </IconButton>
                       </Tooltip>
                     </a>
@@ -306,19 +304,38 @@ const RowItemPage = () => {
                 >
                   <Tooltip placement="bottom" title="اضافه به لیست">
                     <IconButton aria-label="Add">
-                      <PlaylistAdd className="Add" fontSize="large" />
+                      <PlaylistAdd
+                        className="Add"
+                        style={{ fontSize: "30px" }}
+                      />
                     </IconButton>
                   </Tooltip>
                 </div>
                 <div className="view">
                   <IconButton aria-label="View">
-                    <Visibility className="View" fontSize="large" />
+                    <Visibility className="View" style={{ fontSize: "30px" }} />
                   </IconButton>
                   {viewsPage}
                 </div>
               </div>
             </div>
+            <div className="musicInfo__left text-light   justify-content-start align-items-center">
+              <div className="musicInfo__name mt-5 mb-3 d-flex">
+                نام اثر : {dataSongPage?.media?.[0]?.name}
+              </div>
+              <div className="musicInfo__mode_singer">
+                <div className="musicInfo__singer mb-3 d-flex ml-5">
+                  نام خواننده : {dataSongPage?.person?.[0]?.name}
+                </div>
+                <div className="musicInfo__mode mb-3 d-flex">سبک : شور</div>
+              </div>
+
+              <div className=" mb-3 d-flex">
+                توضیحات : {dataSongPage?.description}
+              </div>
+            </div>
           </div>
+          <hr />
 
           <div className="rowList  mt-5  pt-5 ">
             <h3 className="text-light text-right pb-3 mr-4">

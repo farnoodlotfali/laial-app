@@ -931,7 +931,7 @@ const Playerstate = (props) => {
               className=" musicBar text-light"
               style={{ display: showMusic ? "block" : "none" }}
             >
-              <div className="position d-flex justify-content-around">
+              <div className="position d-flex justify-content-around pt-2">
                 <div className="musicBar__right align-self-center">
                   <div className="musicBar__info">
                     <div className="musicBar__infoImage ">
@@ -975,7 +975,7 @@ const Playerstate = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className="player musicBar__center ">
+                <div className="player musicBar__center align-self-center ">
                   <div className="player__actions d-flex justify-content-center ">
                     <div
                       onClick={() => changeShuffle()}
@@ -983,10 +983,10 @@ const Playerstate = (props) => {
                         state.shuffle ? "icon__shuffle__press" : ""
                       } align-self-center`}
                     >
-                      <ShuffleRounded style={{ fontSize: 25 }} />
+                      <ShuffleRounded style={{ fontSize: 20 }} />
                     </div>
                     <div className="icon mr-4 " onClick={handlePrevious}>
-                      <SkipPreviousRounded style={{ fontSize: 35 }} />
+                      <SkipPreviousRounded style={{ fontSize: 30 }} />
                     </div>
                     <div className="icon mr-4 align-self-center ">
                       {state.loading ? (
@@ -999,7 +999,7 @@ const Playerstate = (props) => {
                           className=""
                           onClick={() => playAndPauseMusic(audioRef.current)}
                         >
-                          <Pause style={{ fontSize: 35 }} />
+                          <Pause style={{ fontSize: 30 }} />
                         </div>
                       ) : (
                         <div
@@ -1010,33 +1010,33 @@ const Playerstate = (props) => {
                               : changeShowLoginModal(true)
                           }
                         >
-                          <PlayArrowRounded style={{ fontSize: 35 }} />
+                          <PlayArrowRounded style={{ fontSize: 30 }} />
                         </div>
                       )}
                     </div>
                     <div className="icon mr-4  " onClick={handleNext}>
-                      <SkipNextRounded style={{ fontSize: 35 }} />
+                      <SkipNextRounded style={{ fontSize: 30 }} />
                     </div>
                     {state.noneOrLoopOrRepeat === 0 ? (
                       <div
                         onClick={() => changeNoneOrLoopOrRepeat()}
                         className={`mr-4  icon__loop align-self-center `}
                       >
-                        <RepeatRounded style={{ fontSize: 25 }} />
+                        <RepeatRounded style={{ fontSize: 20 }} />
                       </div>
                     ) : state.noneOrLoopOrRepeat === 1 ? (
                       <div
                         onClick={() => changeNoneOrLoopOrRepeat()}
                         className={`mr-4 icon__loop__press align-self-center `}
                       >
-                        <RepeatRounded style={{ fontSize: 25 }} />
+                        <RepeatRounded style={{ fontSize: 20 }} />
                       </div>
                     ) : (
                       <div
                         onClick={() => changeNoneOrLoopOrRepeat()}
                         className={`mr-4 icon__repeatOne__press align-self-center `}
                       >
-                        <RepeatOneRounded style={{ fontSize: 25 }} />
+                        <RepeatOneRounded style={{ fontSize: 20 }} />
                       </div>
                     )}
                   </div>
@@ -1081,7 +1081,7 @@ const Playerstate = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className="playlist_sound   musicBar__left  mb-2">
+                <div className="playlist_sound   musicBar__left  ">
                   <div className="d-flex justify-content-around  ">
                     <div className="icon">
                       {isAuth && (
