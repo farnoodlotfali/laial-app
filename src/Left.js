@@ -35,7 +35,7 @@ const Left = () => {
     totalDuration,
     changeShuffle,
     shuffle,
-    changeLoop,
+
     songSinger,
     songName,
     songPhoto,
@@ -112,21 +112,21 @@ const Left = () => {
             </div>
             {noneOrLoopOrRepeat === 0 ? (
               <div
-                onClick={() => changeLoop() & changeNoneOrLoopOrRepeat()}
+                onClick={() => changeNoneOrLoopOrRepeat()}
                 className={` icon__loop align-self-center `}
               >
                 <RepeatRounded style={{ fontSize: 25 }} />
               </div>
             ) : noneOrLoopOrRepeat === 1 ? (
               <div
-                onClick={() => changeLoop() & changeNoneOrLoopOrRepeat()}
+                onClick={() => changeNoneOrLoopOrRepeat()}
                 className={`icon__loop__press align-self-center `}
               >
                 <RepeatRounded style={{ fontSize: 25 }} />
               </div>
             ) : (
               <div
-                onClick={() => changeLoop() & changeNoneOrLoopOrRepeat()}
+                onClick={() => changeNoneOrLoopOrRepeat()}
                 className={`icon__repeatOne__press align-self-center `}
               >
                 <RepeatOneRounded style={{ fontSize: 25 }} />

@@ -62,13 +62,14 @@ const PhoneMenu = () => {
           <Headset fontSize="large" />
           {/* <span>لیست من</span> */}
         </div>
-        <div
-          className={`phoneMenu__item ${showMusic && "selected"} `}
-          onClick={() => currentUrl !== null && showMusicBar()}
-        >
-          <MusicNote fontSize="large" />
-          {/* <span>آهنگ</span> */}
-        </div>
+        {currentUrl && (
+          <div
+            className={`phoneMenu__item ${showMusic && "selected"} `}
+            onClick={() => currentUrl !== null && showMusicBar()}
+          >
+            <MusicNote fontSize="large" />
+          </div>
+        )}
       </div>
     </div>
   );

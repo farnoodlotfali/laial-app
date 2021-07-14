@@ -22,8 +22,10 @@ const SongOnLeft = ({ item, playlist, number, zeroPad }) => {
       item?.media?.[0]?.image !== null
         ? item?.media?.[0]?.image
         : item?.person?.[0]?.image.full_image_url,
-      item.id
+      item?.id,
+      item?.slug
     );
+
     if (item.media[0]?.path) {
       // console.log("path");
       setUrl(item.media[0]?.path, playList);

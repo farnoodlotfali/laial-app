@@ -259,8 +259,6 @@ const Playerstate = (props) => {
         }
       }
     }
-
-    // setIds({ telegramId: tId, songId: id });
   };
 
   const showPlaylist = () => {
@@ -270,7 +268,7 @@ const Playerstate = (props) => {
   const handleChange = (newDuration) => {
     // تنظیم مدت زمان هنگام کلیک
     // state.seek = true;
-    state.seek = true;
+    // state.seek = true;
     changeDuration(audioRef.current, newDuration);
     setNewProgress(newDuration);
   };
@@ -377,11 +375,10 @@ const Playerstate = (props) => {
   };
 
   const nextMusic = async (audioElement = audioRef.current) => {
-    // console.log(22);
     audioElement.pause();
     putToMusicChangeList(audioElement.currentTime, "next");
     setNewProgress(0);
-    // console.log(playList[0]);
+
     if (playList !== undefined) {
       for (let i = 0; i < playList.length; i++) {
         if (
@@ -432,8 +429,10 @@ const Playerstate = (props) => {
                 chosen?.media?.[0]?.image !== null
                   ? chosen?.media?.[0]?.image
                   : chosen?.person?.[0]?.image.full_image_url,
-                chosen.id
+                chosen.id,
+                chosen.slug
               );
+
               if (chosen.media[0]?.path) {
                 setUrl(chosen.media[0]?.path, playList);
                 playMusic();
@@ -511,7 +510,8 @@ const Playerstate = (props) => {
               chosen?.media?.[0]?.image !== null
                 ? chosen?.media?.[0]?.image
                 : chosen?.person?.[0]?.image.full_image_url,
-              chosen.id
+              chosen.id,
+              chosen.slug
             );
 
             if (chosen.media[0]?.path) {
@@ -692,8 +692,9 @@ const Playerstate = (props) => {
             onEnded={() => {
               if (
                 audioRef?.current &&
-                audioRef?.current?.ended &&
-                !state.seek
+                audioRef?.current?.ended
+                // &&
+                // !state.seek
               ) {
                 if (state.repeatOne) {
                   repeatSongAgain();
