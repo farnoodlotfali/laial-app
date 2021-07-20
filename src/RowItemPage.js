@@ -170,9 +170,9 @@ const RowItemPage = () => {
         <div className="rowItemPage py-4  ">
           <div className="musicInfo d-flex px-2 justify-content-around mt-4">
             <div className="musicInfo__right ">
-              <div className="position-relative">
+              <div className="musicInfo__image_section">
                 <img
-                  className="musicInfo__image position-relative"
+                  className="musicInfo__image "
                   src={
                     dataSongPage?.image?.full_image_url
                       ? dataSongPage?.image?.full_image_url
@@ -321,7 +321,7 @@ const RowItemPage = () => {
             </div>
             <div className="musicInfo__left text-light   justify-content-start align-items-center">
               <div className="musicInfo__name mt-5 mb-3 d-flex">
-                نام اثر : {dataSongPage?.media?.[0]?.name}
+                نام اثر : {dataSongPage?.title}
               </div>
               <div className="musicInfo__mode_singer">
                 <div className="musicInfo__singer mb-3 d-flex ml-5">

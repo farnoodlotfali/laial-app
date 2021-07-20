@@ -18,6 +18,7 @@ import SongOnLeft from "./SongOnLeft";
 import Bar from "./player/Bar";
 import Time from "./player/Time";
 import authContext from "./auth/authContext";
+import SpinnerLoading from "./spinner/SpinnerLoading";
 
 const Left = () => {
   const { showLeft, ChangeShowLeft, showMusic } = useContext(AppContext);
@@ -31,11 +32,9 @@ const Left = () => {
     playAndPauseMusic,
     playing,
     // eslint-disable-next-line
-    duration,
     totalDuration,
     changeShuffle,
     shuffle,
-
     songSinger,
     songName,
     songPhoto,
@@ -95,18 +94,25 @@ const Left = () => {
             <div className="icon  " onClick={() => previousMusic()}>
               <SkipPreviousRounded style={{ fontSize: 35 }} />
             </div>
-            <div
-              className="icon  "
-              onClick={() =>
-                !forceStop ? playAndPauseMusic() : changeShowLoginModal(true)
-              }
-            >
-              {playing ? (
-                <Pause style={{ fontSize: 35 }} />
-              ) : (
-                <PlayArrowRounded style={{ fontSize: 35 }} />
-              )}
-            </div>
+            {loading ? (
+              <div className="leftside_spinner">
+                <SpinnerLoading />
+              </div>
+            ) : (
+              <div
+                className="icon  "
+                onClick={() =>
+                  !forceStop ? playAndPauseMusic() : changeShowLoginModal(true)
+                }
+              >
+                {playing ? (
+                  <Pause style={{ fontSize: 35 }} />
+                ) : (
+                  <PlayArrowRounded style={{ fontSize: 35 }} />
+                )}
+              </div>
+            )}
+
             <div className="icon  " onClick={() => nextMusic()}>
               <SkipNextRounded style={{ fontSize: 35 }} />
             </div>

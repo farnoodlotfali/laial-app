@@ -182,9 +182,9 @@ const Playerstate = (props) => {
     });
   };
   const setIds = (tId, id, duration, name, singer, photo, postId, songSlug) => {
-    if (audioRef.current?.played) {
-      audioRef.current.pause();
-    }
+    // if (audioRef.current?.played) {
+    //   audioRef.current.pause();
+    // }
     dispatch({
       type: SET_IDS,
       payload: {
@@ -371,7 +371,6 @@ const Playerstate = (props) => {
       type: SET_CURRENT_URL,
       payload: url,
     });
-    // setProgress(0);
   };
 
   const nextMusic = async (audioElement = audioRef.current) => {

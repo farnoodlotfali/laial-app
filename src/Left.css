@@ -252,6 +252,19 @@
   font-size: 20px;
 }
 
+.leftside_spinner .spinner {
+  height: 38px !important;
+  width: 30px !important;
+
+  transform: none !important;
+  position: inherit !important;
+}
+
+.leftside_spinner .spinner img {
+  height: 100%;
+  width: 100%;
+}
+
 @media (max-width: 768px) {
   .playList {
     width: 100%;

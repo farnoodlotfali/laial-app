@@ -101,6 +101,7 @@ const RowItem = ({
             console.log(error);
           }
         }
+
         // const songPhotoUrl = logo?.full_image_url
         //   ? logo?.full_image_url
         //   : media?.image !== null

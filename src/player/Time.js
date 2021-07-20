@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const Time = () => {
   const zeroPad = (num, places) => String(num).padStart(places, "0");
-  const [time, settime] = useState(0);
+  const [time, settime] = useState("00:00");
 
   useEffect(() => {
     const audio = document.getElementById("audio2");

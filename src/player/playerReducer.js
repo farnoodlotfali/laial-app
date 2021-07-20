@@ -15,6 +15,7 @@ import {
   CHANGE_SHUFFLE,
   CHANGE_LOOP_STATE,
   FORCE_STOP,
+  BAR_TO_ZERO,
 } from "./types";
 // eslint-disable-next-line
 export default (state, action) => {
@@ -90,6 +91,11 @@ export default (state, action) => {
       return {
         ...state,
         currentProgress: action.payload,
+      };
+    case BAR_TO_ZERO:
+      return {
+        ...state,
+        progressToZero: true,
       };
 
     case CHANGE_LOOP_STATE:

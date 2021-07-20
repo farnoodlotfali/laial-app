@@ -863,6 +863,7 @@ const AppState = (props) => {
         changeHomeMeta,
         removeThisSongHasBeenbAdd,
         changeMyProfilemySonglistId,
+        getSongPageUrl,
         home: state.home,
         homeMeta: state.homeMeta,
         menu: state.menu,
