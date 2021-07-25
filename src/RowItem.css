@@ -1,6 +1,6 @@
 .carousel-cellRowItem {
   width: 10%;
-  height: 300px;
+  height: 224px;
   margin-right: 5px;
   border-radius: 5px;
   margin-left: 5px;
@@ -14,7 +14,7 @@
 }
 .carousel-cellRowItem img {
   width: 100%;
-  height: 180px;
+  height: 100%;
   border-radius: 5px;
 }
 
@@ -23,13 +23,9 @@
 }
 
 .rowItem__title {
-  /* width: 240px; */
   cursor: pointer;
-  font-size: 20px;
   font-weight: 900;
-  line-height: 28px;
   color: white;
-  /* margin-top: 10px; */
   margin: 0;
   padding: 10px;
   display: flex;
@@ -43,14 +39,17 @@
   transform: scale(1.1);
 } */
 .scroll__rowItem__title {
+  font-size: 13px;
   display: none;
+  margin-bottom: 10px;
 }
 .steady__rowItem__title {
   display: block;
   padding: 0 5px;
   overflow: hidden;
   direction: rtl;
-  font-size: 17px;
+  font-size: 13px;
+  margin-bottom: 10px;
 }
 .rowItem__info a:hover {
   text-decoration: none !important;
@@ -58,7 +57,7 @@
 .carousel-cellRowItem:hover .scroll__rowItem__title {
   display: block;
 
-  animation: animate__rowItem__title 6s linear infinite;
+  animation: animate__rowItem__title 4s linear infinite;
 }
 .carousel-cellRowItem:hover .steady__rowItem__title {
   display: none;
@@ -74,10 +73,9 @@
 
 .rowItem__person {
   cursor: pointer;
-  font-size: 12px;
+  font-size: 9px;
   font-weight: 900;
-  line-height: 28px;
-  color: #757575;
+  color: #a19f9f;
   margin: 0;
   display: flex;
   transition: transform 450ms ease-in-out;
@@ -85,6 +83,7 @@
 }
 .rowItem__person:hover {
   transform: scale(1.1);
+  color: #fcfcfc;
 }
 
 .rowItem:hover .rowItem__onHover {
@@ -134,7 +133,7 @@
   margin: 2px;
 }
 .rowItem__image {
-  height: 200px;
+  height: 152px;
 }
 .rowItem__image .badge {
   position: relative;
@@ -162,7 +161,7 @@
 }
 .play__music {
   position: sticky;
-  bottom: 50%;
+  bottom: 40%;
   /* left: 15%; */
 }
 
@@ -258,16 +257,18 @@
 }
 
 .play__music___spinner {
+  width: 100px;
   position: relative;
-  bottom: 100%;
+  bottom: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 .prepareSong {
   position: relative;
-  bottom: -140px;
+  bottom: 25px;
   width: 100%;
   font-size: 12px;
+  white-space: nowrap;
   color: white;
 }
 @media (max-width: 768px) {
@@ -285,7 +286,7 @@
   }
   .carousel-cellRowItem img {
     width: 100%;
-    height: 114px;
+    height: 100%;
     border-radius: 5px;
   }
   .rowItem__image {
@@ -307,11 +308,11 @@
     font-size: 12px;
   }
   .steady__rowItem__title {
-    font-size: 12px;
+    font-size: 10px;
   }
   .rowItem__person {
     margin: 0;
-    font-size: 9px;
+    font-size: 8px;
   }
 
   .visit_text,
@@ -324,15 +325,15 @@
   }
 
   .rowItem__playing {
+    width: 50px;
     display: block;
     position: relative;
-    bottom: 100%;
+    bottom: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
   .prepareSong {
-    bottom: -95px;
-
+    bottom: -6px;
     font-size: 7px;
   }
 }

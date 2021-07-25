@@ -66,12 +66,7 @@ const App = () => {
                   path="/person/:slug"
                   component={Person}
                 />
-                <Route
-                  sensitive
-                  exact
-                  path="/all-persons"
-                  component={AllPerson}
-                />
+                <Route sensitive exact path="/persons" component={AllPerson} />
                 <Route exact path="/password_reset" component={PasswordReset} />
                 <Route exact path="/not_found" component={NotFound} />
                 {/* <Route exact path="/test" component={Test} /> */}

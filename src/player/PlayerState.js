@@ -109,6 +109,7 @@ const Playerstate = (props) => {
     setWhichSongToSaveInPlaylist,
     removeThisSongHasBeenbAdd,
     changeHomeMeta,
+    LimitListPlayNonLogin,
   } = useContext(AppContext);
   const initialState = {
     playList: [],
@@ -243,7 +244,8 @@ const Playerstate = (props) => {
 
         let limitListTo10 = JSON.parse(localStorage.getItem("limitListTo10"));
 
-        if (limitListTo10.length >= 10) {
+        if (limitListTo10.length >= LimitListPlayNonLogin) {
+          console.log(212);
           forceLogin();
         } else {
           let hasThisItem = limitListTo10.some((x) => x.postId === postId);

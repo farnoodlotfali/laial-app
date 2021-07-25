@@ -6,14 +6,8 @@ import authContext from "./auth/authContext";
 import { useHistory } from "react-router";
 
 const UserInterests = () => {
-  const {
-    getTags,
-    tags,
-    tagsUrls,
-    saveChosenTags,
-    isUserChooseTags,
-    user,
-  } = useContext(authContext);
+  const { getTags, tags, tagsUrls, saveChosenTags, isUserChooseTags, user } =
+    useContext(authContext);
   const [chosenTagsList, setChosenTagsList] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
   const history = useHistory();
@@ -102,7 +96,6 @@ const UserInterests = () => {
           {next?.listResults && (
             <InfiniteScroll
               dataLength={next?.listResults?.length}
-              // dataLength={10}
               next={() => infiniteList()}
               hasMore={next.hasMore}
             >

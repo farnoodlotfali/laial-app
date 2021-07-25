@@ -22,7 +22,7 @@ const TileBanner = ({ imgs }) => {
               alt="logo"
             />
             {/* <div className='tileBanner__box'> */}
-            {imgs.url && (
+            {img.url && (
               <div className="tileBanner__show">
                 <span></span>
                 <span></span>

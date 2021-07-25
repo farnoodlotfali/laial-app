@@ -78,7 +78,6 @@
 .userInterests .infinite-scroll-component {
   display: flex;
   flex-wrap: wrap;
-  /* min-height: 100vh; */
   padding-bottom: 20px;
   justify-content: center;
 }

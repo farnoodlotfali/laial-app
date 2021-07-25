@@ -94,11 +94,17 @@ const MoreSong = () => {
               next?.list.map((item) => (
                 <RowItem
                   key={item.id}
+                  postId={item.id}
+                  isRow={true}
                   logo={item.image}
                   media={item.media[0]}
                   person={item.person}
                   slug={item.slug}
                   context={next?.list}
+                  meta_description={item.meta_description}
+                  meta_title={item.meta_title}
+                  description={item.description}
+                  title={item.title}
                 />
               ))}
           </InfiniteScroll>

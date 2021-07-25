@@ -47,7 +47,7 @@ const RowItem = ({
   } = useContext(playerContext);
 
   const { changeShowLoginModal, checkIfForce, user } = useContext(authContext);
-  // console.log(logo);
+  // console.log(media?.name);
   const playMusicAndShowMusicBar = async () => {
     // نشان دادن موزیک و پخش موزیک
 
@@ -217,10 +217,10 @@ const RowItem = ({
           <h4 className="rowItem__title text-center">
             <div className="scroll__rowItem__title">
               {/* {truncate(media?.name, 4)} */}
-              {media?.name}
+              {title ? title : media?.name}
             </div>
             <div className="steady__rowItem__title">
-              {truncate(media?.name, 4)}
+              {truncate(title ? title : media?.name, 4)}
               {/* {media?.name} */}
             </div>
             {/* {media?.name} */}

@@ -11,7 +11,6 @@
 .moreSong .infinite-scroll-component {
   display: flex;
   flex-wrap: wrap;
-  min-height: 100vh;
   justify-content: center;
 }
 .moreSong__title {

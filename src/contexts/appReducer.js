@@ -27,6 +27,7 @@ import {
   REMOVE_THIS_SONG_HAS_BEEN_ADD,
   CHANGE_MY_PROFILE_MY_SONGLIST_ID,
   CHANGE_SHOW_CREATE_LIST,
+  GET_CONFIGS,
 } from "./types";
 // eslint-disable-next-line
 export default (state, action) => {
@@ -34,13 +35,13 @@ export default (state, action) => {
     case GET_HOME:
       return {
         ...state,
-        home: action.payload.block,
+        home: action.payload?.block,
         homeMeta: {
-          meta_description: action.payload.meta_description,
-          meta_title: action.payload.meta_title,
-          name: action.payload.name,
-          slug: action.payload.slug,
-          id: action.payload.id,
+          meta_description: action.payload?.meta_description,
+          meta_title: action.payload?.meta_title,
+          name: action.payload?.name,
+          slug: action.payload?.slug,
+          id: action.payload?.id,
         },
         loading: false,
       };
@@ -110,6 +111,12 @@ export default (state, action) => {
         ...state,
         downloadUrl: action.payload,
         loading: false,
+      };
+    case GET_CONFIGS:
+      return {
+        ...state,
+
+        LimitListPlayNonLogin: JSON.parse(action.payload?.[0]?.value),
       };
     case CHANGE_MY_PROFILE_MY_SONGLIST_ID:
       return {

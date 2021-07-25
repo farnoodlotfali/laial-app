@@ -7,13 +7,18 @@ import appContext from "./contexts/appContext";
 import Spinner from "./spinner/Spinner";
 import authContext from "./auth/authContext";
 import { Helmet } from "react-helmet";
+import { useParams } from "react-router";
 const Home = () => {
   const { loading, getHome, home, homeMeta, showMusic } =
     useContext(appContext);
   const { user } = useContext(authContext);
+
+  const { slug } = useParams();
+
   useEffect(() => {
+    // console.log(slug);
     if (home === null) {
-      getHome();
+      getHome(slug);
     }
     // console.log(homeMeta);
     // eslint-disable-next-line
@@ -56,13 +61,13 @@ const Home = () => {
         {loading ? (
           <Spinner />
         ) : (
-          home !== null && (
+          home && (
             <div
               className={`home ${
                 showMusic ? "AddPaddingHome" : "normalPaddingHome"
               }`}
             >
-              {home.map((data, i) =>
+              {home?.map((data, i) =>
                 data.banner !== null ? (
                   data.banner.banner_type === "big" ? (
                     <Banner key={i} imgs={data.banner.images} />

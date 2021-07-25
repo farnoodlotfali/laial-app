@@ -112,48 +112,46 @@ const Search = () => {
       }}
     >
       {/* <Navigation /> */}
-      <div className="search__title ">
-        <div
-          className="searchFields__option__form__goBack"
-          onClick={() => history.goBack()}
-        >
-          <CloseRounded />
-          {/* <span>بستن</span> */}
-        </div>
-        <h1>جستجو</h1>
-      </div>
-
-      <div className=" searchFields__option my-3 py-3 ">
-        <form
-          className="searchFields__option__form"
-          onSubmit={(e) => onSubmitHandle(e)}
-        >
-          <div className="searchFields__option__searching">
-            <input
-              className="ml-2"
-              onChange={onchange}
-              name="searchValue"
-              type="text"
-              value={searchValue}
-              placeholder="متن جستجو ...."
-              required
-            />
-            <div
-              className="searchFields__option__searching__icon"
-              onClick={() => onSubmitHandle()}
-            >
-              <input type="submit" />
-              <SearchRounded />
-            </div>
+      <div className="d-flex">
+        <div className="search__title ">
+          <div
+            className="searchFields__option__form__goBack"
+            onClick={() => history.goBack()}
+          >
+            <CloseRounded />
           </div>
+        </div>
+        <div className=" searchFields__option my-3 py-3 ">
+          <form
+            className="searchFields__option__form"
+            onSubmit={(e) => onSubmitHandle(e)}
+          >
+            <div className="searchFields__option__searching">
+              <input
+                className="ml-2"
+                onChange={onchange}
+                name="searchValue"
+                type="text"
+                value={searchValue}
+                placeholder="متن جستجو ...."
+                required
+              />
+              <div
+                className="searchFields__option__searching__icon"
+                onClick={() => onSubmitHandle()}
+              >
+                <input type="submit" />
+                <SearchRounded />
+              </div>
+            </div>
 
-          {/* <input type="submit" value="جستجو" /> */}
-        </form>
+            {/* <input type="submit" value="جستجو" /> */}
+          </form>
+        </div>
       </div>
+
       <div className="listPersons">
-        {next?.listPersons && (
-          <h2 className="text-white my-5">نتایج براساس افراد</h2>
-        )}
+        {next?.listPersons && <h5 className="text-white my-3">مداحان</h5>}
         {next?.listPersons && (
           <InfiniteScroll
             dataLength={next?.listPersons?.length}
@@ -176,9 +174,7 @@ const Search = () => {
         )}
       </div>
       <div className="listResults">
-        {next?.listResults && (
-          <h2 className="text-white my-5">نتایج براساس مرثیه</h2>
-        )}
+        {next?.listResults && <h5 className="text-white mb-3">مرثیه ها</h5>}
         {next?.listResults && (
           <InfiniteScroll
             dataLength={next?.listResults?.length}
@@ -190,10 +186,17 @@ const Search = () => {
                 return (
                   <RowItem
                     key={item.id}
+                    postId={item.id}
+                    isRow={true}
                     logo={item.image}
                     media={item.media[0]}
                     person={item.person}
                     slug={item.slug}
+                    context={next?.listResults}
+                    meta_description={item.meta_description}
+                    meta_title={item.meta_title}
+                    description={item.description}
+                    title={item.title}
                   />
                 );
               })}

@@ -133,34 +133,28 @@ const Person = () => {
         )} */}
       </Helmet>
       <div className="person">
-        {/* <div className='d-flex'>
-        <div className='person__img '>
-          <img
-            src={
-              personList?.[0]?.media[0]?.image !== null
-                ? personList?.[0]?.media[0]?.image
-                : personList?.[0]?.person[0]?.image.full_image_url !== null
-                ? personList?.[0]?.person[0]?.image.full_image_url
-                : defualtPhoto
-            }
-            alt='logo'
-          />
-        </div>
-        <div className='person__info text-light mb-5'>
-          <div className='my-2'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate,
-            in incidunt? At.
+        <div className="d-flex person_information_img  p-4 m-4 ">
+          <div className="person_information_img_information text-white mr-4">
+            <h5>{personList?.[0]?.person?.[0]?.name}</h5>
+            <p>{personList?.[0]?.person?.[0]?.description}</p>
           </div>
-          <div className='my-2'>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cupiditate
-            suscipit accusamus vitae laboriosam perspiciatis labore cum modi
-            officiis similique sapiente nesciunt non sint corrupti aliquid,
-            error explicabo. Est, id magnam?
+          <div className="">
+            <div className="person_information_img__img ">
+              <img
+                src={
+                  personList?.[0]?.media[0]?.image !== null
+                    ? personList?.[0]?.media[0]?.image
+                    : personList?.[0]?.person[0]?.image.full_image_url !== null
+                    ? personList?.[0]?.person[0]?.image.full_image_url
+                    : defualtPhoto
+                }
+                alt="logo"
+              />
+            </div>
           </div>
         </div>
-      </div>
-     */}
-        <div className="person__infoAndImg py-4 d-flex justify-content-center align-items-center">
+
+        {/* <div className="person__infoAndImg py-4 d-flex justify-content-center align-items-center">
           <div className="card__person">
             <div className="circle__person">
               <div className="content__person">
@@ -179,7 +173,7 @@ const Person = () => {
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
         {next?.list && (
           <InfiniteScroll
@@ -187,7 +181,6 @@ const Person = () => {
             next={() => infiniteList()}
             hasMore={next.hasMore}
             // loader={<h4>Loading...</h4>}
-            // height={'100vh'}
             // endMessage={
             //   <p style={{ textAlign: 'center' }}>
             //     <b>Yay! You have seen it all</b>
@@ -196,14 +189,21 @@ const Person = () => {
           >
             {next.list &&
               next.list?.map((item, i) => {
+                console.log(item);
                 return (
                   <RowItem
                     key={item.id}
+                    postId={item.id}
+                    isRow={true}
                     logo={item.image}
                     media={item.media[0]}
                     person={item.person}
                     slug={item.slug}
                     context={next?.list}
+                    meta_description={item.meta_description}
+                    meta_title={item.meta_title}
+                    description={item.description}
+                    title={item.title}
                   />
                 );
               })}

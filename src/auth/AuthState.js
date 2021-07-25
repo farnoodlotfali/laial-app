@@ -39,7 +39,7 @@ const AuthState = (props) => {
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
-  const { getAllPlaylists } = useContext(appContext);
+  const { getAllPlaylists, LimitListPlayNonLogin } = useContext(appContext);
 
   useEffect(() => {
     loadUser();
@@ -200,7 +200,10 @@ const AuthState = (props) => {
     });
   };
   const checkIfForce = () => {
-    return JSON.parse(localStorage.getItem("limitListTo10"))?.length >= 10;
+    return (
+      JSON.parse(localStorage.getItem("limitListTo10"))?.length >=
+      LimitListPlayNonLogin
+    );
   };
   return (
     <AuthContext.Provider

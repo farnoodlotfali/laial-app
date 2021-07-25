@@ -25,14 +25,14 @@
 
 .rowList .carousel {
   outline-width: 0px;
-  height: 315px;
+  height: 250px;
   padding-bottom: 20px;
   padding-top: 10px;
   background-color: rgb(18, 18, 18);
 }
 
 .rowList .flickity-viewport {
-  height: 317px !important;
+  height: 250px !important;
 }
 .rowList .carousel-cell {
   left: 0 !important;

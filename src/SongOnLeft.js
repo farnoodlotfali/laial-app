@@ -50,7 +50,6 @@ const SongOnLeft = ({ item, playlist, number, zeroPad }) => {
     }
   };
 
-  // console.log(item?.person);
   return (
     <div className="songOnLeft">
       <div className="songOnLeft__song d-flex    justify-content-between">
@@ -95,7 +94,7 @@ const SongOnLeft = ({ item, playlist, number, zeroPad }) => {
           <div className="song__info mr-3 align-self-center ">
             <div className="song__title">
               {/* {isFileItem ? item.name : item.media[0].name} */}
-              {item.media?.[0]?.name}
+              {item?.title ? item?.title : item.media?.[0]?.name}
             </div>
             <div className="song__person ">
               {/* {isFileItem ? item?.person?.name : item.person[0].name} */}

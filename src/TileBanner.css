@@ -1,5 +1,6 @@
 .tileBanner {
   background-color: rgb(18, 18, 18);
+  margin-top: 20px;
 }
 .tileBanner .carousel {
   padding-bottom: 10px;
@@ -8,10 +9,12 @@
   /* margin-bottom: 40px; */
   padding-right: 10px;
 }
-
+.tileBanner .flickity-viewport {
+  height: 202px !important;
+}
 .tileBanner .carousel-cell {
-  width: 28%;
-  height: 250px;
+  width: 22%;
+  height: 200px;
   margin-right: 10px;
   display: flex;
   align-items: center;
@@ -124,12 +127,15 @@
 }
 
 @media (max-width: 768px) {
+  .tileBanner .flickity-viewport {
+    height: 150px !important;
+  }
   .tileBanner .carousel-cell {
-    height: 150px;
-    width: 66.66%;
+    height: 125px;
+    width: 45%;
   }
   .tileBanner .carousel-cell-image {
-    height: 149px;
+    height: 100%;
     width: 100%;
   }
   .tileBanner__show {

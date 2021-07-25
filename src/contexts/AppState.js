@@ -31,6 +31,7 @@ import {
   REMOVE_THIS_SONG_HAS_BEEN_ADD,
   CHANGE_MY_PROFILE_MY_SONGLIST_ID,
   CHANGE_SHOW_CREATE_LIST,
+  GET_CONFIGS,
 } from "./types";
 const AppState = (props) => {
   const initialState = {
@@ -81,10 +82,12 @@ const AppState = (props) => {
     userPlaylists: null,
     thisSongHasBeenAddedToRecentlyViwed: false,
     myProfilemySonglistId: null,
+    LimitListPlayNonLogin: 10,
   };
   useEffect(() => {
     getMenu();
     getAllPersons();
+    getConfig();
   }, []);
   const [state, dispatch] = useReducer(appReducer, initialState);
 
@@ -194,13 +197,15 @@ const AppState = (props) => {
       });
     }
   };
-  const getHome = async () => {
+  const getHome = async (slug = "home") => {
     // getMenu();
     dispatch({
       type: SET_LOADING,
     });
     try {
-      const res = await axios.instanceApi.get(`page/home`);
+      // const res = await axios.instanceApi.get(`page/test-page`);
+      const res = await axios.instanceApi.get(`page/${slug}`);
+
       // console.log(res.data.data);
       dispatch({
         type: GET_HOME,
@@ -827,6 +832,19 @@ const AppState = (props) => {
       payload: id,
     });
   };
+
+  const getConfig = async () => {
+    try {
+      const res = await axios.instanceApi.get("/configs/");
+      dispatch({
+        type: GET_CONFIGS,
+        payload: res.data,
+      });
+      // console.log(JSON.parse(res.data?.[0]?.value));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <AppContext.Provider
       value={{
@@ -868,6 +886,7 @@ const AppState = (props) => {
         homeMeta: state.homeMeta,
         menu: state.menu,
         block: state.block,
+        LimitListPlayNonLogin: state.LimitListPlayNonLogin,
         blockUrls: state.blockUrls,
         allPersons: state.allPersons,
         AllpersonsUrls: state.AllpersonsUrls,

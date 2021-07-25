@@ -120,6 +120,8 @@ const RowItemPage = () => {
         <title>
           {dataSongPage?.meta_title !== null
             ? dataSongPage?.meta_title
+            : dataSongPage?.title
+            ? dataSongPage?.title
             : dataSongPage?.media?.[0]?.name}
         </title>
         <meta
@@ -130,7 +132,14 @@ const RowItemPage = () => {
               : dataSongPage?.media?.[0]?.name
           }
         />
-        <meta name="description" content={dataSongPage?.meta_description} />
+        <meta
+          name="description"
+          content={
+            dataSongPage?.meta_description
+              ? dataSongPage?.meta_description
+              : dataSongPage?.description
+          }
+        />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={dataSongPage?.slug} />
         <meta
@@ -143,7 +152,11 @@ const RowItemPage = () => {
         />
         <meta
           property="og:description"
-          content={dataSongPage?.meta_description}
+          content={
+            dataSongPage?.meta_description
+              ? dataSongPage?.meta_description
+              : dataSongPage?.description
+          }
         />
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="http:app.7negare.ir/" />
@@ -157,7 +170,11 @@ const RowItemPage = () => {
         />
         <meta
           property="twitter:description"
-          content={dataSongPage?.meta_description}
+          content={
+            dataSongPage?.meta_description
+              ? dataSongPage?.meta_description
+              : dataSongPage?.description
+          }
         />
         {/* {dataSongPage['image'] && (
           <meta property='twitter:image' content={dataSongPage['image']} />
@@ -321,7 +338,10 @@ const RowItemPage = () => {
             </div>
             <div className="musicInfo__left text-light   justify-content-start align-items-center">
               <div className="musicInfo__name mt-5 mb-3 d-flex">
-                نام اثر : {dataSongPage?.title}
+                نام اثر :
+                {dataSongPage?.title
+                  ? dataSongPage?.title
+                  : dataSongPage?.media?.[0]?.name}
               </div>
               <div className="musicInfo__mode_singer">
                 <div className="musicInfo__singer mb-3 d-flex ml-5">
@@ -331,27 +351,36 @@ const RowItemPage = () => {
               </div>
 
               <div className=" mb-3 d-flex">
-                توضیحات : {dataSongPage?.description}
+                توضیحات :
+                {dataSongPage?.description
+                  ? dataSongPage?.description
+                  : dataSongPage?.meta_description}
               </div>
             </div>
           </div>
           <hr />
 
-          <div className="rowList  mt-5  pt-5 ">
-            <h3 className="text-light text-right pb-3 mr-4">
+          <div className="rowList  pt-5 ">
+            <h5 className="text-light text-right pb-3 mr-4">
               <span>پیشنهاداتی برای شما</span>
-            </h3>
+            </h5>
             <Flickity className="carousel  px-2 py-0" options={flickityOptions}>
               {recommender &&
                 recommender.map((item, i) => {
                   return (
                     <RowItem
+                      context={recommender}
                       key={item.id}
+                      postId={item.id}
+                      isRow={true}
                       logo={item.image}
                       media={item.media[0]}
                       person={item.person}
                       slug={item.slug}
-                      context={recommender}
+                      meta_description={item.meta_description}
+                      meta_title={item.meta_title}
+                      description={item.description}
+                      title={item.title}
                     />
                   );
                 })}
