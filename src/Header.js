@@ -1,4 +1,4 @@
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useRef, useState } from "react";
 import "./Header.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import appContext from "./contexts/appContext";
@@ -14,11 +14,58 @@ import {
 } from "@material-ui/icons";
 import authContext from "./auth/authContext";
 import Headroom from "react-headroom";
+import Button from "@material-ui/core/Button";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import Popper from "@material-ui/core/Popper";
+import MenuItem from "@material-ui/core/MenuItem";
+import MenuList from "@material-ui/core/MenuList";
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  PaperRoot: {
+    backgroundColor: "rgb(34, 35, 39)",
+    border: "1px solid white",
+  },
+  menuItemRoot: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  btnRoot: {
+    border: "1px solid white",
+    color: "white",
+    minWidth: "100px",
+  },
+}));
+
 const Header = () => {
+  const classes = useStyles();
+
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef(null);
+
   const { ChangeshowCenter, ChangeShowLeft, ChangeShowRight } =
     useContext(appContext);
   const { isAuth, user, logout } = useContext(authContext);
+  const handleToggle = () => {
+    setOpen(!open);
+  };
 
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  function handleListKeyDown(event) {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      setOpen(false);
+    }
+  }
   return (
     <Headroom>
       <nav className="header  navbar-expand-sm ">
@@ -70,7 +117,7 @@ const Header = () => {
             <div className="register__login__btn mr-auto ml-3">
               {user !== null ? (
                 <Fragment>
-                  <div className="dropdown">
+                  {/* <div className="dropdown">
                     <button
                       className="btn text-light user_btn "
                       type="button"
@@ -86,24 +133,79 @@ const Header = () => {
                       className="dropdown-menu"
                       aria-labelledby="dropdownMenuButton"
                     >
-                      {/* eslint-disable-next-line */}
                       <Link to="/myprofile" className="dropdown-item">
                         <span>پروفایل</span>
                         <PersonRounded className="" />
                       </Link>
-                      {/* eslint-disable-next-line */}
                       <a className="dropdown-item" onClick={() => logout()}>
                         <span> خروج از حساب</span>
                         <ExitToAppRounded className="" />
                       </a>
                     </div>
                   </div>
+                 */}
+                  <div>
+                    <Button
+                      classes={{ root: classes.btnRoot }}
+                      ref={anchorRef}
+                      aria-controls={open ? "menu-list-grow" : undefined}
+                      aria-haspopup="true"
+                      onClick={handleToggle}
+                    >
+                      {user?.first_name}
+                      <AccountCircleRounded />
+                    </Button>
+                    <Popper
+                      open={open}
+                      anchorEl={anchorRef.current}
+                      role={undefined}
+                      transition
+                      disablePortal
+                    >
+                      {({ TransitionProps }) => (
+                        <Grow {...TransitionProps}>
+                          <Paper classes={{ root: classes.PaperRoot }}>
+                            <ClickAwayListener onClickAway={handleClose}>
+                              <MenuList
+                                autoFocusItem={open}
+                                id="menu-list-grow"
+                                onKeyDown={handleListKeyDown}
+                              >
+                                <MenuItem onClick={handleClose}>
+                                  <Link
+                                    to="/myprofile"
+                                    className="header_dropdown_item"
+                                  >
+                                    <span>پروفایل</span>
+                                    <PersonRounded fontSize="small" />
+                                  </Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleClose}>
+                                  <div
+                                    className="header_dropdown_item"
+                                    onClick={() => logout()}
+                                  >
+                                    <span> خروج از حساب</span>
+                                    <ExitToAppRounded fontSize="small" />
+                                  </div>
+                                </MenuItem>
+                              </MenuList>
+                            </ClickAwayListener>
+                          </Paper>
+                        </Grow>
+                      )}
+                    </Popper>
+                  </div>
                 </Fragment>
               ) : (
-                <NavLink exact to="/login" className="d-flex text-light">
+                <NavLink
+                  exact
+                  to="/login"
+                  className="d-flex text-light header_login_btn"
+                >
                   ورود/ثبت نام
                   <span className="d-flex  justify-content-center align-self-center">
-                    <AccountCircleRounded />
+                    {/* <AccountCircleRounded /> */}
                   </span>
                 </NavLink>
               )}

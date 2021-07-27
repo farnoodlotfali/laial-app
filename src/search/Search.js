@@ -128,6 +128,7 @@ const Search = () => {
           >
             <div className="searchFields__option__searching">
               <input
+                autoFocus="true"
                 className="ml-2"
                 onChange={onchange}
                 name="searchValue"

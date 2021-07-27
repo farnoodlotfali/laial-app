@@ -44,9 +44,7 @@ const MyProfilemySonglist = ({
   };
 
   const handleClick = async () => {
-    // console.log(await getOnePlayList(id));
     changeMyProfilemySonglistId(id);
-    // setPlayList(await getOnePlayList(id), true);
   };
   return (
     <div

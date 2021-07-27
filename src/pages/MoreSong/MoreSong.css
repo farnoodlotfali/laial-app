@@ -1,6 +1,9 @@
 .moreSong {
   /* height: 100%; */
 }
+.moreSong__infiniteScroll__section {
+  min-height: 100vh;
+}
 .moreSong__items {
   padding: 0 10px 0 0;
   display: flex;

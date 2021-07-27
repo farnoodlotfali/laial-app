@@ -113,7 +113,7 @@ const RowItemPage = () => {
       [e.target.name]: e.target.value,
     });
   };
-  console.log(dataSongPage);
+  // console.log(dataSongPage);
   return (
     <Fragment>
       <Helmet>
@@ -364,7 +364,10 @@ const RowItemPage = () => {
             <h5 className="text-light text-right pb-3 mr-4">
               <span>پیشنهاداتی برای شما</span>
             </h5>
-            <Flickity className="carousel  px-2 py-0" options={flickityOptions}>
+            <Flickity
+              className={`carousel  px-2 py-0  ${showMusic && "mb-5"} `}
+              options={flickityOptions}
+            >
               {recommender &&
                 recommender.map((item, i) => {
                   return (

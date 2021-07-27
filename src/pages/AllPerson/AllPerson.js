@@ -78,27 +78,30 @@ const AllPerson = () => {
         height: next.list === null || next.list.length === 0 ? "100vh" : "",
       }}
     >
-      {next?.list && (
-        <InfiniteScroll
-          dataLength={next?.list?.length}
-          next={() => infiniteList()}
-          hasMore={next.hasMore}
-        >
-          {next.list &&
-            next.list?.map((item, i) => {
-              return (
-                <div key={item.id} className="allPerson__item">
-                  <PersonItem
-                    id={item.id}
-                    name={item.name}
-                    image={item.image}
-                    slug={item.slug}
-                  />
-                </div>
-              );
-            })}
-        </InfiniteScroll>
-      )}
+      <div className="allPerson__infiniteScroll__section">
+        {next?.list && (
+          <InfiniteScroll
+            dataLength={next?.list?.length}
+            next={() => infiniteList()}
+            hasMore={next.hasMore}
+          >
+            {next.list &&
+              next.list?.map((item, i) => {
+                return (
+                  <div key={item.id} className="allPerson__item">
+                    <PersonItem
+                      id={item.id}
+                      name={item.name}
+                      image={item.image}
+                      slug={item.slug}
+                    />
+                  </div>
+                );
+              })}
+          </InfiniteScroll>
+        )}
+      </div>
+
       <div
         className="loading-message"
         // ref={loadingRef}

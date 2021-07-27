@@ -1,5 +1,4 @@
 import Flickity from "react-flickity-component";
-import { Link } from "react-router-dom";
 import "./TileBanner.css";
 const TileBanner = ({ imgs }) => {
   const flickityOptions = {
@@ -28,7 +27,7 @@ const TileBanner = ({ imgs }) => {
                 <span></span>
                 <span></span>
                 <span></span>
-                <Link to={`${imgs.url}`}>نمایش بیشتر</Link>
+                <a href={`${img.url}`}>نمایش </a>
               </div>
             )}
 

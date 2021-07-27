@@ -70,6 +70,7 @@ const Register = (props) => {
           backgroundPosition: "center",
           backgroundSize: "cover",
           objectFit: "contain",
+          minHeight: "100vh",
           backgroundRepeat: "no-repeat",
         }}
       >

@@ -3,10 +3,10 @@
   padding-top: 40px;
   /* height: 100%; */
 }
-
-.allPerson .infinite-scroll-component__outerdiv {
-  /* min-height: 100vh !important; */
+.allPerson__infiniteScroll__section {
+  min-height: 100vh;
 }
+
 .allPerson .infinite-scroll-component {
   /* padding: 0 10px 0 0; */
   display: flex;

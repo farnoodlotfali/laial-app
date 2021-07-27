@@ -47,7 +47,7 @@ const RowItem = ({
   } = useContext(playerContext);
 
   const { changeShowLoginModal, checkIfForce, user } = useContext(authContext);
-  // console.log(media?.name);
+  // console.log(title);
   const playMusicAndShowMusicBar = async () => {
     // نشان دادن موزیک و پخش موزیک
 
@@ -67,7 +67,7 @@ const RowItem = ({
           media?.telegram_id,
           media?.id,
           media?.duration,
-          media?.name,
+          title ? title : media?.name,
           person?.[0]?.name,
           logo?.full_image_url
             ? logo?.full_image_url
@@ -101,15 +101,6 @@ const RowItem = ({
             console.log(error);
           }
         }
-
-        // const songPhotoUrl = logo?.full_image_url
-        //   ? logo?.full_image_url
-        //   : media?.image !== null
-        //   ? media?.image
-        //   : person?.[0]?.image.full_image_url;
-        // const MusicPhotoIcon = document.getElementById("musicPhoto");
-        // songPhotoUrl !== null && (MusicPhotoIcon.href = songPhotoUrl);
-        // console.log(MusicPhotoIcon.href);
       }
     }
   };
@@ -132,7 +123,7 @@ const RowItem = ({
     changeHomeMeta(sendTitle, sendDescription);
   };
   return (
-    <div className="carousel-cellRowItem rowItem ">
+    <div className="carousel-cellRowItem rowItem mb-2">
       {isRow && media?.id === songId && (
         <>
           <span></span>
@@ -174,8 +165,8 @@ const RowItem = ({
         {/* mobile ratio  */}
         {loading && media?.id === songId ? (
           <div className="rowItem__playing">
-            <SpinnerLoading />
-            <div className="prepareSong">در حال آماده سازی</div>
+            {/* <SpinnerLoading />
+            <div className="prepareSong">در حال آماده سازی</div> */}
           </div>
         ) : playing && media?.id === songId ? (
           <div className=" moblie_play" onClick={() => playAndPauseMusic()}>
@@ -188,8 +179,9 @@ const RowItem = ({
         )}
 
         {/* web ratio  */}
+
         {loading && media?.id === songId ? (
-          <div className="play__music___spinner">
+          <div className="">
             <SpinnerLoading />
             <div className="prepareSong">در حال آماده سازی</div>
           </div>
@@ -200,7 +192,6 @@ const RowItem = ({
         ) : (
           <div className=" play__music">
             <PlaySvg playMusicAndShowMusicBar={playMusicAndShowMusicBar} />
-            {/* <SpinnerLoading /> */}
           </div>
         )}
         <Badge className="badge bg-light">{/* شور */}</Badge>

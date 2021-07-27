@@ -77,7 +77,7 @@ const Center = () => {
     if (userPlaylists !== null) {
       do {
         i++;
-        name = "myList " + i;
+        name = "safine " + i;
         // eslint-disable-next-line
       } while (userPlaylists.findIndex((list) => list.name === name) !== -1);
     } else name = "myList 0";

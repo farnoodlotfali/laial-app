@@ -6,6 +6,7 @@
   margin-left: 5px;
   /* min-width: 240px; */
   transition: transform 450ms;
+  transform: scale(1);
 }
 .carousel-cellRowItem:hover {
   cursor: context-menu;
@@ -45,7 +46,7 @@
 }
 .steady__rowItem__title {
   display: block;
-  padding: 0 5px;
+  padding: 2px 5px;
   overflow: hidden;
   direction: rtl;
   font-size: 13px;
@@ -167,7 +168,7 @@
 
 .play__music .MuiSvgIcon-root {
   color: white;
-  font-size: 120px;
+  font-size: 110px;
   opacity: 0.65;
 }
 .play__music .MuiSvgIcon-root path {
@@ -333,7 +334,7 @@
     transform: translate(-50%, -50%);
   }
   .prepareSong {
-    bottom: -6px;
+    bottom: 25px;
     font-size: 7px;
   }
 }

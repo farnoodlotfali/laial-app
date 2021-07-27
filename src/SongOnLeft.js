@@ -49,7 +49,6 @@ const SongOnLeft = ({ item, playlist, number, zeroPad }) => {
       }
     }
   };
-
   return (
     <div className="songOnLeft">
       <div className="songOnLeft__song d-flex    justify-content-between">
@@ -58,7 +57,7 @@ const SongOnLeft = ({ item, playlist, number, zeroPad }) => {
           <div className="song__image" onClick={() => paly()}>
             <img
               src={
-                item?.image?.full_image_url !== null
+                item?.image?.full_image_url
                   ? item?.image?.full_image_url
                   : item?.media?.[0]?.image !== null
                   ? item?.media?.[0]?.image
@@ -75,31 +74,12 @@ const SongOnLeft = ({ item, playlist, number, zeroPad }) => {
                 style={{ position: "absolute", left: "0", opacity: "0.4" }}
               />
             )}
-            {/* {item.media[0]?.id === songId ? (
-              // <img
-              //   src={barOnPlayingMusic}
-              //   alt=""
-              //   style={{ position: "absolute", left: "0", opacity: "0.4" }}
-              // />
-              // <div className="overlay">
-              //   <div className="now playing" id="music">
-              //     <span className="bar n1">A</span>
-              //     <span className="bar n2">B</span>
-              //     <span className="bar n3">G</span>
-              //     <span className="bar n4">H</span>
-              //   </div>
-              // </div>
-            )} */}
           </div>
           <div className="song__info mr-3 align-self-center ">
             <div className="song__title">
-              {/* {isFileItem ? item.name : item.media[0].name} */}
               {item?.title ? item?.title : item.media?.[0]?.name}
             </div>
-            <div className="song__person ">
-              {/* {isFileItem ? item?.person?.name : item.person[0].name} */}
-              {item.person?.[0]?.name}
-            </div>
+            <div className="song__person ">{item.person?.[0]?.name}</div>
           </div>
           <div className="song__center d-flex align-self-center"></div>
         </div>

@@ -43,11 +43,15 @@ const MyProfile = () => {
     if (user === null) {
       hisotry.push("/");
     }
-    changeMyProfilemySonglistId(null);
 
-    // console.log(listShow);
     // eslint-disable-next-line
   }, [user, listShow]);
+
+  useEffect(() => {
+    changeMyProfilemySonglistId(null);
+    // eslint-disable-next-line
+  }, []);
+
   const {
     userPlaylists,
     getLikedSongsPlaylist,
@@ -398,11 +402,6 @@ const MyProfile = () => {
                     hasMore={next.hasMore}
                     loader={<LoadIcon />}
                     height={445}
-                    // endMessage={
-                    //   <p style={{ textAlign: 'center' }}>
-                    //     <b>Yay! You have seen it all</b>
-                    //   </p>
-                    // }
                   >
                     {listShow.map((item, i) => (
                       <div
@@ -470,16 +469,6 @@ const MyProfile = () => {
             {/* web ratio */}
             {userPlaylists && (
               <div className="myListsBtn">
-                {/* <div className='myListsOption'>
-            <span> لیست های ساختگی من</span>
-          </div> */}
-                {/* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-          ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
                 <div
                   className="myListsOption"
                   onClick={() => likedSongsHandle()}
@@ -517,36 +506,17 @@ const MyProfile = () => {
                 ) : listShow === null || listShow.length === 0 ? (
                   <div className="none  text-light">لیست خالی است</div>
                 ) : (
-                  // <InfiniteScroll
-                  //   dataLength={state.items.length}
-                  //   next={fetchMoreData}
-                  //   hasMore={true}
-                  //   loader={<LoadIcon />}
-                  //   height={250}
-                  // >
-                  //   {state.items.map((i, index) => (
-                  //     <div style={style} key={index}>
-                  //       div - #{index}
-                  //     </div>
-                  //   ))}
-                  // </InfiniteScroll>
-
                   <InfiniteScroll
                     dataLength={listShow.length}
                     next={() => infiniteList()}
                     hasMore={next.hasMore}
                     loader={<LoadIcon />}
                     height={435}
-                    // endMessage={
-                    //   <p style={{ textAlign: 'center' }}>
-                    //     <b>Yay! You have seen it all</b>
-                    //   </p>
-                    // }
                   >
                     {listShow.map((item, i) => (
                       <MyProfileSong
                         item={item}
-                        key={i}
+                        key={item.post.id}
                         zeroPad={zeroPad}
                         truncate={truncate}
                         deleteBtn={deleteBtn}
@@ -567,7 +537,6 @@ const MyProfile = () => {
                       className="playListBtn"
                       onClick={() => {
                         if (listShow) {
-                          // setPlayList(listShow, true);
                           ChangeShowLeft(true);
                           playThisListFromMyProflie(listShow);
                         }

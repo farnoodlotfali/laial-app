@@ -10,11 +10,43 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "./axios/axios";
 import LoadingIcon from "./spinner/LoadingIcon";
 import { Helmet } from "react-helmet";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import { makeStyles } from "@material-ui/core/styles";
+import { ExpandLess, ExpandMore } from "@material-ui/icons";
+
+const useStyles = makeStyles((theme) => ({
+  summaryRoot: {
+    width: "100%",
+    display: "flex",
+    background: "black",
+    color: "white",
+    borderTopLeftRadius: "10px",
+    borderTopRightRadius: "10px",
+    borderBottom: "1px solid lightgrey",
+  },
+  summaryContent: {
+    justifyContent: "space-between",
+  },
+  detailsRoot: {
+    background: "black",
+    borderBottomLeftRadius: "10px",
+    borderBottomRightRadius: "10px",
+    color: "white",
+    textAlign: "justify",
+    direction: "rtl",
+    fontSize: "12px",
+    lineHeight: "30px",
+  },
+}));
+
 const Person = () => {
+  const classes = useStyles();
   const { personList, getPerson, personkSlug, loading, personUrls } =
     useContext(appContext);
   let params = useParams();
-
+  const [readMore, setReadMore] = useState(false);
   const { user } = useContext(authContext);
   const [next, setNext] = useState({
     next: "",
@@ -71,7 +103,6 @@ const Person = () => {
       }
     }, 1200);
   };
-  // console.log(next.next);
   return loading ? (
     <Spinner />
   ) : (
@@ -133,10 +164,65 @@ const Person = () => {
         )} */}
       </Helmet>
       <div className="person">
-        <div className="d-flex person_information_img  p-4 m-4 ">
-          <div className="person_information_img_information text-white mr-4">
+        <div className=" m-5 ">
+          <Accordion onChange={(e, expanded) => setReadMore(expanded)}>
+            <AccordionSummary
+              classes={{
+                root: classes.summaryRoot,
+                content: classes.summaryContent,
+              }}
+              //  expandIcon={<span>hi</span>}
+            >
+              {readMore ? (
+                <div className="">
+                  <span className="person_expand">نمایش کمتر</span>
+                  <ExpandLess fontSize="small" />
+                </div>
+              ) : (
+                <div className="">
+                  <span className="person_expand">نمایش بیشتر</span>
+                  <ExpandMore fontSize="small" />
+                </div>
+              )}
+
+              <span>{personList?.[0]?.person?.[0]?.name}</span>
+            </AccordionSummary>
+
+            <AccordionDetails classes={{ root: classes.detailsRoot }}>
+              <div className="">
+                <div className="person_information_img_information">
+                  <img
+                    src={
+                      personList?.[0]?.media[0]?.image !== null
+                        ? personList?.[0]?.media[0]?.image
+                        : personList?.[0]?.person[0]?.image.full_image_url !==
+                          null
+                        ? personList?.[0]?.person[0]?.image.full_image_url
+                        : defualtPhoto
+                    }
+                    alt="logo"
+                  />
+                </div>
+              </div>
+              <div>{personList?.[0]?.person?.[0]?.description}</div>
+            </AccordionDetails>
+          </Accordion>
+
+          {/* <div className="person_information_img_information text-white mr-4 text-justify dir-rtl">
             <h5>{personList?.[0]?.person?.[0]?.name}</h5>
-            <p>{personList?.[0]?.person?.[0]?.description}</p>
+            <p
+              className={`person_information_img_information_content ${
+                !readMore ? "collapsed" : "expanded"
+              }`}
+            >
+              {personList?.[0]?.person?.[0]?.description}
+            </p>
+            <span
+              className="person_information_img_information_content_btn"
+              onClick={() => setReadMore(!readMore)}
+            >
+              {!readMore ? "نمایش بیشتر" : "نمایش کمتر"}
+            </span>
           </div>
           <div className="">
             <div className="person_information_img__img ">
@@ -152,6 +238,7 @@ const Person = () => {
               />
             </div>
           </div>
+       */}
         </div>
 
         {/* <div className="person__infoAndImg py-4 d-flex justify-content-center align-items-center">
@@ -175,44 +262,38 @@ const Person = () => {
           </div>
         </div> */}
 
-        {next?.list && (
-          <InfiniteScroll
-            dataLength={next?.list?.length}
-            next={() => infiniteList()}
-            hasMore={next.hasMore}
-            // loader={<h4>Loading...</h4>}
-            // endMessage={
-            //   <p style={{ textAlign: 'center' }}>
-            //     <b>Yay! You have seen it all</b>
-            //   </p>
-            // }
-          >
-            {next.list &&
-              next.list?.map((item, i) => {
-                console.log(item);
-                return (
-                  <RowItem
-                    key={item.id}
-                    postId={item.id}
-                    isRow={true}
-                    logo={item.image}
-                    media={item.media[0]}
-                    person={item.person}
-                    slug={item.slug}
-                    context={next?.list}
-                    meta_description={item.meta_description}
-                    meta_title={item.meta_title}
-                    description={item.description}
-                    title={item.title}
-                  />
-                );
-              })}
-          </InfiniteScroll>
-        )}
+        <div className="person__infiniteScroll__section">
+          {next?.list && (
+            <InfiniteScroll
+              dataLength={next?.list?.length}
+              next={infiniteList}
+              hasMore={next.hasMore}
+            >
+              {next.list &&
+                next.list?.map((item, i) => {
+                  return (
+                    <RowItem
+                      key={item.id}
+                      postId={item.id}
+                      isRow={true}
+                      logo={item.image}
+                      media={item.media[0]}
+                      person={item.person}
+                      slug={item.slug}
+                      context={next?.list}
+                      meta_description={item.meta_description}
+                      meta_title={item.meta_title}
+                      description={item.description}
+                      title={item.title}
+                    />
+                  );
+                })}
+            </InfiniteScroll>
+          )}
+        </div>
 
         <div
           className="loading-message"
-          // ref={loadingRef}
           style={{
             opacity: next.loading ? "1" : "0",
             transform: next.loading && "translate(-50%, -150%)",
@@ -221,8 +302,6 @@ const Person = () => {
           <LoadingIcon color="#fff" />
           <span>در حال دریافت</span>
         </div>
-
-        {/* <h4 className='text-white mb-5 mt-3'>{next.loaderMsg}</h4> */}
       </div>
     </>
   );

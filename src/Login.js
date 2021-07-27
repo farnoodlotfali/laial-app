@@ -85,6 +85,7 @@ const Login = (props) => {
           backgroundSize: "cover",
           objectFit: "contain",
           backgroundRepeat: "no-repeat",
+          minHeight: "100vh",
         }}
       >
         <div className="color"></div>

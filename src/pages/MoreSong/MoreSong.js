@@ -77,38 +77,41 @@ const MoreSong = () => {
         <h3> {BlockListName}</h3>
       </div>
       <div className="moreSong__items mt-5">
-        {next?.list && (
-          <InfiniteScroll
-            dataLength={next?.list?.length}
-            next={() => infiniteList()}
-            hasMore={next.hasMore}
-            // loader={<h4>Loading...</h4>}
-            // height={'100vh'}
-            // endMessage={
-            //   <p style={{ textAlign: 'center' }}>
-            //     <b>Yay! You have seen it all</b>
-            //   </p>
-            // }
-          >
-            {next?.list !== null &&
-              next?.list.map((item) => (
-                <RowItem
-                  key={item.id}
-                  postId={item.id}
-                  isRow={true}
-                  logo={item.image}
-                  media={item.media[0]}
-                  person={item.person}
-                  slug={item.slug}
-                  context={next?.list}
-                  meta_description={item.meta_description}
-                  meta_title={item.meta_title}
-                  description={item.description}
-                  title={item.title}
-                />
-              ))}
-          </InfiniteScroll>
-        )}
+        <div className="moreSong__infiniteScroll__section">
+          {next?.list && (
+            <InfiniteScroll
+              dataLength={next?.list?.length}
+              next={() => infiniteList()}
+              hasMore={next.hasMore}
+              // loader={<h4>Loading...</h4>}
+              // height={'100vh'}
+              // endMessage={
+              //   <p style={{ textAlign: 'center' }}>
+              //     <b>Yay! You have seen it all</b>
+              //   </p>
+              // }
+            >
+              {next?.list !== null &&
+                next?.list.map((item) => (
+                  <RowItem
+                    key={item.id}
+                    postId={item.id}
+                    isRow={true}
+                    logo={item.image}
+                    media={item.media[0]}
+                    person={item.person}
+                    slug={item.slug}
+                    context={next?.list}
+                    meta_description={item.meta_description}
+                    meta_title={item.meta_title}
+                    description={item.description}
+                    title={item.title}
+                  />
+                ))}
+            </InfiniteScroll>
+          )}
+        </div>
+
         <div
           className="loading-message"
           // ref={loadingRef}

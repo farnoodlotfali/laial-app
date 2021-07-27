@@ -86,20 +86,30 @@
   opacity: 1;
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
-.register__login__btn .dropdown-item {
+.register__login__btn .header_dropdown_item {
   display: flex;
-  font-size: 16px;
   justify-content: space-between;
-  padding: 5px 10px 2px 5px;
   color: white;
+  font-size: 12px;
+  width: 100%;
+  align-items: center;
 }
 
 .dropdown {
   border: 1px solid white;
   border-radius: 14px;
 }
+.header_login_btn {
+  border: 1px solid white;
+  font-size: 14px;
+  padding: 5px;
+  border-radius: 5px;
+}
+.header_login_btn:hover {
+  background-color: rgba(253, 253, 253, 0.171);
+}
 
-.register__login__btn .dropdown-item:hover {
+.register__login__btn .header_dropdown_item:hover {
   background: rgb(49, 50, 54);
   color: white;
   cursor: pointer;

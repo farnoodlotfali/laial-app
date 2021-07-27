@@ -7,18 +7,26 @@ import appContext from "./contexts/appContext";
 import Spinner from "./spinner/Spinner";
 import authContext from "./auth/authContext";
 import { Helmet } from "react-helmet";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 const Home = () => {
   const { loading, getHome, home, homeMeta, showMusic } =
     useContext(appContext);
   const { user } = useContext(authContext);
 
   const { slug } = useParams();
+  const history = useHistory();
 
   useEffect(() => {
-    // console.log(slug);
+    // console.log(home);
     if (home === null) {
       getHome(slug);
+    }
+    if (home === undefined) {
+      history.push("/not_found");
+      // setTimeout(() => {
+      //   history.push("/");
+      //   getHome();
+      // }, 3000);
     }
     // console.log(homeMeta);
     // eslint-disable-next-line
