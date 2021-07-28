@@ -88,15 +88,15 @@ const Login = (props) => {
           minHeight: "100vh",
         }}
       >
+        {/* <div className="color"></div>
         <div className="color"></div>
-        <div className="color"></div>
-        <div className="color"></div>
+        <div className="color"></div> */}
         <div className="box">
-          <div className="square" style={{ i: "0" }}></div>
+          {/* <div className="square" style={{ i: "0" }}></div>
           <div className="square" style={{ i: "1" }}></div>
           <div className="square" style={{ i: "2" }}></div>
           <div className="square" style={{ i: "3" }}></div>
-          <div className="square" style={{ i: "4" }}></div>
+          <div className="square" style={{ i: "4" }}></div> */}
           <div className="login__container">
             <div className="form">
               <h2>ورود</h2>

@@ -175,7 +175,7 @@ const Person = () => {
             >
               {readMore ? (
                 <div className="">
-                  <span className="person_expand">نمایش کمتر</span>
+                  <span className="person_expand">بستن </span>
                   <ExpandLess fontSize="small" />
                 </div>
               ) : (

@@ -1,6 +1,5 @@
 import { Fragment, useContext, useRef, useState } from "react";
 import "./Header.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import appContext from "./contexts/appContext";
 import { Link, NavLink } from "react-router-dom";
 import {

@@ -3,6 +3,8 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import "swiper/swiper-bundle.css";
 import "swiper/swiper-bundle.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import Header from "./Header";
 import AppState from "./contexts/AppState";
 import Left from "./Left";
