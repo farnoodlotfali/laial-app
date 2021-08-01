@@ -43,7 +43,7 @@ export default (state, action) => {
           slug: action.payload?.slug,
           id: action.payload?.id,
         },
-        loading: false,
+        pageLoading: false,
       };
     case CHANGE_HOME_META:
       return {
@@ -63,7 +63,7 @@ export default (state, action) => {
     case SET_LOADING:
       return {
         ...state,
-        loading: true,
+        pageLoading: true,
       };
     case GET_BLOCK:
       // console.log(action.payload);
@@ -73,7 +73,7 @@ export default (state, action) => {
         BlockListName: action.payload.BlockListName,
         blockSlug: action.payload.blockSlug,
         blockUrls: action.payload.blockUrls,
-        loading: false,
+        pageLoading: false,
       };
 
     case GET_PERSON:
@@ -82,7 +82,7 @@ export default (state, action) => {
         personList: action.payload.personList,
         personUrls: action.payload.personUrls,
         personkSlug: action.payload.personkSlug,
-        loading: false,
+        pageLoading: false,
       };
     case GET_ALL_PERSONS:
       return {
@@ -95,7 +95,7 @@ export default (state, action) => {
         ...state,
         dataSongPage: action.payload,
         like: action.payload.likes,
-        loading: false,
+        pageLoading: false,
 
         // dataSongPageMeta: {
         //   meta_description: action.payload.meta_description,
@@ -110,7 +110,7 @@ export default (state, action) => {
       return {
         ...state,
         downloadUrl: action.payload,
-        loading: false,
+        pageLoading: false,
       };
     case GET_CONFIGS:
       return {

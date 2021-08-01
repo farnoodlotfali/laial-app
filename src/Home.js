@@ -9,7 +9,7 @@ import authContext from "./auth/authContext";
 import { Helmet } from "react-helmet";
 import { useHistory, useParams } from "react-router";
 const Home = () => {
-  const { loading, getHome, home, homeMeta, showMusic } =
+  const { pageLoading, getHome, home, homeMeta, showMusic } =
     useContext(appContext);
   const { user } = useContext(authContext);
 
@@ -66,7 +66,7 @@ const Home = () => {
       </Helmet>
 
       <Fragment>
-        {loading ? (
+        {pageLoading ? (
           <Spinner />
         ) : (
           home && (

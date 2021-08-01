@@ -9,7 +9,7 @@
   /* height: 100%; */
   background: linear-gradient(to bottom, rgb(34, 35, 39), black);
 }
-
+/* 
 .register .color {
   position: absolute;
   filter: blur(150px);
@@ -99,7 +99,7 @@
   width: 60px;
   height: 60px;
   animation-delay: -5s;
-}
+} */
 
 .register__container {
   position: relative;
@@ -108,7 +108,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(5px);
+  /* backdrop-filter: blur(5px); */
+  background-color: rgba(2, 2, 2, 0.788);
+
   box-shadow: 0 25px 45px rgba(5, 4, 10, 0.2);
   border: 1px solid gray;
   border-right: 1px solid rgba(255, 255, 255, 0.3);
@@ -161,7 +163,7 @@
 .register .form .inputBox input::placeholder {
   /* color: rgba(255, 255, 255, 0.438); if background is black*/
   text-align: right;
-  color: black;
+  color: rgb(172, 172, 172);
 }
 
 .register .form .inputBox input[type="submit"] {

@@ -337,4 +337,7 @@
     bottom: 25px;
     font-size: 7px;
   }
+  .scroll__rowItem__title {
+    font-size: 11px;
+  }
 }

@@ -231,7 +231,7 @@
   overflow: hidden;
   width: 140px;
   height: 100%;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
 }
 .phoneMusicBar__title a {
@@ -254,7 +254,7 @@
   white-space: nowrap;
 }
 .phoneMusicBar__singer {
-  font-size: 12px;
+  font-size: 9px;
   font-weight: 500;
 }
 .phoneMusicBar__slide .MuiDrawer-paperAnchorBottom,

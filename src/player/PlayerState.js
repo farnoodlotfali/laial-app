@@ -420,14 +420,15 @@ const Playerstate = (props) => {
                 : chosen?.media?.name;
 
               changeHomeMeta(sendTitle, sendDescription);
-
               setIds(
                 chosen.media[0]?.telegram_id,
                 chosen.media[0]?.id,
                 chosen.media[0]?.duration,
                 chosen.media[0]?.name,
                 chosen.person?.[0]?.name,
-                chosen?.media?.[0]?.image !== null
+                chosen?.image?.full_image_url
+                  ? chosen?.image?.full_image_url
+                  : chosen?.media?.[0]?.image !== null
                   ? chosen?.media?.[0]?.image
                   : chosen?.person?.[0]?.image.full_image_url,
                 chosen.id,
@@ -508,7 +509,9 @@ const Playerstate = (props) => {
               chosen.media[0]?.duration,
               chosen.media[0]?.name,
               chosen.person?.[0]?.name,
-              chosen?.media?.[0]?.image !== null
+              chosen?.image?.full_image_url
+                ? chosen?.image?.full_image_url
+                : chosen?.media?.[0]?.image !== null
                 ? chosen?.media?.[0]?.image
                 : chosen?.person?.[0]?.image.full_image_url,
               chosen.id,

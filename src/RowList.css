@@ -59,7 +59,7 @@
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
-*/ .rowList__showMore {
+.rowList__showMore {
   align-self: center;
 }
 
@@ -92,11 +92,14 @@
   }
 
   .rowList .flickity-viewport {
-    height: 190.8px !important;
+    height: 195.8px !important;
   }
 
   .rowList__title .rowList__moreSong {
     font-size: 13px;
+  }
+  .rowList__showMore {
+    font-size: 10px;
   }
   .rowList__showMore__icon {
     font-size: 15px !important;

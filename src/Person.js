@@ -38,12 +38,15 @@ const useStyles = makeStyles((theme) => ({
     direction: "rtl",
     fontSize: "12px",
     lineHeight: "30px",
+    "@media (max-width: 768px)": {
+      display: "grid",
+    },
   },
 }));
 
 const Person = () => {
   const classes = useStyles();
-  const { personList, getPerson, personkSlug, loading, personUrls } =
+  const { personList, getPerson, personkSlug, pageLoading, personUrls } =
     useContext(appContext);
   let params = useParams();
   const [readMore, setReadMore] = useState(false);
@@ -75,7 +78,7 @@ const Person = () => {
     // loadUser();
 
     // eslint-disable-next-line
-  }, [params.slug, user, personUrls, loading, personList]);
+  }, [params.slug, user, personUrls, pageLoading, personList]);
 
   const infiniteList = async () => {
     setNext({
@@ -103,7 +106,7 @@ const Person = () => {
       }
     }, 1200);
   };
-  return loading ? (
+  return pageLoading ? (
     <Spinner />
   ) : (
     <>
@@ -189,7 +192,7 @@ const Person = () => {
             </AccordionSummary>
 
             <AccordionDetails classes={{ root: classes.detailsRoot }}>
-              <div className="">
+              <div className="d-flex justify-content-center">
                 <div className="person_information_img_information">
                   <img
                     src={

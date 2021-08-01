@@ -10,7 +10,7 @@ import axios from "../../axios/axios";
 import LoadingIcon from "../../spinner/LoadingIcon";
 
 const MoreSong = () => {
-  const { BlockListName, loading, getBlock, block, blockSlug, blockUrls } =
+  const { BlockListName, pageLoading, getBlock, block, blockSlug, blockUrls } =
     useContext(appContext);
   const [next, setNext] = useState({
     next: "",
@@ -41,7 +41,7 @@ const MoreSong = () => {
 
     // loadUser();
     // eslint-disable-next-line
-  }, [params.slug, blockUrls, loading, block]);
+  }, [params.slug, blockUrls, pageLoading, block]);
 
   const infiniteList = async () => {
     setNext({
@@ -69,7 +69,7 @@ const MoreSong = () => {
     }, 1200);
   };
 
-  return loading ? (
+  return pageLoading ? (
     <Spinner />
   ) : (
     <div className="moreSong pt-5">

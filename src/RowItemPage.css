@@ -124,6 +124,13 @@
 .musicInfo__image_section {
   height: 200px;
 }
+
+.rowItemPage_play__laoding_spinner {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  bottom: 80%;
+}
 @media (max-width: 768px) {
   .rowItemPage {
     height: 90vh;
@@ -152,5 +159,9 @@
   } */
   .musicInfo__mode_singer {
     display: grid;
+  }
+  .rowItemPage_play__laoding_spinner {
+    width: 50%;
+    right: 25%;
   }
 }

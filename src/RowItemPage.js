@@ -2,6 +2,7 @@ import { IconButton, Tooltip } from "@material-ui/core";
 import {
   Favorite,
   GetAppRounded,
+  Pause,
   PlaylistAdd,
   Visibility,
 } from "@material-ui/icons";
@@ -21,6 +22,7 @@ import defualtPhoto from "./assets/defualtPhoto.jpeg";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import PlaySvg from "./svgs/PlaySvg";
+import SpinnerLoading from "./spinner/SpinnerLoading";
 
 const RowItemPage = () => {
   const [show, setShow] = useState(false);
@@ -43,7 +45,7 @@ const RowItemPage = () => {
     getSongPage,
     dataSongPage,
     viewPage,
-    loading,
+    pageLoading,
     downloadUrl,
     viewsPage,
     like,
@@ -54,7 +56,16 @@ const RowItemPage = () => {
     addToLikedSongPlaylist,
     addMusicToRecentlyViewed,
   } = useContext(AppContext);
-  const { setUrl, playMusic, setIds } = useContext(playerContext);
+  const {
+    setUrl,
+    playMusic,
+    setIds,
+    playing,
+    loading,
+    songId,
+    playAndPauseMusic,
+  } = useContext(playerContext);
+
   const { error, login, loadUser, user, isAuth, checkIfForce } =
     useContext(authContext);
 
@@ -68,44 +79,49 @@ const RowItemPage = () => {
     // گرفته میشود و در حال حاضر کامنت است  getSongPage  ادرس دانلود اهنگ در
     // eslint-disable-next-line
   }, [params.slug, user]);
-
   // نشان دادن موزیک و پخش موزیک
   const playMusicAndShowMusicBar = async () => {
-    setIds(
-      dataSongPage?.media?.[0]?.telegram_id,
-      dataSongPage?.media?.[0]?.id,
-      dataSongPage?.media?.[0]?.duration,
-      dataSongPage?.media?.[0]?.name,
-      dataSongPage?.person?.[0]?.name,
-      dataSongPage?.image?.full_image_url
-        ? dataSongPage?.image?.full_image_url
-        : dataSongPage?.media?.[0]?.image !== null
-        ? dataSongPage?.media?.[0]?.image
-        : dataSongPage?.person?.[0]?.image.full_image_url,
-      dataSongPage?.id
-    );
-    if (dataSongPage?.media?.[0]?.path) {
-      setUrl(dataSongPage?.media?.[0]?.path, recommender);
-      if (!showMusic) {
-        ChangeShowMusic();
-      }
-      playMusic();
+    if (dataSongPage?.media?.[0]?.id === songId) {
+      playAndPauseMusic();
     } else {
-      try {
-        const res = await axios.downloader.get(
-          `/${dataSongPage?.media?.[0]?.telegram_id}`
-        );
-        // console.log(res.data.download_link);recommender
-        setUrl(res.data.download_link, recommender);
+      setIds(
+        dataSongPage?.media?.[0]?.telegram_id,
+        dataSongPage?.media?.[0]?.id,
+        dataSongPage?.media?.[0]?.duration,
+        dataSongPage?.title
+          ? dataSongPage?.title
+          : dataSongPage?.media?.[0]?.name,
+        dataSongPage?.person?.[0]?.name,
+        dataSongPage?.image?.full_image_url
+          ? dataSongPage?.image?.full_image_url
+          : dataSongPage?.media?.[0]?.image !== null
+          ? dataSongPage?.media?.[0]?.image
+          : dataSongPage?.person?.[0]?.image.full_image_url,
+        dataSongPage?.id
+      );
+      if (dataSongPage?.media?.[0]?.path) {
+        setUrl(dataSongPage?.media?.[0]?.path, recommender);
         if (!showMusic) {
           ChangeShowMusic();
         }
         playMusic();
-      } catch (error) {
-        console.log(error);
+      } else {
+        try {
+          const res = await axios.downloader.get(
+            `/${dataSongPage?.media?.[0]?.telegram_id}`
+          );
+          // console.log(res.data.download_link);recommender
+          setUrl(res.data.download_link, recommender);
+          if (!showMusic) {
+            ChangeShowMusic();
+          }
+          playMusic();
+        } catch (error) {
+          console.log(error);
+        }
       }
+      user !== null && addMusicToRecentlyViewed(1, dataSongPage?.id);
     }
-    user !== null && addMusicToRecentlyViewed(1, dataSongPage?.id);
   };
   const onchange = (e) => {
     setUserInfo({
@@ -113,9 +129,10 @@ const RowItemPage = () => {
       [e.target.name]: e.target.value,
     });
   };
-  // console.log(dataSongPage);
+  // console.log(songId === dataSongPage?.media?.[0]?.id);
   return (
     <Fragment>
+      {/* {!playing && ( */}
       <Helmet>
         <title>
           {dataSongPage?.meta_title !== null
@@ -180,8 +197,9 @@ const RowItemPage = () => {
           <meta property='twitter:image' content={dataSongPage['image']} />
         )} */}
       </Helmet>
+      {/* // )} */}
 
-      {loading ? (
+      {pageLoading ? (
         <Spinner />
       ) : (
         <div className="rowItemPage py-4  ">
@@ -202,11 +220,24 @@ const RowItemPage = () => {
                   }
                   alt="logo"
                 />
-                <div className=" rowItemPage_play__music">
-                  <PlaySvg
-                    playMusicAndShowMusicBar={playMusicAndShowMusicBar}
-                  />
-                </div>
+                {loading && songId === dataSongPage?.media?.[0]?.id ? (
+                  <div className="rowItemPage_play__laoding_spinner">
+                    <SpinnerLoading />
+                  </div>
+                ) : playing && songId === dataSongPage?.media?.[0]?.id ? (
+                  <div
+                    className=" rowItemPage_play__music"
+                    onClick={() => playAndPauseMusic()}
+                  >
+                    <Pause />
+                  </div>
+                ) : (
+                  <div className=" rowItemPage_play__music">
+                    <PlaySvg
+                      playMusicAndShowMusicBar={playMusicAndShowMusicBar}
+                    />
+                  </div>
+                )}
               </div>
 
               <div className="actions d-flex justify-content-around mt-4">
@@ -337,7 +368,7 @@ const RowItemPage = () => {
               </div>
             </div>
             <div className="musicInfo__left text-light   justify-content-start align-items-center">
-              <div className="musicInfo__name mt-5 mb-3 d-flex">
+              <div className="musicInfo__name mt-5 mb-3 d-flex  ">
                 نام اثر :
                 {dataSongPage?.title
                   ? dataSongPage?.title
@@ -350,7 +381,7 @@ const RowItemPage = () => {
                 <div className="musicInfo__mode mb-3 d-flex">سبک : شور</div>
               </div>
 
-              <div className=" mb-3 d-flex">
+              <div className=" mb-3 d-flex text-right">
                 توضیحات :
                 {dataSongPage?.description
                   ? dataSongPage?.description
