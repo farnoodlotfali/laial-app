@@ -182,7 +182,9 @@
 .error__msg__register {
   color: darkred;
 }
-
+.policy_page_reg a {
+  font-size: 12px;
+}
 @media (max-width: 768px) {
   .register {
     min-height: 92vh;

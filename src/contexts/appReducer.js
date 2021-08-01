@@ -42,6 +42,7 @@ export default (state, action) => {
           name: action.payload?.name,
           slug: action.payload?.slug,
           id: action.payload?.id,
+          description: action.payload?.block?.[0]?.description,
         },
         pageLoading: false,
       };

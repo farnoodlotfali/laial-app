@@ -256,6 +256,7 @@
 .phoneMusicBar__singer {
   font-size: 9px;
   font-weight: 500;
+  color: lightgray;
 }
 .phoneMusicBar__slide .MuiDrawer-paperAnchorBottom,
 .phoneMusicBar__slide .MuiPaper-root {

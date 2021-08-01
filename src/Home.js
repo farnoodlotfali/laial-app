@@ -28,10 +28,9 @@ const Home = () => {
       //   getHome();
       // }, 3000);
     }
-    // console.log(homeMeta);
     // eslint-disable-next-line
   }, [home, user, homeMeta]);
-
+  // console.log(homeMeta);
   return (
     <>
       <Helmet>
@@ -64,6 +63,13 @@ const Home = () => {
           <meta property='twitter:image' content={homeMeta['image']} />
         )} */}
       </Helmet>
+
+      {homeMeta?.description && (
+        <div
+          className="text-white mx-4"
+          dangerouslySetInnerHTML={{ __html: `${homeMeta?.description}` }}
+        />
+      )}
 
       <Fragment>
         {pageLoading ? (

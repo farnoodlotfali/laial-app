@@ -3,6 +3,7 @@ import authContext from "./auth/authContext";
 import "./Register.css";
 import SnackBarComponent from "./snackBarComponent/SnackBarComponent";
 import backImg from "./assets/safine.jpeg";
+import { Link } from "react-router-dom";
 
 // const useStyles = makeStyles({
 //   paper: {
@@ -32,7 +33,7 @@ const Register = (props) => {
     }
     // eslint-disable-next-line
   }, [user, props.history]);
-  // const [errorMsg, setErrorMsg] = useState("");
+
   const { username, email, password, password2, first_name, last_name } =
     userInfo;
   const onchange = (e) => {
@@ -41,12 +42,7 @@ const Register = (props) => {
       [e.target.name]: e.target.value,
     });
   };
-  // const passNotSame = () => {
-  //   setErrorMsg("رمز اول با رمز دوم تطابق ندارد");
-  //   setTimeout(() => {
-  //     setErrorMsg("");
-  //   }, 5000);
-  // };
+
   const registerError = () => {
     setShowMsg({
       showMsg: true,
@@ -196,6 +192,10 @@ const Register = (props) => {
                   />
                 </div>
               </form>
+
+              <div className="policy_page_reg text-primary w-100 text-left">
+                <Link to="/privacy-policy">سیاست حفظ حریم خصوصی </Link>
+              </div>
             </div>
           </div>
         </div>

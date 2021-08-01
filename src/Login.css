@@ -262,6 +262,10 @@
   text-align: right;
   margin-top: -75px;
 }
+
+.policy_page_login a {
+  font-size: 12px;
+}
 @media (max-width: 768px) {
   .login {
     min-height: 92vh;

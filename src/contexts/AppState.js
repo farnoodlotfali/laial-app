@@ -206,7 +206,7 @@ const AppState = (props) => {
       // const res = await axios.instanceApi.get(`page/test-page`);
       const res = await axios.instanceApi.get(`page/${slug}`);
 
-      // console.log(res.data.data);
+      // console.log(res.data.data?.[0]?.block?.[0]?.description);
       dispatch({
         type: GET_HOME,
         payload: res.data.data[0],
