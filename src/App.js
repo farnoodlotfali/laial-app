@@ -11,7 +11,6 @@ import Left from "./Left";
 import Center from "./Center";
 import Home from "./Home";
 import Search from "./search/Search";
-import AboutUs from "./pages/aboutUs/AboutUs";
 import SearchState from "./search/SearchState";
 import Playerstate from "./player/PlayerState";
 import RowItemPage from "./RowItemPage";
@@ -60,7 +59,7 @@ const App = () => {
                   path="/list/:slug"
                   component={MoreSong}
                 />
-                <Route exact path="/aboutus" component={AboutUs} />
+                {/* <Route exact path="/aboutus" component={AboutUs} /> */}
                 <Route exact path="/user-interests" component={UserInterests} />
                 <Route
                   sensitive

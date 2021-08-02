@@ -9,7 +9,7 @@ import authContext from "./auth/authContext";
 import { Helmet } from "react-helmet";
 import { useHistory, useParams } from "react-router";
 const Home = () => {
-  const { pageLoading, getHome, home, homeMeta, showMusic } =
+  const { pageLoading, getHome, home, homeMeta, showMusic, homeSlug } =
     useContext(appContext);
   const { user } = useContext(authContext);
 
@@ -17,19 +17,15 @@ const Home = () => {
   const history = useHistory();
 
   useEffect(() => {
-    // console.log(home);
-    if (home === null) {
+    // console.log(homeSlug !== slug);
+    if (homeSlug !== slug) {
       getHome(slug);
     }
     if (home === undefined) {
       history.push("/not_found");
-      // setTimeout(() => {
-      //   history.push("/");
-      //   getHome();
-      // }, 3000);
     }
     // eslint-disable-next-line
-  }, [home, user, homeMeta]);
+  }, [home, user, homeMeta, slug, homeSlug]);
   // console.log(homeMeta);
   return (
     <>

@@ -35,14 +35,15 @@ export default (state, action) => {
     case GET_HOME:
       return {
         ...state,
-        home: action.payload?.block,
+        home: action.payload?.data?.block,
+        homeSlug: action.payload?.slug,
         homeMeta: {
-          meta_description: action.payload?.meta_description,
-          meta_title: action.payload?.meta_title,
-          name: action.payload?.name,
-          slug: action.payload?.slug,
-          id: action.payload?.id,
-          description: action.payload?.block?.[0]?.description,
+          meta_description: action.payload?.data?.meta_description,
+          meta_title: action.payload?.data?.meta_title,
+          name: action.payload?.data?.name,
+          slug: action.payload?.data?.slug,
+          id: action.payload?.data?.id,
+          description: action.payload?.data?.block?.[0]?.description,
         },
         pageLoading: false,
       };

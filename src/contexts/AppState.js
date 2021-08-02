@@ -57,6 +57,7 @@ const AppState = (props) => {
     BlockListName: "",
     blockSlug: null,
     personkSlug: null,
+    homeSlug: null,
     error: null,
     allPersons: null,
     mainPlaylistId: null,
@@ -198,21 +199,20 @@ const AppState = (props) => {
     }
   };
   const getHome = async (slug = "home") => {
-    // getMenu();
     dispatch({
       type: SET_LOADING,
     });
     try {
-      // const res = await axios.instanceApi.get(`page/test-page`);
       const res = await axios.instanceApi.get(`page/${slug}`);
 
-      // console.log(res.data.data?.[0]?.block?.[0]?.description);
       dispatch({
         type: GET_HOME,
-        payload: res.data.data[0],
+        payload: {
+          data: res.data.data[0],
+          slug: slug === "home" ? undefined : slug,
+        },
       });
     } catch (error) {
-      // console.log(error);
       dispatch({
         type: ERROR,
         payload: error,
@@ -890,6 +890,7 @@ const AppState = (props) => {
         blockUrls: state.blockUrls,
         allPersons: state.allPersons,
         AllpersonsUrls: state.AllpersonsUrls,
+        homeSlug: state.homeSlug,
         showCenter: state.showCenter,
         showMusic: state.showMusic,
         showRight: state.showRight,
