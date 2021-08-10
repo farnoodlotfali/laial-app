@@ -8,13 +8,13 @@ import { Link } from "react-router-dom";
 import playerContext from "./player/playerContext";
 import axios from "./axios/axios";
 import Axios from "axios";
-// import logo from "./assets/0.jpg";
 import SpinnerLoading from "./spinner/SpinnerLoading";
 import authContext from "./auth/authContext";
 import PlaySvg from "./svgs/PlaySvg";
-// import { LazyLoadImage } from "react-lazy-load-image-component";
+
 const CancelToken = Axios.CancelToken;
 let cancel;
+
 const RowItem = ({
   media,
   person,
@@ -28,14 +28,12 @@ const RowItem = ({
   title,
   logo,
 }) => {
-  // let { slug } = useParams();
-  // eslint-disable-next-line
   const {
     ChangeShowMusic,
     showMusic,
     changeHomeMeta,
     addMusicToRecentlyViewed,
-  } = useContext(AppContext); // eslint-disable-next-line
+  } = useContext(AppContext);
   const {
     playMusic,
     playing,
@@ -75,7 +73,9 @@ const RowItem = ({
             ? media?.image
             : person?.[0]?.image.full_image_url,
           postId,
-          slug
+          slug,
+          meta_title ? meta_title : title,
+          meta_description ? meta_description : description
         );
         if (cancel !== undefined) {
           cancel();
@@ -93,9 +93,7 @@ const RowItem = ({
             });
 
             setUrl(res.data.download_link, context);
-            // if (!showMusic) {
-            //   ChangeShowMusic();
-            // }
+
             playMusic();
           } catch (error) {
             console.log(error);

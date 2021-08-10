@@ -1,8 +1,8 @@
 import "./UserInterests.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useContext, useEffect, useState } from "react";
-import axios from "./axios/axios";
-import authContext from "./auth/authContext";
+import axios from "../../axios/axios";
+import authContext from "../../auth/authContext";
 import { useHistory } from "react-router";
 
 const UserInterests = () => {

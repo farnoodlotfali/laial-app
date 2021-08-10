@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import appContext from "./contexts/appContext";
 import "./PasswordReset.css";
 import PasswordStrengthBar from "react-password-strength-bar";
-import authContext from "./auth/authContext";
+import appContext from "../../contexts/appContext";
+import authContext from "../../auth/authContext";
 const PasswordReset = () => {
   const history = useHistory();
   const [validateEmailMsg, setValidateEmailMsg] = useState("");
@@ -12,9 +12,8 @@ const PasswordReset = () => {
   const [goBackLogin, setGoBackLogin] = useState(false);
   const [newToken, setNewToken] = useState(null);
   const location = useLocation();
-  const { validateTokenForgetPassword, confrimRestPassword } = useContext(
-    appContext
-  );
+  const { validateTokenForgetPassword, confrimRestPassword } =
+    useContext(appContext);
   const { user } = useContext(authContext);
   const [errorMsg, setErrorMsg] = useState("");
   const [password, setPassword] = useState({

@@ -13,7 +13,7 @@ const PersonItem = ({ id, image, name, slug }) => {
         <img
           className="rounded-circle"
           src={image !== null ? image.full_image_url : defualtPhoto}
-          alt="logo"
+          alt=""
         />
       </Link>
 

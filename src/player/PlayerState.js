@@ -8,34 +8,16 @@ import React, {
 } from "react";
 import "./Player.css";
 import PlayerContext from "./playerContext";
-import defualtPhoto from ".././assets/defualtPhoto.jpeg";
 import playerReducer from "./playerReducer";
-import { ClickAwayListener, Drawer, Slide, Slider } from "@material-ui/core";
 import AppContext from "../contexts/appContext";
 import { detect } from "detect-browser";
-import {
-  ExpandLessRounded,
-  ExpandMoreRounded,
-  Pause,
-  PlayArrowRounded,
-  PlayCircleFilledRounded,
-  PlaylistAddRounded,
-  QueueMusic,
-  RepeatOneRounded,
-  RepeatRounded,
-  ShuffleRounded,
-  SkipNextRounded,
-  SkipPreviousRounded,
-  VolumeOff,
-  VolumeUp,
-} from "@material-ui/icons";
+
 import {
   MUTE_MUSIC,
   PLAY_MUSIC,
   PAUSE_MUSIC,
   UNMUTE_MUSIC,
   CHANGE_VOLUME,
-  // CHANGE_DURATION,
   SET_PALYLIST,
   FORCE_STOP,
   SET_CURRENT_URL,
@@ -44,15 +26,13 @@ import {
   CHANGE_SHOW_MUSICBAR_ON_MOBILE_RATIO,
   CHANGE_SHUFFLE,
   CHANGE_LOOP_STATE,
+  CHANGE_SEEK,
 } from "./types";
 import { useLocation } from "react-router";
 import axios from "../axios/axios";
 import authContext from "../auth/authContext";
-import SpinnerLoading from "../spinner/SpinnerLoading";
-import Bar from "./Bar";
-import Time from "./Time";
-import { Link } from "react-router-dom";
-// eslint-disable-next-line
+import PlayerOnWeb from "./PlayerOnWeb";
+import PlayerOnMobile from "./PlayerOnMobile";
 
 const detectMob = () => {
   const toMatch = [
@@ -102,11 +82,9 @@ const Playerstate = (props) => {
   const location = useLocation();
   const audioRef = useRef();
   const {
-    showMusic,
     ChangeShowLeft,
     showLeft,
     addMusicToMAINPlaylist,
-    setWhichSongToSaveInPlaylist,
     removeThisSongHasBeenbAdd,
     changeHomeMeta,
     LimitListPlayNonLogin,
@@ -139,37 +117,22 @@ const Playerstate = (props) => {
     showMusicBarOnMoblieRatio: false,
     canDeleteSong: false,
     isThisSongAddedToRecentlyViewdPlaylist: false,
+    song_meta_description: null,
+    song_meta_title: null,
   };
   const [state, dispatch] = useReducer(playerReducer, initialState);
   const { playList } = state;
 
   const [musicChangeList, setMusicChangeList] = useState([]);
+
   useEffect(() => {
     // جهت آپدیت عکس ایکون
     const MusicPhotoIcon = document.getElementById("musicPhoto");
+    const titlePageSong = document.getElementById("titlePageSong");
     state.songPhoto !== null && (MusicPhotoIcon.href = state.songPhoto);
-  }, [state.songPhoto]);
-
-  useEffect(() => {
-    //   حرکت خواهد کردprogress اگر در حال پخش بود
-    // if (state.playing && !state.loading) {
-    //   if (audioRef?.current && audioRef?.current?.ended && !state.seek) {
-    //     if (state.repeatOne) {
-    //       repeatSongAgain();
-    //     } else nextMusic();
-    //   } else if (audioRef?.current?.ended) {
-    //     dispatch({ type: PAUSE_MUSIC });
-    //   }
-    // }
-    // eslint-disable-next-line
-  }, [
-    state.playing,
-    state.loading,
-    state.seek,
-    state.currentUrl,
-    audioRef?.current?.ended,
-    audioRef.current?.currentTime,
-  ]);
+    state.song_meta_title !== null &&
+      (titlePageSong.innerText = state.song_meta_title);
+  }, [state.songPhoto, state.song_meta_title, state.playing]);
 
   const setShowMusicBarOnMoblieRatio = () => {
     dispatch({ type: CHANGE_SHOW_MUSICBAR_ON_MOBILE_RATIO });
@@ -182,10 +145,18 @@ const Playerstate = (props) => {
       payload: isNaN(progress) ? 0 : progress,
     });
   };
-  const setIds = (tId, id, duration, name, singer, photo, postId, songSlug) => {
-    // if (audioRef.current?.played) {
-    //   audioRef.current.pause();
-    // }
+  const setIds = (
+    tId,
+    id,
+    duration,
+    name,
+    singer,
+    photo,
+    postId,
+    songSlug,
+    newTitle,
+    newDesc
+  ) => {
     dispatch({
       type: SET_IDS,
       payload: {
@@ -197,6 +168,8 @@ const Playerstate = (props) => {
         songPhoto: photo,
         postId: postId,
         songSlug: songSlug,
+        newTitle: newTitle,
+        newDesc: newDesc,
       },
     });
     // set if user listen this song twice or more if true add to mainplaylist,
@@ -221,17 +194,10 @@ const Playerstate = (props) => {
           });
           let newItem = { postId: postId, count: item.count + 1 };
           newMainPlaylist.push(newItem);
-          // console.log(newMainPlaylist);
 
           localStorage.setItem("mainPlaylist", JSON.stringify(newMainPlaylist));
           addMusicToMAINPlaylist(postId);
         }
-
-        // console.log(item);
-        // console.log(newMainPlaylist);
-        // const item = { songId: id, count: 1 };
-        // mainPlaylist.push(item);
-        // localStorage.setItem('mainPlaylist', JSON.stringify(mainPlaylist));
       }
     } else {
       if (JSON.parse(localStorage.getItem("limitListTo10")) === null) {
@@ -245,11 +211,9 @@ const Playerstate = (props) => {
         let limitListTo10 = JSON.parse(localStorage.getItem("limitListTo10"));
 
         if (limitListTo10.length >= LimitListPlayNonLogin) {
-          console.log(212);
           forceLogin();
         } else {
           let hasThisItem = limitListTo10.some((x) => x.postId === postId);
-          // console.log(hasThisItem);
           if (!hasThisItem) {
             const item = { postId: postId };
             limitListTo10.push(item);
@@ -269,27 +233,22 @@ const Playerstate = (props) => {
 
   const handleChange = (newDuration) => {
     // تنظیم مدت زمان هنگام کلیک
-    // state.seek = true;
-    // state.seek = true;
+
     changeDuration(audioRef.current, newDuration);
     setNewProgress(newDuration);
   };
   const handleNext = () => {
     //  موزیک بعدی
     nextMusic(audioRef.current);
-    // setProgress(0);
     setNewProgress(0);
   };
   const handlePrevious = () => {
     // موزیک قبلی
     previousMusic(audioRef.current);
-    // setProgress(0);
     setNewProgress(0);
   };
 
   const setPlayList = (playlist, canDeleteSong = false) => {
-    // console.log(playlist[0].post ? "true" : "false");
-
     if (playlist !== state.playList) {
       dispatch({
         type: SET_PALYLIST,
@@ -301,7 +260,7 @@ const Playerstate = (props) => {
     }
   };
 
-  const zeroPad = (num, places) => String(num).padStart(places, "0");
+  // const zeroPad = (num, places) => String(num).padStart(places, "0");
 
   const playAndPauseMusic = (audioElement = audioRef.current) => {
     // پلی و استپ کردن آهنگ
@@ -323,13 +282,9 @@ const Playerstate = (props) => {
 
   const playMusic = async (audioElement = audioRef.current) => {
     if (audioElement) {
-      // audioElement.pause();
       audioElement.load();
       // await audioElement.play();
     }
-    // dispatch({
-    //   type: PLAY_MUSIC,
-    // });
   };
 
   const muteAndUnmuteMusic = (audioElement) => {
@@ -361,12 +316,9 @@ const Playerstate = (props) => {
   };
 
   const setUrl = (url, playlist = []) => {
-    // console.log(playlist);
-
     if (playlist !== state.playList) {
       setPlayList(playlist);
     }
-    // console.log(url);
     setNewProgress(0);
     removeThisSongHasBeenbAdd();
     dispatch({
@@ -410,21 +362,20 @@ const Playerstate = (props) => {
             } else {
               const sendTitle = chosen?.meta_title
                 ? chosen?.meta_title
-                : chosen?.title !== null && chosen?.title !== ""
+                : chosen?.title && chosen?.title !== ""
                 ? chosen?.title
                 : chosen?.media?.name;
               const sendDescription = chosen?.meta_description
                 ? chosen?.meta_description
-                : chosen?.description !== null && chosen?.description !== ""
+                : chosen?.description && chosen?.description !== ""
                 ? chosen?.description
                 : chosen?.media?.name;
 
-              changeHomeMeta(sendTitle, sendDescription);
               setIds(
                 chosen.media[0]?.telegram_id,
                 chosen.media[0]?.id,
                 chosen.media[0]?.duration,
-                chosen.media[0]?.name,
+                chosen?.title ? chosen?.title : chosen.media[0]?.name,
                 chosen.person?.[0]?.name,
                 chosen?.image?.full_image_url
                   ? chosen?.image?.full_image_url
@@ -432,7 +383,17 @@ const Playerstate = (props) => {
                   ? chosen?.media?.[0]?.image
                   : chosen?.person?.[0]?.image.full_image_url,
                 chosen.id,
-                chosen.slug
+                chosen.slug,
+                chosen?.meta_title
+                  ? chosen?.meta_title
+                  : chosen?.title && chosen?.title !== ""
+                  ? chosen?.title
+                  : chosen?.media?.name,
+                chosen?.meta_description
+                  ? chosen?.meta_description
+                  : chosen?.description && chosen?.description !== ""
+                  ? chosen?.description
+                  : chosen?.media?.name
               );
 
               if (chosen.media[0]?.path) {
@@ -450,6 +411,7 @@ const Playerstate = (props) => {
                   console.log(error);
                 }
               }
+              changeHomeMeta(sendTitle, sendDescription);
             }
           } else {
             dispatch({
@@ -466,7 +428,6 @@ const Playerstate = (props) => {
     putToMusicChangeList(audioElement.currentTime, "previous");
     setNewProgress(0);
 
-    // let last = null;
     if (playList !== undefined) {
       for (let i = 0; i < playList.length; i++) {
         if (
@@ -492,22 +453,20 @@ const Playerstate = (props) => {
           } else {
             const sendTitle = chosen?.meta_title
               ? chosen?.meta_title
-              : chosen?.title !== null && chosen?.title !== ""
+              : chosen?.title && chosen?.title !== ""
               ? chosen?.title
               : chosen?.media?.name;
             const sendDescription = chosen?.meta_description
               ? chosen?.meta_description
-              : chosen?.description !== null && chosen?.description !== ""
+              : chosen?.description && chosen?.description !== ""
               ? chosen?.description
               : chosen?.media?.name;
-
-            changeHomeMeta(sendTitle, sendDescription);
 
             setIds(
               chosen.media[0]?.telegram_id,
               chosen.media[0]?.id,
               chosen.media[0]?.duration,
-              chosen.media[0]?.name,
+              chosen?.title ? chosen?.title : chosen.media[0]?.name,
               chosen.person?.[0]?.name,
               chosen?.image?.full_image_url
                 ? chosen?.image?.full_image_url
@@ -515,7 +474,17 @@ const Playerstate = (props) => {
                 ? chosen?.media?.[0]?.image
                 : chosen?.person?.[0]?.image.full_image_url,
               chosen.id,
-              chosen.slug
+              chosen.slug,
+              chosen?.meta_title
+                ? chosen?.meta_title
+                : chosen?.title && chosen?.title !== ""
+                ? chosen?.title
+                : chosen?.media?.name,
+              chosen?.meta_description
+                ? chosen?.meta_description
+                : chosen?.description && chosen?.description !== ""
+                ? chosen?.description
+                : chosen?.media?.name
             );
 
             if (chosen.media[0]?.path) {
@@ -533,6 +502,7 @@ const Playerstate = (props) => {
                 console.log(error);
               }
             }
+            changeHomeMeta(sendTitle, sendDescription);
           }
         }
       }
@@ -556,14 +526,11 @@ const Playerstate = (props) => {
       date: getTimeToday(),
       favorite: false,
       download: false,
-      // songId: ids.songId,
-      // telegramId: ids.telegramId,
-      // destination_url: null,
+
       CurrentUrl: location.pathname,
     };
 
     musicChangeList.push(schema);
-    // console.log(musicChangeList);
     setMusicChangeList(musicChangeList);
   };
 
@@ -600,22 +567,28 @@ const Playerstate = (props) => {
     }
   };
   const playThisListFromMyProflie = async (listShow) => {
-    console.log(listShow?.[0]?.post.media[0]?.telegram_id);
-    // setPlayList(listShow, true);
-
+    console.log(listShow?.[0]?.post);
     setIds(
       listShow?.[0]?.post.media[0]?.telegram_id,
       listShow?.[0]?.post.media[0]?.id,
       listShow?.[0]?.post.media[0]?.duration,
-      listShow?.[0]?.post.media[0]?.name,
+      listShow?.[0]?.post?.title
+        ? listShow?.[0]?.post?.title
+        : listShow?.[0]?.post.media[0]?.name,
       listShow?.[0]?.post.person?.[0]?.name,
       listShow?.[0]?.post?.media?.[0]?.image !== null
         ? listShow?.[0]?.post?.media?.[0]?.image
         : listShow?.[0]?.post?.person?.[0]?.image.full_image_url,
-      listShow?.[0]?.post.id
+      listShow?.[0]?.post.id,
+      listShow?.[0]?.post?.slug,
+      listShow?.[0]?.post?.meta_title
+        ? listShow?.[0]?.post?.meta_title
+        : listShow?.[0]?.post?.title,
+      listShow?.[0]?.post?.meta_description
+        ? listShow?.[0]?.post?.meta_description
+        : listShow?.[0]?.post?.description
     );
     if (listShow?.[0]?.post.media[0]?.path) {
-      // console.log("path");
       setUrl(listShow?.[0]?.post.media[0]?.path, listShow);
       playMusic();
     } else {
@@ -632,6 +605,12 @@ const Playerstate = (props) => {
     }
   };
 
+  const changeSeek = (newval) => {
+    dispatch({
+      type: CHANGE_SEEK,
+      payload: newval,
+    });
+  };
   return (
     <PlayerContext.Provider
       value={{
@@ -656,9 +635,11 @@ const Playerstate = (props) => {
         showMusicBarOnMoblieRatio: state.showMusicBarOnMoblieRatio,
         canDeleteSong: state.canDeleteSong,
         postId: state.postId,
+        seek: state.seek,
         forceStop: state.forceStop,
         songSlug: state.songSlug,
         progressToZero: state.progressToZero,
+        mute: state.mute,
         setShowMusicBarOnMoblieRatio,
         changeNoneOrLoopOrRepeat,
         changeVolume,
@@ -671,6 +652,10 @@ const Playerstate = (props) => {
         changeShuffle,
         setIds,
         playThisListFromMyProflie,
+        handlePrevious,
+        handleNext,
+        showPlaylist,
+        changeSeek,
       }}
     >
       {props.children}
@@ -685,7 +670,6 @@ const Playerstate = (props) => {
                 dispatch({
                   type: FORCE_STOP,
                 });
-                // console.log(12121);
               } else {
                 audioRef.current.play();
                 dispatch({
@@ -694,12 +678,7 @@ const Playerstate = (props) => {
               }
             }}
             onEnded={() => {
-              if (
-                audioRef?.current &&
-                audioRef?.current?.ended
-                // &&
-                // !state.seek
-              ) {
+              if (audioRef?.current && audioRef?.current?.ended) {
                 if (state.repeatOne) {
                   repeatSongAgain();
                 } else nextMusic();
@@ -711,423 +690,17 @@ const Playerstate = (props) => {
             onPlay={playMusicKey}
             ref={audioRef}
             className="player"
-            // autoPlay={state.playing}
             src={state.currentUrl}
-            // src={
-            //   "https://files.musico.ir/Song/Ehsan%20Daryadel%20-%20Koochamoon%20(320).mp3"
-            // }
             type="audio/mpeg"
             preload="metadata"
           ></audio>
         </div>
 
         {/* for mobile ratio */}
-        <Fragment
-        // for mobile ratio
-        >
-          <div className="phoneMusicBar__slide">
-            <Drawer
-              variant="persistent"
-              className="phoneMusicBar__slide"
-              anchor={"bottom"}
-              open={state.showMusicBarOnMoblieRatio}
-              onClose={() => setShowMusicBarOnMoblieRatio()}
-              // onOpen={() => setShowMusicBarOnMoblieRatio()}
-            >
-              <div className="player__zone d-flex text-light ">
-                <div className="current-time align-self-center ">
-                  <Time />
-                  {/* {Math.floor(audioRef.current?.currentTime / 60) +
-                    ":" +
-                    zeroPad(Math.floor(audioRef.current?.currentTime % 60), 2)} */}
-                </div>
+        <PlayerOnMobile audioRef={audioRef} />
 
-                <div className="player">
-                  <Bar
-                    loading={state.loading}
-                    // currentProgress={state.currentProgress}
-                    handleChange={handleChange}
-                  />
-                  {/* <Slider
-                    disabled={state.loading}
-                    variant="determinate"
-                    value={state.currentProgress}
-                    onChange={(e, newDuration) => handleChange(newDuration)}
-                  /> */}
-                </div>
-
-                <div className="last-time align-self-center ">
-                  {Math.floor(state.totalDuration / 60) +
-                    ":" +
-                    zeroPad(Math.floor(state.totalDuration % 60), 2)}
-                </div>
-              </div>
-
-              <div className="d-flex text-light pb-2 px-2 justify-content-between">
-                <div className="player__actions d-flex justify-content-around w-100">
-                  <div
-                    className="icon playlist_sound_playlist d-flex justify-content-between align-self-end mr-2 align-self-center"
-                    onClick={showPlaylist}
-                  >
-                    <QueueMusic style={{ fontSize: 22 }} />
-                  </div>
-                  <div className="mr-2 ">
-                    {isAuth && (
-                      <PlaylistAddRounded
-                        style={{ fontSize: 22 }}
-                        onClick={() =>
-                          setWhichSongToSaveInPlaylist(state.postId)
-                        }
-                      />
-                    )}
-                  </div>
-                  <div
-                    onClick={() => changeShuffle()}
-                    className={`icon__shuffle mr-2 ${
-                      state.shuffle ? "icon__shuffle__press" : ""
-                    } align-self-center`}
-                  >
-                    <ShuffleRounded style={{ fontSize: 20 }} />
-                  </div>
-
-                  {state.noneOrLoopOrRepeat === 0 ? (
-                    <div
-                      onClick={() => changeNoneOrLoopOrRepeat()}
-                      className={` mr-2 icon__loop align-self-center `}
-                    >
-                      <RepeatRounded style={{ fontSize: 20 }} />
-                    </div>
-                  ) : state.noneOrLoopOrRepeat === 1 ? (
-                    <div
-                      onClick={() => changeNoneOrLoopOrRepeat()}
-                      className={`mr-2 icon__loop__press align-self-center `}
-                    >
-                      <RepeatRounded style={{ fontSize: 20 }} />
-                    </div>
-                  ) : (
-                    <div
-                      onClick={() => changeNoneOrLoopOrRepeat()}
-                      className={`mr-2 icon__repeatOne__press align-self-center `}
-                    >
-                      <RepeatOneRounded style={{ fontSize: 20 }} />
-                    </div>
-                  )}
-                </div>
-                <div className="d-flex mobileSound mr-2 w-75">
-                  <div
-                    className="icon col-2 p-0 d-flex align-self-center mr-2"
-                    onClick={() => muteAndUnmuteMusic(audioRef.current)}
-                  >
-                    {state.mute ? <VolumeOff /> : <VolumeUp />}
-                  </div>
-
-                  <Slider
-                    className="mobileSound "
-                    value={state.volume * 100}
-                    onChange={(e, newVolume) =>
-                      changeVolume(audioRef.current, newVolume)
-                    }
-                    aria-labelledby="continuous-slider"
-                  />
-                </div>
-              </div>
-            </Drawer>
-          </div>
-          {/* {state.currentUrl && ( */}
-          <Slide direction="up" timeout={500} in={showMusic}>
-            <div className="phoneMusicBar bg-dark d-flex text-light">
-              <div
-                className="phoneMusicBar__left d-flex align-self-center 
-          justify-content-start"
-              >
-                {state.songSlug ? (
-                  <Link to={`/song/${state.songSlug}`}>
-                    <img
-                      className="phoneMusicBar__img m-2"
-                      src={
-                        state.songPhoto !== null
-                          ? state.songPhoto
-                          : defualtPhoto
-                      }
-                      alt=""
-                    />
-                  </Link>
-                ) : (
-                  <img
-                    className="phoneMusicBar__img m-2"
-                    src={
-                      state.songPhoto !== null ? state.songPhoto : defualtPhoto
-                    }
-                    alt=""
-                  />
-                )}
-
-                <div className="phoneMusicBar__info align-self-center mr-2">
-                  <div className="phoneMusicBar__title">
-                    <div className="scroll">
-                      {state.songSlug ? (
-                        <Link to={`/song/${state.songSlug}`}>
-                          <span>{state.songName}</span>
-                        </Link>
-                      ) : (
-                        <span>{state.songName}</span>
-                      )}
-                    </div>
-                  </div>
-                  <div className="phoneMusicBar__singer">
-                    <span>{state.songSinger}</span>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="phoneMusicBar__right d-flex align-self-center 
-          justify-content-around"
-              >
-                <div className="iconPhone " onClick={handleNext}>
-                  <SkipNextRounded style={{ fontSize: "25px" }} />
-                </div>
-                <div className="iconPhone ">
-                  {state.loading ? (
-                    <SpinnerLoading />
-                  ) : state.playing ? (
-                    <div
-                      className=""
-                      onClick={() => playAndPauseMusic(audioRef.current)}
-                    >
-                      <Pause style={{ fontSize: "25px" }} />
-                    </div>
-                  ) : (
-                    <div
-                      className=""
-                      onClick={() =>
-                        !state.forceStop
-                          ? playAndPauseMusic(audioRef.current)
-                          : changeShowLoginModal(true)
-                      }
-                    >
-                      <PlayCircleFilledRounded style={{ fontSize: "25px" }} />
-                    </div>
-                  )}
-                </div>
-                <div className="iconPhone" onClick={handlePrevious}>
-                  <SkipPreviousRounded style={{ fontSize: "25px" }} />
-                </div>
-                <div
-                  className="icon"
-                  onClick={() => setShowMusicBarOnMoblieRatio()}
-                >
-                  {state.showMusicBarOnMoblieRatio ? (
-                    <ExpandMoreRounded style={{ fontSize: "25px" }} />
-                  ) : (
-                    <ExpandLessRounded style={{ fontSize: "25px" }} />
-                  )}
-                </div>
-              </div>
-            </div>
-          </Slide>
-          {/* )} */}
-        </Fragment>
         {/* for web ratio */}
-        <Fragment
-        //for web ratio
-        >
-          <Slide direction="up" timeout={500} in={showMusic}>
-            <div
-              className=" musicBar text-light"
-              style={{ display: showMusic ? "block" : "none" }}
-            >
-              <div className="position d-flex justify-content-around pt-2">
-                <div className="musicBar__right align-self-center">
-                  <div className="musicBar__info">
-                    <div className="musicBar__infoImage ">
-                      {state.songSlug ? (
-                        <Link to={`/song/${state.songSlug}`}>
-                          <img
-                            src={
-                              state.songPhoto !== null
-                                ? state.songPhoto
-                                : defualtPhoto
-                            }
-                            alt="logo"
-                          />
-                        </Link>
-                      ) : (
-                        <img
-                          src={
-                            state.songPhoto !== null
-                              ? state.songPhoto
-                              : defualtPhoto
-                          }
-                          alt="logo"
-                        />
-                      )}
-                    </div>
-                    <div className="musicBar__infoDesc">
-                      <div className="infoDesc__title">
-                        <div className="scroll">
-                          {state.songSlug ? (
-                            <Link to={`/song/${state.songSlug}`}>
-                              <span>{state.songName}</span>
-                            </Link>
-                          ) : (
-                            <span>{state.songName}</span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="infoDesc__person text-center">
-                        {state.songSinger}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="player musicBar__center align-self-center ">
-                  <div className="player__actions d-flex justify-content-center ">
-                    <div
-                      onClick={() => changeShuffle()}
-                      className={`icon__shuffle mr-4 ${
-                        state.shuffle ? "icon__shuffle__press" : ""
-                      } align-self-center`}
-                    >
-                      <ShuffleRounded style={{ fontSize: 20 }} />
-                    </div>
-                    <div className="icon mr-4 " onClick={handlePrevious}>
-                      <SkipPreviousRounded style={{ fontSize: 30 }} />
-                    </div>
-                    <div className="icon mr-4 align-self-center ">
-                      {state.loading ? (
-                        <>
-                          <SpinnerLoading />
-                          {/* <div className="">در حال آماده سازی</div> */}
-                        </>
-                      ) : state.playing ? (
-                        <div
-                          className=""
-                          onClick={() => playAndPauseMusic(audioRef.current)}
-                        >
-                          <Pause style={{ fontSize: 30 }} />
-                        </div>
-                      ) : (
-                        <div
-                          className=""
-                          onClick={() =>
-                            !state.forceStop
-                              ? playAndPauseMusic(audioRef.current)
-                              : changeShowLoginModal(true)
-                          }
-                        >
-                          <PlayArrowRounded style={{ fontSize: 30 }} />
-                        </div>
-                      )}
-                    </div>
-                    <div className="icon mr-4  " onClick={handleNext}>
-                      <SkipNextRounded style={{ fontSize: 30 }} />
-                    </div>
-                    {state.noneOrLoopOrRepeat === 0 ? (
-                      <div
-                        onClick={() => changeNoneOrLoopOrRepeat()}
-                        className={`mr-4  icon__loop align-self-center `}
-                      >
-                        <RepeatRounded style={{ fontSize: 20 }} />
-                      </div>
-                    ) : state.noneOrLoopOrRepeat === 1 ? (
-                      <div
-                        onClick={() => changeNoneOrLoopOrRepeat()}
-                        className={`mr-4 icon__loop__press align-self-center `}
-                      >
-                        <RepeatRounded style={{ fontSize: 20 }} />
-                      </div>
-                    ) : (
-                      <div
-                        onClick={() => changeNoneOrLoopOrRepeat()}
-                        className={`mr-4 icon__repeatOne__press align-self-center `}
-                      >
-                        <RepeatOneRounded style={{ fontSize: 20 }} />
-                      </div>
-                    )}
-                  </div>
-                  <div className="player__zone d-flex mt-2">
-                    <div className="current-time align-self-center text-right">
-                      <Time />
-                      {/* {Math.floor(audioRef.current?.currentTime / 60) +
-                        ":" +
-                        zeroPad(
-                          Math.floor(audioRef.current?.currentTime % 60),
-                          2
-                        )} */}
-                    </div>
-                    {/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
-                    <ClickAwayListener onClickAway={() => (state.seek = false)}>
-                      <div
-                        className="player mt-1 align-self-center mx-3 "
-                        onMouseUp={() => (state.seek = false)}
-                      >
-                        <Bar
-                          loading={state.loading}
-                          // currentProgress={state.currentProgress}
-                          handleChange={handleChange}
-                        />
-                        {/* <Slider
-                          disabled={state.loading}
-                          variant="determinate"
-                          value={state.currentProgress}
-                          onChange={(e, newDuration) =>
-                            handleChange(newDuration)
-                          }
-                        /> */}
-                      </div>
-                    </ClickAwayListener>
-
-                    <div className="last-time align-self-center text-left ">
-                      {Math.floor(state.totalDuration / 60) +
-                        ":" +
-                        zeroPad(Math.floor(state.totalDuration % 60), 2)}
-                    </div>
-                  </div>
-                </div>
-                <div className="playlist_sound   musicBar__left  ">
-                  <div className="d-flex justify-content-around  ">
-                    <div className="icon">
-                      {isAuth && (
-                        <PlaylistAddRounded
-                          fontSize="large"
-                          onClick={() =>
-                            setWhichSongToSaveInPlaylist(state.postId)
-                          }
-                        />
-                      )}
-                    </div>
-                    <div
-                      className="icon playlist_sound_playlist d-flex justify-content-end align-self-end "
-                      onClick={showPlaylist}
-                    >
-                      <QueueMusic fontSize="large" />
-                    </div>
-                  </div>
-
-                  <div className="sound  d-flex ">
-                    <div className="progressBar p-0  w-100 mt-1 ">
-                      <Slider
-                        value={state.volume * 100}
-                        onChange={(e, newVolume) =>
-                          changeVolume(audioRef.current, newVolume)
-                        }
-                        aria-labelledby="continuous-slider"
-                      />
-                    </div>
-                    <div
-                      className="icon col-2 p-0 d-flex align-self-center mr-2"
-                      onClick={() => muteAndUnmuteMusic(audioRef.current)}
-                    >
-                      {state.mute ? <VolumeOff /> : <VolumeUp />}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Slide>
-        </Fragment>
+        <PlayerOnWeb audioRef={audioRef} />
       </Fragment>
     </PlayerContext.Provider>
   );

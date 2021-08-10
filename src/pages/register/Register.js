@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import authContext from "./auth/authContext";
+import authContext from "../../auth/authContext";
 import "./Register.css";
-import SnackBarComponent from "./snackBarComponent/SnackBarComponent";
-import backImg from "./assets/safine.jpeg";
+import SnackBarComponent from "../../snackBarComponent/SnackBarComponent";
+import backImg from "../../assets/safine.jpeg";
 import { Link } from "react-router-dom";
 
 // const useStyles = makeStyles({

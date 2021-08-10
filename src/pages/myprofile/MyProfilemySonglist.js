@@ -1,7 +1,7 @@
 import { IconButton } from "@material-ui/core";
 import { CheckRounded, Close, Edit } from "@material-ui/icons";
 import { useContext, useEffect, useRef, useState } from "react";
-import appContext from "./contexts/appContext";
+import appContext from "../../contexts/appContext";
 
 const MyProfilemySonglist = ({
   name,
@@ -19,7 +19,6 @@ const MyProfilemySonglist = ({
     changeMyProfilemySonglistId,
     myProfilemySonglistId,
   } = useContext(appContext);
-  // const { setPlayList } = useContext(playerContext);
 
   const [edit, setEdit] = useState(false);
   const [SongListName, setSongListName] = useState(name);

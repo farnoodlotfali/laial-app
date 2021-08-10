@@ -5,19 +5,15 @@ import "./Home.css";
 import TileBanner from "./TileBanner";
 import appContext from "./contexts/appContext";
 import Spinner from "./spinner/Spinner";
-import authContext from "./auth/authContext";
-import { Helmet } from "react-helmet";
 import { useHistory, useParams } from "react-router";
 const Home = () => {
   const { pageLoading, getHome, home, homeMeta, showMusic, homeSlug } =
     useContext(appContext);
-  const { user } = useContext(authContext);
 
   const { slug } = useParams();
   const history = useHistory();
 
   useEffect(() => {
-    // console.log(homeSlug !== slug);
     if (homeSlug !== slug) {
       getHome(slug);
     }
@@ -25,11 +21,12 @@ const Home = () => {
       history.push("/not_found");
     }
     // eslint-disable-next-line
-  }, [home, user, homeMeta, slug, homeSlug]);
-  // console.log(homeMeta);
+  }, [slug]);
+  // console.log(home);
+
   return (
     <>
-      <Helmet>
+      {/* <Helmet>
         <title>
           {homeMeta?.meta_title ? homeMeta?.meta_title : homeMeta?.name}
         </title>
@@ -55,17 +52,20 @@ const Home = () => {
           property="twitter:description"
           content={homeMeta?.meta_description}
         />
-        {/* {homeMeta['image'] && (
-          <meta property='twitter:image' content={homeMeta['image']} />
-        )} */}
-      </Helmet>
+      </Helmet> */}
 
-      {homeMeta?.description && (
-        <div
-          className="text-white mx-4"
-          dangerouslySetInnerHTML={{ __html: `${homeMeta?.description}` }}
-        />
-      )}
+      <Fragment>
+        {pageLoading ? (
+          <Spinner />
+        ) : (
+          homeMeta?.description && (
+            <div
+              className="text-white mx-4"
+              dangerouslySetInnerHTML={{ __html: `${homeMeta?.description}` }}
+            />
+          )
+        )}
+      </Fragment>
 
       <Fragment>
         {pageLoading ? (

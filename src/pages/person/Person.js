@@ -1,20 +1,21 @@
 import { useContext, useEffect, useState } from "react";
-import appContext from "./contexts/appContext";
+import appContext from "../../contexts/appContext";
 import "./Person.css";
-import defualtPhoto from "./assets/defualtPhoto.jpeg";
-import Spinner from "./spinner/Spinner";
-import RowItem from "./RowItem";
+import defualtPhoto from "../../assets/defualtPhoto.jpeg";
+import Spinner from "../../spinner/Spinner";
+import RowItem from "../../RowItem";
 import { useParams } from "react-router";
-import authContext from "./auth/authContext";
+import authContext from "../../auth/authContext";
 import InfiniteScroll from "react-infinite-scroll-component";
-import axios from "./axios/axios";
-import LoadingIcon from "./spinner/LoadingIcon";
+import axios from "../../axios/axios";
+import LoadingIcon from "../../spinner/LoadingIcon";
 import { Helmet } from "react-helmet";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import { makeStyles } from "@material-ui/core/styles";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
+import playerContext from "../../player/playerContext";
 
 const useStyles = makeStyles((theme) => ({
   summaryRoot: {
@@ -51,6 +52,7 @@ const Person = () => {
   let params = useParams();
   const [readMore, setReadMore] = useState(false);
   const { user } = useContext(authContext);
+  const { playing } = useContext(playerContext);
   const [next, setNext] = useState({
     next: "",
     list: null,
@@ -110,62 +112,65 @@ const Person = () => {
     <Spinner />
   ) : (
     <>
-      <Helmet>
-        <title>
-          {personList?.[0]?.person?.[0]?.meta_title
-            ? personList?.[0]?.person?.[0]?.meta_title
-            : personList?.[0]?.person?.[0]?.name}
-        </title>
-        <meta
-          name="title"
-          content={
-            personList?.[0]?.person?.[0]?.meta_title
+      {!playing && (
+        <Helmet>
+          <title>
+            {personList?.[0]?.person?.[0]?.meta_title
               ? personList?.[0]?.person?.[0]?.meta_title
-              : personList?.[0]?.person?.[0]?.name
-          }
-        />
-        <meta
-          name="description"
-          content={personList?.[0]?.person?.[0]?.meta_description}
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content={`      http:app.7negare.ir/${params.slug}`}
-        />
-        <meta
-          property="og:title"
-          content={
-            personList?.[0]?.person?.[0]?.meta_title
-              ? personList?.[0]?.person?.[0]?.meta_title
-              : personList?.[0]?.person?.[0]?.name
-          }
-        />
-        <meta
-          property="og:description"
-          content={personList?.[0]?.person?.[0]?.meta_description}
-        />
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta
-          property="twitter:url"
-          content={`      http:app.7negare.ir/${params?.slug}`}
-        />
-        <meta
-          property="twitter:title"
-          content={
-            personList?.[0]?.person?.[0]?.meta_title
-              ? personList?.[0]?.person?.[0]?.meta_title
-              : personList?.[0]?.person?.[0]?.name
-          }
-        />
-        <meta
-          property="twitter:description"
-          content={personList?.[0]?.person?.[0]?.meta_description}
-        />
-        {/* {dataSongPage['image'] && (
+              : personList?.[0]?.person?.[0]?.name}
+          </title>
+          <meta
+            name="title"
+            content={
+              personList?.[0]?.person?.[0]?.meta_title
+                ? personList?.[0]?.person?.[0]?.meta_title
+                : personList?.[0]?.person?.[0]?.name
+            }
+          />
+          <meta
+            name="description"
+            content={personList?.[0]?.person?.[0]?.meta_description}
+          />
+          <meta property="og:type" content="website" />
+          <meta
+            property="og:url"
+            content={`      http:app.7negare.ir/${params.slug}`}
+          />
+          <meta
+            property="og:title"
+            content={
+              personList?.[0]?.person?.[0]?.meta_title
+                ? personList?.[0]?.person?.[0]?.meta_title
+                : personList?.[0]?.person?.[0]?.name
+            }
+          />
+          <meta
+            property="og:description"
+            content={personList?.[0]?.person?.[0]?.meta_description}
+          />
+          <meta property="twitter:card" content="summary_large_image" />
+          <meta
+            property="twitter:url"
+            content={`      http:app.7negare.ir/${params?.slug}`}
+          />
+          <meta
+            property="twitter:title"
+            content={
+              personList?.[0]?.person?.[0]?.meta_title
+                ? personList?.[0]?.person?.[0]?.meta_title
+                : personList?.[0]?.person?.[0]?.name
+            }
+          />
+          <meta
+            property="twitter:description"
+            content={personList?.[0]?.person?.[0]?.meta_description}
+          />
+          {/* {dataSongPage['image'] && (
           <meta property='twitter:image' content={dataSongPage['image']} />
         )} */}
-      </Helmet>
+        </Helmet>
+      )}
+
       <div className="person">
         <div className=" m-5 ">
           <Accordion onChange={(e, expanded) => setReadMore(expanded)}>
@@ -203,7 +208,7 @@ const Person = () => {
                         ? personList?.[0]?.person[0]?.image.full_image_url
                         : defualtPhoto
                     }
-                    alt="logo"
+                    alt=""
                   />
                 </div>
               </div>
@@ -237,7 +242,7 @@ const Person = () => {
                     ? personList?.[0]?.person[0]?.image.full_image_url
                     : defualtPhoto
                 }
-                alt="logo"
+                alt=""
               />
             </div>
           </div>

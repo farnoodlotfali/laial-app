@@ -4,7 +4,6 @@ import {
   PAUSE_MUSIC,
   UNMUTE_MUSIC,
   CHANGE_VOLUME,
-  CHANGE_DURATION,
   SET_PALYLIST,
   NEXT_MUSIC,
   PREVIOUS_MUSIC,
@@ -16,6 +15,7 @@ import {
   CHANGE_LOOP_STATE,
   FORCE_STOP,
   BAR_TO_ZERO,
+  CHANGE_SEEK,
 } from "./types";
 // eslint-disable-next-line
 export default (state, action) => {
@@ -53,11 +53,7 @@ export default (state, action) => {
         ...state,
         volume: action.payload,
       };
-    case CHANGE_DURATION:
-      return {
-        ...state,
-        duration: action.payload.currentTime,
-      };
+
     case SET_PALYLIST:
       return {
         ...state,
@@ -96,6 +92,11 @@ export default (state, action) => {
       return {
         ...state,
         progressToZero: true,
+      };
+    case CHANGE_SEEK:
+      return {
+        ...state,
+        seek: action.payload,
       };
 
     case CHANGE_LOOP_STATE:
@@ -142,6 +143,8 @@ export default (state, action) => {
         songPhoto: action.payload.songPhoto,
         postId: action.payload.postId,
         songSlug: action.payload.songSlug,
+        song_meta_description: action.payload.newDesc,
+        song_meta_title: action.payload.newTitle,
         progressToZero: true,
       };
 

@@ -1,10 +1,10 @@
 import { DeleteRounded, Pause, PlayArrowRounded } from "@material-ui/icons";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import defualtPhoto from "./assets/defualtPhoto.jpeg";
-import axios from "./axios/axios";
-import appContext from "./contexts/appContext";
-import playerContext from "./player/playerContext";
+import defualtPhoto from "../../assets/defualtPhoto.jpeg";
+import axios from "../../axios/axios";
+import appContext from "../../contexts/appContext";
+import playerContext from "../../player/playerContext";
 
 const MyProfileSong = ({ item, zeroPad, truncate, deleteBtn, playlist }) => {
   const { ChangeShowMusic, showMusic, removeSongFromPlaylist } =
@@ -19,14 +19,19 @@ const MyProfileSong = ({ item, zeroPad, truncate, deleteBtn, playlist }) => {
         item?.post.media[0]?.telegram_id,
         item?.post.media[0]?.id,
         item?.post.media[0]?.duration,
-        item?.post.media[0]?.name,
+        item?.post?.title ? item?.post?.title : item?.post.media[0]?.name,
         item?.post.person?.[0]?.name,
         item?.post?.image?.full_image_url
           ? item?.post?.image?.full_image_url
           : item?.post?.media?.[0]?.image !== null
           ? item?.post?.media?.[0]?.image
           : item?.post?.person?.[0]?.image.full_image_url,
-        item?.post.id
+        item?.post.id,
+        item?.post?.slug,
+        item?.post?.meta_title ? item?.post?.meta_title : item?.post?.title,
+        item?.post?.meta_description
+          ? item?.post?.meta_description
+          : item?.post?.description
       );
       if (item?.post.media[0]?.path) {
         // console.log("path");
@@ -68,7 +73,7 @@ const MyProfileSong = ({ item, zeroPad, truncate, deleteBtn, playlist }) => {
                 ? item?.post?.person?.[0]?.image.full_image_url
                 : defualtPhoto
             }
-            alt="songlogo"
+            alt=""
           />
           {playing && item?.post.media[0]?.id === songId ? (
             <div
@@ -92,8 +97,13 @@ const MyProfileSong = ({ item, zeroPad, truncate, deleteBtn, playlist }) => {
         </div>
         <div className="songInfo">
           <span className="songName">
-            <Link to={`/song/:${item?.post?.slug}`}>
-              {truncate(item?.post?.media?.[0]?.name, 4)}
+            <Link to={`/song/${item?.post?.slug}`}>
+              {truncate(
+                item?.post?.title
+                  ? item?.post?.title
+                  : item?.post?.media?.[0]?.name,
+                4
+              )}
             </Link>
           </span>
           <span className="songSinger">{item?.post?.person?.[0]?.name}</span>

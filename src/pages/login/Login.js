@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import authContext from "./auth/authContext";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import "./Login.css";
-import appContext from "./contexts/appContext";
 import { CloseRounded } from "@material-ui/icons";
-import SnackBarComponent from "./snackBarComponent/SnackBarComponent";
-import backImg from "./assets/w.jpg";
+import backImg from "../../assets/w.jpg";
+import appContext from "../../contexts/appContext";
+import authContext from "../../auth/authContext";
+import SnackBarComponent from "../../snackBarComponent/SnackBarComponent";
 
 const Login = (props) => {
   let history = useHistory();

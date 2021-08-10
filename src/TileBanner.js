@@ -18,7 +18,7 @@ const TileBanner = ({ imgs }) => {
             <img
               className="carousel-cell-image"
               src={img?.full_image_url}
-              alt="logo"
+              alt=""
             />
             {/* <div className='tileBanner__box'> */}
             {img.url && (

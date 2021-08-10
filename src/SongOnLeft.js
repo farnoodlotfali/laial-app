@@ -12,13 +12,12 @@ const SongOnLeft = ({ item, playlist, number, zeroPad }) => {
     useContext(playerContext);
   const { ChangeShowMusic, showMusic, removeSongFromPlaylist } =
     useContext(appContext);
-  // console.log(item?.image);
   const paly = async () => {
     setIds(
       item.media[0]?.telegram_id,
       item.media[0]?.id,
       item.media[0]?.duration,
-      item.media[0]?.name,
+      item?.title ? item?.title : item.media[0]?.name,
       item.person?.[0]?.name,
       item?.image?.full_image_url !== null
         ? item?.image?.full_image_url
@@ -26,7 +25,9 @@ const SongOnLeft = ({ item, playlist, number, zeroPad }) => {
         ? item?.media?.[0]?.image
         : item?.person?.[0]?.image.full_image_url,
       item?.id,
-      item?.slug
+      item?.slug,
+      item?.meta_title ? item?.meta_title : item?.title,
+      item?.meta_description ? item?.meta_description : item?.description
     );
 
     if (item.media[0]?.path) {

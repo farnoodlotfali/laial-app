@@ -8,21 +8,21 @@ import {
 } from "@material-ui/icons";
 import { Fragment, useContext, useEffect } from "react";
 import { useParams } from "react-router";
-import axios from "./axios/axios";
-import AppContext from "./contexts/appContext";
-import playerContext from "./player/playerContext";
 import "./RowItemPage.css";
 import Flickity from "react-flickity-component";
-import Spinner from "./spinner/Spinner";
-import RowItem from "./RowItem";
-import authContext from "./auth/authContext";
+import Spinner from "../../spinner/Spinner";
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
-import defualtPhoto from "./assets/defualtPhoto.jpeg";
+import defualtPhoto from "../../assets/defualtPhoto.jpeg";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import PlaySvg from "./svgs/PlaySvg";
-import SpinnerLoading from "./spinner/SpinnerLoading";
+import PlaySvg from "../../svgs/PlaySvg";
+import SpinnerLoading from "../../spinner/SpinnerLoading";
+import appContext from "../../contexts/appContext";
+import playerContext from "../../player/playerContext";
+import authContext from "../../auth/authContext";
+import RowItem from "../../RowItem";
+import axios from "../../axios/axios";
 
 const RowItemPage = () => {
   const [show, setShow] = useState(false);
@@ -55,7 +55,7 @@ const RowItemPage = () => {
     setWhichSongToSaveInPlaylist,
     addToLikedSongPlaylist,
     addMusicToRecentlyViewed,
-  } = useContext(AppContext);
+  } = useContext(appContext);
   const {
     setUrl,
     playMusic,
@@ -69,7 +69,6 @@ const RowItemPage = () => {
   const { error, login, loadUser, user, isAuth, checkIfForce } =
     useContext(authContext);
 
-  // console.log(recommender);
   let params = useParams();
   useEffect(() => {
     getSongPage(params.slug);
@@ -97,7 +96,14 @@ const RowItemPage = () => {
           : dataSongPage?.media?.[0]?.image !== null
           ? dataSongPage?.media?.[0]?.image
           : dataSongPage?.person?.[0]?.image.full_image_url,
-        dataSongPage?.id
+        dataSongPage?.id,
+        dataSongPage?.slug,
+        dataSongPage?.meta_title
+          ? dataSongPage?.meta_title
+          : dataSongPage?.title,
+        dataSongPage?.meta_description
+          ? dataSongPage?.meta_description
+          : dataSongPage?.description
       );
       if (dataSongPage?.media?.[0]?.path) {
         setUrl(dataSongPage?.media?.[0]?.path, recommender);
@@ -129,75 +135,75 @@ const RowItemPage = () => {
       [e.target.name]: e.target.value,
     });
   };
-  // console.log(songId === dataSongPage?.media?.[0]?.id);
+  // console.log(downloadUrl);
   return (
     <Fragment>
-      {/* {!playing && ( */}
-      <Helmet>
-        <title>
-          {dataSongPage?.meta_title !== null
-            ? dataSongPage?.meta_title
-            : dataSongPage?.title
-            ? dataSongPage?.title
-            : dataSongPage?.media?.[0]?.name}
-        </title>
-        <meta
-          name="title"
-          content={
-            dataSongPage?.meta_title !== null
+      {!playing && (
+        <Helmet>
+          <title>
+            {dataSongPage?.meta_title !== null
               ? dataSongPage?.meta_title
-              : dataSongPage?.media?.[0]?.name
-          }
-        />
-        <meta
-          name="description"
-          content={
-            dataSongPage?.meta_description
-              ? dataSongPage?.meta_description
-              : dataSongPage?.description
-          }
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={dataSongPage?.slug} />
-        <meta
-          property="og:title"
-          content={
-            dataSongPage?.meta_title !== null
-              ? dataSongPage?.meta_title
-              : dataSongPage?.media?.[0]?.name
-          }
-        />
-        <meta
-          property="og:description"
-          content={
-            dataSongPage?.meta_description
-              ? dataSongPage?.meta_description
-              : dataSongPage?.description
-          }
-        />
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="http:app.7negare.ir/" />
-        <meta
-          property="twitter:title"
-          content={
-            dataSongPage?.meta_title !== null
-              ? dataSongPage?.meta_title
-              : dataSongPage?.media?.[0]?.name
-          }
-        />
-        <meta
-          property="twitter:description"
-          content={
-            dataSongPage?.meta_description
-              ? dataSongPage?.meta_description
-              : dataSongPage?.description
-          }
-        />
-        {/* {dataSongPage['image'] && (
+              : dataSongPage?.title
+              ? dataSongPage?.title
+              : dataSongPage?.media?.[0]?.name}
+          </title>
+          <meta
+            name="title"
+            content={
+              dataSongPage?.meta_title !== null
+                ? dataSongPage?.meta_title
+                : dataSongPage?.media?.[0]?.name
+            }
+          />
+          <meta
+            name="description"
+            content={
+              dataSongPage?.meta_description
+                ? dataSongPage?.meta_description
+                : dataSongPage?.description
+            }
+          />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content={dataSongPage?.slug} />
+          <meta
+            property="og:title"
+            content={
+              dataSongPage?.meta_title !== null
+                ? dataSongPage?.meta_title
+                : dataSongPage?.media?.[0]?.name
+            }
+          />
+          <meta
+            property="og:description"
+            content={
+              dataSongPage?.meta_description
+                ? dataSongPage?.meta_description
+                : dataSongPage?.description
+            }
+          />
+          <meta property="twitter:card" content="summary_large_image" />
+          <meta property="twitter:url" content="http:app.7negare.ir/" />
+          <meta
+            property="twitter:title"
+            content={
+              dataSongPage?.meta_title !== null
+                ? dataSongPage?.meta_title
+                : dataSongPage?.media?.[0]?.name
+            }
+          />
+          <meta
+            property="twitter:description"
+            content={
+              dataSongPage?.meta_description
+                ? dataSongPage?.meta_description
+                : dataSongPage?.description
+            }
+          />
+          {/* {dataSongPage['image'] && (
           <meta property='twitter:image' content={dataSongPage['image']} />
         )} */}
-      </Helmet>
-      {/* // )} */}
+        </Helmet>
+      )}
 
       {pageLoading ? (
         <Spinner />
@@ -218,7 +224,7 @@ const RowItemPage = () => {
                       ? dataSongPage?.person?.[0]?.image.full_image_url
                       : defualtPhoto
                   }
-                  alt="logo"
+                  alt=""
                 />
                 {loading && songId === dataSongPage?.media?.[0]?.id ? (
                   <div className="rowItemPage_play__laoding_spinner">
@@ -241,17 +247,6 @@ const RowItemPage = () => {
               </div>
 
               <div className="actions d-flex justify-content-around mt-4">
-                {/* <div onClick={playMusicAndShowMusicBar}>
-                  <Tooltip placement="bottom" title="پخش مرثیه">
-                    <IconButton aria-label="play">
-                      <PlayArrowRounded
-                        style={{ fontSize: "30px" }}
-                        className="icon"
-                      />
-                    </IconButton>
-                  </Tooltip>
-                </div> */}
-
                 <div className="favorite">
                   <IconButton
                     aria-label="Favorite"
@@ -259,8 +254,7 @@ const RowItemPage = () => {
                       isAuth
                         ? likeSong(params.slug) &
                           addToLikedSongPlaylist(dataSongPage.id)
-                        : //  & getLikedSongsPlaylist()
-                          setShow(true)
+                        : setShow(true)
                     }
                   >
                     <Favorite
@@ -322,7 +316,6 @@ const RowItemPage = () => {
                             <span> ثبت نام </span>
                           </Link>
                         </div>
-                        {/* <div className='formMsg pt-2'>{errorMsg}</div> */}
                         <div className="formGp__btn d-flex justify-content-around ">
                           <div className="inputBox__login">
                             <input type="submit" value="ورود" />

@@ -32,6 +32,7 @@ import {
   CHANGE_MY_PROFILE_MY_SONGLIST_ID,
   CHANGE_SHOW_CREATE_LIST,
   GET_CONFIGS,
+  REMOVE_LOADING,
 } from "./types";
 const AppState = (props) => {
   const initialState = {
@@ -183,8 +184,15 @@ const AppState = (props) => {
     });
     try {
       const res = await axios.instanceApi.get(`post/${newSlug}`);
-
-      // getSongPageUrl(res.data.data.media[0].telegram_id);
+      // console.log(res?.data?.data?.media?.[0]?.path);
+      if (res?.data?.data?.media?.[0]?.path) {
+        dispatch({
+          type: GET_SONG_PAGE_URL,
+          payload: res?.data?.data?.media?.[0]?.path,
+        });
+      } else {
+        getSongPageUrl(res.data.data.media[0].telegram_id);
+      }
 
       dispatch({
         type: GET_SONG_PAGE,
@@ -198,6 +206,24 @@ const AppState = (props) => {
       });
     }
   };
+
+  const getSongPageUrl = async (telegramId) => {
+    try {
+      const res = await axios.downloader.get(`/${telegramId}`);
+      // console.log(res.data.download_link);
+      dispatch({
+        type: GET_SONG_PAGE_URL,
+        payload: res.data.download_link,
+      });
+    } catch (error) {
+      // console.log(error);
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+
   const getHome = async (slug = "home") => {
     dispatch({
       type: SET_LOADING,
@@ -218,6 +244,9 @@ const AppState = (props) => {
         payload: error,
       });
     }
+    dispatch({
+      type: REMOVE_LOADING,
+    });
   };
 
   const getBlock = async (newSlug) => {
@@ -296,22 +325,6 @@ const AppState = (props) => {
     }
   };
 
-  const getSongPageUrl = async (telegramId) => {
-    try {
-      const res = await axios.downloader.get(`/${telegramId}`);
-      // console.log(res.data.download_link);
-      dispatch({
-        type: GET_SONG_PAGE_URL,
-        payload: res.data.download_link,
-      });
-    } catch (error) {
-      // console.log(error);
-      dispatch({
-        type: ERROR,
-        payload: error,
-      });
-    }
-  };
   const getRecommender = async () => {
     try {
       const res = await axios.instanceApi.get(`/recommender`);

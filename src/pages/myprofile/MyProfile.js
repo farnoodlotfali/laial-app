@@ -1,7 +1,7 @@
 import "./MyProfile.css";
-import defualtPhoto from "./assets/defualtPhoto.jpeg";
+import defualtPhoto from "../../assets/defualtPhoto.jpeg";
 import { useContext, useEffect, useState } from "react";
-import authContext from "./auth/authContext";
+import authContext from "../../auth/authContext";
 import {
   AccessTime,
   AddRounded,
@@ -11,18 +11,18 @@ import {
   Favorite,
   PlayArrow,
 } from "@material-ui/icons";
-import appContext from "./contexts/appContext";
 import { useHistory } from "react-router";
 import { Button, Modal } from "react-bootstrap";
-import SpinnerOnUserPlaylist from "./spinner/SpinnerOnUserPlaylist";
+import SpinnerOnUserPlaylist from "../../spinner/SpinnerOnUserPlaylist";
 import { Dropdown } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
-import axios from "./axios/axios";
-import LoadIcon from "./spinner/LoadIcon";
+import axios from "../../axios/axios";
+import LoadIcon from "../../spinner/LoadIcon";
 import { CircularProgress, Tooltip } from "@material-ui/core";
 import MyProfilemySonglist from "./MyProfilemySonglist";
-import playerContext from "./player/playerContext";
+import playerContext from "../../player/playerContext";
 import MyProfileSong from "./MyProfileSong";
+import appContext from "../../contexts/appContext";
 
 const MyProfile = () => {
   const { user } = useContext(authContext);
@@ -313,8 +313,6 @@ const MyProfile = () => {
                       onClick={() => likedSongsHandle()}
                     >
                       <Favorite />
-
-                      {/* <span>مرثیه‌های لایک شده</span> */}
                       <span className="d-flex justify-content-center w-100 align-items-center">
                         لایک
                       </span>
@@ -324,8 +322,6 @@ const MyProfile = () => {
                       onClick={() => recentlyViewedc()}
                     >
                       <AccessTime />
-
-                      {/* <span> اخیرا شنیده شده</span> */}
                       <span className="d-flex justify-content-center w-100 align-items-center">
                         اخیرا
                       </span>
@@ -342,7 +338,6 @@ const MyProfile = () => {
                       <span className="d-flex justify-content-center w-100 align-items-center">
                         منتخب
                       </span>
-                      {/* <span> نوا های منتخب سایت</span> */}
                     </div>
                   </div>
                   <div className="myprofile__mobile__songs__myListsOption mb-2">
@@ -366,7 +361,6 @@ const MyProfile = () => {
                                 onClick={async () =>
                                   setListShow(await getOnePlayList(item.id)) &
                                   setListName(item.name) &
-                                  // console.log(listShow) &
                                   setDeleteBtn(true) &
                                   changeMyProfilemySonglistId(item.id)
                                 }
@@ -422,12 +416,17 @@ const MyProfile = () => {
                                 ? item?.post?.person?.[0]?.image.full_image_url
                                 : defualtPhoto
                             }
-                            alt="songlogo"
+                            alt=""
                           />
                         </div>
                         <div className="songInfo">
                           <span className="songName">
-                            {truncate(item?.post?.media?.[0]?.name, 4)}
+                            {truncate(
+                              item?.post?.title
+                                ? item?.post?.title
+                                : item?.post?.media?.[0]?.name,
+                              4
+                            )}
                           </span>
                           <span className="songSinger">
                             {item?.post?.person?.[0]?.name}

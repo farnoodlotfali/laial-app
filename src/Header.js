@@ -104,45 +104,10 @@ const Header = () => {
                   لیست من
                 </li>
               )}
-              {/* <NavLink
-                activeClassName='selected'
-                to='/aboutus'
-                className='  mx-3'
-                onClick={() => ChangeShowLeft(false)}
-              >
-                درباره ی ما
-              </NavLink> */}
             </div>
             <div className="register__login__btn mr-auto ml-3">
               {user !== null ? (
                 <Fragment>
-                  {/* <div className="dropdown">
-                    <button
-                      className="btn text-light user_btn "
-                      type="button"
-                      id="dropdownMenuButton"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      <span className="ml-2">{user.first_name}</span>
-                      <AccountCircleRounded />
-                    </button>
-                    <div
-                      className="dropdown-menu"
-                      aria-labelledby="dropdownMenuButton"
-                    >
-                      <Link to="/myprofile" className="dropdown-item">
-                        <span>پروفایل</span>
-                        <PersonRounded className="" />
-                      </Link>
-                      <a className="dropdown-item" onClick={() => logout()}>
-                        <span> خروج از حساب</span>
-                        <ExitToAppRounded className="" />
-                      </a>
-                    </div>
-                  </div>
-                 */}
                   <div>
                     <Button
                       classes={{ root: classes.btnRoot }}
@@ -203,15 +168,12 @@ const Header = () => {
                   className="d-flex text-light header_login_btn"
                 >
                   ورود/ثبت نام
-                  <span className="d-flex  justify-content-center align-self-center">
-                    {/* <AccountCircleRounded /> */}
-                  </span>
+                  <span className="d-flex  justify-content-center align-self-center"></span>
                 </NavLink>
               )}
             </div>
           </ul>
         </div>
-        {/* </div> */}
       </nav>
     </Headroom>
   );

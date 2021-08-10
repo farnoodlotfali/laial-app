@@ -28,6 +28,7 @@ import {
   CHANGE_MY_PROFILE_MY_SONGLIST_ID,
   CHANGE_SHOW_CREATE_LIST,
   GET_CONFIGS,
+  REMOVE_LOADING,
 } from "./types";
 // eslint-disable-next-line
 export default (state, action) => {
@@ -45,7 +46,7 @@ export default (state, action) => {
           id: action.payload?.data?.id,
           description: action.payload?.data?.block?.[0]?.description,
         },
-        pageLoading: false,
+        // pageLoading: false,
       };
     case CHANGE_HOME_META:
       return {
@@ -66,6 +67,11 @@ export default (state, action) => {
       return {
         ...state,
         pageLoading: true,
+      };
+    case REMOVE_LOADING:
+      return {
+        ...state,
+        pageLoading: false,
       };
     case GET_BLOCK:
       // console.log(action.payload);

@@ -111,7 +111,6 @@ const Search = () => {
             : "",
       }}
     >
-      {/* <Navigation /> */}
       <div className="d-flex">
         <div className="search__title ">
           <div
@@ -128,7 +127,7 @@ const Search = () => {
           >
             <div className="searchFields__option__searching">
               <input
-                autoFocus="true"
+                autoFocus={true}
                 className="ml-2"
                 onChange={onchange}
                 name="searchValue"
