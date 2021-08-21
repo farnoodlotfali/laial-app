@@ -9,7 +9,6 @@ import { useHistory, useParams } from "react-router";
 const Home = () => {
   const { pageLoading, getHome, home, homeMeta, showMusic, homeSlug } =
     useContext(appContext);
-
   const { slug } = useParams();
   const history = useHistory();
 

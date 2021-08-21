@@ -9,6 +9,7 @@ const TileBanner = ({ imgs }) => {
     rightToLeft: true,
   };
   // console.log(imgs);
+
   return (
     <div className="tileBanner">
       <Flickity className="carousel " options={flickityOptions}>

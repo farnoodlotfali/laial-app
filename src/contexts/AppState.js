@@ -858,6 +858,7 @@ const AppState = (props) => {
       console.log(error);
     }
   };
+
   return (
     <AppContext.Provider
       value={{
