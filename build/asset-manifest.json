@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/static/css/main.14157030.chunk.css",
+    "main.js": "/static/js/main.dd9c4d27.chunk.js",
+    "main.js.map": "/static/js/main.dd9c4d27.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.ce3aea3e.js",
+    "runtime-main.js.map": "/static/js/runtime-main.ce3aea3e.js.map",
+    "static/css/2.9d5e5e09.chunk.css": "/static/css/2.9d5e5e09.chunk.css",
+    "static/js/2.1c3ee932.chunk.js": "/static/js/2.1c3ee932.chunk.js",
+    "static/js/2.1c3ee932.chunk.js.map": "/static/js/2.1c3ee932.chunk.js.map",
+    "static/js/3.0b21fae6.chunk.js": "/static/js/3.0b21fae6.chunk.js",
+    "static/js/3.0b21fae6.chunk.js.map": "/static/js/3.0b21fae6.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.9d5e5e09.chunk.css.map": "/static/css/2.9d5e5e09.chunk.css.map",
+    "static/css/main.14157030.chunk.css.map": "/static/css/main.14157030.chunk.css.map",
+    "static/js/2.1c3ee932.chunk.js.LICENSE.txt": "/static/js/2.1c3ee932.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/static/media/IRANSans-Light-web.71f8e92a.ttf",
+    "static/media/LoadIcon.f99f48cd.gif": "/static/media/LoadIcon.f99f48cd.gif",
+    "static/media/Spinner2.e123ab33.gif": "/static/media/Spinner2.e123ab33.gif",
+    "static/media/barOnPlayingMusic.63309852.gif": "/static/media/barOnPlayingMusic.63309852.gif",
+    "static/media/loadspin.6bf996af.gif": "/static/media/loadspin.6bf996af.gif",
+    "static/media/safine.2e800905.jpeg": "/static/media/safine.2e800905.jpeg",
+    "static/media/w.163edfc5.jpg": "/static/media/w.163edfc5.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ce3aea3e.js",
+    "static/css/2.9d5e5e09.chunk.css",
+    "static/js/2.1c3ee932.chunk.js",
+    "static/css/main.14157030.chunk.css",
+    "static/js/main.dd9c4d27.chunk.js"
+  ]
+}
